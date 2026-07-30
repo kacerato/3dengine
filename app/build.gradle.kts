@@ -12,8 +12,8 @@ android {
         applicationId = "com.mobilegamestudio.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 3
+        versionName = "0.3.0-web-editor"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -45,6 +45,31 @@ android {
 
 kotlin {
     jvmToolchain(17)
+}
+
+val webEditorDirectory = rootProject.layout.projectDirectory.dir("web-editor")
+val npmExecutable = if (System.getProperty("os.name").lowercase().contains("windows")) "npm.cmd" else "npm"
+
+val installWebEditor by tasks.registering(Exec::class) {
+    workingDir(webEditorDirectory)
+    commandLine(npmExecutable, "install", "--no-audit", "--no-fund")
+    inputs.file(webEditorDirectory.file("package.json"))
+    outputs.dir(webEditorDirectory.dir("node_modules"))
+}
+
+val buildWebEditor by tasks.registering(Exec::class) {
+    dependsOn(installWebEditor)
+    workingDir(webEditorDirectory)
+    commandLine(npmExecutable, "run", "build")
+    inputs.dir(webEditorDirectory.dir("src"))
+    inputs.file(webEditorDirectory.file("index.html"))
+    inputs.file(webEditorDirectory.file("tsconfig.json"))
+    inputs.file(webEditorDirectory.file("vite.config.ts"))
+    outputs.dir(layout.projectDirectory.dir("src/main/assets/editor"))
+}
+
+tasks.named("preBuild").configure {
+    dependsOn(buildWebEditor)
 }
 
 dependencies {

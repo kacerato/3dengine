@@ -20,6 +20,7 @@ import com.mobilegamestudio.core.model.SceneValidator
 import com.mobilegamestudio.core.model.TransformComponent
 import com.mobilegamestudio.core.model.Vector3
 import java.util.UUID
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -66,6 +67,18 @@ class WebWorkspaceViewModel(
 
     private val undoStack = ArrayDeque<SceneDocument>()
     private val redoStack = ArrayDeque<SceneDocument>()
+
+    private val backgroundErrorHandler = CoroutineExceptionHandler { _, error ->
+        mutableState.update { current ->
+            current.copy(
+                isLoading = false,
+                isSaving = false,
+                playing = false,
+                playScene = null,
+                message = "Falha interna no projeto: ${error.message ?: error::class.simpleName}",
+            )
+        }
+    }
 
     init {
         load()
@@ -239,7 +252,7 @@ class WebWorkspaceViewModel(
             return
         }
         mutableState.update { it.copy(isSaving = true, message = null) }
-        viewModelScope.launch {
+        viewModelScope.launch(backgroundErrorHandler) {
             when (val result = contentRepository.saveScene(projectId, scene, scene.metadata.revision)) {
                 is ContentResult.Success -> {
                     mutableState.update {
@@ -290,7 +303,7 @@ class WebWorkspaceViewModel(
     }
 
     private fun load() {
-        viewModelScope.launch {
+        viewModelScope.launch(backgroundErrorHandler) {
             val metadata = when (val projectResult = repository.openProject(projectId)) {
                 is ProjectResult.Success -> projectResult.value.metadata
                 is ProjectResult.Failure -> {

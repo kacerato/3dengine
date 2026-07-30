@@ -114,6 +114,18 @@ internal fun GodotCompactEditorShell(
     onTerrainStrokeEnd: (Boolean) -> Unit,
     onCreateFlatTerrain: (Int, Float, Float) -> Unit,
     onAssignTerrainTexture: (String, String, Boolean) -> Unit,
+    onCreateEditableMesh: (PrimitiveMesh) -> Unit,
+    onConvertSelectedToEditableMesh: () -> Unit,
+    onSelectMeshVertex: (Int, Boolean) -> Unit,
+    onSelectMeshFace: (Int) -> Unit,
+    onMoveMeshSelection: (TransformAxis, Float) -> Unit,
+    onExtrudeMeshFace: (Float) -> Unit,
+    onSubdivideMeshFace: () -> Unit,
+    onDyntopoMesh: () -> Unit,
+    onCreateVoxelVolume: (Int, Boolean) -> Unit,
+    onConvertMeshToVoxel: (Int) -> Unit,
+    onVoxelBrush: (com.mobilegamestudio.core.model.VoxelSliceAxis, Int, Float, Float, Float, Float, com.mobilegamestudio.core.model.VoxelBrushMode) -> Unit,
+    onSmoothVoxel: (Int) -> Unit,
 ) {
     val previewActive = state.isPreviewStarting || state.isPreviewRunning
     var openPanelName by rememberSaveable { mutableStateOf<String?>(StudioPopup.FILES.name) }
@@ -177,7 +189,7 @@ internal fun GodotCompactEditorShell(
                 )
             } else {
                 if (openPanel == StudioPopup.WORLD) {
-                    WorldStudioWorkspace(
+                    WorldStudioWorkspaceV3(
                         state = state,
                         resolveAsset = resolveAsset,
                         onExit = { show(null) },
@@ -203,6 +215,18 @@ internal fun GodotCompactEditorShell(
                         onAssignTerrainTexture = onAssignTerrainTexture,
                         onImportAsset = onImportAsset,
                         onImportHeightmap = onImportTerrainHeightmap,
+                        onCreateEditableMesh = onCreateEditableMesh,
+                        onConvertSelectedToEditableMesh = onConvertSelectedToEditableMesh,
+                        onSelectMeshVertex = onSelectMeshVertex,
+                        onSelectMeshFace = onSelectMeshFace,
+                        onMoveMeshSelection = onMoveMeshSelection,
+                        onExtrudeMeshFace = onExtrudeMeshFace,
+                        onSubdivideMeshFace = onSubdivideMeshFace,
+                        onDyntopoMesh = onDyntopoMesh,
+                        onCreateVoxelVolume = onCreateVoxelVolume,
+                        onConvertMeshToVoxel = onConvertMeshToVoxel,
+                        onVoxelBrush = onVoxelBrush,
+                        onSmoothVoxel = onSmoothVoxel,
                         modifier = Modifier.weight(1f).fillMaxWidth(),
                     )
                 } else {

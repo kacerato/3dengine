@@ -42,6 +42,7 @@ internal fun SceneViewport(
     onTransformChange: (TransformProperty, TransformAxis, Float) -> Unit = { _, _, _ -> },
     onDiagnostic: (String) -> Unit,
     onPreviewAction: (String) -> Unit,
+    editorChromeVisible: Boolean = true,
     terrainAuthoringEnabled: Boolean = false,
     terrainTopDownCamera: Boolean = false,
     terrainBrushRadius: Float = 0.12f,
@@ -61,7 +62,7 @@ internal fun SceneViewport(
     val joysticks = document.objects.flatMap { item ->
         item.components.filterIsInstance<VirtualJoystickComponent>()
     }
-    val sceneMarkers = if (state.isPreviewRunning || terrainAuthoringEnabled) emptyList() else document.objects.mapNotNull { item ->
+    val sceneMarkers = if (state.isPreviewRunning || terrainAuthoringEnabled || !editorChromeVisible) emptyList() else document.objects.mapNotNull { item ->
         when {
             item.components.any { it is CameraComponent } -> Triple(item.id, "CAM", item.name)
             item.components.any { it is DirectionalLightComponent } -> Triple(item.id, "SUN", item.name)
@@ -93,7 +94,7 @@ internal fun SceneViewport(
             modifier = Modifier.matchParentSize(),
         )
 
-        if (!terrainAuthoringEnabled) {
+        if (editorChromeVisible && !terrainAuthoringEnabled) {
             Row(
                 modifier = Modifier
                     .align(Alignment.TopStart)

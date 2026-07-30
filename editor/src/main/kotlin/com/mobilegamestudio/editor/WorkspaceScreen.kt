@@ -152,6 +152,18 @@ fun WorkspaceRoute(
                 onTerrainStrokeEnd = viewModel::endTerrainStroke,
                 onCreateFlatTerrain = viewModel::createFlatTerrain,
                 onAssignTerrainTexture = viewModel::assignTerrainTexture,
+                onCreateEditableMesh = viewModel::createEditableMesh,
+                onConvertSelectedToEditableMesh = viewModel::convertSelectedToEditableMesh,
+                onSelectMeshVertex = viewModel::selectEditableMeshVertex,
+                onSelectMeshFace = viewModel::selectEditableMeshFace,
+                onMoveMeshSelection = viewModel::moveEditableMeshSelection,
+                onExtrudeMeshFace = viewModel::extrudeEditableMeshFace,
+                onSubdivideMeshFace = viewModel::subdivideEditableMeshFace,
+                onDyntopoMesh = viewModel::applyEditableMeshDyntopo,
+                onCreateVoxelVolume = viewModel::createVoxelVolume,
+                onConvertMeshToVoxel = viewModel::convertSelectedMeshToVoxel,
+                onVoxelBrush = viewModel::applyVoxelSliceBrush,
+                onSmoothVoxel = viewModel::smoothSelectedVoxel,
             )
         }
         SnackbarHost(

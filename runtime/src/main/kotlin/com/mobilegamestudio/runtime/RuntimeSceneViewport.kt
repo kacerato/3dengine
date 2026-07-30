@@ -32,6 +32,8 @@ import com.mobilegamestudio.core.model.CharacterControllerComponent
 import com.mobilegamestudio.core.model.CharacterCameraMode
 import com.mobilegamestudio.core.model.AnimationControllerComponent
 import com.mobilegamestudio.core.model.MeshRendererComponent
+import com.mobilegamestudio.core.model.EditableMeshComponent
+import com.mobilegamestudio.core.model.VoxelVolumeComponent
 import com.mobilegamestudio.core.model.MeshModifierStackComponent
 import com.mobilegamestudio.core.model.MeshModifierType
 import com.mobilegamestudio.core.model.PrimitiveMesh
@@ -117,6 +119,8 @@ fun RuntimeSceneViewport(
                 objectValue.id,
                 objectValue.enabled,
                 objectValue.component<MeshRendererComponent>(),
+                objectValue.component<EditableMeshComponent>(),
+                objectValue.component<VoxelVolumeComponent>(),
                 objectValue.component<TerrainComponent>(),
                 objectValue.component<VegetationSpawnerComponent>(),
                 objectValue.component<AnimationControllerComponent>(),
@@ -610,8 +614,19 @@ private suspend fun buildProjection(
             val transform = objectValue.component<TransformComponent>() ?: return@forEach
             val pbr = objectValue.component<PbrMaterialComponent>()?.takeIf { it.enabled }
             try {
-            val node = when (renderer.primitive) {
-                PrimitiveMesh.CUBE -> CubeNode(
+            val editableMesh = objectValue.component<EditableMeshComponent>()?.takeIf { it.enabled }
+            val voxelVolume = objectValue.component<VoxelVolumeComponent>()?.takeIf { it.enabled }
+            val customMaterial = if (editableMesh != null || voxelVolume != null) {
+                materialLoader.createColorInstance(
+                    Color(pbr?.baseColorArgb ?: voxelVolume?.colorArgb ?: renderer.colorArgb),
+                    metallic = pbr?.metallic ?: 0.02f,
+                    roughness = pbr?.roughness ?: 0.84f,
+                ).also(materials::add)
+            } else null
+            val node = when {
+                editableMesh != null -> buildEditableMeshNode(engine, editableMesh, requireNotNull(customMaterial))
+                voxelVolume != null -> buildVoxelVolumeNode(engine, voxelVolume, requireNotNull(customMaterial))
+                renderer.primitive == PrimitiveMesh.CUBE -> CubeNode(
                     engine = engine,
                     size = Size(1f, 1f, 1f),
                     materialInstance = materialLoader.createColorInstance(
@@ -620,7 +635,7 @@ private suspend fun buildProjection(
                         roughness = pbr?.roughness ?: 0.72f,
                     ).also(materials::add),
                 )
-                PrimitiveMesh.PLANE -> PlaneNode(
+                renderer.primitive == PrimitiveMesh.PLANE -> PlaneNode(
                     engine = engine,
                     size = Size(1f, 1f, 1f),
                     materialInstance = materialLoader.createColorInstance(
@@ -629,7 +644,7 @@ private suspend fun buildProjection(
                         roughness = pbr?.roughness ?: 0.95f,
                     ).also(materials::add),
                 )
-                null -> {
+                else -> {
                     if (loadedModels >= MAX_MODEL_INSTANCES) {
                         diagnostics += "Limite de $MAX_MODEL_INSTANCES instâncias GLB atingido."
                         return@forEach

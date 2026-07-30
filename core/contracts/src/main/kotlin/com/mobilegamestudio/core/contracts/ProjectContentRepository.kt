@@ -51,12 +51,12 @@ interface ProjectContentRepository {
         projectId: ProjectId,
         fromRelativePath: String,
         toRelativePath: String,
-    ): ContentResult<Unit>
+    ): ContentResult<Unit> = ContentResult.Failure(ContentError.StorageUnavailable)
 
     suspend fun deleteLogicResource(
         projectId: ProjectId,
         relativePath: String,
-    ): ContentResult<Unit>
+    ): ContentResult<Unit> = ContentResult.Failure(ContentError.StorageUnavailable)
 }
 
 sealed interface ContentResult<out T> {

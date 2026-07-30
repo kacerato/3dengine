@@ -35,7 +35,11 @@ Os painéis laterais de Cena, Arquivos e Inspector não bloqueiam mais o viewpor
 
 A câmera de terceira pessoa é calculada novamente a partir da transformação atual do jogador. Movimento e rotação da visão deslocam a câmera junto com o player.
 
-## Validação mínima
+## Validação automatizada
+
+O runtime possui testes para confirmar que deslocar o jogador desloca também o alvo e a posição da câmera, e que girar a visão altera a órbita sem perder o foco no jogador. O pipeline reaplica as migrações, executa os testes e gera o APK.
+
+## Validação no aparelho
 
 1. Criar mundo jogável.
 2. Navegar no viewport sem mover o objeto selecionado.
@@ -47,3 +51,5 @@ A câmera de terceira pessoa é calculada novamente a partir da transformação 
 8. Pular.
 9. Tocar no jogador para validar Lua e NoCode.
 10. Parar o Play e confirmar que a cena editável foi preservada.
+
+A compilação e os testes automatizados validam a lógica técnica. Sensibilidade dos gestos, ergonomia e proporção visual continuam dependentes da validação no dispositivo real.

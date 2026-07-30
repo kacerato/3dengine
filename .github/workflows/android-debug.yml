@@ -92,6 +92,9 @@ jobs:
       - name: Apply editor cohesion v3
         run: python tools/apply_editor_cohesion_v3.py
 
+      - name: Normalize editor cohesion v3
+        run: python tools/apply_editor_cohesion_v3_hotfix.py
+
       - name: Persist generated source changes
         if: github.event_name == 'push'
         shell: bash

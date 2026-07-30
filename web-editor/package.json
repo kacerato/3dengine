@@ -21,6 +21,7 @@
     "@types/three": "latest",
     "typescript": "latest",
     "vite": "latest",
+    "vite-plugin-singlefile": "2.3.3",
     "vitest": "latest"
   }
 }

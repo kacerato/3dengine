@@ -89,6 +89,9 @@ jobs:
       - name: Apply functional world authoring v2
         run: python tools/apply_world_authoring_v2_fixed.py
 
+      - name: Apply editor cohesion v3
+        run: python tools/apply_editor_cohesion_v3.py
+
       - name: Persist generated source changes
         if: github.event_name == 'push'
         shell: bash
@@ -99,7 +102,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated changes"
           else
-            git commit -m "feat: functional world authoring v2"
+            git commit -m "feat: cohesive editor workspaces and player camera rig"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -124,7 +127,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-world-authoring-v2-debug
+          name: mobile-game-studio-editor-cohesion-v3-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

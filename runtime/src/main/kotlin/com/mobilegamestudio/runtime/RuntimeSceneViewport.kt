@@ -195,32 +195,31 @@ fun RuntimeSceneViewport(
     }
     val firstPersonPlay = controlledVehicle == null && mode == EditorMode.PLAY &&
         playController?.cameraMode == CharacterCameraMode.FIRST_PERSON
-    val editorCameraManipulator = if (firstPersonPlay || controlledVehicle != null || (authoredPlayCamera != null && mode == EditorMode.PLAY) || terrainTopDownCamera) {
-        null
-    } else {
-        key(document.sceneId, mode) {
-            if (mode == EditorMode.EDITOR) {
-                remember(document.sceneId) {
-                    StudioOrbitCameraManipulator(
-                        eye = Position(
-                            selectedTarget.x + cameraOffset.x,
-                            selectedTarget.y + cameraOffset.y,
-                            selectedTarget.z + cameraOffset.z,
-                        ),
-                        target = Position(selectedTarget.x, selectedTarget.y, selectedTarget.z),
-                    )
-                }
-            } else {
-                rememberCameraManipulator(
-                    orbitHomePosition = Position(
-                        selectedTarget.x + cameraOffset.x,
-                        selectedTarget.y + cameraOffset.y,
-                        selectedTarget.z + cameraOffset.z,
-                    ),
-                    targetPosition = Position(selectedTarget.x, selectedTarget.y, selectedTarget.z),
-                )
-            }
-        }
+    val persistentEditorManipulator = remember(document.sceneId) {
+        StudioOrbitCameraManipulator(
+            eye = Position(
+                document.editorSettings.cameraOrbit.x,
+                document.editorSettings.cameraOrbit.y,
+                document.editorSettings.cameraOrbit.z,
+            ),
+            target = Position(
+                document.editorSettings.cameraTarget.x,
+                document.editorSettings.cameraTarget.y,
+                document.editorSettings.cameraTarget.z,
+            ),
+        )
+    }
+    val editorCameraManipulator = when {
+        firstPersonPlay || controlledVehicle != null || (authoredPlayCamera != null && mode == EditorMode.PLAY) || terrainTopDownCamera -> null
+        mode == EditorMode.EDITOR -> persistentEditorManipulator
+        else -> rememberCameraManipulator(
+            orbitHomePosition = Position(
+                selectedTarget.x + cameraOffset.x,
+                selectedTarget.y + cameraOffset.y,
+                selectedTarget.z + cameraOffset.z,
+            ),
+            targetPosition = Position(selectedTarget.x, selectedTarget.y, selectedTarget.z),
+        )
     }
     LaunchedEffect(editorCameraManipulator, mode, terrainTopDownCamera, selectedObjectId) {
         if (mode != EditorMode.EDITOR) return@LaunchedEffect
@@ -498,6 +497,45 @@ private class StudioOrbitCameraManipulator(
     override fun update(deltaTime: Float) = Unit
 }
 
+
+private fun buildEditorGridNodes(
+    engine: Engine,
+    minorMaterial: MaterialInstance,
+    xMaterial: MaterialInstance,
+    zMaterial: MaterialInstance,
+): List<Node> = buildList {
+    val extent = 20
+    val span = extent * 2f
+    for (index in -extent..extent) {
+        val zLineMaterial = if (index == 0) xMaterial else minorMaterial
+        add(
+            CubeNode(
+                engine = engine,
+                size = Size(span, 0.004f, if (index == 0) 0.035f else 0.018f),
+                materialInstance = zLineMaterial,
+            ).apply {
+                name = "__editor_grid_x_$index"
+                position = Position(0f, 0.004f, index.toFloat())
+                isTouchable = false
+                isEditable = false
+            },
+        )
+        val xLineMaterial = if (index == 0) zMaterial else minorMaterial
+        add(
+            CubeNode(
+                engine = engine,
+                size = Size(if (index == 0) 0.035f else 0.018f, 0.004f, span),
+                materialInstance = xLineMaterial,
+            ).apply {
+                name = "__editor_grid_z_$index"
+                position = Position(index.toFloat(), 0.004f, 0f)
+                isTouchable = false
+                isEditable = false
+            },
+        )
+    }
+}
+
 private suspend fun buildProjection(
     document: SceneDocument,
     mode: EditorMode,
@@ -511,6 +549,18 @@ private suspend fun buildProjection(
     val textures = mutableListOf<Texture>()
     val nodes = mutableListOf<Node>()
     try {
+        if (mode == EditorMode.EDITOR && document.editorSettings.gridVisible) {
+            val minorGridMaterial = materialLoader.createColorInstance(
+                Color(0xFF252B33), metallic = 0f, roughness = 1f,
+            ).also(materials::add)
+            val xAxisMaterial = materialLoader.createColorInstance(
+                Color(0xFF8B4048), metallic = 0f, roughness = 1f,
+            ).also(materials::add)
+            val zAxisMaterial = materialLoader.createColorInstance(
+                Color(0xFF3F608C), metallic = 0f, roughness = 1f,
+            ).also(materials::add)
+            nodes += buildEditorGridNodes(engine, minorGridMaterial, xAxisMaterial, zAxisMaterial)
+        }
         var loadedModels = 0
         val renderableObjects = document.objects.filter { objectValue ->
             objectValue.enabled &&

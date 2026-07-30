@@ -569,6 +569,121 @@ class WorkspaceViewModel(
         }
     }
 
+    fun createPlayableWorld() {
+        if (!canEdit()) return
+        val document = mutableState.value.sceneDocument ?: return
+        val normalized = document.objects.map { item ->
+            if (item.component<CharacterControllerComponent>() != null && "player" !in item.tags) {
+                item.copy(tags = item.tags + "player")
+            } else item
+        }
+        val additions = mutableListOf<GameObject>()
+
+        val terrainId = normalized.firstOrNull { it.component<TerrainComponent>() != null }?.id ?: run {
+            var terrain = createFlatTerrainComponent(65, 96f, 20f)
+            terrain = terrain.applyBrush(
+                TerrainBrush(TerrainBrushMode.RAISE, 0.30f, 0.34f, radius = 0.22f, strength = 0.46f, falloff = TerrainBrushFalloff.SMOOTH),
+            ).applyBrush(
+                TerrainBrush(TerrainBrushMode.RAISE, 0.70f, 0.63f, radius = 0.27f, strength = 0.34f, falloff = TerrainBrushFalloff.SMOOTH),
+            ).applyBrush(
+                TerrainBrush(TerrainBrushMode.LOWER, 0.52f, 0.52f, radius = 0.16f, strength = 0.24f, falloff = TerrainBrushFalloff.SMOOTH),
+            ).applyBrush(
+                TerrainBrush(TerrainBrushMode.SMOOTH, 0.50f, 0.50f, radius = 0.46f, strength = 0.30f, falloff = TerrainBrushFalloff.SMOOTH),
+            ).applyAutoTile()
+            val id = UUID.randomUUID().toString()
+            additions += GameObject(
+                id = id,
+                name = "Terreno principal",
+                tags = setOf("world", "starter-world"),
+                components = listOf(TransformComponent(), terrain),
+            )
+            id
+        }
+
+        if (normalized.none { it.component<DirectionalLightComponent>()?.enabled == true }) {
+            additions += GameObject(
+                id = UUID.randomUUID().toString(),
+                name = "Sol",
+                tags = setOf("world", "starter-world"),
+                components = listOf(
+                    TransformComponent(rotationEulerDegrees = Vector3(-48f, -32f, 0f)),
+                    DirectionalLightComponent(intensityLux = 78_000f, castShadows = true),
+                ),
+            )
+        }
+        if (normalized.none { it.component<CameraComponent>()?.let { camera -> camera.enabled && camera.isMain } == true }) {
+            additions += GameObject(
+                id = UUID.randomUUID().toString(),
+                name = "Câmera principal",
+                tags = setOf("world", "starter-world"),
+                components = listOf(
+                    TransformComponent(position = Vector3(7f, 5f, 9f), rotationEulerDegrees = Vector3(-18f, 218f, 0f)),
+                    CameraComponent(isMain = true, fieldOfViewDegrees = 62f),
+                ),
+            )
+        }
+        if (normalized.none { it.component<CharacterControllerComponent>()?.enabled == true && "player" in it.tags }) {
+            additions += GameObject(
+                id = UUID.randomUUID().toString(),
+                name = "Jogador",
+                tags = setOf("player", "starter-world"),
+                components = listOf(
+                    TransformComponent(position = Vector3(0f, 2.2f, 5f), scale = Vector3(0.7f, 1.8f, 0.7f)),
+                    CharacterControllerComponent(
+                        movementSpeed = 5.2f,
+                        jumpForce = 6.8f,
+                        gravity = 18f,
+                        cameraMode = CharacterCameraMode.THIRD_PERSON,
+                        cameraDistance = 4.8f,
+                        cameraHeight = 1.55f,
+                        lookSensitivity = 0.58f,
+                    ),
+                    MeshRendererComponent(primitive = PrimitiveMesh.CUBE, colorArgb = 0xFF7B5AC8),
+                    ColliderComponent(shape = com.mobilegamestudio.core.model.ColliderShape.CAPSULE, size = Vector3(0.7f, 1.8f, 0.7f)),
+                ),
+            )
+        }
+        if (normalized.none { it.component<VirtualJoystickComponent>()?.enabled == true }) {
+            additions += GameObject(
+                id = UUID.randomUUID().toString(),
+                name = "Movimento",
+                tags = setOf("ui", "starter-world"),
+                components = listOf(TransformComponent(), VirtualJoystickComponent(eventPrefix = "move")),
+            )
+        }
+        if (normalized.none { it.component<TouchButtonComponent>()?.eventName == "jump" }) {
+            additions += GameObject(
+                id = UUID.randomUUID().toString(),
+                name = "Pular",
+                tags = setOf("ui", "starter-world"),
+                components = listOf(
+                    TransformComponent(),
+                    TouchButtonComponent(label = "PULAR", eventName = "jump", normalizedX = 0.86f, normalizedY = 0.72f),
+                ),
+            )
+        }
+
+        val objects = normalized + additions
+        val updated = document.copy(
+            objects = objects,
+            rootObjects = (document.rootObjects + additions.map(GameObject::id)).distinct(),
+            editorSettings = document.editorSettings.copy(
+                cameraTarget = Vector3(0f, 1f, 0f),
+                cameraOrbit = Vector3(8f, 6f, 10f),
+                gridVisible = true,
+                selectedObjectId = terrainId,
+            ),
+        )
+        applyDocumentEdit(updated)
+        mutableState.update {
+            it.copy(
+                selectedObjectId = terrainId,
+                terrainTool = it.terrainTool.copy(mode = TerrainBrushMode.RAISE, radius = 0.14f, strength = 0.34f),
+                message = "Mundo jogável preparado. Molde o terreno, depois toque em Jogar para testar movimento, visão e pulo.",
+            )
+        }
+    }
+
     fun updateTerrainTool(
         mode: TerrainBrushMode? = null,
         radius: Float? = null,
@@ -2612,6 +2727,13 @@ private fun EditorSceneObject.toGameObject(transform: TransformComponent): GameO
         name = name,
         enabled = isVisible,
         parentId = parentId,
+        tags = when (type) {
+            EditorObjectType.PLAYER,
+            EditorObjectType.PLAYER_FIRST_PERSON,
+            EditorObjectType.PLAYER_TOP_DOWN,
+            -> setOf("player")
+            else -> emptySet()
+        },
         components = listOf(transform) + specificComponents,
     )
 }

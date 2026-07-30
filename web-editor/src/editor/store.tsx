@@ -53,6 +53,8 @@ export function EditorProvider({ children }: PropsWithChildren) {
   const undo = useCallback(() => run(() => editorBridge.undo()), [run]);
   const redo = useCallback(() => run(() => editorBridge.redo()), [run]);
 
+  useEffect(() => editorBridge.subscribe(setSnapshot), []);
+
   useEffect(() => {
     void reload();
   }, [reload]);

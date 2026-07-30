@@ -209,6 +209,13 @@ private fun TerrainBrushMode.toolLabel(): String = when (this) {
     TerrainBrushMode.FLATTEN -> "NIVELAR"
     TerrainBrushMode.NOISE -> "RUÍDO"
     TerrainBrushMode.PAINT -> "PINTAR"
+    TerrainBrushMode.STAMP -> "CARIMBO"
+    TerrainBrushMode.TERRACE -> "TERRAÇOS"
+    TerrainBrushMode.RIDGE -> "CRISTA"
+    TerrainBrushMode.CANYON -> "CÂNION"
+    TerrainBrushMode.ERODE -> "ERODIR"
+    TerrainBrushMode.MASK_PAINT -> "PROTEGER"
+    TerrainBrushMode.MASK_ERASE -> "LIBERAR"
 }
 
 private fun TerrainBrushMode.toolInstruction(): String = when (this) {
@@ -218,4 +225,11 @@ private fun TerrainBrushMode.toolInstruction(): String = when (this) {
     TerrainBrushMode.FLATTEN -> "nivelar na altura escolhida"
     TerrainBrushMode.NOISE -> "adicionar variação natural"
     TerrainBrushMode.PAINT -> "misturar a camada selecionada"
+    TerrainBrushMode.STAMP -> "carimbar uma forma na altura alvo"
+    TerrainBrushMode.TERRACE -> "criar degraus e mesas"
+    TerrainBrushMode.RIDGE -> "formar uma crista montanhosa"
+    TerrainBrushMode.CANYON -> "escavar um cânion com bordas"
+    TerrainBrushMode.ERODE -> "desgastar e redistribuir o solo"
+    TerrainBrushMode.MASK_PAINT -> "proteger a região de processos"
+    TerrainBrushMode.MASK_ERASE -> "remover a proteção da região"
 }

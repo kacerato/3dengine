@@ -17,10 +17,15 @@ def write(path: str, text: str) -> None:
 
 def replace_once(path: str, old: str, new: str) -> None:
     text = read(path)
-    count = text.count(old)
-    if count != 1:
-        raise RuntimeError(f"{path}: expected one exact match, found {count}: {old[:120]!r}")
-    write(path, text.replace(old, new, 1))
+    if old in text:
+        write(path, text.replace(old, new, 1))
+        return
+    chunks = re.split(r"(\s+)", old)
+    pattern = "".join(r"\s+" if chunk.isspace() else re.escape(chunk) for chunk in chunks if chunk)
+    updated, count = re.subn(pattern, lambda _: new, text, count=1, flags=re.MULTILINE | re.DOTALL)
+    if count < 1:
+        raise RuntimeError(f"{path}: expected a tolerant match: {old[:120]!r}")
+    write(path, updated)
 
 
 def replace_regex(path: str, pattern: str, replacement: str) -> None:

@@ -242,14 +242,16 @@ object SceneValidator {
                     component.lodDistancesMeters.any { !it.isFinite() || it <= 0f }
                 ) errors += SceneValidationError.InvalidComponent(objectValue.id, component.componentId)
                 is TerrainComponent -> if (
-                    component.resolution !in 9..129 ||
+                    component.resolution !in 9..257 ||
                     component.heights.size != component.resolution * component.resolution ||
                     component.heights.any { !it.isFinite() || it !in 0f..1f } ||
                     component.width <= 0f ||
                     component.maxHeight <= 0f ||
                     component.materialLayers.isEmpty() ||
                     component.materialWeights.size != component.heights.size * component.materialLayers.size ||
-                    component.materialWeights.any { !it.isFinite() || it !in 0f..1f }
+                    component.materialWeights.any { !it.isFinite() || it !in 0f..1f } ||
+                    (component.authoringMask.isNotEmpty() && component.authoringMask.size != component.heights.size) ||
+                    component.authoringMask.any { !it.isFinite() || it !in 0f..1f }
                 ) errors += SceneValidationError.InvalidComponent(objectValue.id, component.componentId)
             }
         }

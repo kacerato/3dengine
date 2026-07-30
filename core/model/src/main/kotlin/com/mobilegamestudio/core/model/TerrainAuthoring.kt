@@ -75,13 +75,13 @@ fun TerrainComponent.applyTerrainProcess(
     val processed = when (mode) {
         TerrainProcessMode.CONTINENT -> generateContinent(source, resolution, strength, scale, settings.seed)
         TerrainProcessMode.MOUNTAIN_RANGES -> generateMountainRanges(source, resolution, strength, scale, settings.seed)
-        TerrainProcessMode.HYDRAULIC_EROSION -> hydraulicErosion(source, resolution, strength, iterations, ::maskByIndex)
-        TerrainProcessMode.THERMAL_EROSION -> thermalErosion(source, resolution, strength, iterations, ::maskByIndex)
-        TerrainProcessMode.RIVER_NETWORK -> carveRiverNetwork(source, resolution, strength, scale, ::maskByIndex)
-        TerrainProcessMode.TERRACE -> terrace(source, strength, scale, ::maskByIndex)
-        TerrainProcessMode.GEOLOGICAL_STRATA -> geologicalStrata(source, resolution, strength, scale, settings.seed, ::maskByIndex)
+        TerrainProcessMode.HYDRAULIC_EROSION -> hydraulicErosion(source, resolution, strength, iterations, { index -> maskByIndex(index) })
+        TerrainProcessMode.THERMAL_EROSION -> thermalErosion(source, resolution, strength, iterations, { index -> maskByIndex(index) })
+        TerrainProcessMode.RIVER_NETWORK -> carveRiverNetwork(source, resolution, strength, scale, { index -> maskByIndex(index) })
+        TerrainProcessMode.TERRACE -> terrace(source, strength, scale, { index -> maskByIndex(index) })
+        TerrainProcessMode.GEOLOGICAL_STRATA -> geologicalStrata(source, resolution, strength, scale, settings.seed, { index -> maskByIndex(index) })
         TerrainProcessMode.NORMALIZE -> normalizeValues(source.asList()).toFloatArray()
-        TerrainProcessMode.SMOOTH -> smooth(source, resolution, strength, iterations, ::maskByIndex)
+        TerrainProcessMode.SMOOTH -> smooth(source, resolution, strength, iterations, { index -> maskByIndex(index) })
         TerrainProcessMode.INVERT -> FloatArray(source.size) { index ->
             val mask = maskByIndex(index)
             source[index] + ((1f - source[index]) - source[index]) * strength * mask

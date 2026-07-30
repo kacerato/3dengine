@@ -86,6 +86,8 @@ internal fun GodotCompactEditorShell(
     onPreviewAction: (String) -> Unit,
     onImportAsset: () -> Unit,
     onCreateTouchGraph: () -> Unit,
+    onCreateTouchGraphAt: (String, String) -> Unit,
+    onOpenGraphResource: (String, String) -> Unit,
     onAddVisualNode: (String) -> Unit,
     onMoveVisualNode: (String, Float, Float) -> Unit,
     onConnectVisualNodes: (String, String, String, String) -> Unit,
@@ -93,6 +95,10 @@ internal fun GodotCompactEditorShell(
     onSaveGraph: () -> Unit,
     onAddQuickBehavior: (QuickBehavior) -> Unit,
     onCreateScript: () -> Unit,
+    onCreateScriptAt: (String, String) -> Unit,
+    onOpenScriptResource: (String, String) -> Unit,
+    onMoveLogicResource: (String, String, String, String) -> Unit,
+    onDeleteLogicResource: (String, String) -> Unit,
     onScriptChange: (String) -> Unit,
     onSaveScript: () -> Unit,
     onProjectNameChange: (String) -> Unit,
@@ -100,6 +106,8 @@ internal fun GodotCompactEditorShell(
     onTerrainToolChange: (TerrainBrushMode?, Float?, Float?, Float?, String?) -> Unit,
     onTerrainBrush: (Float, Float) -> Unit,
     onTerrainAutoTile: () -> Unit,
+    onTerrainProcess: (com.mobilegamestudio.core.model.TerrainProcessMode, Float, Int, Float) -> Unit,
+    onImportTerrainHeightmap: () -> Unit,
 ) {
     val previewActive = state.isPreviewStarting || state.isPreviewRunning
     var openPanelName by rememberSaveable { mutableStateOf<String?>(StudioPopup.FILES.name) }
@@ -246,23 +254,28 @@ internal fun GodotCompactEditorShell(
                 onAddAsset = onAddAsset,
                 onTransformChange = onTransformChange,
                 onTransformValueChange = onTransformValueChange,
-                onImportAsset = onImportAsset,
-                onCreateTouchGraph = onCreateTouchGraph,
-                onAddVisualNode = onAddVisualNode,
+                onImportAsset = onImportAsset,                 onCreateTouchGraph = onCreateTouchGraph,
+                 onCreateTouchGraphAt = onCreateTouchGraphAt,
+                 onOpenGraphResource = onOpenGraphResource,
+                 onAddVisualNode = onAddVisualNode,
                 onMoveVisualNode = onMoveVisualNode,
                 onConnectVisualNodes = onConnectVisualNodes,
                 onRemoveLastVisualNode = onRemoveLastVisualNode,
                 onSaveGraph = onSaveGraph,
-                onAddQuickBehavior = onAddQuickBehavior,
-                onCreateScript = onCreateScript,
-                onScriptChange = onScriptChange,
+                onAddQuickBehavior = onAddQuickBehavior,                 onCreateScript = onCreateScript,
+                 onCreateScriptAt = onCreateScriptAt,
+                 onOpenScriptResource = onOpenScriptResource,
+                 onMoveLogicResource = onMoveLogicResource,
+                 onDeleteLogicResource = onDeleteLogicResource,
+                 onScriptChange = onScriptChange,
                 onSaveScript = onSaveScript,
                 onProjectNameChange = onProjectNameChange,
                 onSaveProject = onSaveProject,
                 onTerrainToolChange = onTerrainToolChange,
-                onTerrainBrush = onTerrainBrush,
-                onTerrainAutoTile = onTerrainAutoTile,
-            )
+                onTerrainBrush = onTerrainBrush,                 onTerrainAutoTile = onTerrainAutoTile,
+                 onTerrainProcess = onTerrainProcess,
+                 onImportTerrainHeightmap = onImportTerrainHeightmap,
+)
         }
     }
 }
@@ -533,6 +546,8 @@ private fun StudioPopupHost(
     onTransformValueChange: (TransformProperty, TransformAxis, Float) -> Unit,
     onImportAsset: () -> Unit,
     onCreateTouchGraph: () -> Unit,
+    onCreateTouchGraphAt: (String, String) -> Unit,
+    onOpenGraphResource: (String, String) -> Unit,
     onAddVisualNode: (String) -> Unit,
     onMoveVisualNode: (String, Float, Float) -> Unit,
     onConnectVisualNodes: (String, String, String, String) -> Unit,
@@ -540,6 +555,10 @@ private fun StudioPopupHost(
     onSaveGraph: () -> Unit,
     onAddQuickBehavior: (QuickBehavior) -> Unit,
     onCreateScript: () -> Unit,
+    onCreateScriptAt: (String, String) -> Unit,
+    onOpenScriptResource: (String, String) -> Unit,
+    onMoveLogicResource: (String, String, String, String) -> Unit,
+    onDeleteLogicResource: (String, String) -> Unit,
     onScriptChange: (String) -> Unit,
     onSaveScript: () -> Unit,
     onProjectNameChange: (String) -> Unit,
@@ -547,9 +566,11 @@ private fun StudioPopupHost(
     onTerrainToolChange: (TerrainBrushMode?, Float?, Float?, Float?, String?) -> Unit,
     onTerrainBrush: (Float, Float) -> Unit,
     onTerrainAutoTile: () -> Unit,
+    onTerrainProcess: (com.mobilegamestudio.core.model.TerrainProcessMode, Float, Int, Float) -> Unit,
+    onImportTerrainHeightmap: () -> Unit,
 ) {
-    val side = panel == StudioPopup.FILES || panel == StudioPopup.SCENE || panel == StudioPopup.INSPECTOR
-    val left = panel == StudioPopup.FILES || panel == StudioPopup.SCENE
+    val side = panel == StudioPopup.FILES || panel == StudioPopup.SCENE || panel == StudioPopup.INSPECTOR || panel == StudioPopup.WORLD
+    val left = panel == StudioPopup.FILES || panel == StudioPopup.SCENE || panel == StudioPopup.WORLD
     Popup(
         alignment = when {
             !side -> Alignment.Center
@@ -574,7 +595,12 @@ private fun StudioPopupHost(
                     .clickable(onClick = onClose),
             )
             val widthFraction = if (side) {
-                if (maxWidth < 720.dp) 0.58f else 0.34f
+                when {
+                    panel == StudioPopup.WORLD && maxWidth < 720.dp -> 0.72f
+                    panel == StudioPopup.WORLD -> 0.46f
+                    maxWidth < 720.dp -> 0.58f
+                    else -> 0.34f
+                }
             } else {
                 if (maxWidth < 720.dp) 0.94f else 0.84f
             }
@@ -590,12 +616,27 @@ private fun StudioPopupHost(
                 PopupTitleBar(panel, onClose)
                 Box(Modifier.weight(1f).fillMaxWidth()) {
                     when (panel) {
-                        StudioPopup.FILES -> ResourceExplorerPanel(
+                        StudioPopup.FILES -> ManagedResourceExplorerPanel(
                             state = state,
                             onSelectObject = onSelectObject,
-                            onOpenPanel = onOpenPanel,
-                            onCreateScript = onCreateScript,
-                            onCreateGraph = onCreateTouchGraph,
+                            onOpenScript = { owner, resourcePath ->
+                                onOpenScriptResource(owner, resourcePath)
+                                onOpenPanel(StudioPopup.CODE)
+                            },
+                            onOpenGraph = { owner, resourcePath ->
+                                onOpenGraphResource(owner, resourcePath)
+                                onOpenPanel(StudioPopup.NOCODE)
+                            },
+                            onCreateScriptAt = { folder, name ->
+                                onCreateScriptAt(folder, name)
+                                onOpenPanel(StudioPopup.CODE)
+                            },
+                            onCreateGraphAt = { folder, name ->
+                                onCreateTouchGraphAt(folder, name)
+                                onOpenPanel(StudioPopup.NOCODE)
+                            },
+                            onMoveLogicResource = onMoveLogicResource,
+                            onDeleteLogicResource = onDeleteLogicResource,
                             onImportAsset = onImportAsset,
                             onAddAsset = onAddAsset,
                         )
@@ -648,12 +689,15 @@ private fun StudioPopupHost(
                             onSourceChange = onScriptChange,
                             onSaveScript = onSaveScript,
                         )
-                        StudioPopup.WORLD -> TerrainEditorPanel(
+                        StudioPopup.WORLD -> AdvancedTerrainEditorPanel(
                             terrain = state.selectedTerrain,
                             tool = state.terrainTool,
                             onToolChange = onTerrainToolChange,
                             onBrush = onTerrainBrush,
                             onAutoTile = onTerrainAutoTile,
+                            onProcess = onTerrainProcess,
+                            onImportHeightmap = onImportTerrainHeightmap,
+                            onCreateTerrain = { onAddSceneObject(EditorObjectType.TERRAIN) },
                             modifier = Modifier.fillMaxSize(),
                         )
                         StudioPopup.BEHAVIORS -> BehaviorManagerPanel(

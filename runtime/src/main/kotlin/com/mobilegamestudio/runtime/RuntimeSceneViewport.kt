@@ -135,10 +135,14 @@ fun RuntimeSceneViewport(
     val cameraTargetObject = if (mode == EditorMode.PLAY) playCharacter else {
         document.objects.firstOrNull { it.id == selectedObjectId }
     }.let { target -> if (mode == EditorMode.PLAY) controlledVehicle ?: target else target }
-    val selectedTarget = cameraTargetObject
-        ?.component<TransformComponent>()
-        ?.position
-        ?: document.editorSettings.cameraTarget
+    val selectedTarget = if (mode == EditorMode.EDITOR) {
+        document.editorSettings.cameraTarget
+    } else {
+        cameraTargetObject
+            ?.component<TransformComponent>()
+            ?.position
+            ?: document.editorSettings.cameraTarget
+    }
     val playController = playCharacter?.component<CharacterControllerComponent>()
     val sceneLightObject = document.objects.firstOrNull {
         it.enabled && it.component<com.mobilegamestudio.core.model.DirectionalLightComponent>()?.enabled == true
@@ -177,12 +181,12 @@ fun RuntimeSceneViewport(
     }
     val firstPersonPlay = controlledVehicle == null && mode == EditorMode.PLAY &&
         playController?.cameraMode == CharacterCameraMode.FIRST_PERSON
-    val editorCameraManipulator = if (transformGesturesEnabled || firstPersonPlay || controlledVehicle != null) {
+    val editorCameraManipulator = if (firstPersonPlay || controlledVehicle != null) {
         null
     } else {
-        key(selectedObjectId, selectedTarget, cameraOffset) {
+        key(document.sceneId, mode) {
             if (mode == EditorMode.EDITOR) {
-                remember(selectedTarget, cameraOffset) {
+                remember(document.sceneId) {
                     StudioOrbitCameraManipulator(
                         eye = Position(
                             selectedTarget.x + cameraOffset.x,
@@ -204,13 +208,12 @@ fun RuntimeSceneViewport(
             }
         }
     }
-    SideEffect {
-        // SceneView initializes CameraNode before its manipulator receives the
-        // first touch. Seed the node explicitly so the first rendered frame
-        // already matches the editor orbit instead of the library default.
+    LaunchedEffect(editorCameraManipulator, mode) {
         if (mode == EditorMode.EDITOR && editorCameraManipulator != null) {
             sceneCameraNode.transform = editorCameraManipulator.getTransform()
         }
+    }
+    SideEffect {
         if (firstPersonPlay) {
             val transform = playCharacter?.component<TransformComponent>()
             val yaw = Math.toRadians((transform?.rotationEulerDegrees?.y ?: 0f).toDouble())
@@ -351,9 +354,6 @@ fun RuntimeSceneViewport(
                 cameraManipulator = editorCameraManipulator,
                 onGestureListener = rememberOnGestureListener(
                     onSingleTapConfirmed = { _, node -> onObjectSelected(node?.name) },
-                    onScroll = { _, _, _, distance ->
-                        if (transformGesturesEnabled) onTransformDrag(distance.x, distance.y)
-                    },
                 ),
             )
         } else {

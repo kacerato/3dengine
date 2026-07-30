@@ -46,6 +46,17 @@ interface ProjectContentRepository {
         relativePath: String,
         graph: VisualGraphDocument,
     ): ContentResult<Unit>
+
+    suspend fun moveLogicResource(
+        projectId: ProjectId,
+        fromRelativePath: String,
+        toRelativePath: String,
+    ): ContentResult<Unit>
+
+    suspend fun deleteLogicResource(
+        projectId: ProjectId,
+        relativePath: String,
+    ): ContentResult<Unit>
 }
 
 sealed interface ContentResult<out T> {

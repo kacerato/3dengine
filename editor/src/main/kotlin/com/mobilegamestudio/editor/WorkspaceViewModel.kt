@@ -1,5 +1,6 @@
 package com.mobilegamestudio.editor
 
+import android.graphics.BitmapFactory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mobilegamestudio.core.contracts.ContentError
@@ -47,6 +48,12 @@ import com.mobilegamestudio.core.model.TerrainBrush
 import com.mobilegamestudio.core.model.TerrainBrushMode
 import com.mobilegamestudio.core.model.TerrainComponent
 import com.mobilegamestudio.core.model.TerrainPresets
+import com.mobilegamestudio.core.model.TerrainHeightmapData
+import com.mobilegamestudio.core.model.TerrainProcessMode
+import com.mobilegamestudio.core.model.TerrainProcessSettings
+import com.mobilegamestudio.core.model.SafeProjectPath
+import com.mobilegamestudio.core.model.applyTerrainProcess
+import com.mobilegamestudio.core.model.withImportedHeightmap
 import com.mobilegamestudio.core.model.VegetationSpawnerComponent
 import com.mobilegamestudio.core.model.applyAutoTile
 import com.mobilegamestudio.core.model.applyBrush
@@ -591,6 +598,69 @@ class WorkspaceViewModel(
         mutableState.update { it.copy(message = "Auto-tile recalculado por altura e inclinação.") }
     }
 
+
+    fun applyTerrainProcess(mode: TerrainProcessMode, strength: Float, iterations: Int, scale: Float) {
+        if (!canEdit()) return
+        val selectedId = mutableState.value.selectedObjectId ?: return
+        val document = mutableState.value.sceneDocument ?: return
+        val updated = document.copy(
+            objects = document.objects.map { objectValue ->
+                if (objectValue.id != selectedId) objectValue else objectValue.copy(
+                    components = objectValue.components.map { component ->
+                        if (component is TerrainComponent) {
+                            component.applyTerrainProcess(
+                                mode,
+                                TerrainProcessSettings(
+                                    strength = strength,
+                                    iterations = iterations,
+                                    scale = scale,
+                                    seed = component.seed,
+                                ),
+                            )
+                        } else component
+                    },
+                )
+            },
+        )
+        applyDocumentEdit(updated)
+        mutableState.update { it.copy(message = "${mode.name.lowercase().replace('_', ' ')} aplicado ao terreno.") }
+    }
+
+    fun importTerrainHeightmap(sourceName: String, openStream: () -> InputStream?) {
+        if (!canEdit()) return
+        val selectedId = mutableState.value.selectedObjectId ?: run {
+            mutableState.update { it.copy(message = "Selecione um terreno antes de importar o heightmap.") }
+            return
+        }
+        if (mutableState.value.selectedTerrain == null) {
+            mutableState.update { it.copy(message = "O objeto selecionado não possui um TerrainComponent.") }
+            return
+        }
+        viewModelScope.launch {
+            val decoded = withContext(Dispatchers.IO) {
+                openStream()?.use { decodeTerrainHeightmap(sourceName, it) }
+            }
+            if (decoded == null) {
+                mutableState.update { it.copy(message = "Heightmap inválido. Use PNG, JPG, RAW16 ou R16 quadrado.") }
+                return@launch
+            }
+            val document = mutableState.value.sceneDocument ?: return@launch
+            val updated = document.copy(
+                objects = document.objects.map { objectValue ->
+                    if (objectValue.id != selectedId) objectValue else objectValue.copy(
+                        components = objectValue.components.map { component ->
+                            if (component is TerrainComponent) component.withImportedHeightmap(decoded) else component
+                        },
+                    )
+                },
+            )
+            applyDocumentEdit(updated)
+            mutableState.update {
+                it.copy(message = "Heightmap $sourceName importado em ${decoded.resolution} × ${decoded.resolution}.")
+            }
+        }
+    }
+
     fun renameSelected(name: String) {
         if (!canEdit()) return
         val selectedId = mutableState.value.selectedObjectId ?: return
@@ -875,7 +945,126 @@ class WorkspaceViewModel(
         if (result is SceneEditResult.Success) publishHistory(history)
     }
 
-    fun createScriptForSelected() {
+
+    fun openScriptResource(ownerObjectId: String, relativePath: String) {
+        if (!canEdit() || !relativePath.startsWith("scripts/lua/")) return
+        mutableState.update {
+            it.copy(
+                selectedObjectId = ownerObjectId,
+                scriptSource = null,
+                scriptPath = relativePath,
+                isLoadingScript = true,
+                isScriptDirty = false,
+                scriptDiagnostics = emptyList(),
+            )
+        }
+        viewModelScope.launch {
+            when (val result = contentRepository.readLuaScript(projectId, relativePath)) {
+                is ContentResult.Success -> mutableState.update {
+                    if (it.selectedObjectId == ownerObjectId && it.scriptPath == relativePath) {
+                        it.copy(scriptSource = result.value, isLoadingScript = false, hasLuaScript = true)
+                    } else it
+                }
+                is ContentResult.Failure -> mutableState.update {
+                    it.copy(isLoadingScript = false, scriptDiagnostics = listOf(result.error.toContentMessage()))
+                }
+            }
+        }
+    }
+
+    fun openGraphResource(ownerObjectId: String, relativePath: String) {
+        if (!canEdit() || !relativePath.startsWith("visual-graphs/")) return
+        mutableState.update {
+            it.copy(
+                selectedObjectId = ownerObjectId,
+                visualGraph = null,
+                visualGraphPath = relativePath,
+                isLoadingGraph = true,
+            )
+        }
+        viewModelScope.launch {
+            when (val result = contentRepository.readVisualGraph(projectId, relativePath)) {
+                is ContentResult.Success -> mutableState.update {
+                    if (it.selectedObjectId == ownerObjectId && it.visualGraphPath == relativePath) {
+                        it.copy(visualGraph = result.value, isLoadingGraph = false, hasVisualGraph = true)
+                    } else it
+                }
+                is ContentResult.Failure -> mutableState.update {
+                    it.copy(isLoadingGraph = false, message = result.error.toContentMessage())
+                }
+            }
+        }
+    }
+
+    fun moveLogicResource(ownerObjectId: String, currentPath: String, folder: String, fileName: String) {
+        if (!canEdit()) return
+        val lua = currentPath.startsWith("scripts/lua/")
+        val root = if (lua) "scripts/lua" else "visual-graphs"
+        val extension = if (lua) "lua" else "graph.json"
+        val targetPath = buildLogicPath(folder, fileName, root, extension) ?: run {
+            mutableState.update { it.copy(message = "Pasta ou nome de arquivo inválido.") }
+            return
+        }
+        if (targetPath == currentPath) return
+        viewModelScope.launch {
+            when (val result = contentRepository.moveLogicResource(projectId, currentPath, targetPath)) {
+                is ContentResult.Success -> {
+                    val document = mutableState.value.sceneDocument ?: return@launch
+                    val updated = document.copy(
+                        objects = document.objects.map { objectValue ->
+                            if (objectValue.id != ownerObjectId) objectValue else objectValue.copy(
+                                components = objectValue.components.map { component ->
+                                    when {
+                                        component is LuaScriptComponent && component.relativePath == currentPath -> component.copy(relativePath = targetPath)
+                                        component is VisualGraphComponent && component.relativePath == currentPath -> component.copy(relativePath = targetPath)
+                                        else -> component
+                                    }
+                                },
+                            )
+                        },
+                    )
+                    applyDocumentEdit(updated)
+                    if (lua) openScriptResource(ownerObjectId, targetPath) else openGraphResource(ownerObjectId, targetPath)
+                    mutableState.update { it.copy(message = "Recurso movido para res://$targetPath") }
+                }
+                is ContentResult.Failure -> mutableState.update { it.copy(message = result.error.toContentMessage()) }
+            }
+        }
+    }
+
+    fun deleteLogicResource(ownerObjectId: String, relativePath: String) {
+        if (!canEdit()) return
+        viewModelScope.launch {
+            when (val result = contentRepository.deleteLogicResource(projectId, relativePath)) {
+                is ContentResult.Success -> {
+                    val document = mutableState.value.sceneDocument ?: return@launch
+                    val updated = document.copy(
+                        objects = document.objects.map { objectValue ->
+                            if (objectValue.id != ownerObjectId) objectValue else objectValue.copy(
+                                components = objectValue.components.filterNot { component ->
+                                    (component is LuaScriptComponent && component.relativePath == relativePath) ||
+                                        (component is VisualGraphComponent && component.relativePath == relativePath)
+                                },
+                            )
+                        },
+                    )
+                    applyDocumentEdit(updated)
+                    mutableState.update {
+                        it.copy(
+                            scriptSource = it.scriptSource.takeUnless { _ -> it.scriptPath == relativePath },
+                            scriptPath = it.scriptPath.takeUnless { path -> path == relativePath },
+                            visualGraph = it.visualGraph.takeUnless { _ -> it.visualGraphPath == relativePath },
+                            visualGraphPath = it.visualGraphPath.takeUnless { path -> path == relativePath },
+                            message = "Recurso excluído: res://$relativePath",
+                        )
+                    }
+                }
+                is ContentResult.Failure -> mutableState.update { it.copy(message = result.error.toContentMessage()) }
+            }
+        }
+    }
+
+    fun createScriptForSelected(folder: String = "scripts/lua", fileName: String? = null, forceNew: Boolean = false) {
         if (!canEdit() || mutableState.value.isSavingScript) return
         val selected = mutableState.value.selectedObject ?: run {
             mutableState.update { it.copy(message = "Selecione um objeto antes de criar um script.") }
@@ -887,11 +1076,14 @@ class WorkspaceViewModel(
             ?.components
             ?.filterIsInstance<LuaScriptComponent>()
             ?.firstOrNull()
-        if (existing != null) {
-            loadScriptForObject(selected.id)
+        if (existing != null && !forceNew) {
+            openScriptResource(selected.id, existing.relativePath)
             return
         }
-        val relativePath = "scripts/lua/${UUID.randomUUID()}.lua"
+        val relativePath = buildLogicPath(folder, fileName, "scripts/lua", "lua") ?: run {
+            mutableState.update { it.copy(message = "Pasta ou nome de script inválido.") }
+            return
+        }
         val safeName = selected.name.replace("\\", "\\\\").replace("\"", "\\\"")
         val source = """
             -- ${selected.name}
@@ -987,7 +1179,7 @@ class WorkspaceViewModel(
         }
     }
 
-    fun createTouchGraph() {
+    fun createTouchGraph(folder: String = "visual-graphs", fileName: String? = null, forceNew: Boolean = false) {
         if (!canEdit()) return
         if (mutableState.value.isLoadingGraph || mutableState.value.isSavingGraph) {
             mutableState.update { it.copy(message = "Aguarde a sincronização do comportamento atual.") }
@@ -1005,8 +1197,14 @@ class WorkspaceViewModel(
             ?.components
             ?.filterIsInstance<VisualGraphComponent>()
             ?.firstOrNull()
-        val graphPath = existingComponent?.relativePath
-            ?: "visual-graphs/${UUID.randomUUID()}.graph.json"
+        if (existingComponent != null && !forceNew) {
+            openGraphResource(selected.id, existingComponent.relativePath)
+            return
+        }
+        val graphPath = buildLogicPath(folder, fileName, "visual-graphs", "graph.json") ?: run {
+            mutableState.update { it.copy(message = "Pasta ou nome de grafo inválido.") }
+            return
+        }
         val graph = VisualGraphDocument(
             graphId = UUID.randomUUID().toString(),
             name = "Ao tocar em ${selected.name}",
@@ -2134,6 +2332,58 @@ private fun EditorTransform.toComponent(existing: TransformComponent? = null) = 
     rotationEulerDegrees = Vector3(rotation.x, rotation.y, rotation.z),
     scale = Vector3(scale.x, scale.y, scale.z),
 )
+
+private fun buildLogicPath(folder: String, fileName: String?, root: String, extension: String): String? {
+    val normalizedFolder = folder.trim().replace('\', '/').trimEnd('/').ifBlank { root }
+    if (normalizedFolder != root && !normalizedFolder.startsWith("$root/")) return null
+    val requested = fileName?.trim().orEmpty().ifBlank { UUID.randomUUID().toString() }
+    val withoutExtension = requested
+        .removeSuffix(".$extension")
+        .removeSuffix(".graph.json")
+        .removeSuffix(".lua")
+    val safeName = withoutExtension
+        .replace(Regex("[^A-Za-z0-9._-]+"), "-")
+        .trim('-', '.', '_')
+        .take(72)
+        .ifBlank { return null }
+    val path = "$normalizedFolder/$safeName.$extension"
+    return path.takeIf(SafeProjectPath::isValidRelativePath)
+}
+
+private fun decodeTerrainHeightmap(sourceName: String, input: InputStream): TerrainHeightmapData? {
+    val bytes = input.readBytes()
+    val extension = sourceName.substringAfterLast('.', "").lowercase()
+    if (extension == "raw" || extension == "raw16" || extension == "r16") {
+        if (bytes.size < 9 * 9 * 2 || bytes.size % 2 != 0) return null
+        val sampleCount = bytes.size / 2
+        val side = kotlin.math.sqrt(sampleCount.toDouble()).toInt()
+        if (side * side != sampleCount || side !in 9..257) return null
+        val values = List(sampleCount) { index ->
+            val low = bytes[index * 2].toInt() and 0xFF
+            val high = bytes[index * 2 + 1].toInt() and 0xFF
+            ((high shl 8) or low) / 65535f
+        }
+        return TerrainHeightmapData(side, values)
+    }
+    val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size) ?: return null
+    return try {
+        val side = minOf(bitmap.width, bitmap.height, 257).coerceAtLeast(9)
+        val values = List(side * side) { index ->
+            val x = index % side
+            val z = index / side
+            val sx = if (side == 1) 0 else x * (bitmap.width - 1) / (side - 1)
+            val sz = if (side == 1) 0 else z * (bitmap.height - 1) / (side - 1)
+            val pixel = bitmap.getPixel(sx, sz)
+            val red = (pixel shr 16) and 0xFF
+            val green = (pixel shr 8) and 0xFF
+            val blue = pixel and 0xFF
+            (red * 0.2126f + green * 0.7152f + blue * 0.0722f) / 255f
+        }
+        TerrainHeightmapData(side, values)
+    } finally {
+        bitmap.recycle()
+    }
+}
 
 private fun ContentError.toContentMessage(): String = when (this) {
     ContentError.ProjectNotFound -> "O projeto não foi encontrado."

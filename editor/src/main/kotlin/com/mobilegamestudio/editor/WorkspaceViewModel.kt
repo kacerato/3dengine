@@ -675,12 +675,26 @@ class WorkspaceViewModel(
             ),
         )
         applyDocumentEdit(updated)
+        val playerId = objects.firstOrNull {
+            "player" in it.tags && it.component<CharacterControllerComponent>()?.enabled == true
+        }?.id
         mutableState.update {
             it.copy(
-                selectedObjectId = terrainId,
+                selectedObjectId = playerId ?: terrainId,
                 terrainTool = it.terrainTool.copy(mode = TerrainBrushMode.RAISE, radius = 0.14f, strength = 0.34f),
-                message = "Mundo jogável preparado. Molde o terreno, depois toque em Jogar para testar movimento, visão e pulo.",
+                message = "Mundo jogável criado. Player, câmera, input, Lua e NoCode estão ligados para validação.",
             )
+        }
+        if (playerId != null) {
+            createScriptForSelected("scripts/lua/starter", "player_controller", forceNew = true)
+            createTouchGraph("visual-graphs/starter", "player_interaction", forceNew = true)
+            addQuickBehavior(QuickBehavior.ROTATE_ON_TOUCH)
+            mutableState.update {
+                it.copy(
+                    selectedObjectId = terrainId,
+                    message = "Mundo jogável pronto: molde o terreno e use Jogar para testar movimento, visão, pulo, Lua e NoCode.",
+                )
+            }
         }
     }
 

@@ -133,6 +133,8 @@ fun RuntimeSceneViewport(
     var projection by remember(engine) { mutableStateOf<RuntimeProjection?>(null) }
     val projectionGeneration = remember(engine) { AtomicLong(0) }
     val playCharacter = document.objects.firstOrNull {
+        it.enabled && "player" in it.tags && it.component<CharacterControllerComponent>()?.enabled == true
+    } ?: document.objects.firstOrNull {
         it.enabled && it.component<CharacterControllerComponent>()?.enabled == true
     }
     val controlledVehicle = document.objects.firstOrNull {
@@ -193,8 +195,8 @@ fun RuntimeSceneViewport(
             )
         }
     }
-    val firstPersonPlay = controlledVehicle == null && mode == EditorMode.PLAY &&
-        playController?.cameraMode == CharacterCameraMode.FIRST_PERSON
+    val characterCameraPlay = controlledVehicle == null && mode == EditorMode.PLAY &&
+        playCharacter != null && playController != null
     val persistentEditorManipulator = remember(document.sceneId) {
         StudioOrbitCameraManipulator(
             eye = Position(
@@ -210,7 +212,7 @@ fun RuntimeSceneViewport(
         )
     }
     val editorCameraManipulator = when {
-        firstPersonPlay || controlledVehicle != null || (authoredPlayCamera != null && mode == EditorMode.PLAY) || terrainTopDownCamera -> null
+        characterCameraPlay || controlledVehicle != null || (authoredPlayCamera != null && mode == EditorMode.PLAY) || terrainTopDownCamera -> null
         mode == EditorMode.EDITOR -> persistentEditorManipulator
         else -> rememberCameraManipulator(
             orbitHomePosition = Position(
@@ -260,24 +262,16 @@ fun RuntimeSceneViewport(
                 )
             }
         }
-        if (firstPersonPlay) {
+        if (characterCameraPlay) {
             val transform = playCharacter?.component<TransformComponent>()
-            val yaw = Math.toRadians((transform?.rotationEulerDegrees?.y ?: 0f).toDouble())
-            val pitch = Math.toRadians((transform?.rotationEulerDegrees?.x ?: 0f).toDouble())
-            val eye = Float3(
-                selectedTarget.x,
-                selectedTarget.y + playController.cameraHeight,
-                selectedTarget.z,
-            )
-            sceneCameraNode.transform = lookAt(
-                eye = eye,
-                target = Float3(
-                    eye.x + (sin(yaw) * cos(pitch)).toFloat(),
-                    eye.y - sin(pitch).toFloat(),
-                    eye.z + (cos(yaw) * cos(pitch)).toFloat(),
-                ),
-                up = Float3(0f, 1f, 0f),
-            )
+            if (transform != null && playController != null) {
+                val pose = computeCharacterCameraPose(transform, playController)
+                sceneCameraNode.transform = lookAt(
+                    eye = Float3(pose.eye.x, pose.eye.y, pose.eye.z),
+                    target = Float3(pose.target.x, pose.target.y, pose.target.z),
+                    up = Float3(0f, 1f, 0f),
+                )
+            }
         }
         controlledVehicle?.component<TransformComponent>()?.let { transform ->
             val yaw = Math.toRadians(transform.rotationEulerDegrees.y.toDouble())
@@ -495,6 +489,72 @@ private class StudioOrbitCameraManipulator(
 
     override fun scrollEnd() = Unit
     override fun update(deltaTime: Float) = Unit
+}
+
+
+internal data class RuntimeCharacterCameraPose(
+    val eye: com.mobilegamestudio.core.model.Vector3,
+    val target: com.mobilegamestudio.core.model.Vector3,
+)
+
+internal fun computeCharacterCameraPose(
+    transform: TransformComponent,
+    controller: CharacterControllerComponent,
+): RuntimeCharacterCameraPose {
+    val position = transform.position
+    val yaw = Math.toRadians(transform.rotationEulerDegrees.y.toDouble())
+    val pitchDegrees = transform.rotationEulerDegrees.x.coerceIn(-78f, 78f)
+    val pitch = Math.toRadians(pitchDegrees.toDouble())
+    val forwardX = (sin(yaw) * cos(pitch)).toFloat()
+    val forwardY = (-sin(pitch)).toFloat()
+    val forwardZ = (cos(yaw) * cos(pitch)).toFloat()
+    return when (controller.cameraMode) {
+        CharacterCameraMode.FIRST_PERSON -> {
+            val eye = com.mobilegamestudio.core.model.Vector3(
+                position.x,
+                position.y + controller.cameraHeight,
+                position.z,
+            )
+            RuntimeCharacterCameraPose(
+                eye = eye,
+                target = com.mobilegamestudio.core.model.Vector3(
+                    eye.x + forwardX,
+                    eye.y + forwardY,
+                    eye.z + forwardZ,
+                ),
+            )
+        }
+        CharacterCameraMode.THIRD_PERSON -> {
+            val focus = com.mobilegamestudio.core.model.Vector3(
+                position.x,
+                position.y + controller.cameraHeight,
+                position.z,
+            )
+            val distance = controller.cameraDistance.coerceIn(1.2f, 18f)
+            val eye = com.mobilegamestudio.core.model.Vector3(
+                focus.x - forwardX * distance,
+                focus.y + distance * 0.22f - forwardY * distance * 0.45f,
+                focus.z - forwardZ * distance,
+            )
+            RuntimeCharacterCameraPose(eye = eye, target = focus)
+        }
+        CharacterCameraMode.TOP_DOWN -> {
+            val focus = com.mobilegamestudio.core.model.Vector3(
+                position.x,
+                position.y + controller.cameraHeight * 0.35f,
+                position.z,
+            )
+            val distance = controller.cameraDistance.coerceAtLeast(4f)
+            RuntimeCharacterCameraPose(
+                eye = com.mobilegamestudio.core.model.Vector3(
+                    focus.x - forwardX * distance * 0.22f,
+                    focus.y + distance,
+                    focus.z - forwardZ * distance * 0.22f,
+                ),
+                target = focus,
+            )
+        }
+    }
 }
 
 

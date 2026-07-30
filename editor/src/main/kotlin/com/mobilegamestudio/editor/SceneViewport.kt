@@ -71,7 +71,7 @@ internal fun SceneViewport(
             mode = mode,
             resolveAsset = resolveAsset,
             onObjectSelected = onObjectSelected,
-            transformGesturesEnabled = !state.isPreviewRunning && state.activeTool != EditorTool.SELECT && !terrainAuthoringEnabled,
+            transformGesturesEnabled = false,
             onTransformDrag = onTransformDrag,
             terrainTopDownCamera = terrainTopDownCamera,
             onDiagnostic = onDiagnostic,
@@ -307,15 +307,22 @@ private fun ViewportTransformDock(
                 .padding(horizontal = 4.dp)
                 .size(width = 86.dp, height = 36.dp)
                 .background(Color(0xFF20252C), RoundedCornerShape(12.dp))
-                .pointerInput(tool, objectName) {
+                .pointerInput(tool, objectName, axis) {
                     detectDragGestures { change, amount ->
                         change.consume()
-                        onFreeDrag(amount.x, amount.y)
+                        val dominant = if (kotlin.math.abs(amount.x) >= kotlin.math.abs(amount.y)) amount.x else -amount.y
+                        val delta = when (tool) {
+                            EditorTool.MOVE -> dominant / 120f
+                            EditorTool.ROTATE -> dominant / 3.5f
+                            EditorTool.SCALE -> dominant / 260f
+                            EditorTool.SELECT -> 0f
+                        }
+                        if (delta != 0f) onAxisDelta(property, axis, delta)
                     }
                 },
             contentAlignment = Alignment.Center,
         ) {
-            Text("ARRASTE", color = Color(0xFFADB3BD), fontSize = 7.sp)
+            Text("ARRASTE NO EIXO", color = Color(0xFFADB3BD), fontSize = 6.5.sp)
         }
         Button(
             onClick = { onAxisDelta(property, axis, step) },

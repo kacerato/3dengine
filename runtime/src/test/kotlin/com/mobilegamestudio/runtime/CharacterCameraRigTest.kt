@@ -4,9 +4,9 @@ import com.mobilegamestudio.core.model.CharacterCameraMode
 import com.mobilegamestudio.core.model.CharacterControllerComponent
 import com.mobilegamestudio.core.model.TransformComponent
 import com.mobilegamestudio.core.model.Vector3
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
+import org.junit.Test
 
 class CharacterCameraRigTest {
     @Test

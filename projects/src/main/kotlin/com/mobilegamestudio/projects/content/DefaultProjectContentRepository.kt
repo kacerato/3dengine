@@ -397,6 +397,66 @@ class DefaultProjectContentRepository(
         }
     }
 
+    override suspend fun moveLogicResource(
+        projectId: ProjectId,
+        fromRelativePath: String,
+        toRelativePath: String,
+    ): ContentResult<Unit> = withContext(ioDispatcher) {
+        mutex.withLock {
+            val directory = trustedProjectDirectory(projectId)
+                ?: return@withLock ContentResult.Failure(ContentError.ProjectNotFound)
+            val fromPrefix = logicPrefix(fromRelativePath)
+                ?: return@withLock ContentResult.Failure(ContentError.InvalidPath)
+            val toPrefix = logicPrefix(toRelativePath)
+                ?: return@withLock ContentResult.Failure(ContentError.InvalidPath)
+            if (fromPrefix != toPrefix) return@withLock ContentResult.Failure(ContentError.InvalidPath)
+            val source = safeContentFile(directory, fromRelativePath, fromPrefix)
+                ?: return@withLock ContentResult.Failure(ContentError.InvalidPath)
+            val destination = safeContentFile(directory, toRelativePath, toPrefix)
+                ?: return@withLock ContentResult.Failure(ContentError.InvalidPath)
+            if (!source.isFile || destination.exists()) {
+                return@withLock ContentResult.Failure(ContentError.StorageUnavailable)
+            }
+            val parent = destination.parentFile
+                ?: return@withLock ContentResult.Failure(ContentError.InvalidPath)
+            try {
+                if ((!parent.exists() && !parent.mkdirs()) || Files.isSymbolicLink(parent.toPath())) {
+                    return@withLock ContentResult.Failure(ContentError.StorageUnavailable)
+                }
+                Files.move(source.toPath(), destination.toPath(), StandardCopyOption.ATOMIC_MOVE)
+                ContentResult.Success(Unit)
+            } catch (_: IOException) {
+                ContentResult.Failure(ContentError.StorageUnavailable)
+            }
+        }
+    }
+
+    override suspend fun deleteLogicResource(
+        projectId: ProjectId,
+        relativePath: String,
+    ): ContentResult<Unit> = withContext(ioDispatcher) {
+        mutex.withLock {
+            val directory = trustedProjectDirectory(projectId)
+                ?: return@withLock ContentResult.Failure(ContentError.ProjectNotFound)
+            val prefix = logicPrefix(relativePath)
+                ?: return@withLock ContentResult.Failure(ContentError.InvalidPath)
+            val file = safeContentFile(directory, relativePath, prefix)
+                ?: return@withLock ContentResult.Failure(ContentError.InvalidPath)
+            try {
+                Files.deleteIfExists(file.toPath())
+                ContentResult.Success(Unit)
+            } catch (_: IOException) {
+                ContentResult.Failure(ContentError.StorageUnavailable)
+            }
+        }
+    }
+
+    private fun logicPrefix(relativePath: String): String? = when {
+        relativePath.startsWith("scripts/lua/") && relativePath.endsWith(".lua") -> "scripts/lua/"
+        relativePath.startsWith("visual-graphs/") && relativePath.endsWith(".graph.json") -> "visual-graphs/"
+        else -> null
+    }
+
     private fun readSceneFile(project: File, file: File): ContentResult<SceneDocument> =
         when (val bytes = readBounded(project, file, SceneContentCodec.MAX_SCENE_BYTES)) {
             is ContentResult.Failure -> ContentResult.Failure(ContentError.CorruptedScene)

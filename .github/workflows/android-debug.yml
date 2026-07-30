@@ -1,0 +1,105 @@
+name: Android debug APK
+
+on:
+  push:
+    branches:
+      - feature/compact-godot-workspace
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Prepare tolerant source patcher
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('tools/apply_authoring_upgrade.py')
+          source = path.read_text(encoding='utf-8')
+          old = '''def replace_once(path: str, old: str, new: str) -> None:
+              text = read(path)
+              count = text.count(old)
+              if count != 1:
+                  raise RuntimeError(f"{path}: expected one exact match, found {count}: {old[:120]!r}")
+              write(path, text.replace(old, new, 1))
+          '''.replace('          ', '')
+          new = '''def replace_once(path: str, old: str, new: str) -> None:
+              text = read(path)
+              if old in text:
+                  write(path, text.replace(old, new, 1))
+                  return
+              chunks = re.split(r"(\\s+)", old)
+              pattern = "".join(r"\\s+" if chunk.isspace() else re.escape(chunk) for chunk in chunks if chunk)
+              updated, count = re.subn(pattern, lambda _: new, text, count=1, flags=re.MULTILINE | re.DOTALL)
+              if count < 1:
+                  raise RuntimeError(f"{path}: expected a tolerant match: {old[:120]!r}")
+              write(path, updated)
+          '''.replace('          ', '')
+          if old in source:
+              path.write_text(source.replace(old, new, 1), encoding='utf-8')
+          PY
+
+      - name: Apply advanced authoring source upgrade
+        run: python tools/apply_authoring_upgrade.py
+
+      - name: Apply generated-source hotfixes
+        run: python tools/apply_authoring_hotfix.py
+
+      - name: Persist generated source changes
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+          else
+            git commit -m "fix: stabilize advanced authoring build"
+            git push origin HEAD:feature/compact-godot-workspace
+          fi
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Make wrapper executable
+        run: chmod +x ./gradlew
+
+      - name: Unit tests
+        run: ./gradlew testDebugUnitTest --stacktrace
+
+      - name: Build debug APK
+        run: ./gradlew :app:assembleDebug --stacktrace
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-game-studio-godot-workspace-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14

@@ -25,6 +25,7 @@ data class TerrainComponent(
         if (index % TerrainPresets.semiAridLayers.size == 0) 1f else 0f
     },
     val autoTileRules: List<TerrainAutoTileRule> = TerrainPresets.semiAridRules,
+    val authoringMask: List<Float> = emptyList(),
     val seed: Int = 73021,
 ) : SceneComponent {
     fun heightAt(x: Int, z: Int): Float =
@@ -78,6 +79,13 @@ enum class TerrainBrushMode {
     FLATTEN,
     NOISE,
     PAINT,
+    STAMP,
+    TERRACE,
+    RIDGE,
+    CANYON,
+    ERODE,
+    MASK_PAINT,
+    MASK_ERASE,
 }
 
 data class TerrainBrush(
@@ -190,19 +198,58 @@ fun TerrainComponent.applyBrush(brush: TerrainBrush): TerrainComponent {
     val before = heights
     val updatedHeights = heights.toMutableList()
     val updatedWeights = materialWeights.toMutableList()
+    val updatedMask = if (authoringMask.size == heights.size) {
+        authoringMask.toMutableList()
+    } else {
+        MutableList(heights.size) { 1f }
+    }
     val paintLayer = materialLayers.indexOfFirst { it.id == brush.materialLayerId }
 
     for (z in 0 until resolution) for (x in 0 until resolution) {
         val distance = sqrt((x - cx) * (x - cx) + (z - cz) * (z - cz))
         if (distance > radiusCells) continue
         val falloff = (1f - distance / radiusCells).let { it * it * (3f - 2f * it) }
-        val amount = strength * falloff
         val index = z * resolution + x
+        val ignoresMask = brush.mode == TerrainBrushMode.MASK_PAINT || brush.mode == TerrainBrushMode.MASK_ERASE
+        val amount = strength * falloff * if (ignoresMask) 1f else updatedMask[index]
         when (brush.mode) {
             TerrainBrushMode.RAISE -> updatedHeights[index] = (before[index] + amount * 0.08f).coerceIn(0f, 1f)
             TerrainBrushMode.LOWER -> updatedHeights[index] = (before[index] - amount * 0.08f).coerceIn(0f, 1f)
             TerrainBrushMode.FLATTEN -> updatedHeights[index] =
                 before[index] + (brush.targetHeight.coerceIn(0f, 1f) - before[index]) * amount
+            TerrainBrushMode.STAMP -> {
+                val target = brush.targetHeight.coerceIn(0f, 1f)
+                val stamp = target + (falloff - 0.5f) * strength * 0.18f
+                updatedHeights[index] = before[index] + (stamp.coerceIn(0f, 1f) - before[index]) * amount
+            }
+            TerrainBrushMode.TERRACE -> {
+                val steps = (5 + strength * 35f).toInt().coerceIn(5, 40)
+                val snapped = floor(before[index] * steps + 0.5f) / steps
+                updatedHeights[index] = before[index] + (snapped - before[index]) * amount
+            }
+            TerrainBrushMode.RIDGE -> {
+                val ridge = (1f - distance / radiusCells).coerceIn(0f, 1f)
+                updatedHeights[index] = (before[index] + ridge * ridge * amount * 0.12f).coerceIn(0f, 1f)
+            }
+            TerrainBrushMode.CANYON -> {
+                val core = (1f - distance / radiusCells).coerceIn(0f, 1f)
+                val cut = core * core * amount * 0.14f
+                val rim = if (core in 0.08f..0.35f) amount * 0.018f else 0f
+                updatedHeights[index] = (before[index] - cut + rim).coerceIn(0f, 1f)
+            }
+            TerrainBrushMode.ERODE -> {
+                var total = 0f
+                var count = 0
+                for (oz in -1..1) for (ox in -1..1) {
+                    val sx = (x + ox).coerceIn(0, resolution - 1)
+                    val sz = (z + oz).coerceIn(0, resolution - 1)
+                    total += before[sz * resolution + sx]
+                    count++
+                }
+                val average = total / count
+                val downhill = (before[index] - average).coerceAtLeast(0f)
+                updatedHeights[index] = (before[index] + (average - before[index]) * amount * 0.55f - downhill * amount * 0.18f).coerceIn(0f, 1f)
+            }
             TerrainBrushMode.SMOOTH -> {
                 var total = 0f
                 var count = 0
@@ -228,9 +275,12 @@ fun TerrainComponent.applyBrush(brush: TerrainBrush): TerrainComponent {
                 }
                 normalizeWeights(updatedWeights, offset, materialLayers.size)
             }
+            TerrainBrushMode.MASK_PAINT -> updatedMask[index] = (updatedMask[index] - strength * falloff).coerceIn(0f, 1f)
+            TerrainBrushMode.MASK_ERASE -> updatedMask[index] = (updatedMask[index] + strength * falloff).coerceIn(0f, 1f)
         }
     }
-    return copy(heights = updatedHeights, materialWeights = updatedWeights)
+    val persistedMask = if (updatedMask.all { it >= 0.999f }) emptyList() else updatedMask
+    return copy(heights = updatedHeights, materialWeights = updatedWeights, authoringMask = persistedMask)
 }
 
 fun TerrainComponent.applyAutoTile(): TerrainComponent {

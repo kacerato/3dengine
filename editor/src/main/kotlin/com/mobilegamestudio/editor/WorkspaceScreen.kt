@@ -19,9 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
@@ -42,6 +42,20 @@ fun WorkspaceRoute(
                 ?.takeIf(String::isNotBlank)
                 ?: "model.glb"
             viewModel.importModel(sourceName) {
+                context.contentResolver.openInputStream(it)
+            }
+        }
+    }
+    val heightmapLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument(),
+    ) { uri ->
+        uri?.let {
+            val sourceName = it.lastPathSegment
+                ?.substringAfterLast('/')
+                ?.substringAfterLast(':')
+                ?.takeIf(String::isNotBlank)
+                ?: "terrain-heightmap.png"
+            viewModel.importTerrainHeightmap(sourceName) {
                 context.contentResolver.openInputStream(it)
             }
         }
@@ -78,7 +92,7 @@ fun WorkspaceRoute(
                 color = Accent,
             )
             state.metadata == null -> WorkspaceLoadError(onBack)
-            else -> EditorShell(
+            else -> GodotCompactEditorShell(
                 state = state,
                 onBack = onBack,
                 onReportDiagnostic = viewModel::reportDiagnostic,
@@ -107,14 +121,20 @@ fun WorkspaceRoute(
                         arrayOf("model/gltf-binary", "image/png", "image/jpeg", "image/webp"),
                     )
                 },
-                onCreateTouchGraph = viewModel::createTouchGraph,
+                onCreateTouchGraph = { viewModel.createTouchGraph() },
+                onCreateTouchGraphAt = { folder, name -> viewModel.createTouchGraph(folder, name, true) },
+                onOpenGraphResource = viewModel::openGraphResource,
                 onAddVisualNode = viewModel::addCatalogNode,
                 onMoveVisualNode = viewModel::moveVisualNode,
                 onConnectVisualNodes = viewModel::connectVisualNodes,
                 onRemoveLastVisualNode = viewModel::removeLastVisualNode,
                 onSaveGraph = viewModel::saveVisualGraph,
                 onAddQuickBehavior = viewModel::addQuickBehavior,
-                onCreateScript = viewModel::createScriptForSelected,
+                onCreateScript = { viewModel.createScriptForSelected() },
+                onCreateScriptAt = { folder, name -> viewModel.createScriptForSelected(folder, name, true) },
+                onOpenScriptResource = viewModel::openScriptResource,
+                onMoveLogicResource = viewModel::moveLogicResource,
+                onDeleteLogicResource = viewModel::deleteLogicResource,
                 onScriptChange = viewModel::updateScriptSource,
                 onSaveScript = viewModel::saveLuaScript,
                 onProjectNameChange = viewModel::updateName,
@@ -122,6 +142,10 @@ fun WorkspaceRoute(
                 onTerrainToolChange = viewModel::updateTerrainTool,
                 onTerrainBrush = viewModel::applyTerrainBrush,
                 onTerrainAutoTile = viewModel::applyTerrainAutoTile,
+                onTerrainProcess = viewModel::applyTerrainProcess,
+                onImportTerrainHeightmap = {
+                    heightmapLauncher.launch(arrayOf("image/png", "image/jpeg", "application/octet-stream", "*/*"))
+                },
             )
         }
         SnackbarHost(

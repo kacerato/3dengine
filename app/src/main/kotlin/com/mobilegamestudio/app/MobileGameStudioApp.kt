@@ -4,19 +4,18 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import kotlinx.coroutines.Dispatchers
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.mobilegamestudio.core.contracts.ProjectRepository
 import com.mobilegamestudio.core.contracts.ProjectContentRepository
+import com.mobilegamestudio.core.contracts.ProjectRepository
 import com.mobilegamestudio.core.model.ProjectId
 import com.mobilegamestudio.editor.HomeRoute
 import com.mobilegamestudio.editor.HomeViewModel
-import com.mobilegamestudio.editor.WorkspaceRoute
-import com.mobilegamestudio.editor.WorkspaceViewModel
+import com.mobilegamestudio.editor.WebWorkspaceRoute
+import com.mobilegamestudio.editor.WebWorkspaceViewModel
 
 private const val PROJECTS_ROUTE = "projects"
 private const val WORKSPACE_ROUTE = "workspace"
@@ -49,19 +48,20 @@ fun MobileGameStudioApp(
             val rawProjectId = requireNotNull(
                 backStackEntry.arguments?.getString(PROJECT_ID_ARGUMENT),
             )
-            val workspaceViewModel: WorkspaceViewModel = viewModel(
-                key = "workspace-$rawProjectId",
+            val projectId = ProjectId(rawProjectId)
+            val workspaceViewModel: WebWorkspaceViewModel = viewModel(
+                key = "web-workspace-$rawProjectId",
                 factory = factory {
-                    WorkspaceViewModel(
-                        projectId = ProjectId(rawProjectId),
+                    WebWorkspaceViewModel(
+                        projectId = projectId,
                         repository = repository,
                         contentRepository = contentRepository,
-                        runtimeDispatcher = Dispatchers.Default,
                     )
                 },
             )
-            WorkspaceRoute(
+            WebWorkspaceRoute(
                 viewModel = workspaceViewModel,
+                resolveAsset = { assetId -> contentRepository.resolveAsset(projectId, assetId) },
                 onBack = navController::popBackStack,
             )
         }

@@ -19,9 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
@@ -78,7 +78,7 @@ fun WorkspaceRoute(
                 color = Accent,
             )
             state.metadata == null -> WorkspaceLoadError(onBack)
-            else -> EditorShell(
+            else -> GodotCompactEditorShell(
                 state = state,
                 onBack = onBack,
                 onReportDiagnostic = viewModel::reportDiagnostic,

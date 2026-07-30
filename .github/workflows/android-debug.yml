@@ -87,7 +87,7 @@ jobs:
         run: python tools/apply_native_editor_validation.py
 
       - name: Apply functional world authoring v2
-        run: python tools/apply_world_authoring_v2.py
+        run: python tools/apply_world_authoring_v2_fixed.py
 
       - name: Persist generated source changes
         if: github.event_name == 'push'

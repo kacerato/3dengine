@@ -8,4 +8,6 @@ local.properties
 captures/
 .externalNativeBuild/
 .cxx/
-
+web-editor/node_modules/
+web-editor/.vite/
+app/src/main/assets/editor/

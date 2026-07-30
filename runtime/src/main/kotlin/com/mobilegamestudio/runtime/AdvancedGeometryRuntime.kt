@@ -6,9 +6,9 @@ import com.mobilegamestudio.core.model.EditableMeshComponent
 import com.mobilegamestudio.core.model.EditableMeshFace
 import com.mobilegamestudio.core.model.Vector3
 import com.mobilegamestudio.core.model.VoxelVolumeComponent
+import dev.romainguy.kotlin.math.Float2
+import dev.romainguy.kotlin.math.Float3
 import io.github.sceneview.geometries.Geometry
-import io.github.sceneview.math.Float2
-import io.github.sceneview.math.Float3
 import io.github.sceneview.math.Position
 import io.github.sceneview.node.GeometryNode
 import kotlin.math.sqrt
@@ -108,11 +108,10 @@ internal fun buildVoxelVolumeNode(
 
     val maxVisibleFaces = 90_000
     var visibleFaces = 0
-    loop@ for (z in 0 until resolution) for (y in 0 until resolution) for (x in 0 until resolution) {
-        if (!occupied(x, y, z)) continue
+    for (z in 0 until resolution) for (y in 0 until resolution) for (x in 0 until resolution) {
+        if (!occupied(x, y, z) || visibleFaces >= maxVisibleFaces) continue
         faces.forEach { face ->
-            if (occupied(x + face.neighborX, y + face.neighborY, z + face.neighborZ)) return@forEach
-            if (visibleFaces >= maxVisibleFaces) return@loop
+            if (occupied(x + face.neighborX, y + face.neighborY, z + face.neighborZ) || visibleFaces >= maxVisibleFaces) return@forEach
             val base = vertices.size
             face.corners.forEachIndexed { cornerIndex, corner ->
                 vertices += Geometry.Vertex(

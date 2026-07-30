@@ -72,8 +72,11 @@ const buildRenderable = (object: GameObject): THREE.Object3D | null => {
         Math.min(cameraComponent.farPlane, 30),
       ),
     );
-    marker.material.transparent = true;
-    marker.material.opacity = 0.55;
+    const markerMaterials = Array.isArray(marker.material) ? marker.material : [marker.material];
+    markerMaterials.forEach((material) => {
+      material.transparent = true;
+      material.opacity = 0.55;
+    });
     marker.userData.objectId = object.id;
     root.add(marker);
   }
@@ -305,7 +308,12 @@ export function SceneViewport() {
     camera.updateProjectionMatrix();
     transform.enabled = true;
     orbit.enabled = true;
-    transform.setMode(snapshot.mode === 'select' ? 'translate' : snapshot.mode);
+    const transformMode = snapshot.mode === 'rotate'
+      ? 'rotate'
+      : snapshot.mode === 'scale'
+        ? 'scale'
+        : 'translate';
+    transform.setMode(transformMode);
     const selected = snapshot.selectedObjectId
       ? objectMapRef.current.get(snapshot.selectedObjectId)
       : undefined;

@@ -79,6 +79,9 @@ jobs:
       - name: Apply Studio V3 interface
         run: python tools/apply_studio_v3_ui.py
 
+      - name: Apply Studio V3 validation
+        run: python tools/apply_studio_v3_validation.py
+
       - name: Persist generated source changes
         if: github.event_name == 'push'
         shell: bash

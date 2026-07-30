@@ -108,6 +108,12 @@ internal fun GodotCompactEditorShell(
     onTerrainAutoTile: () -> Unit,
     onTerrainProcess: (com.mobilegamestudio.core.model.TerrainProcessMode, Float, Int, Float) -> Unit,
     onImportTerrainHeightmap: () -> Unit,
+    onTerrainFalloffChange: (com.mobilegamestudio.core.model.TerrainBrushFalloff) -> Unit,
+    onTerrainStrokeBegin: () -> Unit,
+    onTerrainStrokePoint: (Float, Float) -> Unit,
+    onTerrainStrokeEnd: (Boolean) -> Unit,
+    onCreateFlatTerrain: (Int, Float, Float) -> Unit,
+    onAssignTerrainTexture: (String, String, Boolean) -> Unit,
 ) {
     val previewActive = state.isPreviewStarting || state.isPreviewRunning
     var openPanelName by rememberSaveable { mutableStateOf<String?>(StudioPopup.FILES.name) }
@@ -139,7 +145,7 @@ internal fun GodotCompactEditorShell(
             .background(WorkspaceBackground),
     ) {
         Column(Modifier.fillMaxSize()) {
-            CompactStudioTopBar(
+            if (openPanel != StudioPopup.WORLD) CompactStudioTopBar(
                 state = state,
                 onBack = {
                     when {
@@ -170,6 +176,36 @@ internal fun GodotCompactEditorShell(
                         .fillMaxWidth(),
                 )
             } else {
+                if (openPanel == StudioPopup.WORLD) {
+                    WorldStudioWorkspace(
+                        state = state,
+                        resolveAsset = resolveAsset,
+                        onExit = { show(null) },
+                        onUndo = onUndo,
+                        onRedo = onRedo,
+                        onSave = onSaveScene,
+                        onToolSelected = onToolSelected,
+                        onSelectObject = onSelectObject,
+                        onViewportObjectSelected = onViewportObjectSelected,
+                        onToggleVisibility = onToggleVisibility,
+                        onAddPrimitive = onAddPrimitive,
+                        onAddSceneObject = onAddSceneObject,
+                        onAddAsset = onAddAsset,
+                        onTransformChange = onTransformChange,
+                        onTransformValueChange = onTransformValueChange,
+                        onDiagnostic = onReportDiagnostic,
+                        onTerrainToolChange = onTerrainToolChange,
+                        onTerrainFalloffChange = onTerrainFalloffChange,
+                        onTerrainStrokeBegin = onTerrainStrokeBegin,
+                        onTerrainStrokePoint = onTerrainStrokePoint,
+                        onTerrainStrokeEnd = onTerrainStrokeEnd,
+                        onCreateFlatTerrain = onCreateFlatTerrain,
+                        onAssignTerrainTexture = onAssignTerrainTexture,
+                        onImportAsset = onImportAsset,
+                        onImportHeightmap = onImportTerrainHeightmap,
+                        modifier = Modifier.weight(1f).fillMaxWidth(),
+                    )
+                } else {
                 StudioWorkspaceTabs(
                     selected = openPanel,
                     onScene = { show(null) },
@@ -235,10 +271,11 @@ internal fun GodotCompactEditorShell(
                         onSelect = ::toggle,
                     )
                 }
+                }
             }
         }
 
-        if (!previewActive && openPanel != null) {
+        if (!previewActive && openPanel != null && openPanel != StudioPopup.WORLD) {
             StudioPopupHost(
                 panel = openPanel,
                 state = state,

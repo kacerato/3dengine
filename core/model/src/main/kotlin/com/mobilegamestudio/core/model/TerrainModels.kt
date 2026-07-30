@@ -96,6 +96,7 @@ data class TerrainBrush(
     val strength: Float = 0.35f,
     val targetHeight: Float = 0.5f,
     val materialLayerId: String? = null,
+    val falloff: TerrainBrushFalloff = TerrainBrushFalloff.SMOOTH,
 )
 
 object TerrainPresets {
@@ -208,7 +209,8 @@ fun TerrainComponent.applyBrush(brush: TerrainBrush): TerrainComponent {
     for (z in 0 until resolution) for (x in 0 until resolution) {
         val distance = sqrt((x - cx) * (x - cx) + (z - cz) * (z - cz))
         if (distance > radiusCells) continue
-        val falloff = (1f - distance / radiusCells).let { it * it * (3f - 2f * it) }
+        val normalizedInfluence = (1f - distance / radiusCells).coerceIn(0f, 1f)
+        val falloff = brush.falloff.evaluate(normalizedInfluence)
         val index = z * resolution + x
         val ignoresMask = brush.mode == TerrainBrushMode.MASK_PAINT || brush.mode == TerrainBrushMode.MASK_ERASE
         val amount = strength * falloff * if (ignoresMask) 1f else updatedMask[index]

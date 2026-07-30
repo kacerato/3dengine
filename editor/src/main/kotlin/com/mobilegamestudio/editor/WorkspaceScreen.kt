@@ -146,6 +146,12 @@ fun WorkspaceRoute(
                 onImportTerrainHeightmap = {
                     heightmapLauncher.launch(arrayOf("image/png", "image/jpeg", "application/octet-stream", "*/*"))
                 },
+                onTerrainFalloffChange = viewModel::updateTerrainFalloff,
+                onTerrainStrokeBegin = viewModel::beginTerrainStroke,
+                onTerrainStrokePoint = viewModel::continueTerrainStroke,
+                onTerrainStrokeEnd = viewModel::endTerrainStroke,
+                onCreateFlatTerrain = viewModel::createFlatTerrain,
+                onAssignTerrainTexture = viewModel::assignTerrainTexture,
             )
         }
         SnackbarHost(

@@ -45,6 +45,7 @@ import com.mobilegamestudio.core.model.VehicleRuntimeState
 import com.mobilegamestudio.core.model.CharacterControllerComponent
 import com.mobilegamestudio.core.model.CharacterCameraMode
 import com.mobilegamestudio.core.model.TerrainBrush
+import com.mobilegamestudio.core.model.TerrainBrushFalloff
 import com.mobilegamestudio.core.model.TerrainBrushMode
 import com.mobilegamestudio.core.model.TerrainComponent
 import com.mobilegamestudio.core.model.TerrainPresets
@@ -54,6 +55,7 @@ import com.mobilegamestudio.core.model.TerrainProcessSettings
 import com.mobilegamestudio.core.model.SafeProjectPath
 import com.mobilegamestudio.core.model.applyTerrainProcess
 import com.mobilegamestudio.core.model.withImportedHeightmap
+import com.mobilegamestudio.core.model.createFlatTerrainComponent
 import com.mobilegamestudio.core.model.VegetationSpawnerComponent
 import com.mobilegamestudio.core.model.applyAutoTile
 import com.mobilegamestudio.core.model.applyBrush
@@ -129,6 +131,7 @@ data class TerrainToolState(
     val strength: Float = 0.42f,
     val targetHeight: Float = 0.35f,
     val materialLayerId: String? = "dry-soil",
+    val falloff: TerrainBrushFalloff = TerrainBrushFalloff.SMOOTH,
 )
 
 data class EditorVector3(
@@ -235,6 +238,9 @@ class WorkspaceViewModel(
     private var previewGeneration = 0L
     private val playEventMutex = Mutex()
     private val activeBridgeEvents = mutableSetOf<String>()
+    private var terrainStrokeBase: SceneDocument? = null
+    private var terrainStrokeWorking: SceneDocument? = null
+    private var terrainStrokeObjectId: String? = null
 
     init {
         load()
@@ -552,13 +558,91 @@ class WorkspaceViewModel(
         }
     }
 
-    fun applyTerrainBrush(normalizedX: Float, normalizedZ: Float) {
+    fun updateTerrainFalloff(falloff: TerrainBrushFalloff) {
+        mutableState.update { state ->
+            state.copy(terrainTool = state.terrainTool.copy(falloff = falloff))
+        }
+    }
+
+    fun createFlatTerrain(resolution: Int, widthMeters: Float, maxHeightMeters: Float) {
         if (!canEdit()) return
+        val document = mutableState.value.sceneDocument ?: return
+        val terrain = createFlatTerrainComponent(resolution, widthMeters, maxHeightMeters)
+        val id = UUID.randomUUID().toString()
+        val objectValue = GameObject(
+            id = id,
+            name = "Terreno editável ${nextObjectNumber++}",
+            components = listOf(TransformComponent(), terrain),
+        )
+        applyDocumentEdit(
+            document.copy(
+                objects = document.objects + objectValue,
+                rootObjects = (document.rootObjects + id).distinct(),
+            ),
+        )
+        mutableState.update {
+            it.copy(
+                selectedObjectId = id,
+                terrainTool = it.terrainTool.copy(
+                    mode = TerrainBrushMode.RAISE,
+                    materialLayerId = terrain.materialLayers.firstOrNull()?.id,
+                ),
+                message = "Terreno plano criado. Arraste no viewport para começar a moldar.",
+            )
+        }
+    }
+
+    fun assignTerrainTexture(layerId: String, assetId: String, normalMap: Boolean) {
+        if (!canEdit()) return
+        val asset = mutableState.value.assets.firstOrNull { it.id == assetId && it.mediaType.startsWith("image/") }
+            ?: return
         val selectedId = mutableState.value.selectedObjectId ?: return
-        val terrainTool = mutableState.value.terrainTool
         val document = mutableState.value.sceneDocument ?: return
         val updated = document.copy(
             objects = document.objects.map { objectValue ->
+                if (objectValue.id != selectedId) objectValue else objectValue.copy(
+                    components = objectValue.components.map { component ->
+                        if (component !is TerrainComponent) component else component.copy(
+                            materialLayers = component.materialLayers.map { layer ->
+                                if (layer.id != layerId) layer else if (normalMap) {
+                                    layer.copy(normalAssetId = assetId)
+                                } else {
+                                    layer.copy(textureAssetId = assetId)
+                                }
+                            },
+                        )
+                    },
+                )
+            },
+        )
+        applyDocumentEdit(updated)
+        mutableState.update {
+            it.copy(message = "${asset.displayName} aplicado à camada de terreno.")
+        }
+    }
+
+    fun beginTerrainStroke() {
+        if (!canEdit() || terrainStrokeBase != null) return
+        val selectedId = mutableState.value.selectedObjectId ?: return
+        val base = sceneHistory?.document ?: mutableState.value.sceneDocument ?: return
+        val hasTerrain = base.objects
+            .firstOrNull { it.id == selectedId }
+            ?.component<TerrainComponent>() != null
+        if (!hasTerrain) return
+        terrainStrokeBase = base
+        terrainStrokeWorking = base
+        terrainStrokeObjectId = selectedId
+        autosaveJob?.cancel()
+    }
+
+    fun continueTerrainStroke(normalizedX: Float, normalizedZ: Float) {
+        if (!canEdit()) return
+        if (terrainStrokeBase == null) beginTerrainStroke()
+        val selectedId = terrainStrokeObjectId ?: return
+        val current = terrainStrokeWorking ?: return
+        val terrainTool = mutableState.value.terrainTool
+        val updated = current.copy(
+            objects = current.objects.map { objectValue ->
                 if (objectValue.id != selectedId) return@map objectValue
                 objectValue.copy(
                     components = objectValue.components.map { component ->
@@ -571,13 +655,49 @@ class WorkspaceViewModel(
                                 strength = terrainTool.strength,
                                 targetHeight = terrainTool.targetHeight,
                                 materialLayerId = terrainTool.materialLayerId,
+                                falloff = terrainTool.falloff,
                             ),
                         )
                     },
                 )
             },
         )
-        applyDocumentEdit(updated)
+        if (updated == current) return
+        terrainStrokeWorking = updated
+        mutableState.update {
+            it.copy(
+                sceneDocument = updated,
+                sceneObjects = updated.toEditorObjects(),
+                isSceneDirty = updated != persistedScene,
+            )
+        }
+    }
+
+    fun endTerrainStroke(cancelled: Boolean = false) {
+        val base = terrainStrokeBase ?: return
+        val final = terrainStrokeWorking ?: base
+        terrainStrokeBase = null
+        terrainStrokeWorking = null
+        terrainStrokeObjectId = null
+        val history = sceneHistory ?: return
+        if (cancelled || final == base) {
+            mutableState.update {
+                it.copy(
+                    sceneDocument = history.document,
+                    sceneObjects = history.document.toEditorObjects(),
+                    isSceneDirty = history.document != persistedScene,
+                )
+            }
+            return
+        }
+        val result = history.execute(ReplaceSceneDocumentCommand(history.document, final))
+        if (result is SceneEditResult.Success) publishHistory(history)
+    }
+
+    fun applyTerrainBrush(normalizedX: Float, normalizedZ: Float) {
+        beginTerrainStroke()
+        continueTerrainStroke(normalizedX, normalizedZ)
+        endTerrainStroke(false)
     }
 
     fun applyTerrainAutoTile() {

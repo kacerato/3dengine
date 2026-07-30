@@ -97,6 +97,7 @@ fun RuntimeSceneViewport(
     onObjectSelected: (String?) -> Unit,
     transformGesturesEnabled: Boolean = false,
     onTransformDrag: (Float, Float) -> Unit = { _, _ -> },
+    terrainTopDownCamera: Boolean = false,
     onDiagnostic: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -143,6 +144,11 @@ fun RuntimeSceneViewport(
             ?.position
             ?: document.editorSettings.cameraTarget
     }
+    val terrainCameraObject = document.objects.firstOrNull {
+        it.id == selectedObjectId && it.component<TerrainComponent>() != null
+    }
+    val terrainCameraTransform = terrainCameraObject?.component<TransformComponent>()
+    val terrainCameraComponent = terrainCameraObject?.component<TerrainComponent>()
     val playController = playCharacter?.component<CharacterControllerComponent>()
     val sceneLightObject = document.objects.firstOrNull {
         it.enabled && it.component<com.mobilegamestudio.core.model.DirectionalLightComponent>()?.enabled == true
@@ -181,7 +187,7 @@ fun RuntimeSceneViewport(
     }
     val firstPersonPlay = controlledVehicle == null && mode == EditorMode.PLAY &&
         playController?.cameraMode == CharacterCameraMode.FIRST_PERSON
-    val editorCameraManipulator = if (firstPersonPlay || controlledVehicle != null) {
+    val editorCameraManipulator = if (firstPersonPlay || controlledVehicle != null || terrainTopDownCamera) {
         null
     } else {
         key(document.sceneId, mode) {
@@ -208,8 +214,25 @@ fun RuntimeSceneViewport(
             }
         }
     }
-    LaunchedEffect(editorCameraManipulator, mode) {
-        if (mode == EditorMode.EDITOR && editorCameraManipulator != null) {
+    LaunchedEffect(editorCameraManipulator, mode, terrainTopDownCamera, selectedObjectId) {
+        if (mode != EditorMode.EDITOR) return@LaunchedEffect
+        if (terrainTopDownCamera && terrainCameraComponent != null) {
+            val target = terrainCameraTransform?.position ?: document.editorSettings.cameraTarget
+            val cameraHeight = maxOf(
+                terrainCameraComponent.width * 0.82f,
+                terrainCameraComponent.maxHeight * 2.4f,
+                18f,
+            )
+            sceneCameraNode.transform = lookAt(
+                eye = Float3(target.x, target.y + cameraHeight, target.z + 0.001f),
+                target = Float3(
+                    target.x,
+                    target.y + terrainCameraComponent.maxHeight * 0.12f,
+                    target.z,
+                ),
+                up = Float3(0f, 0f, -1f),
+            )
+        } else if (editorCameraManipulator != null) {
             sceneCameraNode.transform = editorCameraManipulator.getTransform()
         }
     }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -285,7 +286,7 @@ private fun WorldOutliner(
                         .padding(horizontal = 6.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(objectGlyph(item.type), color = if (selected) Color(0xFFC9A7FF) else Color(0xFF8D94A0), fontSize = 8.sp, modifier = Modifier.width(24.dp))
+                    Text(worldObjectGlyph(item.type), color = if (selected) Color(0xFFC9A7FF) else Color(0xFF8D94A0), fontSize = 8.sp, modifier = Modifier.width(24.dp))
                     Text(item.name, modifier = Modifier.weight(1f), color = if (selected) Color.White else Color(0xFFC2C6CE), fontSize = 8.sp, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Text(
                         if (item.isVisible) "●" else "○",
@@ -594,7 +595,7 @@ private fun WorldButton(
 }
 
 @Composable
-private fun SmallSquareAction(label: String, onClick: () -> Unit) {
+private fun RowScope.SmallSquareAction(label: String, onClick: () -> Unit) {
     TextButton(
         onClick = onClick,
         modifier = Modifier.weight(1f).height(34.dp),
@@ -656,7 +657,7 @@ private fun EmptyInspector(message: String, action: (() -> Unit)?) {
     }
 }
 
-private fun objectGlyph(type: EditorObjectType): String = when (type) {
+private fun worldObjectGlyph(type: EditorObjectType): String = when (type) {
     EditorObjectType.TERRAIN -> "TRN"
     EditorObjectType.CAMERA -> "CAM"
     EditorObjectType.LIGHT -> "SUN"

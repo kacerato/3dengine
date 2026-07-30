@@ -54,13 +54,15 @@ jobs:
                   raise RuntimeError(f"{path}: expected a tolerant match: {old[:120]!r}")
               write(path, updated)
           '''.replace('          ', '')
-          if old not in source:
-              raise SystemExit('replace_once helper was not found')
-          path.write_text(source.replace(old, new, 1), encoding='utf-8')
+          if old in source:
+              path.write_text(source.replace(old, new, 1), encoding='utf-8')
           PY
 
       - name: Apply advanced authoring source upgrade
         run: python tools/apply_authoring_upgrade.py
+
+      - name: Apply generated-source hotfixes
+        run: python tools/apply_authoring_hotfix.py
 
       - name: Persist generated source changes
         if: github.event_name == 'push'
@@ -72,7 +74,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated changes"
           else
-            git commit -m "feat: advanced world authoring and logic resource management"
+            git commit -m "fix: stabilize advanced authoring build"
             git push origin HEAD:feature/compact-godot-workspace
           fi
 

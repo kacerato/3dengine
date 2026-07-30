@@ -70,6 +70,9 @@ jobs:
       - name: Apply direct World Studio migration
         run: python tools/apply_world_studio_v2.py
 
+      - name: Apply World Studio compile hotfixes
+        run: python tools/apply_world_studio_compile_hotfix.py
+
       - name: Persist generated source changes
         if: github.event_name == 'push'
         shell: bash

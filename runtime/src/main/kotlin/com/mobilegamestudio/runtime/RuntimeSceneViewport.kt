@@ -30,6 +30,7 @@ import com.mobilegamestudio.core.model.EditorMode
 import com.mobilegamestudio.core.model.GameObject
 import com.mobilegamestudio.core.model.CharacterControllerComponent
 import com.mobilegamestudio.core.model.CharacterCameraMode
+import com.mobilegamestudio.core.model.CameraComponent
 import com.mobilegamestudio.core.model.AnimationControllerComponent
 import com.mobilegamestudio.core.model.MeshRendererComponent
 import com.mobilegamestudio.core.model.EditableMeshComponent
@@ -137,6 +138,9 @@ fun RuntimeSceneViewport(
     val controlledVehicle = document.objects.firstOrNull {
         it.enabled && "runtime-controlled" in it.tags
     }
+    val authoredPlayCamera = document.objects.firstOrNull {
+        it.enabled && it.component<CameraComponent>()?.let { camera -> camera.enabled && camera.isMain } == true
+    }
     val cameraTargetObject = if (mode == EditorMode.PLAY) playCharacter else {
         document.objects.firstOrNull { it.id == selectedObjectId }
     }.let { target -> if (mode == EditorMode.PLAY) controlledVehicle ?: target else target }
@@ -191,7 +195,7 @@ fun RuntimeSceneViewport(
     }
     val firstPersonPlay = controlledVehicle == null && mode == EditorMode.PLAY &&
         playController?.cameraMode == CharacterCameraMode.FIRST_PERSON
-    val editorCameraManipulator = if (firstPersonPlay || controlledVehicle != null || terrainTopDownCamera) {
+    val editorCameraManipulator = if (firstPersonPlay || controlledVehicle != null || (authoredPlayCamera != null && mode == EditorMode.PLAY) || terrainTopDownCamera) {
         null
     } else {
         key(document.sceneId, mode) {
@@ -241,6 +245,22 @@ fun RuntimeSceneViewport(
         }
     }
     SideEffect {
+        if (mode == EditorMode.PLAY && controlledVehicle == null && playCharacter == null) {
+            authoredPlayCamera?.component<TransformComponent>()?.let { transform ->
+                val yaw = Math.toRadians(transform.rotationEulerDegrees.y.toDouble())
+                val pitch = Math.toRadians(transform.rotationEulerDegrees.x.toDouble())
+                val eye = Float3(transform.position.x, transform.position.y, transform.position.z)
+                sceneCameraNode.transform = lookAt(
+                    eye = eye,
+                    target = Float3(
+                        eye.x + (sin(yaw) * cos(pitch)).toFloat(),
+                        eye.y - sin(pitch).toFloat(),
+                        eye.z + (cos(yaw) * cos(pitch)).toFloat(),
+                    ),
+                    up = Float3(0f, 1f, 0f),
+                )
+            }
+        }
         if (firstPersonPlay) {
             val transform = playCharacter?.component<TransformComponent>()
             val yaw = Math.toRadians((transform?.rotationEulerDegrees?.y ?: 0f).toDouble())
@@ -452,15 +472,15 @@ private class StudioOrbitCameraManipulator(
         val dx = (x - lastX).toFloat()
         val dy = (y - lastY).toFloat()
         if (strafing) {
-            val unitsPerPixel = radius / viewportHeight * 1.5f
+            val unitsPerPixel = radius / viewportHeight * 0.9f
             val rightX = cos(yaw)
             val rightZ = -sin(yaw)
             targetX -= rightX * dx * unitsPerPixel
             targetZ -= rightZ * dx * unitsPerPixel
             targetY -= dy * unitsPerPixel
         } else {
-            yaw -= dx / viewportWidth * 3.2f
-            pitch = (pitch + dy / viewportHeight * 2.4f).coerceIn(-1.35f, 1.35f)
+            if (kotlin.math.abs(dx) > 0.35f) yaw -= dx / viewportWidth * 2.1f
+            if (kotlin.math.abs(dy) > 0.35f) pitch = (pitch + dy / viewportHeight * 1.6f).coerceIn(-1.28f, 1.28f)
         }
         lastX = x
         lastY = y
@@ -471,7 +491,7 @@ private class StudioOrbitCameraManipulator(
 
     override fun scrollUpdate(x: Int, y: Int, prevSeparation: Float, currSeparation: Float) {
         val delta = prevSeparation - currSeparation
-        radius = (radius * (1f + delta / viewportHeight)).coerceIn(0.4f, 600f)
+        radius = (radius * (1f + delta / viewportHeight * 0.72f)).coerceIn(0.8f, 280f)
     }
 
     override fun scrollEnd() = Unit

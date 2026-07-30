@@ -42,7 +42,7 @@ internal fun SceneViewport(
     onTransformChange: (TransformProperty, TransformAxis, Float) -> Unit = { _, _, _ -> },
     onDiagnostic: (String) -> Unit,
     onPreviewAction: (String) -> Unit,
-    editorChromeVisible: Boolean = true,
+    editorChromeVisible: Boolean = false,
     terrainAuthoringEnabled: Boolean = false,
     terrainTopDownCamera: Boolean = false,
     terrainBrushRadius: Float = 0.12f,
@@ -62,13 +62,7 @@ internal fun SceneViewport(
     val joysticks = document.objects.flatMap { item ->
         item.components.filterIsInstance<VirtualJoystickComponent>()
     }
-    val sceneMarkers = if (state.isPreviewRunning || terrainAuthoringEnabled || !editorChromeVisible) emptyList() else document.objects.mapNotNull { item ->
-        when {
-            item.components.any { it is CameraComponent } -> Triple(item.id, "CAM", item.name)
-            item.components.any { it is DirectionalLightComponent } -> Triple(item.id, "SUN", item.name)
-            else -> null
-        }
-    }
+    val sceneMarkers = emptyList<Triple<String, String, String>>()
 
     Box(modifier = modifier) {
         RuntimeSceneViewport(
@@ -237,11 +231,98 @@ internal fun SceneViewport(
         }
 
         if (!state.isPreviewRunning && !terrainAuthoringEnabled && selectedObject != null && state.activeTool != EditorTool.SELECT) {
-            TransformGizmo(
+            ViewportTransformDock(
                 tool = state.activeTool,
-                onDelta = onTransformChange,
-                modifier = Modifier.align(Alignment.Center),
+                objectName = selectedObject.name,
+                onFreeDrag = onTransformDrag,
+                onAxisDelta = onTransformChange,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 12.dp),
             )
         }
+    }
+}
+
+
+@Composable
+private fun ViewportTransformDock(
+    tool: EditorTool,
+    objectName: String,
+    onFreeDrag: (Float, Float) -> Unit,
+    onAxisDelta: (TransformProperty, TransformAxis, Float) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    var axis by remember(tool, objectName) { mutableStateOf(TransformAxis.X) }
+    val property = when (tool) {
+        EditorTool.MOVE -> TransformProperty.POSITION
+        EditorTool.ROTATE -> TransformProperty.ROTATION
+        EditorTool.SCALE -> TransformProperty.SCALE
+        EditorTool.SELECT -> TransformProperty.POSITION
+    }
+    val step = when (tool) {
+        EditorTool.MOVE -> 0.1f
+        EditorTool.ROTATE -> 5f
+        EditorTool.SCALE -> 0.05f
+        EditorTool.SELECT -> 0f
+    }
+    Row(
+        modifier = modifier
+            .background(Color(0xE616191E), RoundedCornerShape(18.dp))
+            .padding(horizontal = 8.dp, vertical = 7.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = objectName.take(18),
+            color = Color(0xFFE8EAF0),
+            fontSize = 8.sp,
+            maxLines = 1,
+            modifier = Modifier.padding(horizontal = 5.dp),
+        )
+        TransformAxis.entries.forEach { candidate ->
+            Button(
+                onClick = { axis = candidate },
+                modifier = Modifier.padding(horizontal = 2.dp).size(36.dp),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = if (axis == candidate) Color(0xFF3D5468) else Color(0xFF242931),
+                    contentColor = when (candidate) {
+                        TransformAxis.X -> Color(0xFFE16F74)
+                        TransformAxis.Y -> Color(0xFF6FC78C)
+                        TransformAxis.Z -> Color(0xFF69A6E8)
+                    },
+                ),
+            ) { Text(candidate.name, fontSize = 10.sp) }
+        }
+        Button(
+            onClick = { onAxisDelta(property, axis, -step) },
+            modifier = Modifier.padding(start = 4.dp).size(36.dp),
+            contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF242931)),
+        ) { Text("−") }
+        Box(
+            modifier = Modifier
+                .padding(horizontal = 4.dp)
+                .size(width = 86.dp, height = 36.dp)
+                .background(Color(0xFF20252C), RoundedCornerShape(12.dp))
+                .pointerInput(tool, objectName) {
+                    detectDragGestures { change, amount ->
+                        change.consume()
+                        onFreeDrag(amount.x, amount.y)
+                    }
+                },
+            contentAlignment = Alignment.Center,
+        ) {
+            Text("ARRASTE", color = Color(0xFFADB3BD), fontSize = 7.sp)
+        }
+        Button(
+            onClick = { onAxisDelta(property, axis, step) },
+            modifier = Modifier.size(36.dp),
+            contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF242931)),
+        ) { Text("+") }
     }
 }

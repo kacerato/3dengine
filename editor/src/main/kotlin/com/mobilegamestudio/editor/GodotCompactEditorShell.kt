@@ -128,7 +128,7 @@ internal fun GodotCompactEditorShell(
     onSmoothVoxel: (Int) -> Unit,
 ) {
     val previewActive = state.isPreviewStarting || state.isPreviewRunning
-    var openPanelName by rememberSaveable { mutableStateOf<String?>(StudioPopup.FILES.name) }
+    var openPanelName by rememberSaveable { mutableStateOf<String?>(null) }
     val openPanel = openPanelName?.let(StudioPopup::valueOf)
 
     fun show(panel: StudioPopup?) {
@@ -369,7 +369,7 @@ private fun CompactStudioTopBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(42.dp)
+            .height(50.dp)
             .background(PanelBackground)
             .border(1.dp, WorkspaceBorder),
         verticalAlignment = Alignment.CenterVertically,
@@ -386,7 +386,7 @@ private fun CompactStudioTopBar(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight(),
-            shape = RoundedCornerShape(0.dp),
+            shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.textButtonColors(contentColor = PrimaryText),
         ) {
             Column(
@@ -441,7 +441,7 @@ private fun StudioWorkspaceTabs(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(34.dp)
+            .height(42.dp)
             .background(RaisedBackground)
             .border(1.dp, WorkspaceBorder)
             .horizontalScroll(rememberScrollState()),
@@ -460,8 +460,8 @@ private fun StudioWorkspaceTabs(
 private fun StudioTab(label: String, selected: Boolean, onClick: () -> Unit) {
     TextButton(
         onClick = onClick,
-        modifier = Modifier.height(34.dp),
-        shape = RoundedCornerShape(0.dp),
+        modifier = Modifier.height(42.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.textButtonColors(
             containerColor = if (selected) AccentMuted else Color.Transparent,
             contentColor = if (selected) AccentBright else SecondaryText,
@@ -479,7 +479,7 @@ private fun StudioDockRail(
 ) {
     Column(
         modifier = Modifier
-            .width(46.dp)
+            .width(54.dp)
             .fillMaxHeight()
             .background(PanelBackground)
             .border(1.dp, WorkspaceBorder)
@@ -491,9 +491,9 @@ private fun StudioDockRail(
             val active = panel == selected
             TextButton(
                 onClick = { onSelect(panel) },
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(44.dp),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
-                shape = RoundedCornerShape(4.dp),
+                shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.textButtonColors(
                     containerColor = if (active) AccentMuted else Color.Transparent,
                     contentColor = if (active) AccentBright else SecondaryText,
@@ -513,7 +513,7 @@ private fun CompactViewportTools(selected: EditorTool, onSelected: (EditorTool) 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(38.dp)
+            .height(46.dp)
             .background(RaisedBackground)
             .border(1.dp, WorkspaceBorder)
             .horizontalScroll(rememberScrollState()),
@@ -524,8 +524,8 @@ private fun CompactViewportTools(selected: EditorTool, onSelected: (EditorTool) 
             val active = tool == selected
             TextButton(
                 onClick = { onSelected(tool) },
-                modifier = Modifier.height(38.dp),
-                shape = RoundedCornerShape(0.dp),
+                modifier = Modifier.height(46.dp),
+                shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.textButtonColors(
                     containerColor = if (active) AccentMuted else Color.Transparent,
                     contentColor = if (active) AccentBright else SecondaryText,
@@ -556,7 +556,7 @@ private fun StudioBottomDock(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(32.dp)
+            .height(40.dp)
             .background(PanelBackground)
             .border(1.dp, WorkspaceBorder),
         verticalAlignment = Alignment.CenterVertically,
@@ -580,8 +580,8 @@ private fun StudioBottomDock(
 private fun BottomDockButton(label: String, selected: Boolean, onClick: () -> Unit) {
     TextButton(
         onClick = onClick,
-        modifier = Modifier.height(32.dp),
-        shape = RoundedCornerShape(0.dp),
+        modifier = Modifier.height(40.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.textButtonColors(
             containerColor = if (selected) RaisedBackground else Color.Transparent,
             contentColor = if (selected) AccentBright else SecondaryText,
@@ -670,8 +670,9 @@ private fun StudioPopupHost(
                 modifier = Modifier
                     .fillMaxWidth(widthFraction)
                     .fillMaxHeight(heightFraction)
-                    .background(PanelBackground)
-                    .border(1.dp, WorkspaceBorder)
+                    .padding(8.dp)
+                    .background(PanelBackground, RoundedCornerShape(18.dp))
+                    .border(1.dp, WorkspaceBorder, RoundedCornerShape(18.dp))
                     .imePadding(),
             ) {
                 PopupTitleBar(panel, onClose)
@@ -783,9 +784,9 @@ private fun PopupTitleBar(panel: StudioPopup, onClose: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(36.dp)
-            .background(RaisedBackground)
-            .border(1.dp, WorkspaceBorder)
+            .height(44.dp)
+            .background(RaisedBackground, RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp))
+            .border(1.dp, WorkspaceBorder, RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp))
             .padding(start = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -986,7 +987,7 @@ private fun ResourceTreeRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(34.dp)
+            .height(42.dp)
             .clickable {
                 if (folder) onToggle(node.path) else onOpen(node)
             }
@@ -1224,10 +1225,10 @@ private fun CompactToolButton(
         onClick = onClick,
         enabled = enabled,
         modifier = Modifier
-            .height(42.dp)
+            .height(50.dp)
             .widthIn(min = 38.dp),
         contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 7.dp),
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.textButtonColors(
             containerColor = when {
                 danger -> PlayStopBackground
@@ -1256,7 +1257,7 @@ private fun MiniAction(
         onClick = onClick,
         enabled = enabled,
         modifier = Modifier.height(30.dp),
-        shape = RoundedCornerShape(4.dp),
+        shape = RoundedCornerShape(12.dp),
         contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = RaisedBackground,

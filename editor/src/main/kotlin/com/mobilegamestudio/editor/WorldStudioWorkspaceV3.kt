@@ -128,7 +128,7 @@ internal fun WorldStudioWorkspaceV3(
     onSmoothVoxel: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    var modeName by rememberSaveable { mutableStateOf(StudioV3Mode.SCULPT.name) }
+    var modeName by rememberSaveable { mutableStateOf(StudioV3Mode.OBJECTS.name) }
     var assetsExpanded by rememberSaveable { mutableStateOf(false) }
     var voxelAxisName by rememberSaveable { mutableStateOf(VoxelSliceAxis.Z.name) }
     var voxelModeName by rememberSaveable { mutableStateOf(VoxelBrushMode.SUBTRACT.name) }
@@ -145,8 +145,8 @@ internal fun WorldStudioWorkspaceV3(
 
     BoxWithConstraints(modifier.fillMaxSize().background(StudioV3Background)) {
         val compact = maxWidth < 900.dp
-        val treeWidth = if (compact) 176.dp else 218.dp
-        val inspectorWidth = if (compact) 224.dp else 274.dp
+        val treeWidth = if (compact) 156.dp else 196.dp
+        val inspectorWidth = if (compact) 196.dp else 244.dp
         Column(Modifier.fillMaxSize()) {
             StudioV3Header(
                 state = state,
@@ -311,7 +311,7 @@ private fun StudioV3Header(
     onSave: () -> Unit,
 ) {
     Row(
-        Modifier.fillMaxWidth().height(48.dp).background(StudioV3Panel).border(1.dp, StudioV3Border),
+        Modifier.fillMaxWidth().height(54.dp).padding(6.dp).background(StudioV3Panel, RoundedCornerShape(16.dp)).border(1.dp, StudioV3Border, RoundedCornerShape(16.dp)),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         V3IconButton("‹", "Voltar", onClick = onExit)

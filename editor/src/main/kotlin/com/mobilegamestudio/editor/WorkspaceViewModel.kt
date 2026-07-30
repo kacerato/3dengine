@@ -475,6 +475,7 @@ class WorkspaceViewModel(
     fun addPrimitive(primitive: PrimitiveMesh) {
         if (!canEdit()) return
         val objectNumber = nextObjectNumber++
+        val spawnTarget = mutableState.value.sceneDocument?.editorSettings?.cameraTarget ?: Vector3.ZERO
         val label = if (primitive == PrimitiveMesh.CUBE) "Cube" else "Plane"
         val newObject = EditorSceneObject(
             id = UUID.randomUUID().toString(),
@@ -494,10 +495,12 @@ class WorkspaceViewModel(
             ),
             transform = if (primitive == PrimitiveMesh.PLANE) {
                 EditorTransform(
-                    position = EditorVector3(y = -1f),
+                    position = EditorVector3(spawnTarget.x, spawnTarget.y, spawnTarget.z),
                     scale = EditorVector3(4f, 1f, 4f),
                 )
-            } else EditorTransform(position = EditorVector3(x = 0.5f * objectNumber)),
+            } else EditorTransform(
+                position = EditorVector3(spawnTarget.x, spawnTarget.y + 0.5f, spawnTarget.z),
+            ),
             viewportX = 0.5f,
             viewportY = 0.5f,
         )
@@ -521,6 +524,9 @@ class WorkspaceViewModel(
         if (!canEdit()) return
         require(type != EditorObjectType.MESH)
         val objectNumber = nextObjectNumber++
+        val editorSettings = mutableState.value.sceneDocument?.editorSettings
+        val spawnTarget = editorSettings?.cameraTarget ?: Vector3.ZERO
+        val cameraOrbit = editorSettings?.cameraOrbit ?: Vector3(6f, 4f, 8f)
         val newObject = EditorSceneObject(
             id = UUID.randomUUID().toString(),
             name = when (type) {
@@ -537,12 +543,12 @@ class WorkspaceViewModel(
             },
             type = type,
             transform = when (type) {
-                EditorObjectType.CAMERA -> EditorTransform(position = EditorVector3(6f, 4f, 8f))
-                EditorObjectType.LIGHT -> EditorTransform(rotation = EditorVector3(-45f, -30f, 0f))
+                EditorObjectType.CAMERA -> EditorTransform(position = EditorVector3(cameraOrbit.x, cameraOrbit.y, cameraOrbit.z))
+                EditorObjectType.LIGHT -> EditorTransform(position = EditorVector3(spawnTarget.x, spawnTarget.y + 4f, spawnTarget.z), rotation = EditorVector3(-45f, -30f, 0f))
                 EditorObjectType.PLAYER,
                 EditorObjectType.PLAYER_FIRST_PERSON,
                 EditorObjectType.PLAYER_TOP_DOWN,
-                -> EditorTransform(position = EditorVector3(y = 1f))
+                -> EditorTransform(position = EditorVector3(spawnTarget.x, spawnTarget.y + 1f, spawnTarget.z))
                 else -> EditorTransform()
             },
             viewportX = 0.5f,

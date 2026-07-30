@@ -38,56 +38,16 @@ def patch_scene_viewport() -> None:
     )
     replace_once(
         path,
-        """    val sceneMarkers = if (state.isPreviewRunning) emptyList() else document.objects.mapNotNull { item ->""",
-        """    val sceneMarkers = if (state.isPreviewRunning || !editorChromeVisible) emptyList() else document.objects.mapNotNull { item ->""",
+        """    val sceneMarkers = if (state.isPreviewRunning || terrainAuthoringEnabled) emptyList() else document.objects.mapNotNull { item ->""",
+        """    val sceneMarkers = if (state.isPreviewRunning || terrainAuthoringEnabled || !editorChromeVisible) emptyList() else document.objects.mapNotNull { item ->""",
     )
-    old = """        Row(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(10.dp)
-                .background(Color(0xCC181C20), RoundedCornerShape(4.dp))
-                .padding(horizontal = 9.dp, vertical = 6.dp),
-        ) {
-            Text(
-                if (state.isPreviewRunning) {
-                    "● PLAY ${"%.1f".format(state.previewSeconds)}s"
-                } else {
-                    "PERSPECTIVA · FILAMENT"
-                },
-                color = if (state.isPreviewRunning) Positive else SecondaryText,
-                fontSize = 9.sp,
-                letterSpacing = 0.7.sp,
-            )
-            if (!state.isPreviewRunning && selectedObject != null) {
-                Text(
-                    "  ·  SELECIONADO: ${selectedObject.name}",
-                    color = Accent,
-                    fontSize = 9.sp,
-                    maxLines = 1,
-                )
-            }
-        }
-"""
-    new = """        if (editorChromeVisible) {
-            Row(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(8.dp)
-                    .background(Color(0xD912151A), RoundedCornerShape(3.dp))
-                    .padding(horizontal = 7.dp, vertical = 4.dp),
-            ) {
-                Text(
-                    if (state.isPreviewRunning) "● PLAY ${"%.1f".format(state.previewSeconds)}s" else "3D",
-                    color = if (state.isPreviewRunning) Positive else SecondaryText,
-                    fontSize = 7.sp,
-                )
-                if (!state.isPreviewRunning && selectedObject != null) {
-                    Text("  ${selectedObject.name}", color = Accent, fontSize = 7.sp, maxLines = 1)
-                }
-            }
-        }
-"""
-    replace_once(path, old, new)
+    replace_once(
+        path,
+        """        if (!terrainAuthoringEnabled) {
+            Row(""",
+        """        if (editorChromeVisible && !terrainAuthoringEnabled) {
+            Row(""",
+    )
 
 
 def patch_shell() -> None:

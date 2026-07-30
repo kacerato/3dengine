@@ -2334,7 +2334,7 @@ private fun EditorTransform.toComponent(existing: TransformComponent? = null) = 
 )
 
 private fun buildLogicPath(folder: String, fileName: String?, root: String, extension: String): String? {
-    val normalizedFolder = folder.trim().replace('\', '/').trimEnd('/').ifBlank { root }
+    val normalizedFolder = folder.trim().replace('\\', '/').trimEnd('/').ifBlank { root }
     if (normalizedFolder != root && !normalizedFolder.startsWith("$root/")) return null
     val requested = fileName?.trim().orEmpty().ifBlank { UUID.randomUUID().toString() }
     val withoutExtension = requested

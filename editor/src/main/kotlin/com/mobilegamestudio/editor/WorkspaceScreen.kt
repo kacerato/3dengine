@@ -152,6 +152,7 @@ fun WorkspaceRoute(
                 onTerrainStrokeEnd = viewModel::endTerrainStroke,
                 onCreateFlatTerrain = viewModel::createFlatTerrain,
                 onCreatePlayableWorld = viewModel::createPlayableWorld,
+                onCreatePlayableWorld = viewModel::createPlayableWorld,
                 onAssignTerrainTexture = viewModel::assignTerrainTexture,
                 onCreateEditableMesh = viewModel::createEditableMesh,
                 onConvertSelectedToEditableMesh = viewModel::convertSelectedToEditableMesh,

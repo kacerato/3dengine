@@ -3,12 +3,12 @@ name: Android debug APK
 on:
   push:
     branches:
+      - master
       - feature/compact-godot-workspace
       - feature/world-studio-direct-editing
   pull_request:
     branches:
       - master
-      - feature/compact-godot-workspace
   workflow_dispatch:
 
 permissions:

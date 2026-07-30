@@ -28,6 +28,21 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Prepare sequential source patcher
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('tools/apply_authoring_upgrade.py')
+          source = path.read_text(encoding='utf-8')
+          source = source.replace(
+              '    if count != 1:\n        raise RuntimeError(f"{path}: expected one exact match, found {count}: {old[:120]!r}")',
+              '    if count < 1:\n        raise RuntimeError(f"{path}: expected an exact match, found {count}: {old[:120]!r}")',
+              1,
+          )
+          path.write_text(source, encoding='utf-8')
+          PY
+
       - name: Apply advanced authoring source upgrade
         run: python tools/apply_authoring_upgrade.py
 

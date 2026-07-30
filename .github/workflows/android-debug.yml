@@ -17,7 +17,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -73,6 +73,12 @@ jobs:
       - name: Apply World Studio compile hotfixes
         run: python tools/apply_world_studio_compile_hotfix.py
 
+      - name: Apply Studio V3 geometry
+        run: python tools/apply_studio_v3_geometry.py
+
+      - name: Apply Studio V3 interface
+        run: python tools/apply_studio_v3_ui.py
+
       - name: Persist generated source changes
         if: github.event_name == 'push'
         shell: bash
@@ -83,7 +89,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated changes"
           else
-            git commit -m "feat: direct viewport world authoring"
+            git commit -m "feat: solid Studio V3 layout, mesh editing and voxel volumes"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -108,7 +114,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-world-studio-direct-debug
+          name: mobile-game-studio-v3-solid-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

@@ -5,9 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0f1115" />
     <title>Mobile Game Studio</title>
+    <style>
+      html,
+      body,
+      #root {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        background: #0f1115;
+      }
+
+      #editor-boot-status {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        box-sizing: border-box;
+        background: #0f1115;
+        color: #c7cbd3;
+        font: 500 14px/1.5 system-ui, sans-serif;
+        text-align: center;
+        white-space: pre-wrap;
+      }
+
+      #editor-boot-status[data-error='true'] {
+        color: #f2a0a6;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <div id="editor-boot-status">Carregando editor…</div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

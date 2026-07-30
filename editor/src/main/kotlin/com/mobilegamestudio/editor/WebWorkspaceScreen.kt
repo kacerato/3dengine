@@ -76,6 +76,7 @@ fun WebWorkspaceRoute(
     onBack: () -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val playScene = state.playScene
     BackHandler(enabled = state.playing) { viewModel.stopPlay() }
 
     when {
@@ -93,8 +94,8 @@ fun WebWorkspaceRoute(
             Text(state.message ?: "Não foi possível abrir a cena.", color = ComposeColor(0xFFE7E9ED))
         }
 
-        state.playing && state.playScene != null -> NativePlayPreview(
-            document = state.playScene,
+        state.playing && playScene != null -> NativePlayPreview(
+            document = playScene,
             resolveAsset = resolveAsset,
             onStop = viewModel::stopPlay,
         )

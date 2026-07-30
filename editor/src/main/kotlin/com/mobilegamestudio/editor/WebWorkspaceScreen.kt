@@ -10,7 +10,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,11 +30,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color as ComposeColor
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.mobilegamestudio.core.model.CameraComponent
+import com.mobilegamestudio.core.model.DirectionalLightComponent
 import com.mobilegamestudio.core.model.EditorMode
+import com.mobilegamestudio.core.model.MeshRendererComponent
 import com.mobilegamestudio.core.model.PrimitiveMesh
 import com.mobilegamestudio.core.model.SceneDocument
 import com.mobilegamestudio.core.model.TransformComponent
@@ -87,12 +93,10 @@ fun WebWorkspaceRoute(
             CircularProgressIndicator(color = ComposeColor(0xFF9F7AEA))
         }
 
-        state.scene == null -> Box(
-            modifier = Modifier.fillMaxSize().background(ComposeColor(0xFF0D0F13)),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(state.message ?: "Não foi possível abrir a cena.", color = ComposeColor(0xFFE7E9ED))
-        }
+        state.scene == null -> WorkspaceFailurePanel(
+            message = state.message ?: "Não foi possível abrir a cena.",
+            onBack = onBack,
+        )
 
         state.playing && playScene != null -> NativePlayPreview(
             document = playScene,
@@ -146,20 +150,46 @@ private fun WebEditorHost(
     onBack: () -> Unit,
 ) {
     val scene = requireNotNull(state.scene)
-    val snapshot = remember(state) {
-        webEditorJson.encodeToString(
-            WebEditorSnapshotPayload(
-                projectName = state.metadata?.name ?: "Projeto",
-                scene = scene,
-                selectedObjectId = state.selectedObjectId,
-                mode = state.tool.name.lowercase(),
-                dirty = state.dirty,
-                canUndo = state.canUndo,
-                canRedo = state.canRedo,
-                playing = false,
-            ),
-        )
+
+    // The web editor only needs the small, interactive slice of the native scene.
+    // Serializing terrain, voxel density, animation packs and every advanced component
+    // produced very large JSON payloads and could crash the process while opening a
+    // project. The native SceneDocument remains untouched; this is only a lightweight
+    // projection for the editor UI.
+    val snapshotResult = remember(
+        scene,
+        state.metadata?.name,
+        state.selectedObjectId,
+        state.tool,
+        state.dirty,
+        state.canUndo,
+        state.canRedo,
+    ) {
+        runCatching {
+            webEditorJson.encodeToString(
+                WebEditorSnapshotPayload(
+                    projectName = state.metadata?.name ?: "Projeto",
+                    scene = scene.toWebEditorProjection(),
+                    selectedObjectId = state.selectedObjectId,
+                    mode = state.tool.name.lowercase(),
+                    dirty = state.dirty,
+                    canUndo = state.canUndo,
+                    canRedo = state.canRedo,
+                    playing = false,
+                ),
+            )
+        }
     }
+
+    val snapshot = snapshotResult.getOrElse { error ->
+        WorkspaceFailurePanel(
+            message = "A cena foi carregada, mas não pôde ser preparada para o editor: " +
+                (error.message ?: error::class.simpleName.orEmpty()),
+            onBack = onBack,
+        )
+        return
+    }
+
     val snapshotReference = remember { AtomicReference(snapshot) }
     snapshotReference.set(snapshot)
     val bridge = remember(viewModel) { WebEditorJavascriptBridge(viewModel, snapshotReference) }
@@ -190,6 +220,15 @@ private fun WebEditorHost(
                             !url.startsWith("file:///android_asset/editor/")
                         }
                     }
+
+                    override fun onPageFinished(view: WebView, url: String) {
+                        super.onPageFinished(view, url)
+                        val latest = snapshotReference.get()
+                        view.evaluateJavascript(
+                            "window.__MGS_RECEIVE_SNAPSHOT__?.(${JSONObject.quote(latest)});",
+                            null,
+                        )
+                    }
                 }
                 addJavascriptInterface(bridge, "MobileGameStudioEditor")
                 loadUrl(WEB_EDITOR_URL)
@@ -209,6 +248,58 @@ private fun WebEditorHost(
         onDispose {
             webView?.removeJavascriptInterface("MobileGameStudioEditor")
             webView?.destroy()
+        }
+    }
+}
+
+private fun SceneDocument.toWebEditorProjection(): SceneDocument = copy(
+    objects = objects.map { objectValue ->
+        objectValue.copy(
+            components = objectValue.components.filter { component ->
+                component is TransformComponent ||
+                    component is MeshRendererComponent ||
+                    component is CameraComponent ||
+                    component is DirectionalLightComponent
+            },
+        )
+    },
+)
+
+@Composable
+private fun WorkspaceFailurePanel(
+    message: String,
+    onBack: () -> Unit,
+) {
+    Box(
+        modifier = Modifier.fillMaxSize().background(ComposeColor(0xFF0D0F13)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Column(
+            modifier = Modifier.padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(14.dp),
+        ) {
+            Text(
+                text = "Não foi possível abrir o editor",
+                color = ComposeColor(0xFFF2A0A6),
+                fontSize = 16.sp,
+            )
+            Text(
+                text = message,
+                color = ComposeColor(0xFFC7CBD3),
+                fontSize = 11.sp,
+                textAlign = TextAlign.Center,
+            )
+            Button(
+                onClick = onBack,
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = ComposeColor(0xFF272C36),
+                    contentColor = ComposeColor(0xFFE7E9ED),
+                ),
+            ) {
+                Text("VOLTAR", fontSize = 11.sp)
+            }
         }
     }
 }

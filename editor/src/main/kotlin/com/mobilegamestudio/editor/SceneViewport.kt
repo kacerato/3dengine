@@ -1,12 +1,12 @@
 package com.mobilegamestudio.editor
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,14 +20,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mobilegamestudio.core.model.EditorMode
 import com.mobilegamestudio.core.model.CameraComponent
 import com.mobilegamestudio.core.model.DirectionalLightComponent
+import com.mobilegamestudio.core.model.EditorMode
 import com.mobilegamestudio.core.model.TouchButtonComponent
 import com.mobilegamestudio.core.model.VirtualJoystickComponent
 import com.mobilegamestudio.runtime.RuntimeSceneViewport
@@ -42,6 +42,13 @@ internal fun SceneViewport(
     onTransformChange: (TransformProperty, TransformAxis, Float) -> Unit = { _, _, _ -> },
     onDiagnostic: (String) -> Unit,
     onPreviewAction: (String) -> Unit,
+    editorChromeVisible: Boolean = true,
+    terrainAuthoringEnabled: Boolean = false,
+    terrainTopDownCamera: Boolean = false,
+    terrainBrushRadius: Float = 0.12f,
+    onTerrainStrokeBegin: () -> Unit = {},
+    onTerrainStrokePoint: (Float, Float) -> Unit = { _, _ -> },
+    onTerrainStrokeEnd: (Boolean) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val document = state.playDocument ?: state.sceneDocument ?: return
@@ -55,7 +62,7 @@ internal fun SceneViewport(
     val joysticks = document.objects.flatMap { item ->
         item.components.filterIsInstance<VirtualJoystickComponent>()
     }
-    val sceneMarkers = if (state.isPreviewRunning) emptyList() else document.objects.mapNotNull { item ->
+    val sceneMarkers = if (state.isPreviewRunning || terrainAuthoringEnabled || !editorChromeVisible) emptyList() else document.objects.mapNotNull { item ->
         when {
             item.components.any { it is CameraComponent } -> Triple(item.id, "CAM", item.name)
             item.components.any { it is DirectionalLightComponent } -> Triple(item.id, "SUN", item.name)
@@ -70,37 +77,52 @@ internal fun SceneViewport(
             mode = mode,
             resolveAsset = resolveAsset,
             onObjectSelected = onObjectSelected,
-            transformGesturesEnabled = !state.isPreviewRunning && state.activeTool != EditorTool.SELECT,
+            transformGesturesEnabled = !state.isPreviewRunning && state.activeTool != EditorTool.SELECT && !terrainAuthoringEnabled,
             onTransformDrag = onTransformDrag,
+            terrainTopDownCamera = terrainTopDownCamera,
             onDiagnostic = onDiagnostic,
             modifier = Modifier.matchParentSize(),
         )
-        Row(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(10.dp)
-                .background(Color(0xCC181C20), RoundedCornerShape(4.dp))
-                .padding(horizontal = 9.dp, vertical = 6.dp),
-        ) {
-            Text(
-                if (state.isPreviewRunning) {
-                    "● PLAY ${"%.1f".format(state.previewSeconds)}s"
-                } else {
-                    "PERSPECTIVA · FILAMENT"
-                },
-                color = if (state.isPreviewRunning) Positive else SecondaryText,
-                fontSize = 9.sp,
-                letterSpacing = 0.7.sp,
-            )
-            if (!state.isPreviewRunning && selectedObject != null) {
+
+        TerrainViewportAuthoringOverlay(
+            enabled = !state.isPreviewRunning && terrainAuthoringEnabled,
+            brushMode = state.terrainTool.mode,
+            normalizedRadius = terrainBrushRadius,
+            onStrokeBegin = onTerrainStrokeBegin,
+            onStrokePoint = onTerrainStrokePoint,
+            onStrokeEnd = onTerrainStrokeEnd,
+            modifier = Modifier.matchParentSize(),
+        )
+
+        if (editorChromeVisible && !terrainAuthoringEnabled) {
+            Row(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(10.dp)
+                    .background(Color(0xCC181C20), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 9.dp, vertical = 6.dp),
+            ) {
                 Text(
-                    "  ·  SELECIONADO: ${selectedObject.name}",
-                    color = Accent,
+                    if (state.isPreviewRunning) {
+                        "● PLAY ${"%.1f".format(state.previewSeconds)}s"
+                    } else {
+                        "PERSPECTIVA · FILAMENT"
+                    },
+                    color = if (state.isPreviewRunning) Positive else SecondaryText,
                     fontSize = 9.sp,
-                    maxLines = 1,
+                    letterSpacing = 0.7.sp,
                 )
+                if (!state.isPreviewRunning && selectedObject != null) {
+                    Text(
+                        "  ·  SELECIONADO: ${selectedObject.name}",
+                        color = Accent,
+                        fontSize = 9.sp,
+                        maxLines = 1,
+                    )
+                }
             }
         }
+
         if (sceneMarkers.isNotEmpty()) {
             Row(
                 modifier = Modifier
@@ -121,6 +143,7 @@ internal fun SceneViewport(
                 }
             }
         }
+
         if (state.isPreviewRunning && touchButtons.isNotEmpty()) {
             Row(
                 modifier = Modifier
@@ -144,6 +167,7 @@ internal fun SceneViewport(
                 }
             }
         }
+
         if (state.isPreviewRunning) {
             Box(
                 Modifier
@@ -159,6 +183,7 @@ internal fun SceneViewport(
                     },
             )
         }
+
         if (state.isPreviewRunning && joysticks.isNotEmpty()) {
             val joystick = joysticks.first()
             var joystickKnob by remember(joystick.componentId) { mutableStateOf(Offset.Zero) }
@@ -203,10 +228,15 @@ internal fun SceneViewport(
                     radius = size.minDimension / 5f,
                     center = center + joystickKnob,
                 )
-                drawCircle(Color(0xFFB98AFF), radius = size.minDimension / 2f, style = androidx.compose.ui.graphics.drawscope.Stroke(3f))
+                drawCircle(
+                    Color(0xFFB98AFF),
+                    radius = size.minDimension / 2f,
+                    style = androidx.compose.ui.graphics.drawscope.Stroke(3f),
+                )
             }
         }
-        if (!state.isPreviewRunning && selectedObject != null && state.activeTool != EditorTool.SELECT) {
+
+        if (!state.isPreviewRunning && !terrainAuthoringEnabled && selectedObject != null && state.activeTool != EditorTool.SELECT) {
             TransformGizmo(
                 tool = state.activeTool,
                 onDelta = onTransformChange,

@@ -32,6 +32,8 @@ import com.mobilegamestudio.core.model.CharacterControllerComponent
 import com.mobilegamestudio.core.model.CharacterCameraMode
 import com.mobilegamestudio.core.model.AnimationControllerComponent
 import com.mobilegamestudio.core.model.MeshRendererComponent
+import com.mobilegamestudio.core.model.EditableMeshComponent
+import com.mobilegamestudio.core.model.VoxelVolumeComponent
 import com.mobilegamestudio.core.model.MeshModifierStackComponent
 import com.mobilegamestudio.core.model.MeshModifierType
 import com.mobilegamestudio.core.model.PrimitiveMesh
@@ -97,6 +99,7 @@ fun RuntimeSceneViewport(
     onObjectSelected: (String?) -> Unit,
     transformGesturesEnabled: Boolean = false,
     onTransformDrag: (Float, Float) -> Unit = { _, _ -> },
+    terrainTopDownCamera: Boolean = false,
     onDiagnostic: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -116,6 +119,8 @@ fun RuntimeSceneViewport(
                 objectValue.id,
                 objectValue.enabled,
                 objectValue.component<MeshRendererComponent>(),
+                objectValue.component<EditableMeshComponent>(),
+                objectValue.component<VoxelVolumeComponent>(),
                 objectValue.component<TerrainComponent>(),
                 objectValue.component<VegetationSpawnerComponent>(),
                 objectValue.component<AnimationControllerComponent>(),
@@ -143,6 +148,11 @@ fun RuntimeSceneViewport(
             ?.position
             ?: document.editorSettings.cameraTarget
     }
+    val terrainCameraObject = document.objects.firstOrNull {
+        it.id == selectedObjectId && it.component<TerrainComponent>() != null
+    }
+    val terrainCameraTransform = terrainCameraObject?.component<TransformComponent>()
+    val terrainCameraComponent = terrainCameraObject?.component<TerrainComponent>()
     val playController = playCharacter?.component<CharacterControllerComponent>()
     val sceneLightObject = document.objects.firstOrNull {
         it.enabled && it.component<com.mobilegamestudio.core.model.DirectionalLightComponent>()?.enabled == true
@@ -181,7 +191,7 @@ fun RuntimeSceneViewport(
     }
     val firstPersonPlay = controlledVehicle == null && mode == EditorMode.PLAY &&
         playController?.cameraMode == CharacterCameraMode.FIRST_PERSON
-    val editorCameraManipulator = if (firstPersonPlay || controlledVehicle != null) {
+    val editorCameraManipulator = if (firstPersonPlay || controlledVehicle != null || terrainTopDownCamera) {
         null
     } else {
         key(document.sceneId, mode) {
@@ -208,8 +218,25 @@ fun RuntimeSceneViewport(
             }
         }
     }
-    LaunchedEffect(editorCameraManipulator, mode) {
-        if (mode == EditorMode.EDITOR && editorCameraManipulator != null) {
+    LaunchedEffect(editorCameraManipulator, mode, terrainTopDownCamera, selectedObjectId) {
+        if (mode != EditorMode.EDITOR) return@LaunchedEffect
+        if (terrainTopDownCamera && terrainCameraComponent != null) {
+            val target = terrainCameraTransform?.position ?: document.editorSettings.cameraTarget
+            val cameraHeight = maxOf(
+                terrainCameraComponent.width * 0.82f,
+                terrainCameraComponent.maxHeight * 2.4f,
+                18f,
+            )
+            sceneCameraNode.transform = lookAt(
+                eye = Float3(target.x, target.y + cameraHeight, target.z + 0.001f),
+                target = Float3(
+                    target.x,
+                    target.y + terrainCameraComponent.maxHeight * 0.12f,
+                    target.z,
+                ),
+                up = Float3(0f, 0f, -1f),
+            )
+        } else if (editorCameraManipulator != null) {
             sceneCameraNode.transform = editorCameraManipulator.getTransform()
         }
     }
@@ -587,8 +614,19 @@ private suspend fun buildProjection(
             val transform = objectValue.component<TransformComponent>() ?: return@forEach
             val pbr = objectValue.component<PbrMaterialComponent>()?.takeIf { it.enabled }
             try {
-            val node = when (renderer.primitive) {
-                PrimitiveMesh.CUBE -> CubeNode(
+            val editableMesh = objectValue.component<EditableMeshComponent>()?.takeIf { it.enabled }
+            val voxelVolume = objectValue.component<VoxelVolumeComponent>()?.takeIf { it.enabled }
+            val customMaterial = if (editableMesh != null || voxelVolume != null) {
+                materialLoader.createColorInstance(
+                    Color(pbr?.baseColorArgb ?: voxelVolume?.colorArgb ?: renderer.colorArgb),
+                    metallic = pbr?.metallic ?: 0.02f,
+                    roughness = pbr?.roughness ?: 0.84f,
+                ).also(materials::add)
+            } else null
+            val node = when {
+                editableMesh != null -> buildEditableMeshNode(engine, editableMesh, requireNotNull(customMaterial))
+                voxelVolume != null -> buildVoxelVolumeNode(engine, voxelVolume, requireNotNull(customMaterial))
+                renderer.primitive == PrimitiveMesh.CUBE -> CubeNode(
                     engine = engine,
                     size = Size(1f, 1f, 1f),
                     materialInstance = materialLoader.createColorInstance(
@@ -597,7 +635,7 @@ private suspend fun buildProjection(
                         roughness = pbr?.roughness ?: 0.72f,
                     ).also(materials::add),
                 )
-                PrimitiveMesh.PLANE -> PlaneNode(
+                renderer.primitive == PrimitiveMesh.PLANE -> PlaneNode(
                     engine = engine,
                     size = Size(1f, 1f, 1f),
                     materialInstance = materialLoader.createColorInstance(
@@ -606,7 +644,7 @@ private suspend fun buildProjection(
                         roughness = pbr?.roughness ?: 0.95f,
                     ).also(materials::add),
                 )
-                null -> {
+                else -> {
                     if (loadedModels >= MAX_MODEL_INSTANCES) {
                         diagnostics += "Limite de $MAX_MODEL_INSTANCES instâncias GLB atingido."
                         return@forEach

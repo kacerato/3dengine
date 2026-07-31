@@ -24,6 +24,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: godot-derived-editor-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build-editor:
     runs-on: ubuntu-24.04
@@ -73,23 +77,20 @@ jobs:
       - name: Bootstrap pinned upstream
         run: tools/godot/bootstrap_upstream.sh
 
-      - name: Apply and verify product boundary
+      - name: Apply product identity
         shell: bash
         run: |
-          expected="$(grep '^UPSTREAM_COMMIT=' godot-upstream/UPSTREAM.lock | cut -d= -f2-)"
-          actual="$(git -C "$GODOT_WORK_DIR" rev-parse HEAD)"
-          test "$actual" = "$expected"
           python tools/godot/apply_product_patches.py \
             --godot-dir "$GODOT_WORK_DIR" \
             --root-dir "$GITHUB_WORKSPACE"
-          grep -q 'applicationId "com.mobilegamestudio.editor"' \
-            "$GODOT_WORK_DIR/platform/android/java/editor/build.gradle"
-          grep -q 'editorAppName: "Mobile Game Studio"' \
-            "$GODOT_WORK_DIR/platform/android/java/editor/build.gradle"
-          grep -q 'archivesName = "mobile_game_studio_editor"' \
-            "$GODOT_WORK_DIR/platform/android/java/editor/build.gradle"
-          grep -q 'name = "Mobile Game Studio"' "$GODOT_WORK_DIR/version.py"
-          grep -q 'short_name = "godot"' "$GODOT_WORK_DIR/version.py"
+
+      - name: Verify upstream parity boundary
+        shell: bash
+        run: |
+          expected="$(grep '^UPSTREAM_COMMIT=' godot-upstream/UPSTREAM.lock | cut -d= -f2-)"
+          python tools/godot/verify_upstream_parity.py \
+            --godot-dir "$GODOT_WORK_DIR" \
+            --expected-commit "$expected"
           test -f godot-upstream/licenses/GODOT_LICENSE.txt
           test -f godot-upstream/licenses/GODOT_COPYRIGHT.txt
           test -f godot-upstream/licenses/DERIVATIVE_NOTICE.txt

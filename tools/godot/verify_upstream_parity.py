@@ -14,7 +14,7 @@ CRITICAL_EDITOR_FILES = (
     "editor/docks/filesystem_dock.cpp",
     "editor/inspector/editor_inspector.cpp",
     "editor/script/script_editor_plugin.cpp",
-    "editor/scene/2d/canvas_item_editor_plugin.cpp",
+    "editor/scene/canvas_item_editor_plugin.cpp",
     "editor/scene/3d/node_3d_editor_plugin.cpp",
     "editor/debugger/editor_debugger_node.cpp",
     "editor/gui/touch_actions_panel.cpp",

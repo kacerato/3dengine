@@ -2391,7 +2391,8 @@ class WorkspaceViewModel(
                             )
                             return@launch
                         }
-                        val scene = (sceneResult as ContentResult.Success).value
+                        val loadedScene = (sceneResult as ContentResult.Success).value
+                        val scene = loadedScene.ensureWorldLayerStructure()
                         persistedScene = scene
                         sceneHistory = SceneCommandHistory(scene, MAX_HISTORY)
                         val objects = scene.toEditorObjects()

@@ -419,29 +419,6 @@ fun RuntimeSceneViewport(
                 cameraManipulator = editorCameraManipulator,
                 onGestureListener = rememberOnGestureListener(
                     onSingleTapConfirmed = { _, node -> onObjectSelected(node?.name) },
-                    onDoubleTap = { _, node ->
-                        if (mode == EditorMode.EDITOR) {
-                            val transform = document.objects
-                                .firstOrNull { it.id == node?.name }
-                                ?.component<TransformComponent>()
-                            if (transform == null) {
-                                persistentEditorManipulator.applyPreset(EditorCameraPreset.HOME, null, 4f)
-                            } else {
-                                val scale = transform.scale
-                                val radius = maxOf(
-                                    kotlin.math.abs(scale.x),
-                                    kotlin.math.abs(scale.y),
-                                    kotlin.math.abs(scale.z),
-                                ).coerceAtLeast(0.25f) * 3.4f
-                                persistentEditorManipulator.applyPreset(
-                                    EditorCameraPreset.FOCUS_SELECTION,
-                                    Position(transform.position.x, transform.position.y, transform.position.z),
-                                    radius,
-                                )
-                            }
-                            sceneCameraNode.transform = persistentEditorManipulator.getTransform()
-                        }
-                    },
                 ),
             )
         } else {

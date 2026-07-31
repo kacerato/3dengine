@@ -143,8 +143,17 @@ internal fun GodotCompactEditorShell(
     val openPanel = openPanelName?.let { savedName ->
         StudioPopup.entries.firstOrNull { it.name == savedName }
     }
+    var worldModeName by rememberSaveable { mutableStateOf(WorldStudioInlineMode.OBJECTS.name) }
+    var worldSurfaceEditing by rememberSaveable { mutableStateOf(false) }
+    val worldMode = WorldStudioInlineMode.entries.firstOrNull { it.name == worldModeName }
+        ?: WorldStudioInlineMode.OBJECTS
+    val worldTerrainAuthoring = openPanel == StudioPopup.WORLD &&
+        worldSurfaceEditing &&
+        state.selectedTerrain != null &&
+        worldMode in setOf(WorldStudioInlineMode.TERRAIN, WorldStudioInlineMode.PAINT)
 
     fun show(panel: StudioPopup?) {
+        if (panel != StudioPopup.WORLD) worldSurfaceEditing = false
         openPanelName = panel?.name
         when (panel) {
             StudioPopup.SCENE, StudioPopup.INSPECTOR, StudioPopup.ADD,
@@ -170,7 +179,7 @@ internal fun GodotCompactEditorShell(
             .background(WorkspaceBackground),
     ) {
         Column(Modifier.fillMaxSize()) {
-            if (openPanel != StudioPopup.WORLD) CompactStudioTopBar(
+            CompactStudioTopBar(
                 state = state,
                 onBack = {
                     when {
@@ -201,69 +210,6 @@ internal fun GodotCompactEditorShell(
                         .fillMaxWidth(),
                 )
             } else {
-                if (openPanel == StudioPopup.WORLD) {
-                    WorldStudioWorkspaceV3(
-                        state = state,
-                        resolveAsset = resolveAsset,
-                        onExit = { show(null) },
-                        onUndo = onUndo,
-                        onRedo = onRedo,
-                        onSave = onSaveScene,
-                        onToolSelected = onToolSelected,
-                        onSelectObject = onSelectObject,
-                        onViewportObjectSelected = onViewportObjectSelected,
-                        onToggleVisibility = onToggleVisibility,
-                        onAddPrimitive = onAddPrimitive,
-                        onAddSceneObject = onAddSceneObject,
-                        onAddAsset = onAddAsset,
-                        onTransformChange = onTransformChange,
-                        onTransformValueChange = onTransformValueChange,
-                        onDiagnostic = onReportDiagnostic,
-                        onTerrainToolChange = onTerrainToolChange,
-                        onTerrainFalloffChange = onTerrainFalloffChange,
-                        onTerrainStrokeBegin = onTerrainStrokeBegin,
-                        onTerrainStrokePoint = onTerrainStrokePoint,
-                        onTerrainStrokeEnd = onTerrainStrokeEnd,
-                        onCreateFlatTerrain = onCreateFlatTerrain,
-
-                        onCreatePlayableWorld = onCreatePlayableWorld,
-
-                        onCreateWorldLayer = onCreateWorldLayer,
-
-                        onSelectWorldLayer = onSelectWorldLayer,
-
-                        onRenameWorldLayer = onRenameWorldLayer,
-
-                        onMoveWorldLayer = onMoveWorldLayer,
-
-                        onToggleWorldLayerVisibility = onToggleWorldLayerVisibility,
-
-                        onToggleWorldLayerLock = onToggleWorldLayerLock,
-
-                        onToggleWorldLayerSolo = onToggleWorldLayerSolo,
-
-                        onAssignSelectedToWorldLayer = onAssignSelectedToWorldLayer,
-
-                        onPlay = onTogglePreview,
-
-                        onAssignTerrainTexture = onAssignTerrainTexture,
-                        onImportAsset = onImportAsset,
-                        onImportHeightmap = onImportTerrainHeightmap,
-                        onCreateEditableMesh = onCreateEditableMesh,
-                        onConvertSelectedToEditableMesh = onConvertSelectedToEditableMesh,
-                        onSelectMeshVertex = onSelectMeshVertex,
-                        onSelectMeshFace = onSelectMeshFace,
-                        onMoveMeshSelection = onMoveMeshSelection,
-                        onExtrudeMeshFace = onExtrudeMeshFace,
-                        onSubdivideMeshFace = onSubdivideMeshFace,
-                        onDyntopoMesh = onDyntopoMesh,
-                        onCreateVoxelVolume = onCreateVoxelVolume,
-                        onConvertMeshToVoxel = onConvertMeshToVoxel,
-                        onVoxelBrush = onVoxelBrush,
-                        onSmoothVoxel = onSmoothVoxel,
-                        modifier = Modifier.weight(1f).fillMaxWidth(),
-                    )
-                } else {
                 StudioWorkspaceTabs(
                     selected = openPanel,
                     onScene = { show(null) },
@@ -288,23 +234,91 @@ internal fun GodotCompactEditorShell(
                         selected = openPanel,
                         onSelect = ::toggle,
                     )
+                    if (openPanel == StudioPopup.WORLD) {
+                        WorldStudioV4InlineDock(
+                            state = state,
+                            mode = worldMode,
+                            surfaceEditing = worldSurfaceEditing,
+                            onMode = { next ->
+                                worldModeName = next.name
+                                worldSurfaceEditing = false
+                                when (next) {
+                                    WorldStudioInlineMode.PAINT ->
+                                        onTerrainToolChange(TerrainBrushMode.PAINT, null, null, null, null)
+                                    WorldStudioInlineMode.OBJECTS ->
+                                        if (state.activeTool == EditorTool.SELECT) onToolSelected(EditorTool.MOVE)
+                                    else -> onToolSelected(EditorTool.SELECT)
+                                }
+                            },
+                            onSurfaceEditing = { worldSurfaceEditing = it },
+                            onClose = { show(null) },
+                            onSelectObject = onSelectObject,
+                            onCreateLayer = onCreateWorldLayer,
+                            onSelectLayer = onSelectWorldLayer,
+                            onRenameLayer = onRenameWorldLayer,
+                            onMoveLayer = onMoveWorldLayer,
+                            onToggleLayerVisibility = onToggleWorldLayerVisibility,
+                            onToggleLayerLock = onToggleWorldLayerLock,
+                            onToggleLayerSolo = onToggleWorldLayerSolo,
+                            onAssignSelectedToLayer = onAssignSelectedToWorldLayer,
+                            onAddPrimitive = onAddPrimitive,
+                            onAddSceneObject = onAddSceneObject,
+                            onCreateFlatTerrain = onCreateFlatTerrain,
+                            onCreatePlayableWorld = onCreatePlayableWorld,
+                            onCreateEditableMesh = onCreateEditableMesh,
+                            onConvertSelectedToEditableMesh = onConvertSelectedToEditableMesh,
+                            onCreateVoxelVolume = onCreateVoxelVolume,
+                            onConvertMeshToVoxel = onConvertMeshToVoxel,
+                            onImportAsset = onImportAsset,
+                            onDiagnostic = onReportDiagnostic,
+                        )
+                    }
                     Column(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight(),
                     ) {
-                        CompactViewportTools(state.activeTool, onToolSelected)
+                        if (openPanel == StudioPopup.WORLD) {
+                            WorldStudioV4InlineToolbar(
+                                mode = worldMode,
+                                surfaceEditing = worldSurfaceEditing,
+                                activeTool = state.activeTool,
+                                onMode = { next ->
+                                    worldModeName = next.name
+                                    worldSurfaceEditing = false
+                                    when (next) {
+                                        WorldStudioInlineMode.PAINT ->
+                                            onTerrainToolChange(TerrainBrushMode.PAINT, null, null, null, null)
+                                        WorldStudioInlineMode.OBJECTS ->
+                                            if (state.activeTool == EditorTool.SELECT) onToolSelected(EditorTool.MOVE)
+                                        else -> onToolSelected(EditorTool.SELECT)
+                                    }
+                                },
+                                onSurfaceEditing = { worldSurfaceEditing = it },
+                                onToolSelected = onToolSelected,
+                            )
+                        } else {
+                            CompactViewportTools(state.activeTool, onToolSelected)
+                        }
                         SceneViewport(
                             state = state,
                             resolveAsset = resolveAsset,
                             onObjectSelected = { id ->
-                                onViewportObjectSelected(id)
-                                if (id != null) show(StudioPopup.INSPECTOR)
+                                if (!worldTerrainAuthoring) {
+                                    onViewportObjectSelected(id)
+                                    if (id != null && openPanel != StudioPopup.WORLD) show(StudioPopup.INSPECTOR)
+                                }
                             },
                             onTransformDrag = onTransformDrag,
                             onTransformChange = onTransformChange,
                             onDiagnostic = onReportDiagnostic,
                             onPreviewAction = onPreviewAction,
+                            terrainAuthoringEnabled = worldTerrainAuthoring,
+                            terrainTopDownCamera = false,
+                            terrainBrushRadius = state.terrainTool.radius,
+                            onTerrainStrokeBegin = onTerrainStrokeBegin,
+                            onTerrainStrokePoint = onTerrainStrokePoint,
+                            onTerrainStrokeEnd = onTerrainStrokeEnd,
                             modifier = Modifier
                                 .weight(1f)
                                 .fillMaxWidth()
@@ -332,7 +346,6 @@ internal fun GodotCompactEditorShell(
                         selected = openPanel,
                         onSelect = ::toggle,
                     )
-                }
                 }
             }
         }

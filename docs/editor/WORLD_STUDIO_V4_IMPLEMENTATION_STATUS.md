@@ -2,19 +2,23 @@
 
 ## Estado atual
 
-A implementação das Fases 0–3 do plano V4 permanece na branch como base de domínio e persistência, mas o avanço para a antiga Fase 4 está **pausado**.
+O World Studio V5 foi reprovado na validação de UX. O avanço para a antiga Fase 4 continua pausado.
 
-O World Studio V5 foi reprovado na validação de UX. O projeto entrou em **R0 — pesquisa e refoundation V6**.
+A refoundation V6 possui agora:
+
+- **R0 concluída:** pesquisa, plano revisado e ADR de stack;
+- **R1 iniciada e com fundação compilada:** máquina de estados, tool registry, command registry e testes de transição;
+- **R2 ainda não iniciada:** nenhum novo shell visual V6 foi desenhado.
 
 Documentos ativos:
 
-- `WORLD_STUDIO_V6_REFOUNDATION.md` — plano revisado de arquitetura e fases;
-- `WORLD_STUDIO_V5_UX_VALIDATION.md` — registro da validação reprovada;
-- `../architecture/ADR-0001_EDITOR_TECH_STACK.md` — decisão sobre Kotlin, C# e Rust.
+- `WORLD_STUDIO_V6_REFOUNDATION.md`;
+- `WORLD_STUDIO_V5_UX_VALIDATION.md`;
+- `../architecture/ADR-0001_EDITOR_TECH_STACK.md`.
 
-## Evidência que interrompeu o avanço
+## Evidência que interrompeu o avanço anterior
 
-No aparelho foi possível obter simultaneamente:
+No aparelho foi possível manter simultaneamente:
 
 - toolset visual `Volume` ativo;
 - seleção `Terreno editável 5`;
@@ -22,144 +26,192 @@ No aparelho foi possível obter simultaneamente:
 - nenhuma ferramenta de Volume ativa;
 - necessidade de abrir outra aba para editar.
 
-Essa combinação demonstra que modo, seleção, recomendação e ferramenta são estados paralelos. A interface pode exibir uma intenção que o domínio não executou.
+Essa combinação demonstrou que modo, seleção, recomendação e ferramenta eram estados paralelos.
 
-A correção exigida é uma máquina de estados e um registro de ferramentas, não outro patch visual.
+## R0 — pesquisa e refoundation
 
-## Fundações preservadas das Fases 0–3
-
-### Modelo persistente de camadas
-
-Permanecem válidos:
-
-- `WorldLayer`;
-- `WorldLayerKind`;
-- `WorldLayerSetComponent`;
-- `WorldLayerMembershipComponent`;
-- migração automática de cenas antigas;
-- camadas-padrão;
-- visibilidade, bloqueio e Solo;
-- atribuição e reordenação;
-- persistência no `SceneDocument`;
-- histórico transacional.
-
-### Contexto e capabilities
-
-Permanecem como material para migração:
-
-- reconhecimento do tipo da seleção;
-- capabilities;
-- descritores de ação;
-- pré-condições;
-- motivos de indisponibilidade;
-- próxima etapa;
-- bloqueio por camada.
-
-O resolver atual não será a autoridade final. Ele será migrado para o novo `editor-domain` e integrado a uma máquina de estados.
-
-### Correções validadas
-
-- crash ARGB corrigido com `Color(Int)`;
-- free cam sem botões de preset;
-- foco por toque duplo removido;
-- edição nativa de escala/rotação da SceneView desativada;
-- pinça não escala objetos temporariamente;
-- segundo dedo cancela stroke de Terrain;
-- Mundo abre sem o crash conhecido.
-
-## Partes consideradas provisórias ou rejeitadas
-
-- `WorldStudioWorkspaceV5.kt` como arquitetura definitiva;
-- modos superiores que apenas alteram estado visual;
-- `Criar`, `Ações` e `Ferramentas` como abas globais;
-- Context Bar independente do toolset;
-- regras de compatibilidade dentro da composição Compose;
-- painel monolítico;
-- toolset incompatível com a seleção;
-- tool shelf aberto manualmente após selecionar um modo.
-
-## Novo cronograma
-
-### R0 — pesquisa e refoundation
-
-Estado: **concluído documentalmente nesta rodada**.
+Estado: **concluída**.
 
 Entregue:
 
 - diagnóstico da contradição V5;
-- estudo de padrões de Godot, Blender, Unity, Stride e Bevy;
-- novo contrato de regiões e toolsets;
-- decisão de stack;
+- estudo de padrões Godot, Blender, Unity, Stride e Bevy;
+- contrato de regiões e toolsets;
+- decisão sobre Kotlin, C# e Rust;
 - fases R1–R12;
 - fluxos dourados;
 - V5 marcada como reprovada.
 
-### R1 — domínio e máquina de estados
+## R1 — domínio e máquina de estados
 
-Próxima implementação.
+Estado: **fundação implementada e testada; integração com UI ainda pendente**.
 
-Objetivos:
+### Novo módulo
 
-- `EditorIntent`;
+```text
+:editor-domain
+```
+
+O módulo é Kotlin/JVM e não depende de Compose.
+
+### Tipos implementados
+
+- `EditorSelection`;
+- `EditorSelectionKind`;
+- `EditorToolset`;
+- `EditorToolId`;
+- `ViewportInteractionMode`;
+- `EditorCapability`;
 - `EditorContextState`;
-- reducer;
-- seleção;
-- toolsets;
-- ferramentas;
-- comandos;
-- capabilities;
-- operações pendentes;
-- testes de transição.
+- `EditorIntent`;
+- `EditorTransition`;
+- `PendingEditorOperation`;
+- `EditorDomainEffect`;
+- `EditorDiagnostic`.
 
-Gate:
+### Registries implementados
 
-- estados contraditórios não podem ser construídos.
+- `EditorToolRegistry`;
+- `EditorCommandRegistry`.
 
-### R2 — shell de regiões e design system
+### Reducer implementado
 
-Só começa após R1.
+`EditorContextReducer` controla:
 
-### R3 — toolsets conectados à seleção
+- alteração de seleção;
+- ativação de toolset;
+- ativação de ferramenta;
+- seleção/criação de alvo compatível;
+- confirmação de conversão;
+- cancelamento;
+- diagnóstico;
+- fallback para Object quando a seleção se torna incompatível.
 
-Só começa após R2.
+### Invariantes aplicadas
 
-### R4 — input, free cam e gizmos
+- `Volume` não pode ficar ativo sobre Terrain;
+- `Terrain` só fica ativo com Terrain selecionado;
+- `Mesh` só fica ativo com malha editável;
+- `Volume` só fica ativo com volume voxel;
+- `Material` exige alvo renderizável;
+- ferramenta sempre pertence ao toolset ativo;
+- ferramenta sempre exige capability disponível;
+- ferramenta mutável não pode ficar ativa em seleção bloqueada;
+- breadcrumb é derivado do mesmo estado, não armazenado separadamente.
 
-Substitui a antiga Fase 4.
+### Fluxos implementados
 
-### R5–R12
+#### Terrain
 
-- Terrain end-to-end;
-- Mesh end-to-end;
-- Volume/Voxel end-to-end;
-- materiais/assets/camadas;
-- gameplay;
-- Lua/NoCode;
-- spike Rust condicionado a benchmark;
-- migração e consolidação.
+Terrain selecionado + ativar Terrain:
+
+```text
+Terrain toolset + TerrainNavigateTool
+```
+
+Não existe segunda ativação de Ferramentas no domínio.
+
+#### Primitiva para malha
+
+```text
+Activate Mesh
+→ Pending ConfirmConversion
+→ ConfirmConversion
+→ seleção EDITABLE_MESH
+→ Mesh toolset
+→ MeshVertexSelect
+```
+
+#### Malha para volume
+
+```text
+Activate Volume
+→ Pending ConfirmConversion
+→ ConfirmConversion
+→ seleção VOXEL_VOLUME
+→ Volume toolset
+→ VolumeAdd
+```
+
+#### Alvo incompatível
+
+```text
+Activate toolset
+→ Pending SelectOrCreateTarget
+→ estado ativo anterior permanece coerente
+→ confirmar alvo ativa toolset e ferramenta atomicamente
+```
+
+### Testes adicionados
+
+- Volume sobre Terrain gera decisão pendente, não estado contraditório;
+- Terrain selecionado ativa Navigate imediatamente;
+- primitiva solicita uma conversão explícita;
+- conversão atualiza seleção, toolset e ferramenta atomicamente;
+- cancelar mantém o contexto anterior;
+- troca para seleção incompatível volta a Object;
+- ferramenta de outro toolset é rejeitada;
+- tool registry filtra ferramentas por capability;
+- command registry deriva conversões pela seleção;
+- construção manual de estado contraditório lança exceção.
+
+### CI
+
+O pipeline agora executa separadamente:
+
+```text
+:editor-domain:test
+testDebugUnitTest
+:app:assembleDebug
+```
+
+Os testes do domínio, testes Android e compilação do APK passaram nesta etapa.
+
+## O que R1 ainda não faz
+
+- não substitui ainda o estado da V5 na UI;
+- não conecta `WorkspaceViewModel` ao reducer;
+- não projeta `SceneDocument` em `EditorSelection`;
+- não executa os efeitos de criação/conversão no repositório;
+- não possui region layout persistente;
+- não possui input router;
+- não remove a UI V5.
+
+Essas integrações serão feitas antes de considerar R1 totalmente encerrada e antes de desenhar R2.
+
+## Fundações anteriores preservadas
+
+- camadas persistentes;
+- migração de cenas;
+- visibilidade, bloqueio e Solo;
+- `SceneDocument`;
+- histórico transacional;
+- correção ARGB;
+- free cam sem presets;
+- pinça sem escala nativa de objetos;
+- cancelamento de stroke com segundo dedo.
 
 ## Decisão de linguagem
 
-Não será feita uma migração impulsiva.
-
 - Kotlin permanece no host Android e shell Compose;
-- regras do editor sairão da UI para um módulo independente;
-- C# não será adotado apenas para copiar uma aparência de editor desktop;
+- regras do editor saem da UI para `editor-domain`;
+- C# não será adotado somente por aparência visual;
 - Rust não será usado para UI;
-- Rust poderá ser testado depois em kernels de terrain, mesh e voxel, mediante benchmark e ABI estreita.
+- Rust poderá ser testado em R11 para kernels medidos de terrain, mesh e voxel.
 
-## Gate antes de gerar outro APK de UX
+## Próximo passo técnico
 
-Não será considerado progresso produzir outra disposição visual sem:
+Concluir R1 com adapters entre:
 
-1. máquina de estados;
-2. tool registry;
-3. command registry;
-4. transições testadas;
-5. compatibilidade entre seleção e toolset;
-6. ativação automática da ferramenta padrão;
-7. cancelamento/restauração coerente.
+```text
+SceneDocument
+↔ EditorSelection/Capabilities
+↔ EditorContextReducer
+↔ WorkspaceViewModel
+```
+
+Depois disso começa R2 — shell de regiões e design system.
 
 ## Critério de honestidade
 
-Nesta rodada não foi criada uma nova interface nem um novo APK. O trabalho executado foi a refoundation arquitetural R0. A próxima entrega de código deve ser R1, com testes de domínio, antes de qualquer redesign V6.
+O APK compilado nesta rodada ainda contém a interface V5 e não representa um novo resultado visual. Ele serve apenas para confirmar que o novo módulo de domínio convive com o projeto. Não será apresentado como APK de validação de UX.

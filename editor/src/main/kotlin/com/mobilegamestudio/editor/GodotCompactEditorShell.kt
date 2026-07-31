@@ -179,7 +179,7 @@ internal fun GodotCompactEditorShell(
             .background(WorkspaceBackground),
     ) {
         Column(Modifier.fillMaxSize()) {
-            CompactStudioTopBar(
+            if (openPanel != StudioPopup.WORLD) CompactStudioTopBar(
                 state = state,
                 onBack = {
                     when {
@@ -208,6 +208,45 @@ internal fun GodotCompactEditorShell(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth(),
+                )
+            } else if (openPanel == StudioPopup.WORLD) {
+                WorldStudioWorkspaceV5(
+                    state = state,
+                    resolveAsset = resolveAsset,
+                    onExit = { show(null) },
+                    onUndo = onUndo,
+                    onRedo = onRedo,
+                    onSave = onSaveScene,
+                    onPlay = onTogglePreview,
+                    onToolSelected = onToolSelected,
+                    onSelectObject = onSelectObject,
+                    onViewportObjectSelected = onViewportObjectSelected,
+                    onTransformDrag = onTransformDrag,
+                    onTransformChange = onTransformChange,
+                    onDiagnostic = onReportDiagnostic,
+                    onTerrainToolChange = onTerrainToolChange,
+                    onTerrainFalloffChange = onTerrainFalloffChange,
+                    onTerrainStrokeBegin = onTerrainStrokeBegin,
+                    onTerrainStrokePoint = onTerrainStrokePoint,
+                    onTerrainStrokeEnd = onTerrainStrokeEnd,
+                    onCreateFlatTerrain = onCreateFlatTerrain,
+                    onCreatePlayableWorld = onCreatePlayableWorld,
+                    onCreateWorldLayer = onCreateWorldLayer,
+                    onSelectWorldLayer = onSelectWorldLayer,
+                    onRenameWorldLayer = onRenameWorldLayer,
+                    onMoveWorldLayer = onMoveWorldLayer,
+                    onToggleWorldLayerVisibility = onToggleWorldLayerVisibility,
+                    onToggleWorldLayerLock = onToggleWorldLayerLock,
+                    onToggleWorldLayerSolo = onToggleWorldLayerSolo,
+                    onAssignSelectedToWorldLayer = onAssignSelectedToWorldLayer,
+                    onAddPrimitive = onAddPrimitive,
+                    onAddSceneObject = onAddSceneObject,
+                    onCreateEditableMesh = onCreateEditableMesh,
+                    onConvertSelectedToEditableMesh = onConvertSelectedToEditableMesh,
+                    onCreateVoxelVolume = onCreateVoxelVolume,
+                    onConvertMeshToVoxel = onConvertMeshToVoxel,
+                    onImportAsset = onImportAsset,
+                    onPreviewAction = onPreviewAction,
                 )
             } else {
                 StudioWorkspaceTabs(

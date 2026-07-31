@@ -108,6 +108,37 @@ Também foram adicionados:
 
 O gate técnico não substitui o teste de ergonomia no aparelho. O PR permanece em draft até validar toque, leitura, densidade do painel, persistência ao reabrir e o fluxo real com duas ou mais camadas.
 
+## Correções da rodada de validação no aparelho
+
+A Fase 4 permanece pausada enquanto a fundação das Fases 0–3 é validada.
+
+### Preview e câmera
+
+- os nós da SceneView continuam selecionáveis, mas edição nativa de escala/rotação fica desligada;
+- pinça controla apenas o raio da câmera e não altera temporariamente o objeto tocado;
+- seleção não aumenta mais a escala renderizada do objeto;
+- trocar a seleção não reinicializa a câmera;
+- zoom usa razão entre as separações dos dedos, com limite por atualização;
+- órbita vertical alcança uma visão quase totalmente superior;
+- foram adicionados atalhos de câmera para Início, Topo, Frente, Direita e Focar seleção;
+- toque duplo foca o objeto tocado ou retorna à visão inicial quando feito no vazio.
+
+### Terrain e multitoque
+
+- um segundo dedo cancela a transação atual do pincel;
+- o gesto não continua esculpindo enquanto o usuário tenta navegar ou aproximar;
+- o stroke cancelado não é publicado como edição concluída.
+
+### Crash ao abrir Mundo/Terreno
+
+- estados antigos do `rememberSaveable` deixaram de usar `Enum.valueOf` diretamente;
+- nomes de abas e modos removidos por versões novas agora caem em valores seguros;
+- a mesma proteção foi aplicada ao popup principal, drawer, modo do World Studio, eixo voxel, modo do pincel voxel e grupo do painel Autor.
+
+### Critério desta correção
+
+A compilação e os testes automatizados validam que as correções integram o projeto. A confirmação final de gestos, câmera e ausência de crash depende da execução do APK desta rodada em um aparelho real.
+
 ## Fases ainda não concluídas
 
 - **Fase 4:** novo contrato completo de input e gizmos 3D.

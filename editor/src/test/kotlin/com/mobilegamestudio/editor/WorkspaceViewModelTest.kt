@@ -137,6 +137,29 @@ class WorkspaceViewModelTest {
     }
 
     @Test
+    fun `incompatible creation cannot replace selection during pending target`() = runTest(dispatcher) {
+        val repository = SavingRepository(METADATA.copy(name = "Open World Starter"))
+        val viewModel = WorkspaceViewModel(METADATA.id, repository, FakeContentRepository())
+        advanceUntilIdle()
+        val terrainId = requireNotNull(viewModel.state.value.sceneDocument)
+            .objects
+            .first { it.component<TerrainComponent>() != null }
+            .id
+
+        viewModel.selectObject(terrainId)
+        viewModel.activateAuthoringToolset(EditorToolset.VOLUME)
+        viewModel.addSceneObject(EditorObjectType.CAMERA)
+
+        val context = viewModel.state.value.editorContext
+        assertEquals(terrainId, viewModel.state.value.selectedObjectId)
+        assertEquals(terrainId, context.selection.objectId)
+        assertEquals(EditorSelectionKind.TERRAIN, context.selection.kind)
+        assertEquals(EditorToolset.OBJECT, context.activeToolset)
+        assertTrue(context.pendingOperation is PendingEditorOperation.SelectOrCreateTarget)
+        assertTrue(viewModel.state.value.sceneObjects.any { it.type == EditorObjectType.CAMERA })
+    }
+
+    @Test
     fun `primitive conversion updates document selection and tool atomically`() = runTest(dispatcher) {
         val viewModel = WorkspaceViewModel(METADATA.id, SavingRepository(), FakeContentRepository())
         advanceUntilIdle()

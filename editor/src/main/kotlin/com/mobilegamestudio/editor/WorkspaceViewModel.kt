@@ -2764,9 +2764,12 @@ class WorkspaceViewModel(
             current.editorContext,
             if (choosingTarget) EditorIntent.ConfirmTarget(selection) else EditorIntent.SelectionChanged(selection),
         )
+        val acceptedTarget = !choosingTarget || (
+            transition.state.pendingOperation == null && transition.state.selection.objectId == objectId
+        )
         mutableState.update { state ->
             state.copy(
-                selectedObjectId = objectId,
+                selectedObjectId = if (acceptedTarget) objectId else transition.state.selection.objectId,
                 editorContext = transition.state,
                 message = transition.state.diagnostic?.message ?: state.message,
             )

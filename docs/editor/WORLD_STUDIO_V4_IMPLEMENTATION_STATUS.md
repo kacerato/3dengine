@@ -82,62 +82,46 @@ Também foram adicionados:
 - atribuição da seleção à camada ativa;
 - separação entre preset jogável e criação geométrica.
 
+## Correção de validação — viewport único e free cam
+
+A primeira tentativa de correção adicionou atalhos de câmera no viewport. Essa decisão foi revertida: os botões Início, Topo, Frente, Direita e Foco foram removidos, assim como o foco por toque duplo. O editor mantém somente a free cam já existente.
+
+O crash ao abrir Mundo não foi tratado novamente como simples estado de enum. O fluxo foi alterado estruturalmente:
+
+- abrir Mundo não desmonta mais o `SceneViewport` principal;
+- o menu Mundo agora abre como dock ao lado do mesmo viewport;
+- a mesma instância de free cam continua ativa ao abrir, fechar ou trocar abas do Mundo;
+- terrain usa um overlay sobre esse mesmo viewport;
+- a cena é normalizada com `ensureWorldLayerStructure()` uma única vez durante o carregamento;
+- o motor contextual não precisa mais fabricar uma estrutura temporária de camadas em cada composição;
+- a edição nativa de transformação da SceneView continua desativada, portanto a pinça não escala objetos fora do `SceneDocument`.
+
+Essa mudança elimina a transição que destruía um viewport Filament e criava outro imediatamente ao tocar em Mundo, principal diferença entre o fluxo que apresentava o crash e o fluxo atual.
+
 ## Fluxos validáveis nesta entrega
 
 1. Abrir uma cena antiga e gerar automaticamente a estrutura de camadas.
-2. Criar duas camadas de geometria.
-3. Criar dois cubos e atribuir cada um a uma camada.
-4. Renomear e reordenar camadas.
-5. Ocultar, bloquear ou isolar uma camada.
-6. Fechar Mundo, salvar, reabrir e manter a organização.
-7. Selecionar terrain, malha ou volume e receber ações diferentes.
-8. Criar uma fonte e continuar pelo painel Autor.
-9. Converter uma primitiva em malha editável.
-10. Converter malha editável em volume com a operação já existente.
-11. Receber motivo explícito para conversões ainda não implementadas.
+2. Abrir e fechar Mundo repetidamente sem substituir o viewport.
+3. Continuar orbitando, aproximando e movendo a mesma free cam com Mundo aberto.
+4. Criar duas camadas de geometria.
+5. Criar dois cubos e atribuir cada um a uma camada.
+6. Renomear e reordenar camadas.
+7. Ocultar, bloquear ou isolar uma camada.
+8. Selecionar terrain, malha ou volume e receber ações diferentes.
+9. Ativar Navegar ou Esculpir sobre o mesmo viewport.
+10. Fechar Mundo, salvar, reabrir e manter a organização.
+11. Confirmar que a pinça nunca altera temporariamente a escala de um objeto.
 
 ## Gate técnico concluído
 
-- migrações antigas e V4 aplicadas em ordem;
-- normalização de callbacks idempotente;
+- fonte V4 e correções persistidas na branch;
 - testes de domínio das camadas aprovados;
 - testes do motor contextual aprovados;
 - demais testes unitários do projeto aprovados;
 - APK debug compilado;
 - artifact publicado pelo GitHub Actions.
 
-O gate técnico não substitui o teste de ergonomia no aparelho. O PR permanece em draft até validar toque, leitura, densidade do painel, persistência ao reabrir e o fluxo real com duas ou mais camadas.
-
-## Correções da rodada de validação no aparelho
-
-A Fase 4 permanece pausada enquanto a fundação das Fases 0–3 é validada.
-
-### Preview e câmera
-
-- os nós da SceneView continuam selecionáveis, mas edição nativa de escala/rotação fica desligada;
-- pinça controla apenas o raio da câmera e não altera temporariamente o objeto tocado;
-- seleção não aumenta mais a escala renderizada do objeto;
-- trocar a seleção não reinicializa a câmera;
-- zoom usa razão entre as separações dos dedos, com limite por atualização;
-- órbita vertical alcança uma visão quase totalmente superior;
-- foram adicionados atalhos de câmera para Início, Topo, Frente, Direita e Focar seleção;
-- toque duplo foca o objeto tocado ou retorna à visão inicial quando feito no vazio.
-
-### Terrain e multitoque
-
-- um segundo dedo cancela a transação atual do pincel;
-- o gesto não continua esculpindo enquanto o usuário tenta navegar ou aproximar;
-- o stroke cancelado não é publicado como edição concluída.
-
-### Crash ao abrir Mundo/Terreno
-
-- estados antigos do `rememberSaveable` deixaram de usar `Enum.valueOf` diretamente;
-- nomes de abas e modos removidos por versões novas agora caem em valores seguros;
-- a mesma proteção foi aplicada ao popup principal, drawer, modo do World Studio, eixo voxel, modo do pincel voxel e grupo do painel Autor.
-
-### Critério desta correção
-
-A compilação e os testes automatizados validam que as correções integram o projeto. A confirmação final de gestos, câmera e ausência de crash depende da execução do APK desta rodada em um aparelho real.
+O gate técnico não substitui o teste de ergonomia e estabilidade no aparelho. O PR permanece em draft até validar abertura repetida de Mundo, free cam, multitoque, terrain e persistência real.
 
 ## Fases ainda não concluídas
 
@@ -153,4 +137,4 @@ A compilação e os testes automatizados validam que as correções integram o p
 
 ## Critério de honestidade
 
-Esta entrega é a fundação de arquitetura e interface das Fases 0–3. Ela não declara terrain, modelagem ou voxel equivalentes a editores desktop. As funções futuras continuam visíveis apenas quando ajudam a explicar o fluxo e sempre indicam a dependência que falta.
+Esta entrega é a fundação de arquitetura e interface das Fases 0–3, com uma correção estrutural de estabilidade. A compilação confirma coerência de código; somente o aparelho pode confirmar que o crash nativo observado foi eliminado. A Fase 4 permanece pausada até essa confirmação.

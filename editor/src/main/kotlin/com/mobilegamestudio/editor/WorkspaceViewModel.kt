@@ -104,6 +104,14 @@ import com.mobilegamestudio.scripting.LogicLogLevel
 import com.mobilegamestudio.scripting.LogicSceneHost
 import com.mobilegamestudio.scripting.LuaSceneSession
 import com.mobilegamestudio.scripting.VisualGraphExecutor
+import com.mobilegamestudio.editor.domain.EditorContextReducer
+import com.mobilegamestudio.editor.domain.EditorContextState
+import com.mobilegamestudio.editor.domain.EditorConversion
+import com.mobilegamestudio.editor.domain.EditorIntent
+import com.mobilegamestudio.editor.domain.EditorToolId
+import com.mobilegamestudio.editor.domain.EditorToolset
+import com.mobilegamestudio.editor.domain.EditorTransition
+import com.mobilegamestudio.editor.domain.PendingEditorOperation
 import java.io.File
 import java.io.InputStream
 import java.util.UUID
@@ -235,6 +243,7 @@ data class WorkspaceUiState(
     val assets: List<AssetRecord> = emptyList(),
     val isImportingAsset: Boolean = false,
     val terrainTool: TerrainToolState = TerrainToolState(),
+    val editorContext: EditorContextState = EditorContextState.initial(),
 ) {
     val selectedObject: EditorSceneObject?
         get() = sceneObjects.firstOrNull { it.id == selectedObjectId }
@@ -302,22 +311,141 @@ class WorkspaceViewModel(
         mutableState.update { it.copy(activeTool = tool) }
     }
 
+    fun activateAuthoringToolset(toolset: EditorToolset) {
+        if (!canEdit()) return
+        publishEditorTransition(
+            EditorContextReducer.reduce(
+                mutableState.value.editorContext,
+                EditorIntent.ActivateToolset(toolset),
+            ),
+        )
+    }
+
+    fun activateAuthoringTool(tool: EditorToolId) {
+        if (!canEdit()) return
+        publishEditorTransition(
+            EditorContextReducer.reduce(
+                mutableState.value.editorContext,
+                EditorIntent.ActivateTool(tool),
+            ),
+        )
+    }
+
+    fun cancelPendingAuthoringOperation() {
+        publishEditorTransition(
+            EditorContextReducer.reduce(
+                mutableState.value.editorContext,
+                EditorIntent.CancelPendingOperation,
+            ),
+        )
+    }
+
+    fun clearAuthoringDiagnostic() {
+        publishEditorTransition(
+            EditorContextReducer.reduce(
+                mutableState.value.editorContext,
+                EditorIntent.ClearDiagnostic,
+            ),
+        )
+    }
+
+    fun confirmPendingAuthoringConversion(resolution: Int = 24) {
+        if (!canEdit()) return
+        val current = mutableState.value
+        val pending = current.editorContext.pendingOperation as? PendingEditorOperation.ConfirmConversion
+            ?: run {
+                mutableState.update { it.copy(message = "Nenhuma conversão de autoria está pendente.") }
+                return
+            }
+        val document = current.sceneDocument ?: return
+        val sourceObject = document.objects.firstOrNull { it.id == pending.sourceObjectId }
+            ?: run {
+                mutableState.update { it.copy(message = "O objeto da conversão não existe mais.") }
+                return
+            }
+        val convertedObject = when (pending.conversion) {
+            EditorConversion.PRIMITIVE_TO_EDITABLE_MESH -> {
+                if (sourceObject.component<EditableMeshComponent>() != null) sourceObject else {
+                    val primitive = sourceObject.component<MeshRendererComponent>()?.primitive ?: PrimitiveMesh.CUBE
+                    val editable = if (primitive == PrimitiveMesh.PLANE) {
+                        EditableMeshPresets.plane()
+                    } else {
+                        EditableMeshPresets.cube()
+                    }
+                    sourceObject.copy(components = sourceObject.components + editable)
+                }
+            }
+            EditorConversion.EDITABLE_MESH_TO_VOLUME -> {
+                val editable = sourceObject.component<EditableMeshComponent>() ?: run {
+                    mutableState.update { it.copy(message = "A malha editável da conversão não existe mais.") }
+                    return
+                }
+                val volume = editable.toVoxelVolume(resolution.coerceIn(8, 96))
+                sourceObject.copy(
+                    components = sourceObject.components
+                        .filterNot { it is EditableMeshComponent || it is VoxelVolumeComponent } + volume,
+                )
+            }
+        }
+        val preparedDocument = document.copy(
+            objects = document.objects.map { item ->
+                if (item.id == sourceObject.id) convertedObject else item
+            },
+        ).ensureWorldLayerStructure()
+        val history = sceneHistory ?: return
+        val result = history.execute(ReplaceSceneDocumentCommand(document, preparedDocument))
+        if (result !is SceneEditResult.Success) return
+        val resultSelection = result.document.toEditorSelection(sourceObject.id)
+        val transition = EditorContextReducer.reduce(
+            current.editorContext,
+            EditorIntent.ConfirmConversion(resultSelection),
+        )
+        editGeneration += 1
+        mutableState.update { state ->
+            state.copy(
+                sceneDocument = result.document,
+                sceneObjects = result.document.toEditorObjects(),
+                selectedObjectId = sourceObject.id,
+                editorContext = transition.state,
+                isSceneDirty = result.document != persistedScene,
+                canUndo = history.canUndo,
+                canRedo = history.canRedo,
+                message = when (pending.conversion) {
+                    EditorConversion.PRIMITIVE_TO_EDITABLE_MESH ->
+                        "Objeto convertido e aberto como malha editável."
+                    EditorConversion.EDITABLE_MESH_TO_VOLUME ->
+                        "Malha convertida e aberta como volume voxel."
+                },
+            )
+        }
+        scheduleAutosave()
+    }
+
     fun selectObject(id: String) {
         if (!canEdit()) return
-        if (mutableState.value.sceneObjects.none { it.id == id }) return
-        val hasGraph = mutableState.value.sceneDocument
-            ?.objects
-            ?.firstOrNull { it.id == id }
-            ?.components
-            ?.any { it is VisualGraphComponent && it.enabled } == true
-        val hasScript = mutableState.value.sceneDocument
-            ?.objects
-            ?.firstOrNull { it.id == id }
-            ?.components
-            ?.any { it is LuaScriptComponent && it.enabled } == true
+        val current = mutableState.value
+        val document = current.sceneDocument ?: return
+        if (current.sceneObjects.none { it.id == id }) return
+        val selection = document.toEditorSelection(id)
+        val choosingTarget = current.editorContext.pendingOperation is PendingEditorOperation.SelectOrCreateTarget
+        val transition = EditorContextReducer.reduce(
+            current.editorContext,
+            if (choosingTarget) EditorIntent.ConfirmTarget(selection) else EditorIntent.SelectionChanged(selection),
+        )
+        val accepted = !choosingTarget || (
+            transition.state.pendingOperation == null && transition.state.selection.objectId == id
+        )
+        if (!accepted) {
+            publishEditorTransition(transition)
+            return
+        }
+        val objectValue = document.objects.first { it.id == id }
+        val hasGraph = objectValue.components.any { it is VisualGraphComponent && it.enabled }
+        val hasScript = objectValue.components.any { it is LuaScriptComponent && it.enabled }
         mutableState.update {
             it.copy(
                 selectedObjectId = id,
+                editorContext = transition.state,
                 visualGraph = null,
                 visualGraphPath = null,
                 isLoadingGraph = hasGraph,
@@ -326,6 +454,7 @@ class WorkspaceViewModel(
                 isLoadingScript = hasScript,
                 isScriptDirty = false,
                 scriptDiagnostics = emptyList(),
+                message = transition.state.diagnostic?.message ?: it.message,
             )
         }
         loadGraphForObject(id)
@@ -838,6 +967,7 @@ class WorkspaceViewModel(
                 message = "Terreno plano criado. Arraste no viewport para começar a moldar.",
             )
         }
+        synchronizeCreatedAuthoringSelection(id)
     }
 
     fun assignTerrainTexture(layerId: String, assetId: String, normalMap: Boolean) {
@@ -1047,6 +1177,7 @@ class WorkspaceViewModel(
         val document = mutableState.value.sceneDocument ?: return
         applyDocumentEdit(document.copy(objects = document.objects + objectValue, rootObjects = document.rootObjects + objectValue.id))
         mutableState.update { it.copy(selectedObjectId = objectValue.id, message = "Malha editável criada.") }
+        synchronizeCreatedAuthoringSelection(objectValue.id)
     }
 
     fun convertSelectedToEditableMesh() {
@@ -1104,6 +1235,7 @@ class WorkspaceViewModel(
         val document = mutableState.value.sceneDocument ?: return
         applyDocumentEdit(document.copy(objects = document.objects + objectValue, rootObjects = document.rootObjects + objectValue.id))
         mutableState.update { it.copy(selectedObjectId = objectValue.id, message = if (cave) "Caverna voxel criada." else "Volume voxel criado.") }
+        synchronizeCreatedAuthoringSelection(objectValue.id)
     }
 
     fun convertSelectedMeshToVoxel(resolution: Int = 24) {
@@ -2262,6 +2394,10 @@ class WorkspaceViewModel(
                                     isSceneDirty = false,
                                     sceneDocument = canonicalDocument,
                                     sceneObjects = canonicalDocument.toEditorObjects(),
+                                    editorContext = it.editorContext.synchronizeSceneSelection(
+                                        canonicalDocument,
+                                        it.selectedObjectId,
+                                    ),
                                     canUndo = history?.canUndo == true,
                                     canRedo = history?.canRedo == true,
                                     message = "Cena salva · revisão ${result.value.metadata.revision}.",
@@ -2367,6 +2503,10 @@ class WorkspaceViewModel(
                 it.copy(
                     sceneObjects = changed,
                     sceneDocument = result.document,
+                    editorContext = it.editorContext.synchronizeSceneSelection(
+                        result.document,
+                        it.selectedObjectId,
+                    ),
                     isSceneDirty = result.document != persistedScene,
                     canUndo = history.canUndo,
                     canRedo = history.canRedo,
@@ -2403,6 +2543,10 @@ class WorkspaceViewModel(
                                 EditorObjectType.PLAYER,
                             )
                         }?.id
+                        val initialEditorContext = EditorContextReducer.reduce(
+                            EditorContextState.initial(),
+                            EditorIntent.SelectionChanged(scene.toEditorSelection(selectedId)),
+                        ).state
                         val graphEntry = loadGraph(scene, selectedId)
                         val scriptEntry = loadScript(scene, selectedId)
                         nextObjectNumber = objects.size + 1
@@ -2424,6 +2568,7 @@ class WorkspaceViewModel(
                             scriptSource = scriptEntry?.second,
                             scriptPath = scriptEntry?.first,
                             assets = loadAssets(),
+                            editorContext = initialEditorContext,
                         )
                     }
                     is ProjectResult.Failure -> {
@@ -2581,19 +2726,48 @@ class WorkspaceViewModel(
         val document = history.document
         val objects = document.toEditorObjects()
         editGeneration += 1
-        mutableState.update {
-            it.copy(
+        mutableState.update { state ->
+            val selectedId = state.selectedObjectId.takeIf { id ->
+                objects.any { item -> item.id == id }
+            }
+            state.copy(
                 sceneDocument = document,
                 sceneObjects = objects,
-                selectedObjectId = it.selectedObjectId.takeIf { id ->
-                    objects.any { item -> item.id == id }
-                },
+                selectedObjectId = selectedId,
+                editorContext = state.editorContext.synchronizeSceneSelection(document, selectedId),
                 isSceneDirty = document != persistedScene,
                 canUndo = history.canUndo,
                 canRedo = history.canRedo,
             )
         }
         scheduleAutosave()
+    }
+
+    private fun publishEditorTransition(transition: EditorTransition) {
+        mutableState.update { state ->
+            state.copy(
+                editorContext = transition.state,
+                message = transition.state.diagnostic?.message ?: state.message,
+            )
+        }
+    }
+
+    private fun synchronizeCreatedAuthoringSelection(objectId: String) {
+        val current = mutableState.value
+        val document = current.sceneDocument ?: return
+        val selection = document.toEditorSelection(objectId)
+        val choosingTarget = current.editorContext.pendingOperation is PendingEditorOperation.SelectOrCreateTarget
+        val transition = EditorContextReducer.reduce(
+            current.editorContext,
+            if (choosingTarget) EditorIntent.ConfirmTarget(selection) else EditorIntent.SelectionChanged(selection),
+        )
+        mutableState.update { state ->
+            state.copy(
+                selectedObjectId = objectId,
+                editorContext = transition.state,
+                message = transition.state.diagnostic?.message ?: state.message,
+            )
+        }
     }
 
     private fun scheduleAutosave() {

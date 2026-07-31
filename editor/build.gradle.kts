@@ -31,6 +31,7 @@ kotlin {
 dependencies {
     implementation(project(":core:model"))
     implementation(project(":core:contracts"))
+    implementation(project(":editor-domain"))
     implementation(project(":runtime"))
     implementation(project(":scripting"))
     implementation(platform(libs.androidx.compose.bom))

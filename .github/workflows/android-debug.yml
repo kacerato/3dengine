@@ -90,12 +90,6 @@ jobs:
       - name: Apply functional world authoring v2
         run: python tools/apply_world_authoring_v2_fixed.py
 
-      - name: Apply editor cohesion v3
-        run: python tools/apply_editor_cohesion_v3.py
-
-      - name: Normalize editor cohesion v3
-        run: python tools/apply_editor_cohesion_v3_hotfix.py
-
       - name: Apply World Studio V4 foundation
         run: python tools/apply_world_studio_v4_foundation.py
 

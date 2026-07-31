@@ -81,10 +81,14 @@ jobs:
           test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldAuthoringContext.kt
           test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioV4Panels.kt
           test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV5.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/EditorDomainAdapter.kt
+          test -f editor/src/test/kotlin/com/mobilegamestudio/editor/EditorDomainAdapterTest.kt
           test -f editor-domain/src/main/kotlin/com/mobilegamestudio/editor/domain/EditorDomain.kt
           test -f editor-domain/src/test/kotlin/com/mobilegamestudio/editor/domain/EditorContextReducerTest.kt
+          test -f tools/apply_editor_domain_r1_integration.py
           grep -q 'include(' settings.gradle.kts
           grep -q '":editor-domain"' settings.gradle.kts
+          grep -q 'implementation(project(":editor-domain"))' editor/build.gradle.kts
           grep -q "fun createWorldLayer" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
           echo "World Studio persisted source and V6 editor domain are available"
 
@@ -110,6 +114,15 @@ jobs:
           ! grep -R "onDoubleTap = { _, node ->" runtime/src/main/kotlin/com/mobilegamestudio/runtime/RuntimeSceneViewport.kt
           ! grep -q "private val WorldV5Panel =" editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV5.kt
 
+      - name: Apply editor domain R1 integration
+        if: github.head_ref == 'feature/world-studio-v4-foundation' || github.ref_name == 'feature/world-studio-v4-foundation'
+        shell: bash
+        run: |
+          python tools/apply_editor_domain_r1_integration.py
+          grep -q "fun activateAuthoringToolset" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
+          grep -q "val editorContext: EditorContextState" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
+          grep -q "confirmPendingAuthoringConversion" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
+
       - name: Persist preserved source fixes
         if: github.event_name == 'push' && github.ref_name == 'feature/world-studio-v4-foundation'
         shell: bash
@@ -120,7 +133,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "Preserved source fixes already persisted"
           else
-            git commit -m "fix: preserve validated viewport behavior"
+            git commit -m "feat: persist editor domain R1 workspace integration"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -162,7 +175,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-world-studio-v6-r1-domain-debug
+          name: mobile-game-studio-world-studio-v6-r1-integration-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

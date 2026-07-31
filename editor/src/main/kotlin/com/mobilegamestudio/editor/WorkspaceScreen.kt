@@ -157,6 +157,7 @@ fun WorkspaceRoute(
                 onCreateFlatTerrain = viewModel::createFlatTerrain,
                 onCreatePlayableWorld = viewModel::createPlayableWorld,
                 onCreatePlayableWorld = viewModel::createPlayableWorld,
+                onCreatePlayableWorld = viewModel::createPlayableWorld,
                 onCreateWorldLayer = viewModel::createWorldLayer,
                 onSelectWorldLayer = viewModel::selectWorldLayer,
                 onRenameWorldLayer = viewModel::renameWorldLayer,

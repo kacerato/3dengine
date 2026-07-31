@@ -324,7 +324,9 @@ internal fun WorldStudioV4AuthorPanel(
     }
     var selectedGroupName by rememberSaveable { mutableStateOf(WorldActionGroup.CREATE.name) }
     val availableGroups = WorldActionGroup.entries.filter { group -> context.actions.any { it.group == group } }
-    val selectedGroup = WorldActionGroup.valueOf(selectedGroupName)
+    val selectedGroup = WorldActionGroup.entries.firstOrNull {
+        it.name == selectedGroupName && it in availableGroups
+    } ?: availableGroups.firstOrNull() ?: WorldActionGroup.CREATE
 
     Column(Modifier.fillMaxSize()) {
         V4PanelHeading(

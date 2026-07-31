@@ -15,6 +15,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -30,6 +31,7 @@ import com.mobilegamestudio.core.model.DirectionalLightComponent
 import com.mobilegamestudio.core.model.EditorMode
 import com.mobilegamestudio.core.model.TouchButtonComponent
 import com.mobilegamestudio.core.model.VirtualJoystickComponent
+import com.mobilegamestudio.runtime.EditorCameraPreset
 import com.mobilegamestudio.runtime.RuntimeSceneViewport
 import java.io.File
 
@@ -63,6 +65,12 @@ internal fun SceneViewport(
         item.components.filterIsInstance<VirtualJoystickComponent>()
     }
     val sceneMarkers = emptyList<Triple<String, String, String>>()
+    var editorCameraPreset by remember(document.sceneId) { mutableStateOf<EditorCameraPreset?>(null) }
+    var editorCameraCommandToken by remember(document.sceneId) { mutableIntStateOf(0) }
+    fun requestCamera(preset: EditorCameraPreset) {
+        editorCameraPreset = preset
+        editorCameraCommandToken += 1
+    }
 
     Box(modifier = modifier) {
         RuntimeSceneViewport(
@@ -73,6 +81,8 @@ internal fun SceneViewport(
             onObjectSelected = onObjectSelected,
             transformGesturesEnabled = false,
             onTransformDrag = onTransformDrag,
+            editorCameraPreset = editorCameraPreset,
+            editorCameraCommandToken = editorCameraCommandToken,
             terrainTopDownCamera = terrainTopDownCamera,
             onDiagnostic = onDiagnostic,
             modifier = Modifier.matchParentSize(),
@@ -87,6 +97,18 @@ internal fun SceneViewport(
             onStrokeEnd = onTerrainStrokeEnd,
             modifier = Modifier.matchParentSize(),
         )
+
+        if (!state.isPreviewRunning) {
+            EditorCameraDock(
+                onHome = { requestCamera(EditorCameraPreset.HOME) },
+                onTop = { requestCamera(EditorCameraPreset.TOP) },
+                onFront = { requestCamera(EditorCameraPreset.FRONT) },
+                onRight = { requestCamera(EditorCameraPreset.RIGHT) },
+                onFocus = { requestCamera(EditorCameraPreset.FOCUS_SELECTION) },
+                focusEnabled = state.selectedObjectId != null,
+                modifier = Modifier.align(Alignment.TopEnd).padding(10.dp),
+            )
+        }
 
         if (editorChromeVisible && !terrainAuthoringEnabled) {
             Row(
@@ -244,6 +266,55 @@ internal fun SceneViewport(
     }
 }
 
+
+@Composable
+private fun EditorCameraDock(
+    onHome: () -> Unit,
+    onTop: () -> Unit,
+    onFront: () -> Unit,
+    onRight: () -> Unit,
+    onFocus: () -> Unit,
+    focusEnabled: Boolean,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .background(Color(0xD916191E), RoundedCornerShape(14.dp))
+            .padding(4.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        listOf(
+            Triple("⌂", "Início", onHome),
+            Triple("T", "Topo", onTop),
+            Triple("F", "Frente", onFront),
+            Triple("R", "Direita", onRight),
+        ).forEach { (label, description, action) ->
+            Button(
+                onClick = action,
+                modifier = Modifier.padding(horizontal = 2.dp).size(34.dp),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF252B33),
+                    contentColor = Color(0xFFD9DDE5),
+                ),
+            ) { Text(label, fontSize = 8.sp) }
+        }
+        Button(
+            onClick = onFocus,
+            enabled = focusEnabled,
+            modifier = Modifier.padding(horizontal = 2.dp).size(34.dp),
+            contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
+            shape = RoundedCornerShape(10.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF33264A),
+                contentColor = Color(0xFFB98AFF),
+                disabledContainerColor = Color(0xFF20242A),
+                disabledContentColor = Color(0xFF666D77),
+            ),
+        ) { Text("◎", fontSize = 10.sp) }
+    }
+}
 
 @Composable
 private fun ViewportTransformDock(

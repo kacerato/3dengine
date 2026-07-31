@@ -151,13 +151,15 @@ internal fun WorldStudioWorkspaceV3(
     var voxelRadius by rememberSaveable { mutableFloatStateOf(0.08f) }
     var voxelStrength by rememberSaveable { mutableFloatStateOf(0.8f) }
 
-    val mode = StudioV3Mode.valueOf(modeName)
-    val drawer = WorldV2Drawer.valueOf(drawerName)
+    // rememberSaveable can restore names written by an older APK. A renamed
+    // enum entry must fall back safely instead of crashing when Mundo opens.
+    val mode = StudioV3Mode.entries.firstOrNull { it.name == modeName } ?: StudioV3Mode.OBJECTS
+    val drawer = WorldV2Drawer.entries.firstOrNull { it.name == drawerName } ?: WorldV2Drawer.STRUCTURE
     val terrain = state.selectedTerrain
     val editableMesh = state.selectedEditableMesh
     val voxel = state.selectedVoxelVolume
-    val voxelAxis = VoxelSliceAxis.valueOf(voxelAxisName)
-    val voxelBrushMode = VoxelBrushMode.valueOf(voxelModeName)
+    val voxelAxis = VoxelSliceAxis.entries.firstOrNull { it.name == voxelAxisName } ?: VoxelSliceAxis.Z
+    val voxelBrushMode = VoxelBrushMode.entries.firstOrNull { it.name == voxelModeName } ?: VoxelBrushMode.SUBTRACT
     val isSurfaceMode = mode == StudioV3Mode.SCULPT || mode == StudioV3Mode.PAINT
     val terrainAuthoring = isSurfaceMode && surfaceEditing && terrain != null
 

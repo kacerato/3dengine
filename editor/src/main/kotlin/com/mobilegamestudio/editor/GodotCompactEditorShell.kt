@@ -140,7 +140,9 @@ internal fun GodotCompactEditorShell(
 ) {
     val previewActive = state.isPreviewStarting || state.isPreviewRunning
     var openPanelName by rememberSaveable { mutableStateOf<String?>(null) }
-    val openPanel = openPanelName?.let(StudioPopup::valueOf)
+    val openPanel = openPanelName?.let { savedName ->
+        StudioPopup.entries.firstOrNull { it.name == savedName }
+    }
 
     fun show(panel: StudioPopup?) {
         openPanelName = panel?.name

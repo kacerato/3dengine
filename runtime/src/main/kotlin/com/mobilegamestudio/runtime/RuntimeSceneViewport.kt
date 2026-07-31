@@ -87,6 +87,14 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+enum class EditorCameraPreset {
+    HOME,
+    TOP,
+    FRONT,
+    RIGHT,
+    FOCUS_SELECTION,
+}
+
 /**
  * Filament-backed viewport. SceneDocument remains authoritative; these nodes are
  * a disposable projection and are never persisted by the renderer.
@@ -100,6 +108,8 @@ fun RuntimeSceneViewport(
     onObjectSelected: (String?) -> Unit,
     transformGesturesEnabled: Boolean = false,
     onTransformDrag: (Float, Float) -> Unit = { _, _ -> },
+    editorCameraPreset: EditorCameraPreset? = null,
+    editorCameraCommandToken: Int = 0,
     terrainTopDownCamera: Boolean = false,
     onDiagnostic: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -223,7 +233,7 @@ fun RuntimeSceneViewport(
             targetPosition = Position(selectedTarget.x, selectedTarget.y, selectedTarget.z),
         )
     }
-    LaunchedEffect(editorCameraManipulator, mode, terrainTopDownCamera, selectedObjectId) {
+    LaunchedEffect(editorCameraManipulator, mode, terrainTopDownCamera) {
         if (mode != EditorMode.EDITOR) return@LaunchedEffect
         if (terrainTopDownCamera && terrainCameraComponent != null) {
             val target = terrainCameraTransform?.position ?: document.editorSettings.cameraTarget
@@ -245,6 +255,20 @@ fun RuntimeSceneViewport(
             sceneCameraNode.transform = editorCameraManipulator.getTransform()
         }
     }
+    LaunchedEffect(editorCameraCommandToken, editorCameraPreset, selectedObjectId, mode) {
+        if (mode != EditorMode.EDITOR || editorCameraPreset == null) return@LaunchedEffect
+        val selectedTransform = document.objects
+            .firstOrNull { it.id == selectedObjectId }
+            ?.component<TransformComponent>()
+        val focusTarget = selectedTransform?.position?.let { Position(it.x, it.y, it.z) }
+        val focusRadius = selectedTransform?.scale?.let { value ->
+            maxOf(kotlin.math.abs(value.x), kotlin.math.abs(value.y), kotlin.math.abs(value.z))
+                .coerceAtLeast(0.25f) * 3.4f
+        } ?: 4f
+        persistentEditorManipulator.applyPreset(editorCameraPreset, focusTarget, focusRadius)
+        sceneCameraNode.transform = persistentEditorManipulator.getTransform()
+    }
+
     SideEffect {
         if (mode == EditorMode.PLAY && controlledVehicle == null && playCharacter == null) {
             authoredPlayCamera?.component<TransformComponent>()?.let { transform ->
@@ -353,6 +377,7 @@ fun RuntimeSceneViewport(
                 transform = transform,
                 mode = mode,
                 isSelected = mode == EditorMode.EDITOR && objectValue.id == selectedObjectId,
+                transformGesturesEnabled = transformGesturesEnabled,
             )
         }
     }
@@ -394,6 +419,29 @@ fun RuntimeSceneViewport(
                 cameraManipulator = editorCameraManipulator,
                 onGestureListener = rememberOnGestureListener(
                     onSingleTapConfirmed = { _, node -> onObjectSelected(node?.name) },
+                    onDoubleTap = { _, node ->
+                        if (mode == EditorMode.EDITOR) {
+                            val transform = document.objects
+                                .firstOrNull { it.id == node?.name }
+                                ?.component<TransformComponent>()
+                            if (transform == null) {
+                                persistentEditorManipulator.applyPreset(EditorCameraPreset.HOME, null, 4f)
+                            } else {
+                                val scale = transform.scale
+                                val radius = maxOf(
+                                    kotlin.math.abs(scale.x),
+                                    kotlin.math.abs(scale.y),
+                                    kotlin.math.abs(scale.z),
+                                ).coerceAtLeast(0.25f) * 3.4f
+                                persistentEditorManipulator.applyPreset(
+                                    EditorCameraPreset.FOCUS_SELECTION,
+                                    Position(transform.position.x, transform.position.y, transform.position.z),
+                                    radius,
+                                )
+                            }
+                            sceneCameraNode.transform = persistentEditorManipulator.getTransform()
+                        }
+                    },
                 ),
             )
         } else {
@@ -426,6 +474,12 @@ private class StudioOrbitCameraManipulator(
     private var lastX = 0
     private var lastY = 0
     private var strafing = false
+    private val homeTargetX = target.x
+    private val homeTargetY = target.y
+    private val homeTargetZ = target.z
+    private val homeRadius: Float
+    private val homeYaw: Float
+    private val homePitch: Float
 
     init {
         val dx = eye.x - target.x
@@ -434,6 +488,40 @@ private class StudioOrbitCameraManipulator(
         radius = sqrt(dx * dx + dy * dy + dz * dz).coerceAtLeast(0.5f)
         yaw = atan2(dx, dz)
         pitch = asin((dy / radius).coerceIn(-0.98f, 0.98f))
+        homeRadius = radius
+        homeYaw = yaw
+        homePitch = pitch
+    }
+
+    fun applyPreset(preset: EditorCameraPreset, focusTarget: Position?, focusRadius: Float) {
+        when (preset) {
+            EditorCameraPreset.HOME -> {
+                targetX = homeTargetX
+                targetY = homeTargetY
+                targetZ = homeTargetZ
+                radius = homeRadius
+                yaw = homeYaw
+                pitch = homePitch
+            }
+            EditorCameraPreset.TOP -> {
+                pitch = 1.535f
+                yaw = 0f
+            }
+            EditorCameraPreset.FRONT -> {
+                pitch = 0f
+                yaw = 0f
+            }
+            EditorCameraPreset.RIGHT -> {
+                pitch = 0f
+                yaw = (Math.PI / 2.0).toFloat()
+            }
+            EditorCameraPreset.FOCUS_SELECTION -> if (focusTarget != null) {
+                targetX = focusTarget.x
+                targetY = focusTarget.y
+                targetZ = focusTarget.z
+                radius = focusRadius.coerceIn(0.8f, 280f)
+            }
+        }
     }
 
     override fun setViewport(width: Int, height: Int) {
@@ -473,7 +561,9 @@ private class StudioOrbitCameraManipulator(
             targetY -= dy * unitsPerPixel
         } else {
             if (kotlin.math.abs(dx) > 0.35f) yaw -= dx / viewportWidth * 2.1f
-            if (kotlin.math.abs(dy) > 0.35f) pitch = (pitch + dy / viewportHeight * 1.6f).coerceIn(-1.28f, 1.28f)
+            if (kotlin.math.abs(dy) > 0.35f) {
+                pitch = (pitch + dy / viewportHeight * 1.72f).coerceIn(-1.535f, 1.535f)
+            }
         }
         lastX = x
         lastY = y
@@ -483,8 +573,9 @@ private class StudioOrbitCameraManipulator(
     override fun scrollBegin(x: Int, y: Int, separation: Float) = Unit
 
     override fun scrollUpdate(x: Int, y: Int, prevSeparation: Float, currSeparation: Float) {
-        val delta = prevSeparation - currSeparation
-        radius = (radius * (1f + delta / viewportHeight * 0.72f)).coerceIn(0.8f, 280f)
+        if (prevSeparation <= 0f || currSeparation <= 0f) return
+        val ratio = (prevSeparation / currSeparation).coerceIn(0.72f, 1.38f)
+        radius = (radius * ratio).coerceIn(0.45f, 280f)
     }
 
     override fun scrollEnd() = Unit
@@ -1126,6 +1217,7 @@ private fun Node.applySceneTransform(
     transform: TransformComponent,
     mode: EditorMode,
     isSelected: Boolean,
+    transformGesturesEnabled: Boolean = false,
 ): Node = apply {
     val modifiers = objectValue.component<MeshModifierStackComponent>()
         ?.takeIf { it.enabled }
@@ -1162,8 +1254,10 @@ private fun Node.applySceneTransform(
     val mirror = modifiers.firstOrNull { it.type == MeshModifierType.MIRROR }?.axis
     name = objectValue.id
     isVisible = objectValue.enabled
-    isTouchable = true
-    isEditable = mode == EditorMode.EDITOR
+    isTouchable = mode == EditorMode.EDITOR
+    // Selection stays touchable, but direct SceneView editing is opt-in. The
+    // SceneDocument and editor gizmos are the only authoritative transforms.
+    isEditable = mode == EditorMode.EDITOR && transformGesturesEnabled
     position = Position(
         transform.position.x + modifierOffset.x,
         transform.position.y + modifierOffset.y,
@@ -1174,7 +1268,9 @@ private fun Node.applySceneTransform(
         transform.rotationEulerDegrees.y + modifierRotation.y,
         transform.rotationEulerDegrees.z + modifierRotation.z,
     )
-    val selectionScale = if (isSelected) 1.08f else 1f
+    // Selection must never change apparent object dimensions. Highlighting
+    // belongs to editor chrome/gizmos, not to the render transform.
+    val selectionScale = 1f
     // Normalize arbitrary import units, then let the editable Transform express
     // the intended scene size. The starter Viper uses 4.48 here, matching its
     // real length and its collider instead of silently becoming one metre long.

@@ -588,7 +588,10 @@ private fun V4CapabilityChip(capability: WorldCapability) {
     )
 }
 
-private fun WorldLayer.color(): Color = Color(colorArgb.toULong())
+// WorldLayer persists a conventional 32-bit ARGB value inside a Long.
+// Compose's Color(ULong) expects its internal 64-bit packed color format,
+// including a valid color-space index, and must not receive this value.
+private fun WorldLayer.color(): Color = Color((colorArgb and 0xFFFF_FFFFL).toInt())
 
 private fun WorldLayerKind.label(): String = when (this) {
     WorldLayerKind.SURFACE -> "Superfície"

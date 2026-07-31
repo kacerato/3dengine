@@ -7,6 +7,7 @@ on:
       - feature/compact-godot-workspace
       - feature/world-studio-direct-editing
       - feature/native-editor-validation-v1
+      - feature/world-studio-v4-foundation
   pull_request:
     branches:
       - master
@@ -95,6 +96,9 @@ jobs:
       - name: Normalize editor cohesion v3
         run: python tools/apply_editor_cohesion_v3_hotfix.py
 
+      - name: Apply World Studio V4 foundation
+        run: python tools/apply_world_studio_v4_foundation.py
+
       - name: Persist generated source changes
         if: github.event_name == 'push'
         shell: bash
@@ -105,7 +109,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated changes"
           else
-            git commit -m "feat: cohesive editor workspaces and player camera rig"
+            git commit -m "feat: world studio v4 layer and context foundation"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -130,7 +134,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-editor-cohesion-v3-debug
+          name: mobile-game-studio-world-studio-v4-foundation-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

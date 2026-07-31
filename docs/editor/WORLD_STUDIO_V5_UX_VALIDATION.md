@@ -1,10 +1,54 @@
 # World Studio V5 — contrato de UX e validação
 
-## Estado
+> **ESTADO: REPROVADA E SUPERADA PELA REFOUNDATION V6**
+>
+> A V5 corrigiu o crash ARGB, restaurou a free cam e voltou a usar um workspace dedicado. Entretanto, foi reprovada na validação funcional porque permite estados contraditórios entre toolset, seleção, recomendação e ferramenta ativa.
+>
+> Caso comprovado em aparelho: `Volume` aparece ativo, `Terreno editável 5` continua selecionado, a barra recomenda `Moldar relevo` e nenhuma ferramenta de Volume é iniciada. O usuário precisa clicar separadamente em `Ferramentas`, portanto os botões superiores funcionam como filtros visuais, não como contextos de edição completos.
+>
+> A Fase 4 original permanece pausada. O novo plano está em `WORLD_STUDIO_V6_REFOUNDATION.md`.
 
-Esta etapa substitui o dock lateral compacto do World Studio V4 por um workspace dedicado e responsivo. A Fase 4 do plano de autoria continua pausada até a ergonomia desta interface ser validada em aparelho real.
+## Motivo da reprovação
 
-## Princípios obrigatórios
+A interface V5 mantém estados independentes para:
+
+- modo superior;
+- seleção;
+- painel lateral;
+- ferramenta ativa;
+- recomendação contextual;
+- interação do viewport.
+
+Por isso, combinações inválidas são representáveis. A correção não será outro rearranjo de botões. A V6 introduzirá uma máquina de estados e um registro de ferramentas antes de redesenhar o shell.
+
+## Partes preservadas
+
+- workspace dedicado como direção de produto;
+- viewport como região principal;
+- free cam sem presets artificiais;
+- painéis roláveis e recolhíveis;
+- ARGB das camadas convertido com `Color(Int)`;
+- pinça sem escalar objetos;
+- segundo dedo cancelando stroke;
+- camadas persistentes;
+- `SceneDocument` e histórico transacional.
+
+## Partes descartadas
+
+- `Objetos`, `Terreno`, `Materiais`, `Malha` e `Volume` como simples estado visual;
+- `Criar`, `Ações` e `Ferramentas` como abas globais equivalentes;
+- necessidade de clicar no toolset e depois abrir Ferramentas;
+- recomendação contextual independente do toolset;
+- painel monolítico como autoridade das regras;
+- possibilidade de toolset incompatível permanecer ativo.
+
+---
+
+## Contrato histórico da V5
+
+O conteúdo abaixo permanece somente como registro do que foi testado e rejeitado.
+
+## Princípios originalmente propostos
 
 1. O viewport é sempre a região principal.
 2. A free cam não recebe botões de enquadramento, presets ou foco automático.
@@ -14,7 +58,7 @@ Esta etapa substitui o dock lateral compacto do World Studio V4 por um workspace
 6. Ações descrevem efeito, dependência e próxima etapa.
 7. Camadas organizam autoria sem substituir a hierarquia de objetos.
 
-## Estrutura visual
+## Estrutura visual histórica
 
 ### Cabeçalho
 
@@ -40,43 +84,26 @@ Esta etapa substitui o dock lateral compacto do World Studio V4 por um workspace
 - Ferramentas;
 - Assets.
 
-Em telas amplas, os painéis podem ficar encaixados. Em celular paisagem, eles abrem sobre o viewport e podem ser fechados imediatamente. O viewport volta a ocupar toda a região disponível assim que o painel é fechado.
+Em telas amplas, os painéis podiam ficar encaixados. Em celular paisagem, eles abriam sobre o viewport.
 
 ## Estrutura e camadas
 
-O painel Estrutura possui duas visões:
+O painel Estrutura possuía duas visões:
 
 - Camadas: criar, selecionar, renomear, ordenar, ocultar, bloquear, isolar e atribuir a seleção;
 - Objetos: objetos agrupados por camada, preservando o tipo e a seleção ativa.
 
 As cores das camadas usam ARGB convencional de 32 bits convertido para `Color(Int)`. É proibido usar `Color(colorArgb.toULong())`.
 
-## Criação
+## Criação histórica
 
-O painel Criar separa:
+O painel Criar separava fontes de geometria de gameplay e cena. A validação mostrou que Criar deve virar palette/comando contextual na V6, não uma aba global.
 
-### Fontes de geometria
+## Ações contextuais históricas
 
-- cubo primitivo;
-- plano primitivo;
-- terreno editável;
-- malha editável;
-- volume vazio.
+O painel consultava `resolveWorldAuthoringContext()`, mas o resultado não era acoplado atomicamente ao modo superior. Essa separação permitiu o estado contraditório observado.
 
-### Gameplay e cena
-
-- jogador;
-- câmera da cena;
-- luz direcional;
-- mundo jogável inicial.
-
-Criar produz a fonte inicial. Conversões e edição aparecem no painel Ações após a seleção.
-
-## Ações contextuais
-
-O painel Ações consulta `resolveWorldAuthoringContext()` e apresenta somente operações relacionadas à seleção atual. A ação sugerida recebe destaque, mas nenhuma ação futura é simulada como concluída.
-
-## Ferramentas
+## Ferramentas históricas
 
 ### Objetos e malha
 
@@ -85,49 +112,26 @@ O painel Ações consulta `resolveWorldAuthoringContext()` e apresenta somente o
 - rotacionar;
 - escalar.
 
-A transformação continua no controle inferior do viewport. Pinça e órbita pertencem somente à câmera.
-
 ### Terreno e materiais
 
-Estados explícitos:
-
 - Navegar;
-- Esculpir ou Pintar.
-
-Parâmetros:
-
+- Esculpir ou Pintar;
 - operação;
 - raio;
 - força;
 - altura-alvo;
 - falloff.
 
-Ao colocar um segundo dedo durante um stroke, o stroke é cancelado. A câmera continua livre no estado Navegar.
+O problema não foi a existência dessas ferramentas, e sim exigir uma segunda navegação para ativá-las.
 
-## Validação obrigatória no aparelho
+## Resultado da validação
 
-1. Abrir Mundo sem crash.
-2. Fechar e abrir Mundo repetidamente.
-3. Confirmar que o workspace ocupa a tela inteira.
-4. Abrir e fechar Estrutura, Criar, Ações, Ferramentas e Assets.
-5. Confirmar que, no celular, os painéis ficam sobre o viewport e não deixam uma faixa estreita permanente.
-6. Orbitar, mover e aproximar a free cam com todos os painéis fechados.
-7. Abrir um painel, fechá-lo e confirmar que o viewport volta ao tamanho completo.
-8. Criar cubo, terreno, malha e volume.
-9. Selecionar cada tipo e conferir a mudança das ações contextuais.
-10. Alternar Terreno entre Navegar e Esculpir.
-11. Ajustar raio e força e aplicar relevo.
-12. Confirmar que a pinça não escala objetos.
-13. Salvar, fechar e reabrir a cena.
-14. Confirmar persistência das camadas e atribuições.
+A V5 passou em compilação e eliminou o crash conhecido, mas falhou nos critérios essenciais:
 
-## Gate para a Fase 4
+- fluxo direto entre toolset e ferramenta;
+- coerência entre seleção e modo;
+- clareza da próxima ação;
+- impossibilidade de estados inválidos;
+- sensação de editor integrado.
 
-A Fase 4 só começa depois de confirmar:
-
-- ausência de crash;
-- viewport utilizável em celular paisagem;
-- free cam sem interferência;
-- painéis roláveis e recolhíveis;
-- fluxo coerente entre criar, selecionar, editar e organizar;
-- persistência após reabrir o projeto.
+Ela não deve ser usada como base para a Fase 4 sem a refoundation V6.

@@ -87,14 +87,21 @@ jobs:
       - name: Apply World Studio validation fixes
         shell: bash
         run: |
-          python tools/apply_world_studio_v4_validation_fixes.py
+          if ! grep -q "isEditable = mode == EditorMode.EDITOR && transformGesturesEnabled" runtime/src/main/kotlin/com/mobilegamestudio/runtime/RuntimeSceneViewport.kt; then
+            python tools/apply_world_studio_v4_validation_fixes.py
+          else
+            echo "Base viewport validation fixes already persisted"
+          fi
           if ! grep -q "WorldStudioV4InlineDock" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt; then
             python tools/apply_world_studio_v4_validation_round2.py
           else
             echo "World Studio inline dock already persisted"
           fi
+          python tools/apply_world_studio_v4_freecam_cleanup.py
           python tools/apply_world_studio_v4_color_fix.py
           ! grep -R "colorArgb.toULong()" editor/src/main/kotlin
+          ! grep -R "EditorCameraDock(" editor/src/main/kotlin/com/mobilegamestudio/editor/SceneViewport.kt
+          ! grep -R "onDoubleTap = { _, node ->" runtime/src/main/kotlin/com/mobilegamestudio/runtime/RuntimeSceneViewport.kt
 
       - name: Persist World Studio validation fixes
         if: github.event_name == 'push' && github.ref_name == 'feature/world-studio-v4-foundation'
@@ -106,7 +113,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "World Studio validation fixes already persisted"
           else
-            git commit -m "fix: decode world layer colors as 32-bit ARGB"
+            git commit -m "fix: preserve free cam and decode layer ARGB safely"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -145,7 +152,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-world-studio-v4-color-crash-fix-debug
+          name: mobile-game-studio-world-studio-v4-argb-freecam-fix-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

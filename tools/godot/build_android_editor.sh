@@ -29,6 +29,11 @@ fi
 
 python3 ./misc/scripts/install_swappy_android.py
 
+extra_scons_flags=()
+if [[ -n "${GODOT_SCONS_EXTRA_FLAGS:-}" ]]; then
+  read -r -a extra_scons_flags <<< "$GODOT_SCONS_EXTRA_FLAGS"
+fi
+
 scons \
   platform=android \
   target=editor \
@@ -38,14 +43,11 @@ scons \
   module_text_server_fb_enabled=yes \
   tests=no \
   swappy=yes \
-  "${GODOT_SCONS_EXTRA_FLAGS:-}"
+  "${extra_scons_flags[@]}"
 
 cd platform/android/java
 case "$BUILD_TYPE" in
-  debug)
-    ./gradlew generateGodotEditor
-    ;;
-  release)
+  debug|release)
     ./gradlew generateGodotEditor
     ;;
   *)
@@ -57,6 +59,7 @@ esac
 cd "$WORK_DIR"
 ARTIFACT_DIR="$ROOT_DIR/artifacts/godot-editor"
 mkdir -p "$ARTIFACT_DIR"
+find "$ARTIFACT_DIR" -maxdepth 1 -type f \( -name '*.apk' -o -name '*.aab' \) -delete
 
 find bin/android_editor_builds -maxdepth 1 -type f \
   \( -name '*.apk' -o -name '*.aab' \) \

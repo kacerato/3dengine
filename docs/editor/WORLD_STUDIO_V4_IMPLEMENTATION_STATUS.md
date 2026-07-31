@@ -96,6 +96,18 @@ Também foram adicionados:
 10. Converter malha editável em volume com a operação já existente.
 11. Receber motivo explícito para conversões ainda não implementadas.
 
+## Gate técnico concluído
+
+- migrações antigas e V4 aplicadas em ordem;
+- normalização de callbacks idempotente;
+- testes de domínio das camadas aprovados;
+- testes do motor contextual aprovados;
+- demais testes unitários do projeto aprovados;
+- APK debug compilado;
+- artifact publicado pelo GitHub Actions.
+
+O gate técnico não substitui o teste de ergonomia no aparelho. O PR permanece em draft até validar toque, leitura, densidade do painel, persistência ao reabrir e o fluxo real com duas ou mais camadas.
+
 ## Fases ainda não concluídas
 
 - **Fase 4:** novo contrato completo de input e gizmos 3D.

@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 SHELL = Path("editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV6.kt")
 HOST = Path("editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt")
@@ -22,6 +23,13 @@ def patch_shell_file() -> None:
             "import androidx.compose.foundation.layout.Column\nimport androidx.compose.foundation.layout.ColumnScope\n",
             "ColumnScope import",
         )
+
+    # Repair the accidental double prefix created by the first generator version.
+    source = source.replace(
+        "WorldStudioV6WorldStudioV6PaletteAction",
+        "WorldStudioV6PaletteAction",
+    )
+
     if "private data class WorldStudioV6PaletteAction" not in source:
         source = replace_once(
             source,
@@ -37,12 +45,20 @@ def patch_shell_file() -> None:
             ")\n",
             "palette action model",
         )
+
     source = source.replace(
         "    data class PaletteAction(val label: String, val hint: String, val action: () -> Unit)\n",
         "",
     )
-    source = source.replace("PaletteAction(", "WorldStudioV6PaletteAction(")
-    source = source.replace("distinctBy(PaletteAction::label)", "distinctBy(WorldStudioV6PaletteAction::label)")
+    source = re.sub(
+        r"(?<!WorldStudioV6)\bPaletteAction\b",
+        "WorldStudioV6PaletteAction",
+        source,
+    )
+    source = source.replace(
+        "WorldStudioV6WorldStudioV6PaletteAction",
+        "WorldStudioV6PaletteAction",
+    )
     source = source.replace(
         "    content: @Composable Column.() -> Unit,\n",
         "    content: @Composable ColumnScope.() -> Unit,\n",

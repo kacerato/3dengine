@@ -1,0 +1,112 @@
+name: Godot-derived Android editor
+
+on:
+  push:
+    branches:
+      - feature/godot-editor-refoundation-clean
+    paths:
+      - 'godot-upstream/**'
+      - 'godot-patches/**'
+      - 'tools/godot/**'
+      - 'docs/refoundation/**'
+      - '.github/workflows/godot-derived-android-editor.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'godot-upstream/**'
+      - 'godot-patches/**'
+      - 'tools/godot/**'
+      - 'docs/refoundation/**'
+      - '.github/workflows/godot-derived-android-editor.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-editor:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+
+    env:
+      GODOT_WORK_DIR: ${{ github.workspace }}/.work/godot
+      ANDROID_NDK_VERSION: 29.0.14206865
+      ANDROID_PLATFORM_VERSION: 36
+      ANDROID_BUILD_TOOLS_VERSION: 36.1.0
+
+    steps:
+      - name: Checkout product repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK components
+        shell: bash
+        run: |
+          sdkmanager \
+            "platforms;android-${ANDROID_PLATFORM_VERSION}" \
+            "build-tools;${ANDROID_BUILD_TOOLS_VERSION}" \
+            "ndk;${ANDROID_NDK_VERSION}"
+          echo "ANDROID_NDK_ROOT=${ANDROID_SDK_ROOT}/ndk/${ANDROID_NDK_VERSION}" >> "$GITHUB_ENV"
+
+      - name: Install SCons
+        run: python -m pip install --disable-pip-version-check 'scons>=4.8,<5'
+
+      - name: Make scripts executable
+        run: chmod +x tools/godot/*.sh
+
+      - name: Bootstrap pinned upstream
+        run: tools/godot/bootstrap_upstream.sh
+
+      - name: Apply and verify product boundary
+        shell: bash
+        run: |
+          expected="$(grep '^UPSTREAM_COMMIT=' godot-upstream/UPSTREAM.lock | cut -d= -f2-)"
+          actual="$(git -C "$GODOT_WORK_DIR" rev-parse HEAD)"
+          test "$actual" = "$expected"
+          python tools/godot/apply_product_patches.py \
+            --godot-dir "$GODOT_WORK_DIR" \
+            --root-dir "$GITHUB_WORKSPACE"
+          grep -q 'applicationId "com.mobilegamestudio.editor"' \
+            "$GODOT_WORK_DIR/platform/android/java/editor/build.gradle"
+          grep -q 'editorAppName: "Mobile Game Studio"' \
+            "$GODOT_WORK_DIR/platform/android/java/editor/build.gradle"
+          grep -q 'archivesName = "mobile_game_studio_editor"' \
+            "$GODOT_WORK_DIR/platform/android/java/editor/build.gradle"
+          grep -q 'name = "Mobile Game Studio"' "$GODOT_WORK_DIR/version.py"
+          grep -q 'short_name = "godot"' "$GODOT_WORK_DIR/version.py"
+          test -f godot-upstream/licenses/GODOT_LICENSE.txt
+          test -f godot-upstream/licenses/GODOT_COPYRIGHT.txt
+          test -f godot-upstream/licenses/DERIVATIVE_NOTICE.txt
+
+      - name: Build Android editor
+        shell: bash
+        run: tools/godot/build_android_editor.sh
+
+      - name: List generated artifacts
+        run: |
+          find artifacts/godot-editor -maxdepth 1 -type f -printf '%f %s bytes\n'
+          sha256sum artifacts/godot-editor/*
+
+      - name: Upload Android editor
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-game-studio-godot-4.6.3-clean-foundation
+          path: artifacts/godot-editor/*
+          if-no-files-found: error
+          retention-days: 14

@@ -24,17 +24,7 @@ A V6 começa por uma refoundation do editor, não por outra troca de cores, íco
 
 ### 1.1 O problema não é simplesmente Kotlin
 
-Jetpack Compose consegue construir regiões, docks, listas, painéis, overlays e superfícies responsivas. O problema atual é o uso de uma composição monolítica que concentra:
-
-- navegação do workspace;
-- seleção;
-- modos de autoria;
-- visibilidade dos painéis;
-- ativação de ferramentas;
-- validação de compatibilidade;
-- comandos de cena;
-- mensagens de próxima ação;
-- roteamento de gestos.
+Jetpack Compose consegue construir regiões, docks, listas, painéis, overlays e superfícies responsivas. O problema atual é o uso de uma composição monolítica que concentra navegação, seleção, modos, painéis, ferramentas, compatibilidade, comandos e input.
 
 Quando esses estados são independentes, a interface permite combinações incoerentes.
 
@@ -46,13 +36,12 @@ Quando esses estados são independentes, a interface permite combinações incoe
 - seleção incompatível pode permanecer ativa ao trocar de modo;
 - o breadcrumb e a recomendação podem contradizer o modo selecionado;
 - o usuário precisa memorizar uma sequência de cliques que a interface deveria resolver;
-- a UI apresenta muitas superfícies equivalentes, sem hierarquia operacional;
 - o viewport não recebe um contrato único de posse dos gestos;
-- o código visual contém decisões de domínio que deveriam viver fora do Compose.
+- decisões de domínio vivem dentro da composição Compose.
 
 ### 1.3 Decisão de produto
 
-A V5 não será promovida como fundação visual. As correções comprovadas permanecem:
+A V5 não será promovida como fundação visual. Permanecem as correções comprovadas:
 
 - conversão ARGB segura das camadas;
 - free cam sem presets artificiais;
@@ -79,16 +68,9 @@ Padrões adotados:
 - `_handles(object)` para compatibilidade;
 - `_edit(object)` para estabelecer o alvo de edição;
 - `_make_visible(visible)` para ativação do workspace;
-- ferramentas especializadas sem transformar cada comando em uma aba principal.
+- ferramentas especializadas sem transformar cada comando em aba principal.
 
-Referências:
-
-- repositório: `godotengine/godot`;
-- `EditorPlugin`;
-- `EditorNode`;
-- `SceneTreeDock`;
-- `InspectorDock`;
-- documentação de navegação 3D e plugins de tela principal.
+Referências: repositório `godotengine/godot`, `EditorPlugin`, `EditorNode`, `SceneTreeDock`, `InspectorDock`, navegação 3D e plugins de tela principal.
 
 ### 2.2 Blender
 
@@ -98,16 +80,8 @@ Padrões adotados:
 - área principal dedicada a um editor;
 - regiões com papéis distintos: main region, header, toolbar e sidebar;
 - regiões recolhíveis e redimensionáveis;
-- gizmos como manipuladores de dados, não como substitutos da câmera;
+- gizmos como manipuladores de dados, não substitutos da câmera;
 - modos coerentes com o tipo de dado em edição.
-
-Referências:
-
-- Window System;
-- Workspaces;
-- Areas e Editors;
-- Regions;
-- Gizmos.
 
 ### 2.3 Unity
 
@@ -115,44 +89,21 @@ Padrões adotados:
 
 - `EditorTool` com ativação e desativação explícitas;
 - ferramentas de contexto dependentes do tipo de alvo;
-- overlays que podem ser movidos, recolhidos e ocultados;
-- Terrain tools disponíveis quando existe um Terrain selecionado;
-- ferramentas agrupadas por domínio, não espalhadas como navegação global.
-
-Referências:
-
-- Scene View Overlays;
-- Scene View Tools Overlay;
-- `EditorTools.EditorTool`;
-- Terrain Tools.
+- overlays movíveis, recolhíveis e ocultáveis;
+- Terrain tools disponíveis quando existe Terrain selecionado;
+- ferramentas agrupadas por domínio.
 
 ### 2.4 Outras engines open source
 
-#### Stride
-
-Stride demonstra uma arquitetura forte em C# e um editor desktop completo. É referência para separação entre engine, editor e assets, mas não é uma solução direta para a UI Android deste projeto.
-
-#### Bevy
-
-Bevy demonstra um núcleo Rust orientado a dados e ECS. É referência para sistemas desacoplados e kernels de alto desempenho, mas não oferece uma substituição imediata para o shell de editor mobile.
+Stride demonstra separação forte entre engine, editor e assets em C#, mas é orientada a editor desktop. Bevy demonstra um núcleo Rust orientado a dados e ECS, mas não é substituição imediata para o shell mobile.
 
 ### 2.5 Síntese
 
-O padrão comum não é uma linguagem específica. É a separação entre:
-
-1. contexto de edição;
-2. registro de ferramentas;
-3. região principal;
-4. regiões auxiliares;
-5. seleção;
-6. comandos transacionais;
-7. roteamento de input.
+O padrão comum não é uma linguagem específica. É a separação entre contexto de edição, registro de ferramentas, regiões, seleção, comandos transacionais e roteamento de input.
 
 ---
 
 ## 3. Novo modelo mental
-
-### 3.1 Fluxo autoritativo
 
 ```text
 EditorIntent
@@ -170,7 +121,7 @@ Derived Editor UI
 
 A UI não decide diretamente o que é válido. Ela apresenta o estado derivado pelo domínio.
 
-### 3.2 Estado central
+### Estado central
 
 ```kotlin
 data class EditorContextState(
@@ -185,76 +136,38 @@ data class EditorContextState(
 )
 ```
 
-### 3.3 Invariantes
+### Invariantes
 
-- `TERRAIN` ativo exige Terrain selecionado ou uma operação pendente para selecionar/criar Terrain.
-- `MESH` ativo exige malha editável, uma primitiva convertível ou uma operação pendente.
-- `VOLUME` ativo exige volume voxel ou conversão explicitamente aceita.
-- `MATERIAL` ativo exige alvo renderizável compatível.
+- `TERRAIN` ativo exige Terrain selecionado ou operação pendente para selecionar/criar Terrain;
+- `MESH` ativo exige malha editável, primitiva convertível ou operação pendente;
+- `VOLUME` ativo exige volume voxel ou conversão explicitamente aceita;
+- `MATERIAL` ativo exige alvo renderizável compatível;
 - uma ferramenta ativa sempre declara qual input possui;
-- uma troca de toolset sempre resulta em ferramenta utilizável, escolha necessária ou retorno ao modo anterior;
-- a barra de contexto nunca pode contradizer o toolset;
+- troca de toolset sempre resulta em ferramenta utilizável, escolha necessária ou retorno ao modo anterior;
+- barra de contexto nunca contradiz o toolset;
 - `Criar`, `Ações` e `Ferramentas` não são toolsets principais.
 
 ---
 
 ## 4. Estrutura visual V6
 
-### 4.1 Regiões estáveis
+### Regiões estáveis
 
-#### Header
+**Header:** voltar, cena, salvar, undo/redo, play/stop e estado de persistência.
 
-- voltar;
-- nome da cena;
-- salvar;
-- undo/redo;
-- play/stop;
-- estado de persistência.
+**Main region:** viewport 3D como maior região.
 
-#### Main region
+**Tool shelf:** aparece automaticamente para o toolset ativo, contém somente ferramentas compatíveis e é recolhível.
 
-- viewport 3D;
-- sempre maior região;
-- sem toolbar duplicada dentro da cena.
+**Scene/Outliner:** hierarquia, camadas, visibilidade, bloqueio e seleção.
 
-#### Tool shelf
+**Inspector:** propriedades do alvo, componentes e parâmetros da ferramenta ativa.
 
-- aparece automaticamente para o toolset ativo;
-- contém somente ferramentas compatíveis;
-- recolhível;
-- não exige clicar em `Ferramentas`.
+**Asset browser:** região inferior ou drawer com filtros derivados do contexto.
 
-#### Scene/Outliner
+**Command palette:** busca, criação, ações e conversões; substitui abas permanentes `Criar` e `Ações`.
 
-- hierarquia;
-- camadas;
-- visibilidade;
-- bloqueio;
-- seleção.
-
-#### Inspector
-
-- propriedades do alvo selecionado;
-- seções por componente;
-- parâmetros da ferramenta em seção separada;
-- não replica comandos globais.
-
-#### Asset browser
-
-- região inferior ou drawer;
-- filtros derivados do contexto;
-- drag/drop ou aplicar ao alvo;
-- não é um modo principal.
-
-#### Command palette
-
-- busca de comandos;
-- ações contextuais;
-- criação;
-- conversões;
-- substitui as abas permanentes `Criar` e `Ações`.
-
-### 4.2 Toolsets principais
+### Toolsets principais
 
 - Object;
 - Terrain;
@@ -262,117 +175,57 @@ data class EditorContextState(
 - Volume;
 - Material.
 
-Cada toolset é um contexto de edição real, não uma aba decorativa.
+Cada toolset é um contexto real, não aba decorativa.
 
-### 4.3 Comportamento mobile
+### Comportamento mobile
 
-- viewport permanece visível durante edição;
-- tool shelf usa lateral ou bottom sheet conforme espaço;
-- Inspector e Outliner não permanecem ambos ocupando o viewport em telas compactas;
-- drawers possuem largura máxima e rolagem integral;
-- alvos de toque respeitam tamanho mínimo;
-- texto explica ações críticas; ícone sozinho é reservado a comandos universais;
-- regiões retornam à posição anterior ao reabrir;
-- teclado virtual não cobre o campo editado;
-- orientação paisagem é o primeiro alvo, mas a arquitetura não assume uma resolução fixa.
+- viewport permanece visível;
+- shelf usa lateral ou bottom sheet conforme espaço;
+- Inspector e Outliner não ocupam simultaneamente telas compactas;
+- drawers têm largura máxima e rolagem integral;
+- ações críticas usam texto;
+- layout não assume resolução fixa.
 
 ---
 
-## 5. Contrato de ativação dos toolsets
+## 5. Contrato de ativação
 
-### 5.1 Object
+### Object
 
-Ao tocar em Object:
+Ativa `SelectTool`, mantém seleção, mostra transformação e preserva free cam fora do gizmo.
 
-1. ativa `SelectTool`;
-2. mantém a seleção atual;
-3. mostra transform, duplicate, delete e hierarchy;
-4. free cam continua disponível fora do gizmo;
-5. tool shelf apresenta seleção e transformação.
+### Terrain
 
-### 5.2 Terrain
+- Terrain selecionado: ativa `TerrainNavigateTool` e shelf imediatamente;
+- outro alvo selecionado: oferece Terrain existente;
+- nenhum Terrain: cria, seleciona e entra em Navigate;
+- não existe segundo clique em Ferramentas.
 
-Ao tocar em Terrain:
+### Mesh
 
-#### Terrain já selecionado
+- malha editável: entra em seleção de vértice/aresta/face;
+- primitiva: oferece `Tornar editável` e entra atomicamente;
+- alvo incompatível: oferece selecionar/criar, sem ativar Mesh falsamente.
 
-1. ativa `TerrainNavigateTool` imediatamente;
-2. mostra shelf de terrain;
-3. Inspector mostra Terrain e Brush;
-4. nenhuma segunda abertura de painel é necessária.
+### Volume
 
-#### Terrain existe, mas outro objeto está selecionado
+- volume selecionado: ativa voxel tools;
+- malha editável: oferece conversão transacional;
+- Terrain selecionado: oferece criar, escolher ou cancelar; nunca fica ativo silenciosamente.
 
-1. abre seletor curto com terrains existentes;
-2. permite selecionar o último terrain usado;
-3. não ativa Terrain sobre objeto incompatível.
+### Material
 
-#### Nenhum Terrain existe
-
-1. apresenta `Criar terreno`;
-2. configura tamanho, resolução e camada;
-3. cria e seleciona;
-4. entra em `TerrainNavigateTool`.
-
-### 5.3 Mesh
-
-#### Malha editável selecionada
-
-- entra diretamente em seleção de vértice/aresta/face;
-- tool shelf mostra operações reais.
-
-#### Primitiva selecionada
-
-- apresenta uma única conversão inline: `Tornar editável`;
-- após confirmação, converte e entra no toolset.
-
-#### Alvo incompatível
-
-- oferece selecionar/criar malha;
-- não deixa Mesh visualmente ativo sobre Terrain.
-
-### 5.4 Volume
-
-#### Volume selecionado
-
-- ativa ferramentas voxel;
-- mostra add/subtract/smooth/slice.
-
-#### Malha editável selecionada
-
-- oferece `Converter para volume` com resolução e aviso de perda;
-- a conversão é transacional.
-
-#### Terrain selecionado
-
-- Volume não é ativado silenciosamente;
-- oferece criar volume, escolher existente ou cancelar.
-
-### 5.5 Material
-
-- identifica Terrain, malha ou volume renderizável;
-- abre materiais compatíveis;
-- mostra slots e camadas;
-- pintura só é ativada após material/camada válida.
+Exige Terrain, malha ou volume renderizável; pintura só ativa após material/camada válida.
 
 ---
 
 ## 6. Arquitetura de módulos
 
-### 6.1 Kotlin/Android permanece responsável por
+### Kotlin/Android
 
-- Activity e lifecycle;
-- permissões e armazenamento;
-- integração com Android;
-- shell Compose;
-- acessibilidade e toque;
-- navegação de alto nível;
-- integração da superfície de renderização;
-- comunicação com serviços da plataforma.
+Permanece responsável por lifecycle, permissões, armazenamento, shell Compose, acessibilidade, toque, navegação de alto nível e integração da superfície de renderização.
 
-### 6.2 Núcleo de editor independente de UI
-
-Novo módulo sugerido:
+### Núcleo de editor independente de UI
 
 ```text
 editor-domain/
@@ -386,353 +239,143 @@ editor-domain/
   diagnostics/
 ```
 
-Não deve importar Compose.
+Não importa Compose. Contém intents, estado, reducer, resolver, registries, capabilities, operações pendentes, histórico e diagnóstico.
 
-Responsabilidades:
+### UI Compose
 
-- `EditorIntent`;
-- `EditorContextState`;
-- `EditorContextReducer`;
-- `EditorContextResolver`;
-- `EditorCommandRegistry`;
-- `EditorToolRegistry`;
-- capability graph;
-- transições válidas;
-- mensagens de incompatibilidade;
-- operações pendentes;
-- Undo/Redo;
-- diagnóstico.
+Observa estado, emite intents, renderiza regiões, mede layout e cuida de acessibilidade. Não decide compatibilidade ou transações.
 
-### 6.3 UI Compose
+### Render e input
 
-Responsável apenas por:
-
-- observar `EditorContextState`;
-- emitir `EditorIntent`;
-- renderizar regiões;
-- medir layout;
-- acessibilidade;
-- animações leves;
-- persistência do arranjo das regiões.
-
-### 6.4 Render e input
-
-- render permanece em módulo próprio;
-- input bruto é normalizado antes do domínio;
-- câmera, gizmo e ferramenta não recebem o mesmo gesto;
-- cada ponteiro possui um owner explícito;
-- cancelamento é obrigatório em mudança de owner.
+Render não decide seleção/toolset. Input bruto é normalizado. Câmera, gizmo e ferramenta nunca recebem o mesmo gesto; cada ponteiro possui owner explícito.
 
 ---
 
 ## 7. Decisão de linguagem
 
-A decisão completa está em `docs/architecture/ADR-0001_EDITOR_TECH_STACK.md`.
+Detalhes em `docs/architecture/ADR-0001_EDITOR_TECH_STACK.md`.
 
-Resumo:
-
-- não reescrever o shell Android em Rust;
-- não migrar para C# apenas por aparência visual;
-- extrair primeiro o domínio do editor para um módulo sem Compose;
+- não reescrever shell Android em Rust;
+- não migrar para C# por aparência;
+- extrair primeiro domínio sem Compose;
 - medir terrain, mesh e voxel;
-- considerar Rust apenas para kernels comprovadamente limitados por CPU/memória;
-- manter ABI estreita e dados serializáveis caso Rust seja adotado;
-- nenhuma nova linguagem entra sem benchmark, custo de build, debugging e manutenção documentados.
+- considerar Rust somente para kernels comprovadamente limitados;
+- nenhuma linguagem nova sem benchmark e custo documentado.
 
 ---
 
 ## 8. Plano revisado de fases
 
-## R0 — pesquisa e refoundation
+### R0 — pesquisa e refoundation
 
-Entregáveis:
+Auditoria V5, referências, ADR, contrato de toolsets, fluxos dourados, V5 reprovada e Fase 4 pausada.
 
-- auditoria da V5;
-- matriz de padrões Godot/Blender/Unity;
-- ADR de stack;
-- novo contrato de toolsets;
-- fluxos dourados;
-- V5 marcada como reprovada;
-- Fase 4 anterior pausada.
+### R1 — domínio e máquina de estados
 
-Gate:
-
-- nenhuma implementação visual nova antes da aprovação do contrato.
-
-## R1 — domínio e máquina de estados do editor
-
-Entregáveis:
-
-- `EditorIntent`;
-- `EditorContextState`;
-- `EditorContextReducer`;
-- `EditorContextResolver`;
-- `EditorToolRegistry`;
-- `EditorCommandRegistry`;
-- capabilities;
-- operações pendentes;
-- testes de transição.
+Entregáveis: `EditorIntent`, `EditorContextState`, reducer, resolver, tool registry, command registry, capabilities, operações pendentes e testes.
 
 Testes obrigatórios:
 
-- Terrain não pode ficar ativo sobre Terrain incompatível? (corrigir wording: Terrain exige Terrain; Volume não pode ficar ativo sobre Terrain);
-- toolset e breadcrumb sempre coincidem;
+- `Volume` não permanece ativo sobre Terrain sem escolha/conversão pendente;
+- `Terrain` ativo exige Terrain selecionado, criado ou escolhido;
+- toolset e breadcrumb coincidem;
 - toolset compatível abre ferramenta padrão automaticamente;
-- conversão confirmada altera seleção e ferramenta atomicamente;
+- conversão altera seleção e ferramenta atomicamente;
 - cancelar restaura estado anterior.
 
-Gate:
+Gate: estados contraditórios não são representáveis.
 
-- estados contraditórios não são representáveis.
+### R2 — shell de regiões e design system
 
-## R2 — shell de regiões e design system
+Header, main region, shelf, outliner, inspector, asset browser, command palette, layout compacto/amplo e tokens visuais.
 
-Entregáveis:
+### R3 — toolsets conectados à seleção
 
-- header;
-- main region;
-- tool shelf;
-- outliner;
-- inspector;
-- asset browser;
-- command palette;
-- comportamento compacto/amplo;
-- tokens de espaço, tipografia, raio, elevação, borda e estados.
+Object, Terrain, Mesh, Volume e Material com ativação atômica, escolha/criação/conversão e shelf automático.
 
-Gate:
+### R4 — input, free cam e gizmos
 
-- viewport nunca vira faixa estreita;
-- todos os painéis possuem rolagem integral;
-- nenhuma ação crítica depende apenas de símbolo obscuro.
+`ViewportInputRouter`, pointer ownership, orbit/pan/zoom, seleção, gizmos, strokes e matriz multitouch.
 
-## R3 — toolsets conectados à seleção
+### R5 — Terrain end-to-end
 
-Entregáveis:
+Criar, navegar, esculpir, suavizar, nivelar, expandir/recortar, resolução, chunks, collider, persistência e Undo/Redo.
 
-- Object;
-- Terrain;
-- Mesh;
-- Volume;
-- Material;
-- ativação atômica;
-- escolha/criação/conversão contextual;
-- shelf automático;
-- Inspector contextual.
+### R6 — Mesh end-to-end
 
-Gate:
+Primitiva, conversão, vértice/aresta/face, transform, extrude, inset, subdivide, modifiers, collider e persistência.
 
-- tocar no toolset inicia um fluxo utilizável sem segunda aba de ferramentas.
+### R7 — Volume/Voxel end-to-end
 
-## R4 — input, free cam e gizmos
+Criar, converter, add/subtract/smooth, cavernas, surface extraction, collider, chunks/LOD e persistência.
 
-Entregáveis:
+### R8 — materiais, assets e camadas
 
-- `ViewportInputRouter`;
-- pointer ownership;
-- orbit/pan/zoom;
-- seleção;
-- gizmos;
-- terrain stroke;
-- mesh selection;
-- voxel brush;
-- matriz multitouch;
-- cancelamento seguro.
+Slots, layers, masks, PBR, filtros, aplicação, visibilidade, bloqueio, Solo e dependências.
 
-Gate:
+### R9 — gameplay validado
 
-- pinça nunca altera objeto;
-- gesto de câmera nunca edita superfície;
-- gizmo nunca move câmera;
-- transição entre owners não deixa gesto residual.
+Player, collider, movimento, câmera follow/look, pulo, Play/Stop e retorno ao editor.
 
-## R5 — Terrain end-to-end
+### R10 — Lua e NoCode
 
-- criar;
-- selecionar;
-- navegar;
-- esculpir;
-- suavizar;
-- nivelar;
-- expandir/recortar;
-- resolução;
-- patches/chunks;
-- collider;
-- salvar/reabrir;
-- Undo/Redo.
+Bindings tipados, arquivos, vínculo, eventos, erros, debugging e templates.
 
-## R6 — Mesh end-to-end
+### R11 — spike Rust condicionado a benchmark
 
-- primitiva;
-- conversão;
-- seleção de vértice/aresta/face;
-- move/rotate/scale;
-- extrude;
-- inset;
-- subdivide;
-- modifier stack;
-- collider;
-- persistência.
+Heightmap, topologia, voxel brushes, surface extraction e grandes diffs; exige benchmark, JNI aceitável, crash isolation, build estável e fallback Kotlin.
 
-## R7 — Volume/Voxel end-to-end
+### R12 — migração e consolidação
 
-- criar;
-- converter;
-- add/subtract/smooth;
-- cavernas;
-- surface extraction;
-- collider;
-- chunks/LOD;
-- persistência.
-
-## R8 — materiais, assets e camadas
-
-- slots;
-- layers;
-- masks;
-- PBR;
-- asset filters;
-- drag/apply;
-- camadas do mundo;
-- visibilidade/bloqueio/solo;
-- dependências.
-
-## R9 — gameplay validado
-
-- player;
-- collider;
-- movimento;
-- câmera follow/look;
-- pulo;
-- terreno/collider;
-- Play/Stop;
-- retorno ao editor.
-
-## R10 — Lua e NoCode
-
-- bindings tipados;
-- criação em pasta;
-- vínculo com objeto;
-- eventos;
-- erros;
-- debugging;
-- templates do player e câmera;
-- equivalência de comportamento Lua/NoCode.
-
-## R11 — spike Rust condicionado a benchmark
-
-Candidatos:
-
-- processamento de heightmap;
-- operações de topologia;
-- voxel brushes;
-- surface extraction;
-- diff/serialization em massa.
-
-Gate:
-
-- benchmark reproduzível;
-- ganho relevante;
-- custo de JNI aceitável;
-- crash isolation;
-- build Android estável;
-- fallback Kotlin definido.
-
-## R12 — migração e consolidação
-
-- migrar cenas;
-- remover V4/V5 UI;
-- eliminar scripts geradores temporários;
-- consolidar testes;
-- documentação final;
-- acessibilidade;
-- desempenho;
-- critérios de release.
+Migrar cenas, remover V4/V5 UI, eliminar geradores temporários, consolidar testes, documentação, acessibilidade e desempenho.
 
 ---
 
 ## 9. Fluxos dourados
 
-### 9.1 Terrain
+### Terrain
 
 ```text
-Abrir Mundo
-→ tocar Terrain
-→ selecionar Terrain existente ou criar
-→ TerrainNavigate ativo
-→ escolher Raise
-→ editar
-→ Navegar
-→ salvar
-→ reabrir
+Abrir Mundo → Terrain → selecionar/criar → Navigate ativo → Raise → editar → Navegar → salvar
 ```
 
-Não existe passo separado “abrir Ferramentas”.
-
-### 9.2 Cubo para malha
+### Cubo para malha
 
 ```text
-Criar cubo
-→ selecionar cubo
-→ tocar Mesh
-→ confirmar Tornar editável
-→ Vertex Select ativo
-→ mover/extrudar
-→ salvar
+Criar cubo → selecionar → Mesh → Tornar editável → Vertex Select → editar → salvar
 ```
 
-### 9.3 Malha para volume
+### Malha para volume
 
 ```text
-Selecionar malha editável
-→ tocar Volume
-→ confirmar resolução da conversão
-→ Voxel Add/Subtract ativo
-→ editar
-→ gerar superfície/collider
+Selecionar malha → Volume → confirmar resolução → Voxel tools → editar → superfície/collider
 ```
 
-### 9.4 Mundo jogável
+### Mundo jogável
 
 ```text
-Terrain válido
-→ criar player
-→ gerar collider
-→ configurar camera rig
-→ Play
-→ mover/olhar/pular
-→ Stop
-→ retornar ao mesmo contexto de edição
+Terrain válido → player → collider → camera rig → Play → mover/olhar/pular → Stop
 ```
 
 ---
 
-## 10. Critérios de aceitação antes de retomar funcionalidades avançadas
+## 10. Critérios de aceitação
 
-- não existe estado visual contraditório;
-- cada toolset entra em ferramenta real ou apresenta uma decisão clara;
-- tool shelf aparece automaticamente;
-- Outliner e Inspector têm papéis estáveis;
-- Criar e Ações são comandos contextuais, não modos globais;
-- viewport preserva espaço e free cam;
-- input possui owner;
-- todas as operações alteram `SceneDocument` por transação;
+- nenhum estado contraditório;
+- cada toolset inicia ferramenta real ou decisão clara;
+- shelf automático;
+- Outliner e Inspector estáveis;
+- Criar/Ações como comandos contextuais;
+- viewport e free cam preservados;
+- input com owner;
+- operações transacionais;
 - Undo/Redo cobre conversões e strokes;
-- cenas antigas migram;
-- testes de domínio independem de Compose;
+- testes de domínio sem Compose;
 - testes de aparelho cobrem multitouch;
-- nenhuma nova linguagem é adotada sem benchmark.
-
----
+- linguagem nova somente com benchmark.
 
 ## 11. Próxima implementação autorizada
 
 A próxima etapa é **R1 — domínio e máquina de estados do editor**.
 
-Não será criado outro layout antes de:
-
-1. representar toolsets, ferramentas e seleção no domínio;
-2. impedir estados contraditórios por testes;
-3. definir ativação, cancelamento e conversão;
-4. separar comandos da composição visual.
-
-Somente depois disso o shell V6 será desenhado sobre um contrato funcional.
+Não será criado outro layout antes de representar toolsets, ferramentas e seleção no domínio; impedir estados contraditórios; definir ativação/cancelamento/conversão; e separar comandos da composição visual.

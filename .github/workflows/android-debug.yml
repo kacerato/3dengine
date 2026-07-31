@@ -84,6 +84,23 @@ jobs:
           grep -q "fun createWorldLayer" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
           echo "World Studio V4 source is persisted; no generator replay required"
 
+      - name: Apply World Studio validation fixes
+        run: python tools/apply_world_studio_v4_validation_fixes.py
+
+      - name: Persist World Studio validation fixes
+        if: github.event_name == 'push' && github.ref_name == 'feature/world-studio-v4-foundation'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add editor/src/main/kotlin/com/mobilegamestudio/editor runtime/src/main/kotlin/com/mobilegamestudio/runtime
+          if git diff --cached --quiet; then
+            echo "World Studio validation fixes already persisted"
+          else
+            git commit -m "fix: stabilize world viewport camera and saved state"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
+
       - name: Persist legacy generated source changes
         if: github.event_name == 'push' && github.ref_name != 'feature/world-studio-v4-foundation'
         shell: bash
@@ -119,7 +136,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-world-studio-v4-foundation-debug
+          name: mobile-game-studio-world-studio-v4-validation-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

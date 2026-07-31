@@ -55,10 +55,32 @@ internal fun GameObject.toEditorSelectionKind(): EditorSelectionKind = when {
     else -> EditorSelectionKind.OTHER
 }
 
+/**
+ * Refreshes selection-derived capabilities after a scene transaction.
+ *
+ * A scene refresh is not automatically a user selection change. When the same
+ * object and data kind remain selected, an outstanding target/conversion choice
+ * must survive unrelated transactions such as creating another object or
+ * changing a layer. The reducer is still used to refresh lock/capability state;
+ * only the pending operation and its diagnostic are restored afterwards.
+ */
 internal fun EditorContextState.synchronizeSceneSelection(
     document: SceneDocument,
     selectedObjectId: String?,
-): EditorContextState = EditorContextReducer.reduce(
-    this,
-    EditorIntent.SelectionChanged(document.toEditorSelection(selectedObjectId)),
-).state
+): EditorContextState {
+    val nextSelection = document.toEditorSelection(selectedObjectId)
+    val refreshed = EditorContextReducer.reduce(
+        this,
+        EditorIntent.SelectionChanged(nextSelection),
+    ).state
+    val sameLogicalSelection =
+        selection.objectId == nextSelection.objectId && selection.kind == nextSelection.kind
+    return if (sameLogicalSelection && pendingOperation != null) {
+        refreshed.copy(
+            pendingOperation = pendingOperation,
+            diagnostic = diagnostic,
+        )
+    } else {
+        refreshed
+    }
+}

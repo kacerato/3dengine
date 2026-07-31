@@ -85,7 +85,9 @@ jobs:
           echo "World Studio V4 source is persisted; no generator replay required"
 
       - name: Apply World Studio validation fixes
-        run: python tools/apply_world_studio_v4_validation_fixes.py
+        run: |
+          python tools/apply_world_studio_v4_validation_fixes.py
+          python tools/apply_world_studio_v4_validation_round2.py
 
       - name: Persist World Studio validation fixes
         if: github.event_name == 'push' && github.ref_name == 'feature/world-studio-v4-foundation'
@@ -97,7 +99,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "World Studio validation fixes already persisted"
           else
-            git commit -m "fix: stabilize world viewport camera and saved state"
+            git commit -m "fix: keep one free-camera viewport in World Studio"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -136,7 +138,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-world-studio-v4-validation-debug
+          name: mobile-game-studio-world-studio-v4-inline-validation-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

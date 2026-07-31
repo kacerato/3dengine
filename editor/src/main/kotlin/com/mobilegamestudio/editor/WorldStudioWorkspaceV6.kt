@@ -77,7 +77,7 @@ private enum class WorldStudioV6OutlinerTab {
     LAYERS,
 }
 
-private data class WorldStudioV6WorldStudioV6PaletteAction(
+private data class WorldStudioV6PaletteAction(
     val label: String,
     val hint: String,
     val action: () -> Unit,
@@ -1102,7 +1102,7 @@ private fun WorldStudioV6CommandPalette(
                 Modifier.weight(1f).fillMaxWidth().padding(horizontal = 10.dp, vertical = 4.dp),
                 verticalArrangement = Arrangement.spacedBy(5.dp),
             ) {
-                items(actions, key = PaletteAction::label) { item ->
+                items(actions, key = WorldStudioV6PaletteAction::label) { item ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()

@@ -32,7 +32,8 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Prepare tolerant source patcher
+      - name: Apply legacy generated migrations
+        if: github.head_ref != 'feature/world-studio-v4-foundation' && github.ref_name != 'feature/world-studio-v4-foundation'
         shell: bash
         run: |
           python - <<'PY'
@@ -62,47 +63,28 @@ jobs:
           if old in source:
               path.write_text(source.replace(old, new, 1), encoding='utf-8')
           PY
+          python tools/apply_authoring_upgrade.py
+          python tools/apply_authoring_hotfix.py
+          python tools/apply_world_studio_v2.py
+          python tools/apply_world_studio_compile_hotfix.py
+          python tools/apply_studio_v3_geometry.py
+          python tools/apply_studio_v3_ui.py
+          python tools/apply_studio_v3_validation.py
+          python tools/apply_native_editor_validation.py
+          python tools/apply_world_authoring_v2_fixed.py
 
-      - name: Apply advanced authoring source upgrade
-        run: python tools/apply_authoring_upgrade.py
-
-      - name: Apply generated-source hotfixes
-        run: python tools/apply_authoring_hotfix.py
-
-      - name: Apply direct World Studio migration
-        run: python tools/apply_world_studio_v2.py
-
-      - name: Apply World Studio compile hotfixes
-        run: python tools/apply_world_studio_compile_hotfix.py
-
-      - name: Apply Studio V3 geometry
-        run: python tools/apply_studio_v3_geometry.py
-
-      - name: Apply Studio V3 interface
-        run: python tools/apply_studio_v3_ui.py
-
-      - name: Apply Studio V3 validation
-        run: python tools/apply_studio_v3_validation.py
-
-      - name: Apply native editor validation
-        run: python tools/apply_native_editor_validation.py
-
-      - name: Apply functional world authoring v2
-        run: python tools/apply_world_authoring_v2_fixed.py
-
-      - name: Ensure World Studio V4 foundation
+      - name: Verify persisted World Studio V4 source
+        if: github.head_ref == 'feature/world-studio-v4-foundation' || github.ref_name == 'feature/world-studio-v4-foundation'
         shell: bash
         run: |
-          if grep -q "WorldStudioV4ContextStrip" editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV3.kt \
-             && grep -q "fun createWorldLayer" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt \
-             && test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldLayerModels.kt; then
-            echo "World Studio V4 foundation already persisted"
-          else
-            python tools/apply_world_studio_v4_foundation.py
-            python tools/apply_world_studio_v4_hotfix.py
-          fi
+          test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldLayerModels.kt
+          test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldAuthoringContext.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioV4Panels.kt
+          grep -q "WorldStudioV4ContextStrip" editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV3.kt
+          grep -q "fun createWorldLayer" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
+          echo "World Studio V4 source is persisted; no generator replay required"
 
-      - name: Persist generated source changes
+      - name: Persist legacy generated source changes
         if: github.event_name == 'push' && github.ref_name != 'feature/world-studio-v4-foundation'
         shell: bash
         run: |

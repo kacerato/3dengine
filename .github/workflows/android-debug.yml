@@ -85,9 +85,14 @@ jobs:
           echo "World Studio V4 source is persisted; no generator replay required"
 
       - name: Apply World Studio validation fixes
+        shell: bash
         run: |
           python tools/apply_world_studio_v4_validation_fixes.py
-          python tools/apply_world_studio_v4_validation_round2.py
+          if ! grep -q "WorldStudioV4InlineDock" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt; then
+            python tools/apply_world_studio_v4_validation_round2.py
+          else
+            echo "World Studio inline dock already persisted"
+          fi
           python tools/apply_world_studio_v4_color_fix.py
           ! grep -R "colorArgb.toULong()" editor/src/main/kotlin
 

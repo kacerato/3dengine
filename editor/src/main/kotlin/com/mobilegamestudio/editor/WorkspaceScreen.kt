@@ -61,6 +61,10 @@ fun WorkspaceRoute(
         }
     }
 
+    LaunchedEffect(state.sceneDocument?.sceneId) {
+        if (state.sceneDocument != null) viewModel.ensureWorldLayerStructure()
+    }
+
     LaunchedEffect(state.message) {
         state.message?.let {
             snackbarHostState.showSnackbar(it)
@@ -152,6 +156,14 @@ fun WorkspaceRoute(
                 onTerrainStrokeEnd = viewModel::endTerrainStroke,
                 onCreateFlatTerrain = viewModel::createFlatTerrain,
                 onCreatePlayableWorld = viewModel::createPlayableWorld,
+                onCreateWorldLayer = viewModel::createWorldLayer,
+                onSelectWorldLayer = viewModel::selectWorldLayer,
+                onRenameWorldLayer = viewModel::renameWorldLayer,
+                onMoveWorldLayer = viewModel::moveWorldLayer,
+                onToggleWorldLayerVisibility = viewModel::toggleWorldLayerVisibility,
+                onToggleWorldLayerLock = viewModel::toggleWorldLayerLock,
+                onToggleWorldLayerSolo = viewModel::toggleWorldLayerSolo,
+                onAssignSelectedToWorldLayer = viewModel::assignSelectedObjectToWorldLayer,
                 onAssignTerrainTexture = viewModel::assignTerrainTexture,
                 onCreateEditableMesh = viewModel::createEditableMesh,
                 onConvertSelectedToEditableMesh = viewModel::convertSelectedToEditableMesh,

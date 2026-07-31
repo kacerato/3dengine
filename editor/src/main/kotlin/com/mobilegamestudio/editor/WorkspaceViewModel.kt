@@ -83,6 +83,22 @@ import com.mobilegamestudio.core.model.VisualGraphValidator
 import com.mobilegamestudio.core.model.VisualNode
 import com.mobilegamestudio.core.model.VisualNodeCatalog
 import com.mobilegamestudio.core.model.VisualNodeType
+import com.mobilegamestudio.core.model.WORLD_LAYER_SYSTEM_TAG
+import com.mobilegamestudio.core.model.WorldLayerKind
+import com.mobilegamestudio.core.model.WorldLayerMembershipComponent
+import com.mobilegamestudio.core.model.addWorldLayer
+import com.mobilegamestudio.core.model.assignObjectToWorldLayer
+import com.mobilegamestudio.core.model.ensureWorldLayerStructure
+import com.mobilegamestudio.core.model.isWorldLayerLockedFor
+import com.mobilegamestudio.core.model.renameWorldLayer
+import com.mobilegamestudio.core.model.reorderWorldLayer
+import com.mobilegamestudio.core.model.selectWorldLayer
+import com.mobilegamestudio.core.model.toggleWorldLayerLock
+import com.mobilegamestudio.core.model.toggleWorldLayerSolo
+import com.mobilegamestudio.core.model.toggleWorldLayerVisibility
+import com.mobilegamestudio.core.model.updateWorldObjectLocalVisibility
+import com.mobilegamestudio.core.model.worldLayer
+import com.mobilegamestudio.core.model.worldLayerMembership
 import com.mobilegamestudio.scripting.LogicExecutionResult
 import com.mobilegamestudio.scripting.LogicLogLevel
 import com.mobilegamestudio.scripting.LogicSceneHost
@@ -318,11 +334,10 @@ class WorkspaceViewModel(
 
     fun toggleObjectVisibility(id: String) {
         if (!canEdit()) return
-        mutateScene { objects ->
-            objects.map { item ->
-                if (item.id == id) item.copy(isVisible = !item.isVisible) else item
-            }
-        }
+        val document = mutableState.value.sceneDocument ?: return
+        val objectValue = document.objects.firstOrNull { it.id == id } ?: return
+        val currentLocal = objectValue.worldLayerMembership()?.localVisible ?: objectValue.enabled
+        applyDocumentEdit(document.updateWorldObjectLocalVisibility(id, !currentLocal))
     }
 
     fun addAsset(asset: AssetRecord) {
@@ -697,6 +712,79 @@ class WorkspaceViewModel(
             }
         }
     }
+
+
+    fun ensureWorldLayerStructure() {
+        if (!canEdit()) return
+        val document = mutableState.value.sceneDocument ?: return
+        val prepared = document.ensureWorldLayerStructure()
+        if (prepared != document) {
+            applyDocumentEdit(prepared)
+            mutableState.update { it.copy(message = "Estrutura de camadas do World Studio V4 criada para esta cena.") }
+        }
+    }
+
+    fun createWorldLayer(name: String, kind: WorldLayerKind) {
+        if (!canEdit()) return
+        val document = mutableState.value.sceneDocument ?: return
+        applyDocumentEdit(document.addWorldLayer(name, kind))
+        mutableState.update { it.copy(message = "Camada '$name' criada e selecionada.") }
+    }
+
+    fun selectWorldLayer(layerId: String) {
+        if (!canEdit()) return
+        val document = mutableState.value.sceneDocument ?: return
+        applyDocumentEdit(document.selectWorldLayer(layerId))
+    }
+
+    fun renameWorldLayer(layerId: String, name: String) {
+        if (!canEdit()) return
+        val document = mutableState.value.sceneDocument ?: return
+        applyDocumentEdit(document.renameWorldLayer(layerId, name))
+    }
+
+    fun moveWorldLayer(layerId: String, delta: Int) {
+        if (!canEdit()) return
+        val document = mutableState.value.sceneDocument ?: return
+        applyDocumentEdit(document.reorderWorldLayer(layerId, delta))
+    }
+
+    fun toggleWorldLayerVisibility(layerId: String) {
+        if (!canEdit()) return
+        val document = mutableState.value.sceneDocument ?: return
+        applyDocumentEdit(document.toggleWorldLayerVisibility(layerId))
+    }
+
+    fun toggleWorldLayerLock(layerId: String) {
+        if (!canEdit()) return
+        val document = mutableState.value.sceneDocument ?: return
+        applyDocumentEdit(document.toggleWorldLayerLock(layerId))
+    }
+
+    fun toggleWorldLayerSolo(layerId: String) {
+        if (!canEdit()) return
+        val document = mutableState.value.sceneDocument ?: return
+        applyDocumentEdit(document.toggleWorldLayerSolo(layerId))
+    }
+
+    fun assignSelectedObjectToWorldLayer(layerId: String) {
+        if (!canEdit()) return
+        val selectedId = mutableState.value.selectedObjectId ?: run {
+            mutableState.update { it.copy(message = "Selecione um objeto antes de atribuir uma camada.") }
+            return
+        }
+        val document = mutableState.value.sceneDocument ?: return
+        val target = document.worldLayer(layerId) ?: return
+        if (target.locked) {
+            mutableState.update { it.copy(message = "A camada '${target.name}' está bloqueada.") }
+            return
+        }
+        applyDocumentEdit(document.assignObjectToWorldLayer(selectedId, layerId))
+        mutableState.update { it.copy(message = "Objeto movido para a camada '${target.name}'.") }
+    }
+
+    private fun selectedWorldLayerIsLocked(): Boolean =
+        mutableState.value.sceneDocument?.isWorldLayerLockedFor(mutableState.value.selectedObjectId) == true
 
     fun updateTerrainTool(
         mode: TerrainBrushMode? = null,
@@ -1192,6 +1280,10 @@ class WorkspaceViewModel(
         delta: Float,
     ) {
         if (!canEdit()) return
+        if (selectedWorldLayerIsLocked()) {
+            mutableState.update { it.copy(message = "A camada selecionada está bloqueada.") }
+            return
+        }
         val selectedId = mutableState.value.selectedObjectId ?: return
         mutateScene { objects ->
             objects.map { item ->
@@ -1272,6 +1364,10 @@ class WorkspaceViewModel(
         value: Float,
     ) {
         if (!canEdit()) return
+        if (selectedWorldLayerIsLocked()) {
+            mutableState.update { it.copy(message = "A camada selecionada está bloqueada.") }
+            return
+        }
         if (!value.isFinite() || (property in setOf(TransformProperty.SCALE, TransformProperty.COLLIDER_SIZE) && value <= 0f)) {
             mutableState.update {
                 it.copy(message = "Use um número finito${if (property == TransformProperty.SCALE) " maior que zero" else ""}.")
@@ -2257,7 +2353,7 @@ class WorkspaceViewModel(
         if (changed == current) return
         val currentDocument = mutableState.value.sceneDocument ?: return
         val history = sceneHistory ?: return
-        val updatedDocument = currentDocument.mergeEditorObjects(changed)
+        val updatedDocument = currentDocument.mergeEditorObjects(changed).ensureWorldLayerStructure()
         val result = history.execute(
             ReplaceSceneDocumentCommand(
                 before = currentDocument,
@@ -2468,9 +2564,10 @@ class WorkspaceViewModel(
 
     private fun applyDocumentEdit(updatedDocument: SceneDocument) {
         val currentDocument = mutableState.value.sceneDocument ?: return
-        if (currentDocument == updatedDocument) return
+        val preparedDocument = updatedDocument.ensureWorldLayerStructure()
+        if (currentDocument == preparedDocument) return
         val history = sceneHistory ?: return
-        val result = history.execute(ReplaceSceneDocumentCommand(currentDocument, updatedDocument))
+        val result = history.execute(ReplaceSceneDocumentCommand(currentDocument, preparedDocument))
         if (result is SceneEditResult.Success) publishHistory(history)
     }
 
@@ -2613,7 +2710,9 @@ private fun Vector3.set(axis: TransformAxis, value: Float): Vector3 = when (axis
 }
 
 private fun SceneDocument.toEditorObjects(): List<EditorSceneObject> =
-    objects.mapIndexed { index, item ->
+    objects
+        .filterNot { WORLD_LAYER_SYSTEM_TAG in it.tags }
+        .mapIndexed { index, item ->
         val transform = item.components.filterIsInstance<TransformComponent>().firstOrNull()
             ?: TransformComponent()
         EditorSceneObject(
@@ -2646,6 +2745,7 @@ private fun SceneDocument.toEditorObjects(): List<EditorSceneObject> =
 
 private fun SceneDocument.mergeEditorObjects(editorObjects: List<EditorSceneObject>): SceneDocument {
     val existingById = objects.associateBy(GameObject::id)
+    val systemObjects = objects.filter { WORLD_LAYER_SYSTEM_TAG in it.tags }
     val merged = editorObjects.map { editorObject ->
         val existing = existingById[editorObject.id]
         val existingTransform = existing?.component<TransformComponent>()
@@ -2682,8 +2782,11 @@ private fun SceneDocument.mergeEditorObjects(editorObjects: List<EditorSceneObje
         objectItem.copy(children = childrenByParent[objectItem.id].orEmpty())
     }
     return copy(
-        objects = consistent,
-        rootObjects = consistent.filter { it.parentId == null }.map(GameObject::id),
+        objects = consistent + systemObjects,
+        rootObjects = (
+            consistent.filter { it.parentId == null }.map(GameObject::id) +
+                systemObjects.filter { it.parentId == null }.map(GameObject::id)
+            ).distinct(),
     )
 }
 

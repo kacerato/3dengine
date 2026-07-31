@@ -62,6 +62,7 @@ import com.mobilegamestudio.core.model.Vector3
 import com.mobilegamestudio.core.model.VoxelBrushMode
 import com.mobilegamestudio.core.model.VoxelSliceAxis
 import com.mobilegamestudio.core.model.VoxelVolumeComponent
+import com.mobilegamestudio.core.model.WorldLayerKind
 import java.io.File
 import kotlin.math.abs
 import kotlin.math.max
@@ -114,6 +115,14 @@ internal fun WorldStudioWorkspaceV3(
     onTerrainStrokeEnd: (Boolean) -> Unit,
     onCreateFlatTerrain: (Int, Float, Float) -> Unit,
     onCreatePlayableWorld: () -> Unit,
+    onCreateWorldLayer: (String, WorldLayerKind) -> Unit,
+    onSelectWorldLayer: (String) -> Unit,
+    onRenameWorldLayer: (String, String) -> Unit,
+    onMoveWorldLayer: (String, Int) -> Unit,
+    onToggleWorldLayerVisibility: (String) -> Unit,
+    onToggleWorldLayerLock: (String) -> Unit,
+    onToggleWorldLayerSolo: (String) -> Unit,
+    onAssignSelectedToWorldLayer: (String) -> Unit,
     onAssignTerrainTexture: (String, String, Boolean) -> Unit,
     onImportAsset: () -> Unit,
     onImportHeightmap: () -> Unit,
@@ -132,7 +141,7 @@ internal fun WorldStudioWorkspaceV3(
     modifier: Modifier = Modifier,
 ) {
     var modeName by rememberSaveable { mutableStateOf(StudioV3Mode.OBJECTS.name) }
-    var drawerName by rememberSaveable { mutableStateOf(WorldV2Drawer.SCENE.name) }
+    var drawerName by rememberSaveable { mutableStateOf(WorldV2Drawer.STRUCTURE.name) }
     var surfaceEditing by rememberSaveable { mutableStateOf(false) }
     var inspectorVisible by rememberSaveable { mutableStateOf(true) }
     var assetsExpanded by rememberSaveable { mutableStateOf(false) }
@@ -154,7 +163,7 @@ internal fun WorldStudioWorkspaceV3(
 
     BoxWithConstraints(modifier.fillMaxSize().background(WorldV2Background)) {
         val compact = maxWidth < 940.dp
-        val drawerWidth = if (compact) 190.dp else 224.dp
+        val drawerWidth = if (compact) 258.dp else 304.dp
         val inspectorWidth = if (compact) 252.dp else 292.dp
 
         Column(Modifier.fillMaxSize()) {
@@ -188,8 +197,34 @@ internal fun WorldStudioWorkspaceV3(
                         onAddSceneObject = onAddSceneObject,
                         onCreateFlatTerrain = onCreateFlatTerrain,
                         onCreatePlayableWorld = onCreatePlayableWorld,
+                        onCreateWorldLayer = onCreateWorldLayer,
+                        onSelectWorldLayer = onSelectWorldLayer,
+                        onRenameWorldLayer = onRenameWorldLayer,
+                        onMoveWorldLayer = onMoveWorldLayer,
+                        onToggleWorldLayerVisibility = onToggleWorldLayerVisibility,
+                        onToggleWorldLayerLock = onToggleWorldLayerLock,
+                        onToggleWorldLayerSolo = onToggleWorldLayerSolo,
+                        onAssignSelectedToWorldLayer = onAssignSelectedToWorldLayer,
                         onCreateEditableMesh = onCreateEditableMesh,
+                        onConvertSelectedToEditableMesh = onConvertSelectedToEditableMesh,
                         onCreateVoxelVolume = onCreateVoxelVolume,
+                        onConvertMeshToVoxel = onConvertMeshToVoxel,
+                        onRequestedMode = { requested ->
+                            drawerName = WorldV2Drawer.NONE.name
+                            when (requested) {
+                                WorldStudioV4RequestedMode.OBJECTS -> { modeName = StudioV3Mode.OBJECTS.name; surfaceEditing = false }
+                                WorldStudioV4RequestedMode.TERRAIN -> { modeName = StudioV3Mode.SCULPT.name; surfaceEditing = true }
+                                WorldStudioV4RequestedMode.PAINT -> {
+                                    modeName = StudioV3Mode.PAINT.name
+                                    surfaceEditing = true
+                                    onTerrainToolChange(TerrainBrushMode.PAINT, null, null, null, null)
+                                }
+                                WorldStudioV4RequestedMode.MESH -> { modeName = StudioV3Mode.MESH.name; surfaceEditing = false }
+                                WorldStudioV4RequestedMode.VOLUME -> { modeName = StudioV3Mode.VOLUME.name; surfaceEditing = false }
+                            }
+                        },
+                        onOpenStructure = { drawerName = WorldV2Drawer.STRUCTURE.name },
+                        onDiagnostic = onDiagnostic,
                         onImportAsset = onImportAsset,
                     )
                 }
@@ -215,6 +250,10 @@ internal fun WorldStudioWorkspaceV3(
                         },
                         onSurfaceEditing = { surfaceEditing = it },
                         onToolSelected = onToolSelected,
+                    )
+                    WorldStudioV4ContextStrip(
+                        state = state,
+                        onOpenAuthor = { drawerName = WorldV2Drawer.AUTHOR.name },
                     )
 
                     Box(
@@ -369,7 +408,7 @@ private val WorldV2AccentSoft = Color(0xFF2A203C)
 private val WorldV2Text = Color(0xFFF0F1F5)
 private val WorldV2Muted = Color(0xFF9AA1AD)
 
-private enum class WorldV2Drawer { NONE, SCENE, CREATE, WORLD, ASSETS }
+private enum class WorldV2Drawer { NONE, STRUCTURE, CREATE, AUTHOR, ASSETS }
 
 @Composable
 private fun WorldV2Header(
@@ -412,9 +451,9 @@ private fun WorldV2Rail(selected: WorldV2Drawer, onSelect: (WorldV2Drawer) -> Un
         verticalArrangement = Arrangement.spacedBy(7.dp),
     ) {
         listOf(
-            Triple(WorldV2Drawer.SCENE, "◇", "Cena"),
+            Triple(WorldV2Drawer.STRUCTURE, "▤", "Estrut."),
             Triple(WorldV2Drawer.CREATE, "+", "Criar"),
-            Triple(WorldV2Drawer.WORLD, "⌁", "Mundo"),
+            Triple(WorldV2Drawer.AUTHOR, "⌁", "Autor"),
             Triple(WorldV2Drawer.ASSETS, "▧", "Assets"),
         ).forEach { (drawer, icon, label) ->
             val active = drawer == selected
@@ -448,66 +487,69 @@ private fun WorldV2DrawerPanel(
     onAddSceneObject: (EditorObjectType) -> Unit,
     onCreateFlatTerrain: (Int, Float, Float) -> Unit,
     onCreatePlayableWorld: () -> Unit,
+    onCreateWorldLayer: (String, WorldLayerKind) -> Unit,
+    onSelectWorldLayer: (String) -> Unit,
+    onRenameWorldLayer: (String, String) -> Unit,
+    onMoveWorldLayer: (String, Int) -> Unit,
+    onToggleWorldLayerVisibility: (String) -> Unit,
+    onToggleWorldLayerLock: (String) -> Unit,
+    onToggleWorldLayerSolo: (String) -> Unit,
+    onAssignSelectedToWorldLayer: (String) -> Unit,
     onCreateEditableMesh: (PrimitiveMesh) -> Unit,
+    onConvertSelectedToEditableMesh: () -> Unit,
     onCreateVoxelVolume: (Int, Boolean) -> Unit,
+    onConvertMeshToVoxel: (Int) -> Unit,
+    onRequestedMode: (WorldStudioV4RequestedMode) -> Unit,
+    onOpenStructure: () -> Unit,
+    onDiagnostic: (String) -> Unit,
     onImportAsset: () -> Unit,
 ) {
-    Column(
-        Modifier.width(width).fillMaxHeight().background(WorldV2Panel).border(1.dp, WorldV2Border).padding(10.dp),
-    ) {
-        Text(
-            when (drawer) {
-                WorldV2Drawer.SCENE -> "CENA"
-                WorldV2Drawer.CREATE -> "CRIAR"
-                WorldV2Drawer.WORLD -> "MUNDO"
-                WorldV2Drawer.ASSETS -> "ASSETS"
-                else -> ""
-            },
-            color = WorldV2Muted,
-            fontSize = 8.sp,
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 0.8.sp,
-            modifier = Modifier.padding(horizontal = 4.dp, vertical = 8.dp),
-        )
+    Column(Modifier.width(width).fillMaxHeight().background(WorldV2Panel).border(1.dp, WorldV2Border)) {
         when (drawer) {
-            WorldV2Drawer.SCENE -> LazyColumn(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                items(state.sceneObjects, key = { it.id }) { item ->
-                    val selected = item.id == state.selectedObjectId
-                    Row(
-                        Modifier.fillMaxWidth().height(42.dp)
-                            .background(if (selected) WorldV2AccentSoft else WorldV2Raised, RoundedCornerShape(12.dp))
-                            .clickable { onSelectObject(item.id) }
-                            .padding(horizontal = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(worldObjectGlyph(item.type), color = if (selected) WorldV2Accent else WorldV2Muted, fontSize = 12.sp)
-                        Text(item.name, color = WorldV2Text, fontSize = 8.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f).padding(horizontal = 7.dp))
-                        TextButton(onClick = { onToggleVisibility(item.id) }, contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp), modifier = Modifier.size(30.dp)) {
-                            Text(if (item.isVisible) "●" else "○", color = if (item.isVisible) StudioV3Positive else WorldV2Muted, fontSize = 8.sp)
-                        }
-                    }
-                }
+            WorldV2Drawer.STRUCTURE -> WorldStudioV4StructurePanel(
+                state = state,
+                onSelectObject = onSelectObject,
+                onSelectLayer = onSelectWorldLayer,
+                onCreateLayer = onCreateWorldLayer,
+                onRenameLayer = onRenameWorldLayer,
+                onMoveLayer = onMoveWorldLayer,
+                onToggleLayerVisibility = onToggleWorldLayerVisibility,
+                onToggleLayerLock = onToggleWorldLayerLock,
+                onToggleLayerSolo = onToggleWorldLayerSolo,
+                onAssignSelectedToLayer = onAssignSelectedToWorldLayer,
+            )
+            WorldV2Drawer.CREATE -> Column(Modifier.fillMaxSize().padding(10.dp), verticalArrangement = Arrangement.spacedBy(7.dp)) {
+                Text("FONTES", color = WorldV2Muted, fontSize = 8.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
+                Text("Crie somente a fonte. Conversões e próximas etapas aparecem em Autor conforme a seleção.", color = WorldV2Muted, fontSize = 7.sp)
+                WorldV2Action("Cubo primitivo", "Fonte rápida · camada Geometria") { onAddPrimitive(PrimitiveMesh.CUBE) }
+                WorldV2Action("Plano primitivo", "Base rápida · camada Geometria") { onAddPrimitive(PrimitiveMesh.PLANE) }
+                WorldV2Action("Superfície", "Terrain 65² · camada Superfície") { onCreateFlatTerrain(65, 96f, 20f) }
+                WorldV2Action("Forma editável", "Cubo com vértices e faces") { onCreateEditableMesh(PrimitiveMesh.CUBE) }
+                WorldV2Action("Volume vazio", "Campo voxel para escultura") { onCreateVoxelVolume(24, false) }
+                Text("CENA", color = WorldV2Muted, fontSize = 8.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp, modifier = Modifier.padding(top = 6.dp))
+                WorldV2Action("Jogador", "Objeto técnico de gameplay") { onAddSceneObject(EditorObjectType.PLAYER) }
+                WorldV2Action("Câmera", "Objeto técnico de visão") { onAddSceneObject(EditorObjectType.CAMERA) }
+                WorldV2Action("Luz direcional", "Objeto técnico de ambiente") { onAddSceneObject(EditorObjectType.LIGHT) }
             }
-            WorldV2Drawer.CREATE -> Column(verticalArrangement = Arrangement.spacedBy(7.dp)) {
-                WorldV2PrimaryAction("Mundo jogável", "Terreno + jogador + câmera + luz + controles", onCreatePlayableWorld)
-                WorldV2Action("Cubo", "Malha básica") { onAddPrimitive(PrimitiveMesh.CUBE) }
-                WorldV2Action("Plano", "Base plana") { onAddPrimitive(PrimitiveMesh.PLANE) }
-                WorldV2Action("Terreno", "Heightfield 65²") { onCreateFlatTerrain(65, 96f, 20f) }
-                WorldV2Action("Jogador", "Terceira pessoa") { onAddSceneObject(EditorObjectType.PLAYER) }
-                WorldV2Action("Câmera", "Câmera principal") { onAddSceneObject(EditorObjectType.CAMERA) }
-                WorldV2Action("Luz", "Luz direcional") { onAddSceneObject(EditorObjectType.LIGHT) }
-            }
-            WorldV2Drawer.WORLD -> Column(verticalArrangement = Arrangement.spacedBy(7.dp)) {
-                WorldV2PrimaryAction("Preparar mundo", "Cria um fluxo jogável completo", onCreatePlayableWorld)
-                WorldV2Action("Terreno plano", "Começar do zero") { onCreateFlatTerrain(65, 96f, 20f) }
-                WorldV2Action("Malha editável", "Cubo com vértices e faces") { onCreateEditableMesh(PrimitiveMesh.CUBE) }
-                WorldV2Action("Volume voxel", "Base para cavernas") { onCreateVoxelVolume(24, true) }
-            }
-            WorldV2Drawer.ASSETS -> Column(verticalArrangement = Arrangement.spacedBy(7.dp)) {
-                WorldV2PrimaryAction("Importar", "GLB, PNG, JPG e WebP", onImportAsset)
+            WorldV2Drawer.AUTHOR -> WorldStudioV4AuthorPanel(
+                state = state,
+                onCreateFlatTerrain = onCreateFlatTerrain,
+                onCreateEditableMesh = onCreateEditableMesh,
+                onCreateVoxelVolume = onCreateVoxelVolume,
+                onCreatePlayableWorld = onCreatePlayableWorld,
+                onConvertSelectedToEditableMesh = onConvertSelectedToEditableMesh,
+                onConvertMeshToVoxel = onConvertMeshToVoxel,
+                onRequestedMode = onRequestedMode,
+                onOpenStructure = onOpenStructure,
+                onDiagnostic = onDiagnostic,
+            )
+            WorldV2Drawer.ASSETS -> Column(Modifier.fillMaxSize().padding(10.dp), verticalArrangement = Arrangement.spacedBy(7.dp)) {
+                Text("BIBLIOTECA", color = WorldV2Muted, fontSize = 8.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
+                WorldV2PrimaryAction("Importar recurso", "GLB, PNG, JPG e WebP", onImportAsset)
                 Text("${state.assets.size} assets no projeto", color = WorldV2Muted, fontSize = 8.sp, modifier = Modifier.padding(4.dp))
+                Text("O uso do asset será sugerido conforme terreno, malha, material ou objeto selecionado.", color = WorldV2Muted, fontSize = 7.sp)
             }
-            else -> Unit
+            WorldV2Drawer.NONE -> Unit
         }
     }
 }
@@ -626,8 +668,8 @@ private fun WorldV2Inspector(
         Text("PROPRIEDADES", color = WorldV2Muted, fontSize = 8.sp, fontWeight = FontWeight.Bold, letterSpacing = 0.8.sp)
         val selected = state.selectedObject
         if (selected == null) {
-            WorldV2PrimaryAction("Criar mundo jogável", "Fluxo mínimo completo para testar", onCreatePlayableWorld)
-            Text("Selecione um objeto na cena para editar suas propriedades.", color = WorldV2Muted, fontSize = 8.sp)
+            Text("Nenhum objeto selecionado.", color = WorldV2Text, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+            Text("Use Estrutura para escolher uma camada ou objeto. Use Autor para ver ações válidas e a próxima etapa.", color = WorldV2Muted, fontSize = 8.sp)
             return@Column
         }
         Text(selected.name, color = WorldV2Text, fontSize = 13.sp, fontWeight = FontWeight.Bold, maxLines = 1, overflow = TextOverflow.Ellipsis)

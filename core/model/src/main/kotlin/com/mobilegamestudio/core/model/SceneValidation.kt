@@ -267,6 +267,20 @@ object SceneValidator {
                     !component.isoLevel.isFinite() ||
                     component.isoLevel !in 0.01f..0.99f
                 ) errors += SceneValidationError.InvalidComponent(objectValue.id, component.componentId)
+                is WorldLayerSetComponent -> if (
+                    component.layers.isEmpty() ||
+                    component.layers.size > 128 ||
+                    component.layers.map { it.id }.distinct().size != component.layers.size ||
+                    component.layers.any { layer ->
+                        layer.id.isBlank() ||
+                            layer.name.isBlank() ||
+                            layer.order !in 0..127
+                    } ||
+                    (component.selectedLayerId != null && component.layers.none { it.id == component.selectedLayerId })
+                ) errors += SceneValidationError.InvalidComponent(objectValue.id, component.componentId)
+                is WorldLayerMembershipComponent -> if (
+                    component.layerId.isBlank()
+                ) errors += SceneValidationError.InvalidComponent(objectValue.id, component.componentId)
                 is TerrainComponent -> if (
                     component.resolution !in 9..257 ||
                     component.heights.size != component.resolution * component.resolution ||

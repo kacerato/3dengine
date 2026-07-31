@@ -50,6 +50,7 @@ import androidx.compose.ui.window.PopupProperties
 import com.mobilegamestudio.core.model.AssetRecord
 import com.mobilegamestudio.core.model.PrimitiveMesh
 import com.mobilegamestudio.core.model.TerrainBrushMode
+import com.mobilegamestudio.core.model.WorldLayerKind
 import java.io.File
 
 /**
@@ -115,6 +116,14 @@ internal fun GodotCompactEditorShell(
     onTerrainStrokeEnd: (Boolean) -> Unit,
     onCreateFlatTerrain: (Int, Float, Float) -> Unit,
     onCreatePlayableWorld: () -> Unit,
+    onCreateWorldLayer: (String, WorldLayerKind) -> Unit,
+    onSelectWorldLayer: (String) -> Unit,
+    onRenameWorldLayer: (String, String) -> Unit,
+    onMoveWorldLayer: (String, Int) -> Unit,
+    onToggleWorldLayerVisibility: (String) -> Unit,
+    onToggleWorldLayerLock: (String) -> Unit,
+    onToggleWorldLayerSolo: (String) -> Unit,
+    onAssignSelectedToWorldLayer: (String) -> Unit,
     onAssignTerrainTexture: (String, String, Boolean) -> Unit,
     onCreateEditableMesh: (PrimitiveMesh) -> Unit,
     onConvertSelectedToEditableMesh: () -> Unit,
@@ -215,6 +224,14 @@ internal fun GodotCompactEditorShell(
                         onTerrainStrokeEnd = onTerrainStrokeEnd,
                         onCreateFlatTerrain = onCreateFlatTerrain,
                         onCreatePlayableWorld = onCreatePlayableWorld,
+                        onCreateWorldLayer = onCreateWorldLayer,
+                        onSelectWorldLayer = onSelectWorldLayer,
+                        onRenameWorldLayer = onRenameWorldLayer,
+                        onMoveWorldLayer = onMoveWorldLayer,
+                        onToggleWorldLayerVisibility = onToggleWorldLayerVisibility,
+                        onToggleWorldLayerLock = onToggleWorldLayerLock,
+                        onToggleWorldLayerSolo = onToggleWorldLayerSolo,
+                        onAssignSelectedToWorldLayer = onAssignSelectedToWorldLayer,
                         onPlay = onTogglePreview,
                         onAssignTerrainTexture = onAssignTerrainTexture,
                         onImportAsset = onImportAsset,

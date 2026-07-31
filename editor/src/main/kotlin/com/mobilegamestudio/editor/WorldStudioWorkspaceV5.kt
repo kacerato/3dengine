@@ -58,7 +58,7 @@ import com.mobilegamestudio.core.model.worldLayers
 import java.io.File
 
 private val WorldV5Background = Color(0xFF0D0F13)
-private val WorldV5Panel = Color(0xFF14171C)
+private val WorldV5PanelColor = Color(0xFF14171C)
 private val WorldV5Raised = Color(0xFF1B1F26)
 private val WorldV5RaisedStrong = Color(0xFF222730)
 private val WorldV5Border = Color(0xFF303741)
@@ -411,7 +411,7 @@ private fun WorldV5Header(
     onPlay: () -> Unit,
 ) {
     Row(
-        Modifier.fillMaxWidth().height(58.dp).background(WorldV5Panel)
+        Modifier.fillMaxWidth().height(58.dp).background(WorldV5PanelColor)
             .border(1.dp, WorldV5Border).padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp),
@@ -475,7 +475,7 @@ private fun WorldV5ContextBar(state: WorkspaceUiState, mode: WorldV5Mode) {
         document?.resolveWorldAuthoringContext(state.selectedObjectId)
     }
     Row(
-        Modifier.fillMaxWidth().height(36.dp).background(WorldV5Panel)
+        Modifier.fillMaxWidth().height(36.dp).background(WorldV5PanelColor)
             .border(1.dp, WorldV5Border).padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -518,7 +518,7 @@ private fun WorldV5StatusBar(
     surfaceEditing: Boolean,
 ) {
     Row(
-        Modifier.fillMaxWidth().height(34.dp).background(WorldV5Panel)
+        Modifier.fillMaxWidth().height(34.dp).background(WorldV5PanelColor)
             .border(1.dp, WorldV5Border).padding(horizontal = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -579,7 +579,7 @@ private fun WorldV5PanelHost(
 ) {
     Column(
         modifier.width(width).fillMaxHeight().shadow(16.dp, RoundedCornerShape(18.dp))
-            .background(WorldV5Panel, RoundedCornerShape(18.dp))
+            .background(WorldV5PanelColor, RoundedCornerShape(18.dp))
             .border(1.dp, WorldV5Border, RoundedCornerShape(18.dp)),
     ) {
         val title = when (panel) {

@@ -93,6 +93,9 @@ jobs:
       - name: Apply World Studio V4 foundation
         run: python tools/apply_world_studio_v4_foundation.py
 
+      - name: Normalize World Studio V4 foundation
+        run: python tools/apply_world_studio_v4_hotfix.py
+
       - name: Persist generated source changes
         if: github.event_name == 'push'
         shell: bash

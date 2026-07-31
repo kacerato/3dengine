@@ -1,140 +1,165 @@
-# World Studio V4 — estado da implementação
+# World Studio — estado da implementação
 
-Este documento acompanha a execução do plano `WORLD_STUDIO_V4_ARQUITETURA_COMPLETA.md`.
+## Estado atual
 
-## Regra de entrega
+A implementação das Fases 0–3 do plano V4 permanece na branch como base de domínio e persistência, mas o avanço para a antiga Fase 4 está **pausado**.
 
-O plano será implementado por fundações coerentes, não por botões isolados. Cada etapa somente é considerada concluída quando domínio, persistência, interface, Undo/Redo e testes trabalham sobre o mesmo `SceneDocument`.
+O World Studio V5 foi reprovado na validação de UX. O projeto entrou em **R0 — pesquisa e refoundation V6**.
 
-## Implementado nesta entrega — Fases 0 a 3
+Documentos ativos:
 
-### Fase 0 — inventário e contrato
+- `WORLD_STUDIO_V6_REFOUNDATION.md` — plano revisado de arquitetura e fases;
+- `WORLD_STUDIO_V5_UX_VALIDATION.md` — registro da validação reprovada;
+- `../architecture/ADR-0001_EDITOR_TECH_STACK.md` — decisão sobre Kotlin, C# e Rust.
 
-O fluxo atual foi separado em quatro responsabilidades:
+## Evidência que interrompeu o avanço
 
-1. **estrutura:** camadas e objetos;
-2. **fonte:** criação técnica de terrain, malha, volume e objetos de cena;
-3. **autoria contextual:** ações válidas para a seleção;
-4. **propriedades:** transformação e parâmetros da ferramenta ativa.
+No aparelho foi possível obter simultaneamente:
 
-Os pontos existentes reutilizados são:
+- toolset visual `Volume` ativo;
+- seleção `Terreno editável 5`;
+- recomendação `Moldar relevo`;
+- nenhuma ferramenta de Volume ativa;
+- necessidade de abrir outra aba para editar.
 
-- `WorkspaceViewModel` como coordenador transacional;
-- `SceneDocument` como fonte única;
-- `SceneCommandHistory` para Undo/Redo;
-- `TerrainComponent`, `EditableMeshComponent` e `VoxelVolumeComponent` como fontes geométricas;
-- `SceneViewport`/Filament como visualização;
-- `LuaScriptComponent` e `VisualGraphComponent` como ligações de lógica.
+Essa combinação demonstra que modo, seleção, recomendação e ferramenta são estados paralelos. A interface pode exibir uma intenção que o domínio não executou.
 
-### Fase 1 — modelo persistente de camadas
+A correção exigida é uma máquina de estados e um registro de ferramentas, não outro patch visual.
 
-Foram adicionados:
+## Fundações preservadas das Fases 0–3
+
+### Modelo persistente de camadas
+
+Permanecem válidos:
 
 - `WorldLayer`;
 - `WorldLayerKind`;
 - `WorldLayerSetComponent`;
 - `WorldLayerMembershipComponent`;
 - migração automática de cenas antigas;
-- camadas-padrão de Superfície, Geometria, Volume, Gameplay, Luz e ambiente e Interface;
-- criação, renomeação e reordenação;
-- visibilidade, bloqueio e solo;
-- atribuição de objetos;
-- preservação das camadas ao fechar o workspace, salvar e reabrir;
-- ocultação do objeto técnico de camadas na hierarquia comum;
-- restauração da visibilidade local do objeto após ocultar ou isolar uma camada.
+- camadas-padrão;
+- visibilidade, bloqueio e Solo;
+- atribuição e reordenação;
+- persistência no `SceneDocument`;
+- histórico transacional.
 
-A camada não substitui a hierarquia. Ela classifica os mesmos `GameObject`s e controla sua participação no mundo.
+### Contexto e capabilities
 
-### Fase 2 — motor de contexto
+Permanecem como material para migração:
 
-Foram adicionados:
-
-- resolução do tipo real da seleção;
-- conjunto de capacidades;
-- registro central de ações;
-- estado disponível/desabilitado;
-- motivo de indisponibilidade;
-- efeito esperado;
+- reconhecimento do tipo da seleção;
+- capabilities;
+- descritores de ação;
+- pré-condições;
+- motivos de indisponibilidade;
 - próxima etapa;
-- ação sugerida;
-- bloqueio contextual quando a camada está travada.
+- bloqueio por camada.
 
-Os contextos reconhecidos incluem terrain, malha primitiva, malha editável, volume, player, câmera, luz, UI e ausência de seleção.
+O resolver atual não será a autoridade final. Ele será migrado para o novo `editor-domain` e integrado a uma máquina de estados.
 
-Funções de fases posteriores aparecem desabilitadas com explicação, em vez de serem botões que não fazem nada.
+### Correções validadas
 
-### Fase 3 — shell visual inicial
+- crash ARGB corrigido com `Color(Int)`;
+- free cam sem botões de preset;
+- foco por toque duplo removido;
+- edição nativa de escala/rotação da SceneView desativada;
+- pinça não escala objetos temporariamente;
+- segundo dedo cancela stroke de Terrain;
+- Mundo abre sem o crash conhecido.
 
-O menu Mundo foi reorganizado em:
+## Partes consideradas provisórias ou rejeitadas
 
-- **Estrutura:** camadas e objetos;
-- **Criar:** somente fontes técnicas;
-- **Autor:** operações derivadas da seleção;
-- **Assets:** biblioteca contextual.
+- `WorldStudioWorkspaceV5.kt` como arquitetura definitiva;
+- modos superiores que apenas alteram estado visual;
+- `Criar`, `Ações` e `Ferramentas` como abas globais;
+- Context Bar independente do toolset;
+- regras de compatibilidade dentro da composição Compose;
+- painel monolítico;
+- toolset incompatível com a seleção;
+- tool shelf aberto manualmente após selecionar um modo.
 
-Também foram adicionados:
+## Novo cronograma
 
-- Context Bar permanente;
-- camada atual e estado de bloqueio;
-- próxima ação sugerida;
-- cards de ação com efeito, pré-condição e continuação;
-- painel de camadas com nome, tipo, quantidade de objetos, visibilidade, bloqueio, solo e ordem;
-- atribuição da seleção à camada ativa;
-- separação entre preset jogável e criação geométrica.
+### R0 — pesquisa e refoundation
 
-## Correção de validação — viewport único e free cam
+Estado: **concluído documentalmente nesta rodada**.
 
-A primeira tentativa de correção adicionou atalhos de câmera no viewport. Essa decisão foi revertida: os botões Início, Topo, Frente, Direita e Foco foram removidos, assim como o foco por toque duplo. O editor mantém somente a free cam já existente.
+Entregue:
 
-O crash ao abrir Mundo não foi tratado novamente como simples estado de enum. O fluxo foi alterado estruturalmente:
+- diagnóstico da contradição V5;
+- estudo de padrões de Godot, Blender, Unity, Stride e Bevy;
+- novo contrato de regiões e toolsets;
+- decisão de stack;
+- fases R1–R12;
+- fluxos dourados;
+- V5 marcada como reprovada.
 
-- abrir Mundo não desmonta mais o `SceneViewport` principal;
-- o menu Mundo agora abre como dock ao lado do mesmo viewport;
-- a mesma instância de free cam continua ativa ao abrir, fechar ou trocar abas do Mundo;
-- terrain usa um overlay sobre esse mesmo viewport;
-- a cena é normalizada com `ensureWorldLayerStructure()` uma única vez durante o carregamento;
-- o motor contextual não precisa mais fabricar uma estrutura temporária de camadas em cada composição;
-- a edição nativa de transformação da SceneView continua desativada, portanto a pinça não escala objetos fora do `SceneDocument`.
+### R1 — domínio e máquina de estados
 
-Essa mudança elimina a transição que destruía um viewport Filament e criava outro imediatamente ao tocar em Mundo, principal diferença entre o fluxo que apresentava o crash e o fluxo atual.
+Próxima implementação.
 
-## Fluxos validáveis nesta entrega
+Objetivos:
 
-1. Abrir uma cena antiga e gerar automaticamente a estrutura de camadas.
-2. Abrir e fechar Mundo repetidamente sem substituir o viewport.
-3. Continuar orbitando, aproximando e movendo a mesma free cam com Mundo aberto.
-4. Criar duas camadas de geometria.
-5. Criar dois cubos e atribuir cada um a uma camada.
-6. Renomear e reordenar camadas.
-7. Ocultar, bloquear ou isolar uma camada.
-8. Selecionar terrain, malha ou volume e receber ações diferentes.
-9. Ativar Navegar ou Esculpir sobre o mesmo viewport.
-10. Fechar Mundo, salvar, reabrir e manter a organização.
-11. Confirmar que a pinça nunca altera temporariamente a escala de um objeto.
+- `EditorIntent`;
+- `EditorContextState`;
+- reducer;
+- seleção;
+- toolsets;
+- ferramentas;
+- comandos;
+- capabilities;
+- operações pendentes;
+- testes de transição.
 
-## Gate técnico concluído
+Gate:
 
-- fonte V4 e correções persistidas na branch;
-- testes de domínio das camadas aprovados;
-- testes do motor contextual aprovados;
-- demais testes unitários do projeto aprovados;
-- APK debug compilado;
-- artifact publicado pelo GitHub Actions.
+- estados contraditórios não podem ser construídos.
 
-O gate técnico não substitui o teste de ergonomia e estabilidade no aparelho. O PR permanece em draft até validar abertura repetida de Mundo, free cam, multitoque, terrain e persistência real.
+### R2 — shell de regiões e design system
 
-## Fases ainda não concluídas
+Só começa após R1.
 
-- **Fase 4:** novo contrato completo de input e gizmos 3D.
-- **Fase 5:** terrain por patches, expansão, recorte, resolução e conversões de superfície.
-- **Fase 6:** modelagem completa de vértices, arestas, faces e modificadores.
-- **Fase 7:** pipeline volumétrico, extração de superfície e LOD.
-- **Fase 8:** materiais, máscaras, água, vegetação e caminhos.
-- **Fase 9:** ambiente e iluminação avançados.
-- **Fase 10:** gameplay, dependências Lua/NoCode e validação de mundo jogável.
-- **Fase 11:** diagnóstico completo e testes de interface/aparelho.
-- **Fase 12:** remoção das migrações temporárias e consolidação final.
+### R3 — toolsets conectados à seleção
+
+Só começa após R2.
+
+### R4 — input, free cam e gizmos
+
+Substitui a antiga Fase 4.
+
+### R5–R12
+
+- Terrain end-to-end;
+- Mesh end-to-end;
+- Volume/Voxel end-to-end;
+- materiais/assets/camadas;
+- gameplay;
+- Lua/NoCode;
+- spike Rust condicionado a benchmark;
+- migração e consolidação.
+
+## Decisão de linguagem
+
+Não será feita uma migração impulsiva.
+
+- Kotlin permanece no host Android e shell Compose;
+- regras do editor sairão da UI para um módulo independente;
+- C# não será adotado apenas para copiar uma aparência de editor desktop;
+- Rust não será usado para UI;
+- Rust poderá ser testado depois em kernels de terrain, mesh e voxel, mediante benchmark e ABI estreita.
+
+## Gate antes de gerar outro APK de UX
+
+Não será considerado progresso produzir outra disposição visual sem:
+
+1. máquina de estados;
+2. tool registry;
+3. command registry;
+4. transições testadas;
+5. compatibilidade entre seleção e toolset;
+6. ativação automática da ferramenta padrão;
+7. cancelamento/restauração coerente.
 
 ## Critério de honestidade
 
-Esta entrega é a fundação de arquitetura e interface das Fases 0–3, com uma correção estrutural de estabilidade. A compilação confirma coerência de código; somente o aparelho pode confirmar que o crash nativo observado foi eliminado. A Fase 4 permanece pausada até essa confirmação.
+Nesta rodada não foi criada uma nova interface nem um novo APK. O trabalho executado foi a refoundation arquitetural R0. A próxima entrega de código deve ser R1, com testes de domínio, antes de qualquer redesign V6.

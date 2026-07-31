@@ -79,20 +79,22 @@ jobs:
         run: |
           test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldLayerModels.kt
           test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldAuthoringContext.kt
-          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioV4Panels.kt
           test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV5.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV6.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioV6Design.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioV6Projection.kt
           test -f editor/src/main/kotlin/com/mobilegamestudio/editor/EditorDomainAdapter.kt
           test -f editor/src/test/kotlin/com/mobilegamestudio/editor/EditorDomainAdapterTest.kt
+          test -f editor/src/test/kotlin/com/mobilegamestudio/editor/WorldStudioV6ProjectionTest.kt
           test -f editor-domain/src/main/kotlin/com/mobilegamestudio/editor/domain/EditorDomain.kt
           test -f editor-domain/src/test/kotlin/com/mobilegamestudio/editor/domain/EditorContextReducerTest.kt
           test -f tools/apply_editor_domain_r1_integration.py
           test -f tools/apply_editor_domain_r1_selection_followup.py
           test -f tools/apply_editor_domain_r1_pending_hardening.py
-          grep -q 'include(' settings.gradle.kts
+          test -f tools/apply_world_studio_v6_r2_shell.py
           grep -q '":editor-domain"' settings.gradle.kts
           grep -q 'implementation(project(":editor-domain"))' editor/build.gradle.kts
-          grep -q "fun createWorldLayer" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
-          echo "World Studio persisted source and V6 editor domain are available"
+          echo "World Studio V6 source is available"
 
       - name: Apply preserved World Studio fixes
         shell: bash
@@ -114,7 +116,6 @@ jobs:
           ! grep -R "colorArgb.toULong()" editor/src/main/kotlin
           ! grep -R "EditorCameraDock(" editor/src/main/kotlin/com/mobilegamestudio/editor/SceneViewport.kt
           ! grep -R "onDoubleTap = { _, node ->" runtime/src/main/kotlin/com/mobilegamestudio/runtime/RuntimeSceneViewport.kt
-          ! grep -q "private val WorldV5Panel =" editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV5.kt
 
       - name: Apply editor domain R1 integration
         if: github.head_ref == 'feature/world-studio-v4-foundation' || github.ref_name == 'feature/world-studio-v4-foundation'
@@ -126,10 +127,19 @@ jobs:
           grep -q "fun activateAuthoringToolset" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
           grep -q "val editorContext: EditorContextState" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
           grep -q "confirmPendingAuthoringConversion" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
-          grep -q "workspace selection feeds terrain toolset immediately" editor/src/test/kotlin/com/mobilegamestudio/editor/WorkspaceViewModelTest.kt
           grep -q "incompatible creation cannot replace selection during pending target" editor/src/test/kotlin/com/mobilegamestudio/editor/WorkspaceViewModelTest.kt
 
-      - name: Persist preserved source fixes
+      - name: Apply World Studio V6 R2 shell
+        if: github.head_ref == 'feature/world-studio-v4-foundation' || github.ref_name == 'feature/world-studio-v4-foundation'
+        shell: bash
+        run: |
+          python tools/apply_world_studio_v6_r2_shell.py
+          grep -q "WorldStudioWorkspaceV6(" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt
+          grep -q "onAuthoringToolsetSelected" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt
+          grep -q "onAuthoringToolsetSelected = viewModel::activateAuthoringToolset" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceScreen.kt
+          ! grep -q "WorldStudioWorkspaceV5(" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt
+
+      - name: Persist generated branch source
         if: github.event_name == 'push' && github.ref_name == 'feature/world-studio-v4-foundation'
         shell: bash
         run: |
@@ -137,9 +147,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add editor/src/main/kotlin/com/mobilegamestudio/editor editor/src/test/kotlin/com/mobilegamestudio/editor runtime/src/main/kotlin/com/mobilegamestudio/runtime
           if git diff --cached --quiet; then
-            echo "Preserved source fixes already persisted"
+            echo "World Studio V6 source already persisted"
           else
-            git commit -m "feat: persist editor domain R1 workspace integration"
+            git commit -m "feat: activate domain-driven World Studio V6 R2 shell"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -181,7 +191,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-world-studio-v6-r1-integration-debug
+          name: mobile-game-studio-world-studio-v6-r2-shell-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

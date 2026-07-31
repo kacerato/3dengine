@@ -30,6 +30,7 @@ import com.mobilegamestudio.core.model.EditorMode
 import com.mobilegamestudio.core.model.GameObject
 import com.mobilegamestudio.core.model.CharacterControllerComponent
 import com.mobilegamestudio.core.model.CharacterCameraMode
+import com.mobilegamestudio.core.model.CameraComponent
 import com.mobilegamestudio.core.model.AnimationControllerComponent
 import com.mobilegamestudio.core.model.MeshRendererComponent
 import com.mobilegamestudio.core.model.EditableMeshComponent
@@ -86,6 +87,14 @@ import kotlin.math.cos
 import kotlin.math.sin
 import kotlin.math.sqrt
 
+enum class EditorCameraPreset {
+    HOME,
+    TOP,
+    FRONT,
+    RIGHT,
+    FOCUS_SELECTION,
+}
+
 /**
  * Filament-backed viewport. SceneDocument remains authoritative; these nodes are
  * a disposable projection and are never persisted by the renderer.
@@ -99,6 +108,8 @@ fun RuntimeSceneViewport(
     onObjectSelected: (String?) -> Unit,
     transformGesturesEnabled: Boolean = false,
     onTransformDrag: (Float, Float) -> Unit = { _, _ -> },
+    editorCameraPreset: EditorCameraPreset? = null,
+    editorCameraCommandToken: Int = 0,
     terrainTopDownCamera: Boolean = false,
     onDiagnostic: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -132,10 +143,15 @@ fun RuntimeSceneViewport(
     var projection by remember(engine) { mutableStateOf<RuntimeProjection?>(null) }
     val projectionGeneration = remember(engine) { AtomicLong(0) }
     val playCharacter = document.objects.firstOrNull {
+        it.enabled && "player" in it.tags && it.component<CharacterControllerComponent>()?.enabled == true
+    } ?: document.objects.firstOrNull {
         it.enabled && it.component<CharacterControllerComponent>()?.enabled == true
     }
     val controlledVehicle = document.objects.firstOrNull {
         it.enabled && "runtime-controlled" in it.tags
+    }
+    val authoredPlayCamera = document.objects.firstOrNull {
+        it.enabled && it.component<CameraComponent>()?.let { camera -> camera.enabled && camera.isMain } == true
     }
     val cameraTargetObject = if (mode == EditorMode.PLAY) playCharacter else {
         document.objects.firstOrNull { it.id == selectedObjectId }
@@ -189,36 +205,35 @@ fun RuntimeSceneViewport(
             )
         }
     }
-    val firstPersonPlay = controlledVehicle == null && mode == EditorMode.PLAY &&
-        playController?.cameraMode == CharacterCameraMode.FIRST_PERSON
-    val editorCameraManipulator = if (firstPersonPlay || controlledVehicle != null || terrainTopDownCamera) {
-        null
-    } else {
-        key(document.sceneId, mode) {
-            if (mode == EditorMode.EDITOR) {
-                remember(document.sceneId) {
-                    StudioOrbitCameraManipulator(
-                        eye = Position(
-                            selectedTarget.x + cameraOffset.x,
-                            selectedTarget.y + cameraOffset.y,
-                            selectedTarget.z + cameraOffset.z,
-                        ),
-                        target = Position(selectedTarget.x, selectedTarget.y, selectedTarget.z),
-                    )
-                }
-            } else {
-                rememberCameraManipulator(
-                    orbitHomePosition = Position(
-                        selectedTarget.x + cameraOffset.x,
-                        selectedTarget.y + cameraOffset.y,
-                        selectedTarget.z + cameraOffset.z,
-                    ),
-                    targetPosition = Position(selectedTarget.x, selectedTarget.y, selectedTarget.z),
-                )
-            }
-        }
+    val characterCameraPlay = controlledVehicle == null && mode == EditorMode.PLAY &&
+        playCharacter != null && playController != null
+    val persistentEditorManipulator = remember(document.sceneId) {
+        StudioOrbitCameraManipulator(
+            eye = Position(
+                document.editorSettings.cameraOrbit.x,
+                document.editorSettings.cameraOrbit.y,
+                document.editorSettings.cameraOrbit.z,
+            ),
+            target = Position(
+                document.editorSettings.cameraTarget.x,
+                document.editorSettings.cameraTarget.y,
+                document.editorSettings.cameraTarget.z,
+            ),
+        )
     }
-    LaunchedEffect(editorCameraManipulator, mode, terrainTopDownCamera, selectedObjectId) {
+    val editorCameraManipulator = when {
+        characterCameraPlay || controlledVehicle != null || (authoredPlayCamera != null && mode == EditorMode.PLAY) || terrainTopDownCamera -> null
+        mode == EditorMode.EDITOR -> persistentEditorManipulator
+        else -> rememberCameraManipulator(
+            orbitHomePosition = Position(
+                selectedTarget.x + cameraOffset.x,
+                selectedTarget.y + cameraOffset.y,
+                selectedTarget.z + cameraOffset.z,
+            ),
+            targetPosition = Position(selectedTarget.x, selectedTarget.y, selectedTarget.z),
+        )
+    }
+    LaunchedEffect(editorCameraManipulator, mode, terrainTopDownCamera) {
         if (mode != EditorMode.EDITOR) return@LaunchedEffect
         if (terrainTopDownCamera && terrainCameraComponent != null) {
             val target = terrainCameraTransform?.position ?: document.editorSettings.cameraTarget
@@ -240,25 +255,47 @@ fun RuntimeSceneViewport(
             sceneCameraNode.transform = editorCameraManipulator.getTransform()
         }
     }
+    LaunchedEffect(editorCameraCommandToken, editorCameraPreset, selectedObjectId, mode) {
+        if (mode != EditorMode.EDITOR || editorCameraPreset == null) return@LaunchedEffect
+        val selectedTransform = document.objects
+            .firstOrNull { it.id == selectedObjectId }
+            ?.component<TransformComponent>()
+        val focusTarget = selectedTransform?.position?.let { Position(it.x, it.y, it.z) }
+        val focusRadius = selectedTransform?.scale?.let { value ->
+            maxOf(kotlin.math.abs(value.x), kotlin.math.abs(value.y), kotlin.math.abs(value.z))
+                .coerceAtLeast(0.25f) * 3.4f
+        } ?: 4f
+        persistentEditorManipulator.applyPreset(editorCameraPreset, focusTarget, focusRadius)
+        sceneCameraNode.transform = persistentEditorManipulator.getTransform()
+    }
+
     SideEffect {
-        if (firstPersonPlay) {
+        if (mode == EditorMode.PLAY && controlledVehicle == null && playCharacter == null) {
+            authoredPlayCamera?.component<TransformComponent>()?.let { transform ->
+                val yaw = Math.toRadians(transform.rotationEulerDegrees.y.toDouble())
+                val pitch = Math.toRadians(transform.rotationEulerDegrees.x.toDouble())
+                val eye = Float3(transform.position.x, transform.position.y, transform.position.z)
+                sceneCameraNode.transform = lookAt(
+                    eye = eye,
+                    target = Float3(
+                        eye.x + (sin(yaw) * cos(pitch)).toFloat(),
+                        eye.y - sin(pitch).toFloat(),
+                        eye.z + (cos(yaw) * cos(pitch)).toFloat(),
+                    ),
+                    up = Float3(0f, 1f, 0f),
+                )
+            }
+        }
+        if (characterCameraPlay) {
             val transform = playCharacter?.component<TransformComponent>()
-            val yaw = Math.toRadians((transform?.rotationEulerDegrees?.y ?: 0f).toDouble())
-            val pitch = Math.toRadians((transform?.rotationEulerDegrees?.x ?: 0f).toDouble())
-            val eye = Float3(
-                selectedTarget.x,
-                selectedTarget.y + playController.cameraHeight,
-                selectedTarget.z,
-            )
-            sceneCameraNode.transform = lookAt(
-                eye = eye,
-                target = Float3(
-                    eye.x + (sin(yaw) * cos(pitch)).toFloat(),
-                    eye.y - sin(pitch).toFloat(),
-                    eye.z + (cos(yaw) * cos(pitch)).toFloat(),
-                ),
-                up = Float3(0f, 1f, 0f),
-            )
+            if (transform != null && playController != null) {
+                val pose = computeCharacterCameraPose(transform, playController)
+                sceneCameraNode.transform = lookAt(
+                    eye = Float3(pose.eye.x, pose.eye.y, pose.eye.z),
+                    target = Float3(pose.target.x, pose.target.y, pose.target.z),
+                    up = Float3(0f, 1f, 0f),
+                )
+            }
         }
         controlledVehicle?.component<TransformComponent>()?.let { transform ->
             val yaw = Math.toRadians(transform.rotationEulerDegrees.y.toDouble())
@@ -340,6 +377,7 @@ fun RuntimeSceneViewport(
                 transform = transform,
                 mode = mode,
                 isSelected = mode == EditorMode.EDITOR && objectValue.id == selectedObjectId,
+                transformGesturesEnabled = transformGesturesEnabled,
             )
         }
     }
@@ -413,6 +451,12 @@ private class StudioOrbitCameraManipulator(
     private var lastX = 0
     private var lastY = 0
     private var strafing = false
+    private val homeTargetX = target.x
+    private val homeTargetY = target.y
+    private val homeTargetZ = target.z
+    private val homeRadius: Float
+    private val homeYaw: Float
+    private val homePitch: Float
 
     init {
         val dx = eye.x - target.x
@@ -421,6 +465,40 @@ private class StudioOrbitCameraManipulator(
         radius = sqrt(dx * dx + dy * dy + dz * dz).coerceAtLeast(0.5f)
         yaw = atan2(dx, dz)
         pitch = asin((dy / radius).coerceIn(-0.98f, 0.98f))
+        homeRadius = radius
+        homeYaw = yaw
+        homePitch = pitch
+    }
+
+    fun applyPreset(preset: EditorCameraPreset, focusTarget: Position?, focusRadius: Float) {
+        when (preset) {
+            EditorCameraPreset.HOME -> {
+                targetX = homeTargetX
+                targetY = homeTargetY
+                targetZ = homeTargetZ
+                radius = homeRadius
+                yaw = homeYaw
+                pitch = homePitch
+            }
+            EditorCameraPreset.TOP -> {
+                pitch = 1.535f
+                yaw = 0f
+            }
+            EditorCameraPreset.FRONT -> {
+                pitch = 0f
+                yaw = 0f
+            }
+            EditorCameraPreset.RIGHT -> {
+                pitch = 0f
+                yaw = (Math.PI / 2.0).toFloat()
+            }
+            EditorCameraPreset.FOCUS_SELECTION -> if (focusTarget != null) {
+                targetX = focusTarget.x
+                targetY = focusTarget.y
+                targetZ = focusTarget.z
+                radius = focusRadius.coerceIn(0.8f, 280f)
+            }
+        }
     }
 
     override fun setViewport(width: Int, height: Int) {
@@ -452,15 +530,17 @@ private class StudioOrbitCameraManipulator(
         val dx = (x - lastX).toFloat()
         val dy = (y - lastY).toFloat()
         if (strafing) {
-            val unitsPerPixel = radius / viewportHeight * 1.5f
+            val unitsPerPixel = radius / viewportHeight * 0.9f
             val rightX = cos(yaw)
             val rightZ = -sin(yaw)
             targetX -= rightX * dx * unitsPerPixel
             targetZ -= rightZ * dx * unitsPerPixel
             targetY -= dy * unitsPerPixel
         } else {
-            yaw -= dx / viewportWidth * 3.2f
-            pitch = (pitch + dy / viewportHeight * 2.4f).coerceIn(-1.35f, 1.35f)
+            if (kotlin.math.abs(dx) > 0.35f) yaw -= dx / viewportWidth * 2.1f
+            if (kotlin.math.abs(dy) > 0.35f) {
+                pitch = (pitch + dy / viewportHeight * 1.72f).coerceIn(-1.535f, 1.535f)
+            }
         }
         lastX = x
         lastY = y
@@ -470,12 +550,118 @@ private class StudioOrbitCameraManipulator(
     override fun scrollBegin(x: Int, y: Int, separation: Float) = Unit
 
     override fun scrollUpdate(x: Int, y: Int, prevSeparation: Float, currSeparation: Float) {
-        val delta = prevSeparation - currSeparation
-        radius = (radius * (1f + delta / viewportHeight)).coerceIn(0.4f, 600f)
+        if (prevSeparation <= 0f || currSeparation <= 0f) return
+        val ratio = (prevSeparation / currSeparation).coerceIn(0.72f, 1.38f)
+        radius = (radius * ratio).coerceIn(0.45f, 280f)
     }
 
     override fun scrollEnd() = Unit
     override fun update(deltaTime: Float) = Unit
+}
+
+
+internal data class RuntimeCharacterCameraPose(
+    val eye: com.mobilegamestudio.core.model.Vector3,
+    val target: com.mobilegamestudio.core.model.Vector3,
+)
+
+internal fun computeCharacterCameraPose(
+    transform: TransformComponent,
+    controller: CharacterControllerComponent,
+): RuntimeCharacterCameraPose {
+    val position = transform.position
+    val yaw = Math.toRadians(transform.rotationEulerDegrees.y.toDouble())
+    val pitchDegrees = transform.rotationEulerDegrees.x.coerceIn(-78f, 78f)
+    val pitch = Math.toRadians(pitchDegrees.toDouble())
+    val forwardX = (sin(yaw) * cos(pitch)).toFloat()
+    val forwardY = (-sin(pitch)).toFloat()
+    val forwardZ = (cos(yaw) * cos(pitch)).toFloat()
+    return when (controller.cameraMode) {
+        CharacterCameraMode.FIRST_PERSON -> {
+            val eye = com.mobilegamestudio.core.model.Vector3(
+                position.x,
+                position.y + controller.cameraHeight,
+                position.z,
+            )
+            RuntimeCharacterCameraPose(
+                eye = eye,
+                target = com.mobilegamestudio.core.model.Vector3(
+                    eye.x + forwardX,
+                    eye.y + forwardY,
+                    eye.z + forwardZ,
+                ),
+            )
+        }
+        CharacterCameraMode.THIRD_PERSON -> {
+            val focus = com.mobilegamestudio.core.model.Vector3(
+                position.x,
+                position.y + controller.cameraHeight,
+                position.z,
+            )
+            val distance = controller.cameraDistance.coerceIn(1.2f, 18f)
+            val eye = com.mobilegamestudio.core.model.Vector3(
+                focus.x - forwardX * distance,
+                focus.y + distance * 0.22f - forwardY * distance * 0.45f,
+                focus.z - forwardZ * distance,
+            )
+            RuntimeCharacterCameraPose(eye = eye, target = focus)
+        }
+        CharacterCameraMode.TOP_DOWN -> {
+            val focus = com.mobilegamestudio.core.model.Vector3(
+                position.x,
+                position.y + controller.cameraHeight * 0.35f,
+                position.z,
+            )
+            val distance = controller.cameraDistance.coerceAtLeast(4f)
+            RuntimeCharacterCameraPose(
+                eye = com.mobilegamestudio.core.model.Vector3(
+                    focus.x - forwardX * distance * 0.22f,
+                    focus.y + distance,
+                    focus.z - forwardZ * distance * 0.22f,
+                ),
+                target = focus,
+            )
+        }
+    }
+}
+
+
+private fun buildEditorGridNodes(
+    engine: Engine,
+    minorMaterial: MaterialInstance,
+    xMaterial: MaterialInstance,
+    zMaterial: MaterialInstance,
+): List<Node> = buildList {
+    val extent = 20
+    val span = extent * 2f
+    for (index in -extent..extent) {
+        val zLineMaterial = if (index == 0) xMaterial else minorMaterial
+        add(
+            CubeNode(
+                engine = engine,
+                size = Size(span, 0.004f, if (index == 0) 0.035f else 0.018f),
+                materialInstance = zLineMaterial,
+            ).apply {
+                name = "__editor_grid_x_$index"
+                position = Position(0f, 0.004f, index.toFloat())
+                isTouchable = false
+                isEditable = false
+            },
+        )
+        val xLineMaterial = if (index == 0) zMaterial else minorMaterial
+        add(
+            CubeNode(
+                engine = engine,
+                size = Size(if (index == 0) 0.035f else 0.018f, 0.004f, span),
+                materialInstance = xLineMaterial,
+            ).apply {
+                name = "__editor_grid_z_$index"
+                position = Position(index.toFloat(), 0.004f, 0f)
+                isTouchable = false
+                isEditable = false
+            },
+        )
+    }
 }
 
 private suspend fun buildProjection(
@@ -491,6 +677,18 @@ private suspend fun buildProjection(
     val textures = mutableListOf<Texture>()
     val nodes = mutableListOf<Node>()
     try {
+        if (mode == EditorMode.EDITOR && document.editorSettings.gridVisible) {
+            val minorGridMaterial = materialLoader.createColorInstance(
+                Color(0xFF252B33), metallic = 0f, roughness = 1f,
+            ).also(materials::add)
+            val xAxisMaterial = materialLoader.createColorInstance(
+                Color(0xFF8B4048), metallic = 0f, roughness = 1f,
+            ).also(materials::add)
+            val zAxisMaterial = materialLoader.createColorInstance(
+                Color(0xFF3F608C), metallic = 0f, roughness = 1f,
+            ).also(materials::add)
+            nodes += buildEditorGridNodes(engine, minorGridMaterial, xAxisMaterial, zAxisMaterial)
+        }
         var loadedModels = 0
         val renderableObjects = document.objects.filter { objectValue ->
             objectValue.enabled &&
@@ -996,6 +1194,7 @@ private fun Node.applySceneTransform(
     transform: TransformComponent,
     mode: EditorMode,
     isSelected: Boolean,
+    transformGesturesEnabled: Boolean = false,
 ): Node = apply {
     val modifiers = objectValue.component<MeshModifierStackComponent>()
         ?.takeIf { it.enabled }
@@ -1032,8 +1231,10 @@ private fun Node.applySceneTransform(
     val mirror = modifiers.firstOrNull { it.type == MeshModifierType.MIRROR }?.axis
     name = objectValue.id
     isVisible = objectValue.enabled
-    isTouchable = true
-    isEditable = mode == EditorMode.EDITOR
+    isTouchable = mode == EditorMode.EDITOR
+    // Selection stays touchable, but direct SceneView editing is opt-in. The
+    // SceneDocument and editor gizmos are the only authoritative transforms.
+    isEditable = mode == EditorMode.EDITOR && transformGesturesEnabled
     position = Position(
         transform.position.x + modifierOffset.x,
         transform.position.y + modifierOffset.y,
@@ -1044,7 +1245,9 @@ private fun Node.applySceneTransform(
         transform.rotationEulerDegrees.y + modifierRotation.y,
         transform.rotationEulerDegrees.z + modifierRotation.z,
     )
-    val selectionScale = if (isSelected) 1.08f else 1f
+    // Selection must never change apparent object dimensions. Highlighting
+    // belongs to editor chrome/gizmos, not to the render transform.
+    val selectionScale = 1f
     // Normalize arbitrary import units, then let the editable Transform express
     // the intended scene size. The starter Viper uses 4.48 here, matching its
     // real length and its collider instead of silently becoming one metre long.

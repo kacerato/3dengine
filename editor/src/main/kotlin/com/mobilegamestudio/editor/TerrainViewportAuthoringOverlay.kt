@@ -63,6 +63,11 @@ internal fun TerrainViewportAuthoringOverlay(
                     var cancelled = false
                     while (true) {
                         val event = awaitPointerEvent()
+                        if (event.changes.count { it.pressed } > 1) {
+                            cancelled = true
+                            event.changes.forEach { it.consume() }
+                            break
+                        }
                         val change = event.changes.firstOrNull { it.id == down.id }
                         if (change == null) {
                             cancelled = true

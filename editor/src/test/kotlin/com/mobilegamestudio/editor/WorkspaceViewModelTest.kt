@@ -7,6 +7,12 @@ import com.mobilegamestudio.core.model.AssetRecord
 import com.mobilegamestudio.core.model.CreateProjectRequest
 import com.mobilegamestudio.core.model.OpenProject
 import com.mobilegamestudio.core.model.PrimitiveMesh
+import com.mobilegamestudio.core.model.EditableMeshComponent
+import com.mobilegamestudio.core.model.TerrainComponent
+import com.mobilegamestudio.editor.domain.EditorSelectionKind
+import com.mobilegamestudio.editor.domain.EditorToolId
+import com.mobilegamestudio.editor.domain.EditorToolset
+import com.mobilegamestudio.editor.domain.PendingEditorOperation
 import com.mobilegamestudio.core.model.ProjectId
 import com.mobilegamestudio.core.model.ProjectMetadata
 import com.mobilegamestudio.core.model.ProjectResult
@@ -87,6 +93,105 @@ class WorkspaceViewModelTest {
 
         assertTrue(viewModel.state.value.sceneObjects.any { it.id == "open-world-terrain" })
         assertEquals("starter-car", viewModel.state.value.selectedObjectId)
+    }
+
+    @Test
+    fun `workspace selection feeds terrain toolset immediately`() = runTest(dispatcher) {
+        val repository = SavingRepository(METADATA.copy(name = "Open World Starter"))
+        val viewModel = WorkspaceViewModel(METADATA.id, repository, FakeContentRepository())
+        advanceUntilIdle()
+        val terrainId = requireNotNull(viewModel.state.value.sceneDocument)
+            .objects
+            .first { it.component<TerrainComponent>() != null }
+            .id
+
+        viewModel.selectObject(terrainId)
+        viewModel.activateAuthoringToolset(EditorToolset.TERRAIN)
+
+        val context = viewModel.state.value.editorContext
+        assertEquals(terrainId, context.selection.objectId)
+        assertEquals(EditorSelectionKind.TERRAIN, context.selection.kind)
+        assertEquals(EditorToolset.TERRAIN, context.activeToolset)
+        assertEquals(EditorToolId.TERRAIN_NAVIGATE, context.activeTool)
+        assertEquals(null, context.pendingOperation)
+    }
+
+    @Test
+    fun `volume request over terrain keeps coherent context and asks for a target`() = runTest(dispatcher) {
+        val repository = SavingRepository(METADATA.copy(name = "Open World Starter"))
+        val viewModel = WorkspaceViewModel(METADATA.id, repository, FakeContentRepository())
+        advanceUntilIdle()
+        val terrainId = requireNotNull(viewModel.state.value.sceneDocument)
+            .objects
+            .first { it.component<TerrainComponent>() != null }
+            .id
+
+        viewModel.selectObject(terrainId)
+        viewModel.activateAuthoringToolset(EditorToolset.VOLUME)
+
+        val context = viewModel.state.value.editorContext
+        assertEquals(EditorToolset.OBJECT, context.activeToolset)
+        assertEquals(EditorToolId.OBJECT_SELECT, context.activeTool)
+        assertEquals(EditorSelectionKind.TERRAIN, context.selection.kind)
+        assertTrue(context.pendingOperation is PendingEditorOperation.SelectOrCreateTarget)
+    }
+
+    @Test
+    fun `incompatible creation cannot replace selection during pending target`() = runTest(dispatcher) {
+        val repository = SavingRepository(METADATA.copy(name = "Open World Starter"))
+        val viewModel = WorkspaceViewModel(METADATA.id, repository, FakeContentRepository())
+        advanceUntilIdle()
+        val terrainId = requireNotNull(viewModel.state.value.sceneDocument)
+            .objects
+            .first { it.component<TerrainComponent>() != null }
+            .id
+
+        viewModel.selectObject(terrainId)
+        viewModel.activateAuthoringToolset(EditorToolset.VOLUME)
+        viewModel.addSceneObject(EditorObjectType.CAMERA)
+
+        val context = viewModel.state.value.editorContext
+        assertEquals(terrainId, viewModel.state.value.selectedObjectId)
+        assertEquals(terrainId, context.selection.objectId)
+        assertEquals(EditorSelectionKind.TERRAIN, context.selection.kind)
+        assertEquals(EditorToolset.OBJECT, context.activeToolset)
+        assertTrue(context.pendingOperation is PendingEditorOperation.SelectOrCreateTarget)
+        assertTrue(viewModel.state.value.sceneObjects.any { it.type == EditorObjectType.CAMERA })
+    }
+
+    @Test
+    fun `primitive conversion updates document selection and tool atomically`() = runTest(dispatcher) {
+        val viewModel = WorkspaceViewModel(METADATA.id, SavingRepository(), FakeContentRepository())
+        advanceUntilIdle()
+
+        viewModel.addPrimitive(PrimitiveMesh.CUBE)
+        val primitiveId = requireNotNull(viewModel.state.value.selectedObjectId)
+        assertEquals(primitiveId, viewModel.state.value.editorContext.selection.objectId)
+        assertEquals(EditorSelectionKind.PRIMITIVE_MESH, viewModel.state.value.editorContext.selection.kind)
+
+        viewModel.activateAuthoringToolset(EditorToolset.MESH)
+        assertTrue(
+            viewModel.state.value.editorContext.pendingOperation is PendingEditorOperation.ConfirmConversion,
+        )
+
+        viewModel.confirmPendingAuthoringConversion()
+
+        val converted = requireNotNull(viewModel.state.value.sceneDocument)
+            .objects
+            .first { it.id == primitiveId }
+        val context = viewModel.state.value.editorContext
+        assertTrue(converted.component<EditableMeshComponent>() != null)
+        assertEquals(EditorSelectionKind.EDITABLE_MESH, context.selection.kind)
+        assertEquals(EditorToolset.MESH, context.activeToolset)
+        assertEquals(EditorToolId.MESH_VERTEX_SELECT, context.activeTool)
+
+        viewModel.undo()
+        val restored = requireNotNull(viewModel.state.value.sceneDocument)
+            .objects
+            .first { it.id == primitiveId }
+        assertEquals(null, restored.component<EditableMeshComponent>())
+        assertEquals(EditorSelectionKind.PRIMITIVE_MESH, viewModel.state.value.editorContext.selection.kind)
+        assertEquals(EditorToolset.OBJECT, viewModel.state.value.editorContext.activeToolset)
     }
 
     @Test

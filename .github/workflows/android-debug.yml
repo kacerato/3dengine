@@ -6,6 +6,8 @@ on:
       - master
       - feature/compact-godot-workspace
       - feature/world-studio-direct-editing
+      - feature/native-editor-validation-v1
+      - feature/world-studio-v4-foundation
   pull_request:
     branches:
       - master
@@ -30,7 +32,8 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Prepare tolerant source patcher
+      - name: Apply legacy generated migrations
+        if: github.head_ref != 'feature/world-studio-v4-foundation' && github.ref_name != 'feature/world-studio-v4-foundation'
         shell: bash
         run: |
           python - <<'PY'
@@ -50,8 +53,8 @@ jobs:
               if old in text:
                   write(path, text.replace(old, new, 1))
                   return
-              chunks = re.split(r"(\\s+)", old)
-              pattern = "".join(r"\\s+" if chunk.isspace() else re.escape(chunk) for chunk in chunks if chunk)
+              chunks = re.split(r"(\s+)", old)
+              pattern = "".join(r"\s+" if chunk.isspace() else re.escape(chunk) for chunk in chunks if chunk)
               updated, count = re.subn(pattern, lambda _: new, text, count=1, flags=re.MULTILINE | re.DOTALL)
               if count < 1:
                   raise RuntimeError(f"{path}: expected a tolerant match: {old[:120]!r}")
@@ -60,30 +63,98 @@ jobs:
           if old in source:
               path.write_text(source.replace(old, new, 1), encoding='utf-8')
           PY
+          python tools/apply_authoring_upgrade.py
+          python tools/apply_authoring_hotfix.py
+          python tools/apply_world_studio_v2.py
+          python tools/apply_world_studio_compile_hotfix.py
+          python tools/apply_studio_v3_geometry.py
+          python tools/apply_studio_v3_ui.py
+          python tools/apply_studio_v3_validation.py
+          python tools/apply_native_editor_validation.py
+          python tools/apply_world_authoring_v2_fixed.py
 
-      - name: Apply advanced authoring source upgrade
-        run: python tools/apply_authoring_upgrade.py
+      - name: Verify persisted World Studio source
+        if: github.head_ref == 'feature/world-studio-v4-foundation' || github.ref_name == 'feature/world-studio-v4-foundation'
+        shell: bash
+        run: |
+          test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldLayerModels.kt
+          test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldAuthoringContext.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV5.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV6.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioV6Design.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioV6Projection.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/EditorDomainAdapter.kt
+          test -f editor/src/test/kotlin/com/mobilegamestudio/editor/EditorDomainAdapterTest.kt
+          test -f editor/src/test/kotlin/com/mobilegamestudio/editor/WorldStudioV6ProjectionTest.kt
+          test -f editor-domain/src/main/kotlin/com/mobilegamestudio/editor/domain/EditorDomain.kt
+          test -f editor-domain/src/test/kotlin/com/mobilegamestudio/editor/domain/EditorContextReducerTest.kt
+          test -f tools/apply_editor_domain_r1_integration.py
+          test -f tools/apply_editor_domain_r1_selection_followup.py
+          test -f tools/apply_editor_domain_r1_pending_hardening.py
+          test -f tools/apply_world_studio_v6_r2_shell.py
+          grep -q '":editor-domain"' settings.gradle.kts
+          grep -q 'implementation(project(":editor-domain"))' editor/build.gradle.kts
+          echo "World Studio V6 source is available"
 
-      - name: Apply generated-source hotfixes
-        run: python tools/apply_authoring_hotfix.py
+      - name: Apply preserved World Studio fixes
+        shell: bash
+        run: |
+          if ! grep -q "isEditable = mode == EditorMode.EDITOR && transformGesturesEnabled" runtime/src/main/kotlin/com/mobilegamestudio/runtime/RuntimeSceneViewport.kt; then
+            python tools/apply_world_studio_v4_validation_fixes.py
+          else
+            echo "Base viewport validation fixes already persisted"
+          fi
+          if ! grep -q "WorldStudioV4InlineDock" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt; then
+            python tools/apply_world_studio_v4_validation_round2.py
+          else
+            echo "World Studio inline source already persisted"
+          fi
+          python tools/apply_world_studio_v4_freecam_cleanup.py
+          python tools/apply_world_studio_v4_color_fix.py
+          python tools/apply_world_studio_v5_dedicated.py
+          python tools/fix_world_studio_v5_compile.py
+          ! grep -R "colorArgb.toULong()" editor/src/main/kotlin
+          ! grep -R "EditorCameraDock(" editor/src/main/kotlin/com/mobilegamestudio/editor/SceneViewport.kt
+          ! grep -R "onDoubleTap = { _, node ->" runtime/src/main/kotlin/com/mobilegamestudio/runtime/RuntimeSceneViewport.kt
 
-      - name: Apply direct World Studio migration
-        run: python tools/apply_world_studio_v2.py
+      - name: Apply editor domain R1 integration
+        if: github.head_ref == 'feature/world-studio-v4-foundation' || github.ref_name == 'feature/world-studio-v4-foundation'
+        shell: bash
+        run: |
+          python tools/apply_editor_domain_r1_integration.py
+          python tools/apply_editor_domain_r1_selection_followup.py
+          python tools/apply_editor_domain_r1_pending_hardening.py
+          grep -q "fun activateAuthoringToolset" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
+          grep -q "val editorContext: EditorContextState" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
+          grep -q "confirmPendingAuthoringConversion" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
+          grep -q "incompatible creation cannot replace selection during pending target" editor/src/test/kotlin/com/mobilegamestudio/editor/WorkspaceViewModelTest.kt
 
-      - name: Apply World Studio compile hotfixes
-        run: python tools/apply_world_studio_compile_hotfix.py
+      - name: Apply World Studio V6 R2 shell
+        if: github.head_ref == 'feature/world-studio-v4-foundation' || github.ref_name == 'feature/world-studio-v4-foundation'
+        shell: bash
+        run: |
+          python tools/apply_world_studio_v6_r2_shell.py
+          grep -q "WorldStudioWorkspaceV6(" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt
+          grep -q "onAuthoringToolsetSelected" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt
+          grep -q "onAuthoringToolsetSelected = viewModel::activateAuthoringToolset" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceScreen.kt
+          ! grep -q "WorldStudioWorkspaceV5(" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt
 
-      - name: Apply Studio V3 geometry
-        run: python tools/apply_studio_v3_geometry.py
+      - name: Persist generated branch source
+        if: github.event_name == 'push' && github.ref_name == 'feature/world-studio-v4-foundation'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add editor/src/main/kotlin/com/mobilegamestudio/editor editor/src/test/kotlin/com/mobilegamestudio/editor runtime/src/main/kotlin/com/mobilegamestudio/runtime
+          if git diff --cached --quiet; then
+            echo "World Studio V6 source already persisted"
+          else
+            git commit -m "feat: activate domain-driven World Studio V6 R2 shell"
+            git push origin HEAD:${GITHUB_REF_NAME}
+          fi
 
-      - name: Apply Studio V3 interface
-        run: python tools/apply_studio_v3_ui.py
-
-      - name: Apply Studio V3 validation
-        run: python tools/apply_studio_v3_validation.py
-
-      - name: Persist generated source changes
-        if: github.event_name == 'push'
+      - name: Persist legacy generated source changes
+        if: github.event_name == 'push' && github.ref_name != 'feature/world-studio-v4-foundation'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -92,7 +163,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated changes"
           else
-            git commit -m "feat: solid Studio V3 layout, mesh editing and voxel volumes"
+            git commit -m "feat: generated editor source updates"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -108,7 +179,10 @@ jobs:
       - name: Make wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Unit tests
+      - name: Editor domain tests
+        run: ./gradlew :editor-domain:test --stacktrace
+
+      - name: Android unit tests
         run: ./gradlew testDebugUnitTest --stacktrace
 
       - name: Build debug APK
@@ -117,7 +191,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-v3-solid-debug
+          name: mobile-game-studio-world-studio-v6-r2-shell-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

@@ -38,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -49,6 +50,9 @@ import androidx.compose.ui.window.PopupProperties
 import com.mobilegamestudio.core.model.AssetRecord
 import com.mobilegamestudio.core.model.PrimitiveMesh
 import com.mobilegamestudio.core.model.TerrainBrushMode
+import com.mobilegamestudio.core.model.WorldLayerKind
+import com.mobilegamestudio.editor.domain.EditorToolId
+import com.mobilegamestudio.editor.domain.EditorToolset
 import java.io.File
 
 /**
@@ -65,6 +69,10 @@ internal fun GodotCompactEditorShell(
     onBack: () -> Unit,
     onReportDiagnostic: (String) -> Unit,
     onToolSelected: (EditorTool) -> Unit,
+    onAuthoringToolsetSelected: (EditorToolset) -> Unit,
+    onAuthoringToolSelected: (EditorToolId) -> Unit,
+    onCancelPendingAuthoringOperation: () -> Unit,
+    onConfirmPendingAuthoringConversion: (Int) -> Unit,
     onUndo: () -> Unit,
     onRedo: () -> Unit,
     onTogglePreview: () -> Unit,
@@ -113,6 +121,15 @@ internal fun GodotCompactEditorShell(
     onTerrainStrokePoint: (Float, Float) -> Unit,
     onTerrainStrokeEnd: (Boolean) -> Unit,
     onCreateFlatTerrain: (Int, Float, Float) -> Unit,
+    onCreatePlayableWorld: () -> Unit,
+    onCreateWorldLayer: (String, WorldLayerKind) -> Unit,
+    onSelectWorldLayer: (String) -> Unit,
+    onRenameWorldLayer: (String, String) -> Unit,
+    onMoveWorldLayer: (String, Int) -> Unit,
+    onToggleWorldLayerVisibility: (String) -> Unit,
+    onToggleWorldLayerLock: (String) -> Unit,
+    onToggleWorldLayerSolo: (String) -> Unit,
+    onAssignSelectedToWorldLayer: (String) -> Unit,
     onAssignTerrainTexture: (String, String, Boolean) -> Unit,
     onCreateEditableMesh: (PrimitiveMesh) -> Unit,
     onConvertSelectedToEditableMesh: () -> Unit,
@@ -128,10 +145,21 @@ internal fun GodotCompactEditorShell(
     onSmoothVoxel: (Int) -> Unit,
 ) {
     val previewActive = state.isPreviewStarting || state.isPreviewRunning
-    var openPanelName by rememberSaveable { mutableStateOf<String?>(StudioPopup.FILES.name) }
-    val openPanel = openPanelName?.let(StudioPopup::valueOf)
+    var openPanelName by rememberSaveable { mutableStateOf<String?>(null) }
+    val openPanel = openPanelName?.let { savedName ->
+        StudioPopup.entries.firstOrNull { it.name == savedName }
+    }
+    var worldModeName by rememberSaveable { mutableStateOf(WorldStudioInlineMode.OBJECTS.name) }
+    var worldSurfaceEditing by rememberSaveable { mutableStateOf(false) }
+    val worldMode = WorldStudioInlineMode.entries.firstOrNull { it.name == worldModeName }
+        ?: WorldStudioInlineMode.OBJECTS
+    val worldTerrainAuthoring = openPanel == StudioPopup.WORLD &&
+        worldSurfaceEditing &&
+        state.selectedTerrain != null &&
+        worldMode in setOf(WorldStudioInlineMode.TERRAIN, WorldStudioInlineMode.PAINT)
 
     fun show(panel: StudioPopup?) {
+        if (panel != StudioPopup.WORLD) worldSurfaceEditing = false
         openPanelName = panel?.name
         when (panel) {
             StudioPopup.SCENE, StudioPopup.INSPECTOR, StudioPopup.ADD,
@@ -187,49 +215,139 @@ internal fun GodotCompactEditorShell(
                         .weight(1f)
                         .fillMaxWidth(),
                 )
+            } else if (openPanel == StudioPopup.WORLD) {
+                WorldStudioWorkspaceV6(
+                    state = state,
+                    resolveAsset = resolveAsset,
+                    onExit = { show(null) },
+                    onUndo = onUndo,
+                    onRedo = onRedo,
+                    onSave = onSaveScene,
+                    onPlay = onTogglePreview,
+                    onActivateToolset = onAuthoringToolsetSelected,
+                    onActivateTool = onAuthoringToolSelected,
+                    onCancelPendingOperation = onCancelPendingAuthoringOperation,
+                    onConfirmPendingConversion = onConfirmPendingAuthoringConversion,
+                    onLegacyToolSelected = onToolSelected,
+                    onSelectObject = onSelectObject,
+                    onViewportObjectSelected = onViewportObjectSelected,
+                    onToggleVisibility = onToggleVisibility,
+                    onDuplicateSelected = onDuplicateSelected,
+                    onDeleteSelected = onDeleteSelected,
+                    onRenameSelected = onRenameSelected,
+                    onTransformDrag = onTransformDrag,
+                    onTransformChange = onTransformChange,
+                    onTransformValueChange = onTransformValueChange,
+                    onDiagnostic = onReportDiagnostic,
+                    onTerrainToolChange = onTerrainToolChange,
+                    onTerrainFalloffChange = onTerrainFalloffChange,
+                    onTerrainStrokeBegin = onTerrainStrokeBegin,
+                    onTerrainStrokePoint = onTerrainStrokePoint,
+                    onTerrainStrokeEnd = onTerrainStrokeEnd,
+                    onCreateFlatTerrain = onCreateFlatTerrain,
+                    onCreateEditableMesh = onCreateEditableMesh,
+                    onCreateVoxelVolume = onCreateVoxelVolume,
+                    onAddPrimitive = onAddPrimitive,
+                    onAddSceneObject = onAddSceneObject,
+                    onCreateWorldLayer = onCreateWorldLayer,
+                    onSelectWorldLayer = onSelectWorldLayer,
+                    onToggleWorldLayerVisibility = onToggleWorldLayerVisibility,
+                    onToggleWorldLayerLock = onToggleWorldLayerLock,
+                    onToggleWorldLayerSolo = onToggleWorldLayerSolo,
+                    onAssignSelectedToWorldLayer = onAssignSelectedToWorldLayer,
+                    onImportAsset = onImportAsset,
+                    onAddAsset = onAddAsset,
+                    onPreviewAction = onPreviewAction,
+                )
+            } else if (openPanel == StudioPopup.WORLD) {
+                WorldStudioWorkspaceV6(
+                    state = state,
+                    resolveAsset = resolveAsset,
+                    onExit = { show(null) },
+                    onUndo = onUndo,
+                    onRedo = onRedo,
+                    onSave = onSaveScene,
+                    onPlay = onTogglePreview,
+                    onActivateToolset = onAuthoringToolsetSelected,
+                    onActivateTool = onAuthoringToolSelected,
+                    onCancelPendingOperation = onCancelPendingAuthoringOperation,
+                    onConfirmPendingConversion = onConfirmPendingAuthoringConversion,
+                    onLegacyToolSelected = onToolSelected,
+                    onSelectObject = onSelectObject,
+                    onViewportObjectSelected = onViewportObjectSelected,
+                    onToggleVisibility = onToggleVisibility,
+                    onDuplicateSelected = onDuplicateSelected,
+                    onDeleteSelected = onDeleteSelected,
+                    onRenameSelected = onRenameSelected,
+                    onTransformDrag = onTransformDrag,
+                    onTransformChange = onTransformChange,
+                    onTransformValueChange = onTransformValueChange,
+                    onDiagnostic = onReportDiagnostic,
+                    onTerrainToolChange = onTerrainToolChange,
+                    onTerrainFalloffChange = onTerrainFalloffChange,
+                    onTerrainStrokeBegin = onTerrainStrokeBegin,
+                    onTerrainStrokePoint = onTerrainStrokePoint,
+                    onTerrainStrokeEnd = onTerrainStrokeEnd,
+                    onCreateFlatTerrain = onCreateFlatTerrain,
+                    onCreateEditableMesh = onCreateEditableMesh,
+                    onCreateVoxelVolume = onCreateVoxelVolume,
+                    onAddPrimitive = onAddPrimitive,
+                    onAddSceneObject = onAddSceneObject,
+                    onCreateWorldLayer = onCreateWorldLayer,
+                    onSelectWorldLayer = onSelectWorldLayer,
+                    onToggleWorldLayerVisibility = onToggleWorldLayerVisibility,
+                    onToggleWorldLayerLock = onToggleWorldLayerLock,
+                    onToggleWorldLayerSolo = onToggleWorldLayerSolo,
+                    onAssignSelectedToWorldLayer = onAssignSelectedToWorldLayer,
+                    onImportAsset = onImportAsset,
+                    onAddAsset = onAddAsset,
+                    onPreviewAction = onPreviewAction,
+                )
+            } else if (openPanel == StudioPopup.WORLD) {
+                WorldStudioWorkspaceV6(
+                    state = state,
+                    resolveAsset = resolveAsset,
+                    onExit = { show(null) },
+                    onUndo = onUndo,
+                    onRedo = onRedo,
+                    onSave = onSaveScene,
+                    onPlay = onTogglePreview,
+                    onActivateToolset = onAuthoringToolsetSelected,
+                    onActivateTool = onAuthoringToolSelected,
+                    onCancelPendingOperation = onCancelPendingAuthoringOperation,
+                    onConfirmPendingConversion = onConfirmPendingAuthoringConversion,
+                    onLegacyToolSelected = onToolSelected,
+                    onSelectObject = onSelectObject,
+                    onViewportObjectSelected = onViewportObjectSelected,
+                    onToggleVisibility = onToggleVisibility,
+                    onDuplicateSelected = onDuplicateSelected,
+                    onDeleteSelected = onDeleteSelected,
+                    onRenameSelected = onRenameSelected,
+                    onTransformDrag = onTransformDrag,
+                    onTransformChange = onTransformChange,
+                    onTransformValueChange = onTransformValueChange,
+                    onDiagnostic = onReportDiagnostic,
+                    onTerrainToolChange = onTerrainToolChange,
+                    onTerrainFalloffChange = onTerrainFalloffChange,
+                    onTerrainStrokeBegin = onTerrainStrokeBegin,
+                    onTerrainStrokePoint = onTerrainStrokePoint,
+                    onTerrainStrokeEnd = onTerrainStrokeEnd,
+                    onCreateFlatTerrain = onCreateFlatTerrain,
+                    onCreateEditableMesh = onCreateEditableMesh,
+                    onCreateVoxelVolume = onCreateVoxelVolume,
+                    onAddPrimitive = onAddPrimitive,
+                    onAddSceneObject = onAddSceneObject,
+                    onCreateWorldLayer = onCreateWorldLayer,
+                    onSelectWorldLayer = onSelectWorldLayer,
+                    onToggleWorldLayerVisibility = onToggleWorldLayerVisibility,
+                    onToggleWorldLayerLock = onToggleWorldLayerLock,
+                    onToggleWorldLayerSolo = onToggleWorldLayerSolo,
+                    onAssignSelectedToWorldLayer = onAssignSelectedToWorldLayer,
+                    onImportAsset = onImportAsset,
+                    onAddAsset = onAddAsset,
+                    onPreviewAction = onPreviewAction,
+                )
             } else {
-                if (openPanel == StudioPopup.WORLD) {
-                    WorldStudioWorkspaceV3(
-                        state = state,
-                        resolveAsset = resolveAsset,
-                        onExit = { show(null) },
-                        onUndo = onUndo,
-                        onRedo = onRedo,
-                        onSave = onSaveScene,
-                        onToolSelected = onToolSelected,
-                        onSelectObject = onSelectObject,
-                        onViewportObjectSelected = onViewportObjectSelected,
-                        onToggleVisibility = onToggleVisibility,
-                        onAddPrimitive = onAddPrimitive,
-                        onAddSceneObject = onAddSceneObject,
-                        onAddAsset = onAddAsset,
-                        onTransformChange = onTransformChange,
-                        onTransformValueChange = onTransformValueChange,
-                        onDiagnostic = onReportDiagnostic,
-                        onTerrainToolChange = onTerrainToolChange,
-                        onTerrainFalloffChange = onTerrainFalloffChange,
-                        onTerrainStrokeBegin = onTerrainStrokeBegin,
-                        onTerrainStrokePoint = onTerrainStrokePoint,
-                        onTerrainStrokeEnd = onTerrainStrokeEnd,
-                        onCreateFlatTerrain = onCreateFlatTerrain,
-                        onAssignTerrainTexture = onAssignTerrainTexture,
-                        onImportAsset = onImportAsset,
-                        onImportHeightmap = onImportTerrainHeightmap,
-                        onCreateEditableMesh = onCreateEditableMesh,
-                        onConvertSelectedToEditableMesh = onConvertSelectedToEditableMesh,
-                        onSelectMeshVertex = onSelectMeshVertex,
-                        onSelectMeshFace = onSelectMeshFace,
-                        onMoveMeshSelection = onMoveMeshSelection,
-                        onExtrudeMeshFace = onExtrudeMeshFace,
-                        onSubdivideMeshFace = onSubdivideMeshFace,
-                        onDyntopoMesh = onDyntopoMesh,
-                        onCreateVoxelVolume = onCreateVoxelVolume,
-                        onConvertMeshToVoxel = onConvertMeshToVoxel,
-                        onVoxelBrush = onVoxelBrush,
-                        onSmoothVoxel = onSmoothVoxel,
-                        modifier = Modifier.weight(1f).fillMaxWidth(),
-                    )
-                } else {
                 StudioWorkspaceTabs(
                     selected = openPanel,
                     onScene = { show(null) },
@@ -254,26 +372,98 @@ internal fun GodotCompactEditorShell(
                         selected = openPanel,
                         onSelect = ::toggle,
                     )
+                    if (openPanel == StudioPopup.WORLD) {
+                        WorldStudioV4InlineDock(
+                            state = state,
+                            mode = worldMode,
+                            surfaceEditing = worldSurfaceEditing,
+                            onMode = { next ->
+                                worldModeName = next.name
+                                worldSurfaceEditing = false
+                                when (next) {
+                                    WorldStudioInlineMode.PAINT ->
+                                        onTerrainToolChange(TerrainBrushMode.PAINT, null, null, null, null)
+                                    WorldStudioInlineMode.OBJECTS ->
+                                        if (state.activeTool == EditorTool.SELECT) onToolSelected(EditorTool.MOVE)
+                                    else -> onToolSelected(EditorTool.SELECT)
+                                }
+                            },
+                            onSurfaceEditing = { worldSurfaceEditing = it },
+                            onClose = { show(null) },
+                            onSelectObject = onSelectObject,
+                            onCreateLayer = onCreateWorldLayer,
+                            onSelectLayer = onSelectWorldLayer,
+                            onRenameLayer = onRenameWorldLayer,
+                            onMoveLayer = onMoveWorldLayer,
+                            onToggleLayerVisibility = onToggleWorldLayerVisibility,
+                            onToggleLayerLock = onToggleWorldLayerLock,
+                            onToggleLayerSolo = onToggleWorldLayerSolo,
+                            onAssignSelectedToLayer = onAssignSelectedToWorldLayer,
+                            onAddPrimitive = onAddPrimitive,
+                            onAddSceneObject = onAddSceneObject,
+                            onCreateFlatTerrain = onCreateFlatTerrain,
+                            onCreatePlayableWorld = onCreatePlayableWorld,
+                            onCreateEditableMesh = onCreateEditableMesh,
+                            onConvertSelectedToEditableMesh = onConvertSelectedToEditableMesh,
+                            onCreateVoxelVolume = onCreateVoxelVolume,
+                            onConvertMeshToVoxel = onConvertMeshToVoxel,
+                            onImportAsset = onImportAsset,
+                            onDiagnostic = onReportDiagnostic,
+                        )
+                    }
                     Column(
                         modifier = Modifier
                             .weight(1f)
                             .fillMaxHeight(),
                     ) {
-                        CompactViewportTools(state.activeTool, onToolSelected)
+                        if (openPanel == StudioPopup.WORLD) {
+                            WorldStudioV4InlineToolbar(
+                                mode = worldMode,
+                                surfaceEditing = worldSurfaceEditing,
+                                activeTool = state.activeTool,
+                                onMode = { next ->
+                                    worldModeName = next.name
+                                    worldSurfaceEditing = false
+                                    when (next) {
+                                        WorldStudioInlineMode.PAINT ->
+                                            onTerrainToolChange(TerrainBrushMode.PAINT, null, null, null, null)
+                                        WorldStudioInlineMode.OBJECTS ->
+                                            if (state.activeTool == EditorTool.SELECT) onToolSelected(EditorTool.MOVE)
+                                        else -> onToolSelected(EditorTool.SELECT)
+                                    }
+                                },
+                                onSurfaceEditing = { worldSurfaceEditing = it },
+                                onToolSelected = onToolSelected,
+                            )
+                        } else {
+                            CompactViewportTools(state.activeTool, onToolSelected)
+                        }
                         SceneViewport(
                             state = state,
                             resolveAsset = resolveAsset,
                             onObjectSelected = { id ->
-                                onViewportObjectSelected(id)
-                                if (id != null) show(StudioPopup.INSPECTOR)
+                                if (!worldTerrainAuthoring) {
+                                    onViewportObjectSelected(id)
+                                    if (id != null && openPanel != StudioPopup.WORLD) show(StudioPopup.INSPECTOR)
+                                }
                             },
                             onTransformDrag = onTransformDrag,
                             onTransformChange = onTransformChange,
                             onDiagnostic = onReportDiagnostic,
                             onPreviewAction = onPreviewAction,
+                            terrainAuthoringEnabled = worldTerrainAuthoring,
+                            terrainTopDownCamera = false,
+                            terrainBrushRadius = state.terrainTool.radius,
+                            onTerrainStrokeBegin = onTerrainStrokeBegin,
+                            onTerrainStrokePoint = onTerrainStrokePoint,
+                            onTerrainStrokeEnd = onTerrainStrokeEnd,
                             modifier = Modifier
                                 .weight(1f)
-                                .fillMaxWidth(),
+                                .fillMaxWidth()
+                                .padding(horizontal = 8.dp, vertical = 6.dp)
+                                .clip(RoundedCornerShape(18.dp))
+                                .background(Color.Black)
+                                .border(1.dp, WorkspaceBorder, RoundedCornerShape(18.dp)),
                         )
                         StudioBottomDock(
                             state = state,
@@ -294,7 +484,6 @@ internal fun GodotCompactEditorShell(
                         selected = openPanel,
                         onSelect = ::toggle,
                     )
-                }
                 }
             }
         }
@@ -369,7 +558,7 @@ private fun CompactStudioTopBar(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(42.dp)
+            .height(50.dp)
             .background(PanelBackground)
             .border(1.dp, WorkspaceBorder),
         verticalAlignment = Alignment.CenterVertically,
@@ -386,7 +575,7 @@ private fun CompactStudioTopBar(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight(),
-            shape = RoundedCornerShape(0.dp),
+            shape = RoundedCornerShape(12.dp),
             colors = ButtonDefaults.textButtonColors(contentColor = PrimaryText),
         ) {
             Column(
@@ -429,6 +618,14 @@ private fun CompactStudioTopBar(
     }
 }
 
+private data class StudioWorkspaceTabSpec(
+    val glyph: String,
+    val label: String,
+    val hint: String,
+    val selected: Boolean,
+    val onClick: () -> Unit,
+)
+
 @Composable
 private fun StudioWorkspaceTabs(
     selected: StudioPopup?,
@@ -438,36 +635,63 @@ private fun StudioWorkspaceTabs(
     onPlay: () -> Unit,
     onResources: () -> Unit,
 ) {
+    val tabs = listOf(
+        StudioWorkspaceTabSpec("◇", "3D", "Cena e mundo", selected == null || selected == StudioPopup.SCENE || selected == StudioPopup.INSPECTOR, onScene),
+        StudioWorkspaceTabSpec("</>", "Código", "Lua do projeto", selected == StudioPopup.CODE, onCode),
+        StudioWorkspaceTabSpec("⌘", "NoCode", "Grafos visuais", selected == StudioPopup.NOCODE, onNoCode),
+        StudioWorkspaceTabSpec("▶", "Jogo", "Executar cena", false, onPlay),
+        StudioWorkspaceTabSpec("▤", "Recursos", "Arquivos e assets", selected == StudioPopup.FILES || selected == StudioPopup.ASSETS, onResources),
+    )
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(34.dp)
-            .background(RaisedBackground)
+            .height(54.dp)
+            .background(PanelBackground)
             .border(1.dp, WorkspaceBorder)
-            .horizontalScroll(rememberScrollState()),
+            .padding(horizontal = 8.dp, vertical = 5.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
-        StudioTab("3D", selected == null || selected == StudioPopup.SCENE || selected == StudioPopup.INSPECTOR, onScene)
-        StudioTab("Código", selected == StudioPopup.CODE, onCode)
-        StudioTab("NoCode", selected == StudioPopup.NOCODE, onNoCode)
-        StudioTab("Jogo", false, onPlay)
-        StudioTab("Recursos", selected == StudioPopup.FILES || selected == StudioPopup.ASSETS, onResources)
+        tabs.forEach { tab ->
+            StudioTab(
+                glyph = tab.glyph,
+                label = tab.label,
+                hint = tab.hint,
+                selected = tab.selected,
+                onClick = tab.onClick,
+                modifier = Modifier.weight(1f),
+            )
+        }
     }
 }
 
 @Composable
-private fun StudioTab(label: String, selected: Boolean, onClick: () -> Unit) {
+private fun StudioTab(
+    glyph: String,
+    label: String,
+    hint: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
     TextButton(
         onClick = onClick,
-        modifier = Modifier.height(34.dp),
-        shape = RoundedCornerShape(0.dp),
+        modifier = modifier.fillMaxHeight(),
+        shape = RoundedCornerShape(14.dp),
         colors = ButtonDefaults.textButtonColors(
-            containerColor = if (selected) AccentMuted else Color.Transparent,
+            containerColor = if (selected) AccentMuted else RaisedBackground,
             contentColor = if (selected) AccentBright else SecondaryText,
         ),
+        contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp, vertical = 3.dp),
     ) {
-        Text(label, fontSize = 9.sp, fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal)
+        Text(glyph, fontSize = if (glyph.length > 1) 8.sp else 13.sp, fontWeight = FontWeight.Bold)
+        Column(
+            modifier = Modifier.padding(start = 7.dp),
+            horizontalAlignment = Alignment.Start,
+        ) {
+            Text(label, fontSize = 8.sp, fontWeight = FontWeight.Bold, maxLines = 1)
+            Text(hint, fontSize = 5.5.sp, color = if (selected) AccentBright.copy(alpha = 0.76f) else SecondaryText, maxLines = 1)
+        }
     }
 }
 
@@ -479,7 +703,7 @@ private fun StudioDockRail(
 ) {
     Column(
         modifier = Modifier
-            .width(46.dp)
+            .width(54.dp)
             .fillMaxHeight()
             .background(PanelBackground)
             .border(1.dp, WorkspaceBorder)
@@ -491,9 +715,9 @@ private fun StudioDockRail(
             val active = panel == selected
             TextButton(
                 onClick = { onSelect(panel) },
-                modifier = Modifier.size(40.dp),
+                modifier = Modifier.size(44.dp),
                 contentPadding = androidx.compose.foundation.layout.PaddingValues(0.dp),
-                shape = RoundedCornerShape(4.dp),
+                shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.textButtonColors(
                     containerColor = if (active) AccentMuted else Color.Transparent,
                     contentColor = if (active) AccentBright else SecondaryText,
@@ -513,35 +737,45 @@ private fun CompactViewportTools(selected: EditorTool, onSelected: (EditorTool) 
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(38.dp)
-            .background(RaisedBackground)
+            .height(48.dp)
+            .background(PanelBackground)
             .border(1.dp, WorkspaceBorder)
-            .horizontalScroll(rememberScrollState()),
+            .padding(horizontal = 8.dp, vertical = 5.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.spacedBy(5.dp),
     ) {
         EditorTool.entries.forEach { tool ->
             val active = tool == selected
             TextButton(
                 onClick = { onSelected(tool) },
                 modifier = Modifier.height(38.dp),
-                shape = RoundedCornerShape(0.dp),
+                shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.textButtonColors(
-                    containerColor = if (active) AccentMuted else Color.Transparent,
+                    containerColor = if (active) AccentMuted else RaisedBackground,
                     contentColor = if (active) AccentBright else SecondaryText,
                 ),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 10.dp),
             ) {
                 Text(
                     when (tool) {
-                        EditorTool.SELECT -> "▣ Selecionar"
-                        EditorTool.MOVE -> "↔ Mover"
-                        EditorTool.ROTATE -> "⟳ Girar"
-                        EditorTool.SCALE -> "⤢ Escalar"
+                        EditorTool.SELECT -> "◇  Selecionar"
+                        EditorTool.MOVE -> "↔  Mover"
+                        EditorTool.ROTATE -> "⟳  Girar"
+                        EditorTool.SCALE -> "⤢  Escalar"
                     },
-                    fontSize = 8.sp,
+                    fontSize = 7.5.sp,
+                    fontWeight = if (active) FontWeight.Bold else FontWeight.Normal,
                 )
             }
         }
+        Spacer(Modifier.weight(1f))
+        Text(
+            "CÂMERA: arraste fora do controle · pinça: zoom",
+            color = SecondaryText,
+            fontSize = 5.8.sp,
+            maxLines = 1,
+            modifier = Modifier.padding(end = 6.dp),
+        )
     }
 }
 
@@ -556,7 +790,7 @@ private fun StudioBottomDock(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(32.dp)
+            .height(40.dp)
             .background(PanelBackground)
             .border(1.dp, WorkspaceBorder),
         verticalAlignment = Alignment.CenterVertically,
@@ -580,8 +814,8 @@ private fun StudioBottomDock(
 private fun BottomDockButton(label: String, selected: Boolean, onClick: () -> Unit) {
     TextButton(
         onClick = onClick,
-        modifier = Modifier.height(32.dp),
-        shape = RoundedCornerShape(0.dp),
+        modifier = Modifier.height(40.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.textButtonColors(
             containerColor = if (selected) RaisedBackground else Color.Transparent,
             contentColor = if (selected) AccentBright else SecondaryText,
@@ -639,7 +873,7 @@ private fun StudioPopupHost(
             else -> Alignment.CenterEnd
         },
         onDismissRequest = onClose,
-        properties = PopupProperties(focusable = true),
+        properties = PopupProperties(focusable = !side),
     ) {
         BoxWithConstraints(
             modifier = Modifier.fillMaxSize(),
@@ -649,29 +883,36 @@ private fun StudioPopupHost(
                 else -> Alignment.CenterEnd
             },
         ) {
-            Box(
-                Modifier
-                    .fillMaxSize()
-                    .background(if (side) Color.Transparent else Color.Black.copy(alpha = 0.62f))
-                    .clickable(onClick = onClose),
-            )
+            if (!side) {
+                Box(
+                    Modifier
+                        .fillMaxSize()
+                        .background(Color.Black.copy(alpha = 0.62f))
+                        .clickable(onClick = onClose),
+                )
+            }
             val widthFraction = if (side) {
                 when {
-                    panel == StudioPopup.WORLD && maxWidth < 720.dp -> 0.72f
-                    panel == StudioPopup.WORLD -> 0.46f
                     maxWidth < 720.dp -> 0.58f
+                    panel == StudioPopup.FILES || panel == StudioPopup.SCENE -> 0.38f
                     else -> 0.34f
                 }
             } else {
-                if (maxWidth < 720.dp) 0.94f else 0.84f
+                if (maxWidth < 720.dp) 0.96f else 0.90f
             }
-            val heightFraction = if (side) 1f else if (maxHeight < 440.dp) 0.94f else 0.88f
+            val heightFraction = if (side) 0.92f else if (maxHeight < 440.dp) 0.96f else 0.90f
             Column(
                 modifier = Modifier
                     .fillMaxWidth(widthFraction)
                     .fillMaxHeight(heightFraction)
-                    .background(PanelBackground)
-                    .border(1.dp, WorkspaceBorder)
+                    .padding(
+                        start = 8.dp,
+                        end = 8.dp,
+                        top = if (side) 8.dp else 12.dp,
+                        bottom = if (side) 48.dp else 12.dp,
+                    )
+                    .background(PanelBackground, RoundedCornerShape(20.dp))
+                    .border(1.dp, WorkspaceBorder, RoundedCornerShape(20.dp))
                     .imePadding(),
             ) {
                 PopupTitleBar(panel, onClose)
@@ -783,9 +1024,9 @@ private fun PopupTitleBar(panel: StudioPopup, onClose: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(36.dp)
-            .background(RaisedBackground)
-            .border(1.dp, WorkspaceBorder)
+            .height(44.dp)
+            .background(RaisedBackground, RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp))
+            .border(1.dp, WorkspaceBorder, RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp))
             .padding(start = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -986,7 +1227,7 @@ private fun ResourceTreeRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(34.dp)
+            .height(42.dp)
             .clickable {
                 if (folder) onToggle(node.path) else onOpen(node)
             }
@@ -1224,10 +1465,10 @@ private fun CompactToolButton(
         onClick = onClick,
         enabled = enabled,
         modifier = Modifier
-            .height(42.dp)
+            .height(50.dp)
             .widthIn(min = 38.dp),
         contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 7.dp),
-        shape = RoundedCornerShape(0.dp),
+        shape = RoundedCornerShape(12.dp),
         colors = ButtonDefaults.textButtonColors(
             containerColor = when {
                 danger -> PlayStopBackground
@@ -1256,7 +1497,7 @@ private fun MiniAction(
         onClick = onClick,
         enabled = enabled,
         modifier = Modifier.height(30.dp),
-        shape = RoundedCornerShape(4.dp),
+        shape = RoundedCornerShape(12.dp),
         contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 8.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = RaisedBackground,

@@ -61,6 +61,10 @@ fun WorkspaceRoute(
         }
     }
 
+    LaunchedEffect(state.sceneDocument?.sceneId) {
+        if (state.sceneDocument != null) viewModel.ensureWorldLayerStructure()
+    }
+
     LaunchedEffect(state.message) {
         state.message?.let {
             snackbarHostState.showSnackbar(it)
@@ -97,6 +101,10 @@ fun WorkspaceRoute(
                 onBack = onBack,
                 onReportDiagnostic = viewModel::reportDiagnostic,
                 onToolSelected = viewModel::selectTool,
+                onAuthoringToolsetSelected = viewModel::activateAuthoringToolset,
+                onAuthoringToolSelected = viewModel::activateAuthoringTool,
+                onCancelPendingAuthoringOperation = viewModel::cancelPendingAuthoringOperation,
+                onConfirmPendingAuthoringConversion = viewModel::confirmPendingAuthoringConversion,
                 onUndo = viewModel::undo,
                 onRedo = viewModel::redo,
                 onTogglePreview = viewModel::togglePreview,
@@ -151,6 +159,25 @@ fun WorkspaceRoute(
                 onTerrainStrokePoint = viewModel::continueTerrainStroke,
                 onTerrainStrokeEnd = viewModel::endTerrainStroke,
                 onCreateFlatTerrain = viewModel::createFlatTerrain,
+
+                onCreatePlayableWorld = viewModel::createPlayableWorld,
+
+                onCreateWorldLayer = viewModel::createWorldLayer,
+
+                onSelectWorldLayer = viewModel::selectWorldLayer,
+
+                onRenameWorldLayer = viewModel::renameWorldLayer,
+
+                onMoveWorldLayer = viewModel::moveWorldLayer,
+
+                onToggleWorldLayerVisibility = viewModel::toggleWorldLayerVisibility,
+
+                onToggleWorldLayerLock = viewModel::toggleWorldLayerLock,
+
+                onToggleWorldLayerSolo = viewModel::toggleWorldLayerSolo,
+
+                onAssignSelectedToWorldLayer = viewModel::assignSelectedObjectToWorldLayer,
+
                 onAssignTerrainTexture = viewModel::assignTerrainTexture,
                 onCreateEditableMesh = viewModel::createEditableMesh,
                 onConvertSelectedToEditableMesh = viewModel::convertSelectedToEditableMesh,

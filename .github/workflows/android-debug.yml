@@ -87,6 +87,7 @@ jobs:
           test -f editor-domain/src/test/kotlin/com/mobilegamestudio/editor/domain/EditorContextReducerTest.kt
           test -f tools/apply_editor_domain_r1_integration.py
           test -f tools/apply_editor_domain_r1_selection_followup.py
+          test -f tools/apply_editor_domain_r1_pending_hardening.py
           grep -q 'include(' settings.gradle.kts
           grep -q '":editor-domain"' settings.gradle.kts
           grep -q 'implementation(project(":editor-domain"))' editor/build.gradle.kts
@@ -121,10 +122,12 @@ jobs:
         run: |
           python tools/apply_editor_domain_r1_integration.py
           python tools/apply_editor_domain_r1_selection_followup.py
+          python tools/apply_editor_domain_r1_pending_hardening.py
           grep -q "fun activateAuthoringToolset" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
           grep -q "val editorContext: EditorContextState" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
           grep -q "confirmPendingAuthoringConversion" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
           grep -q "workspace selection feeds terrain toolset immediately" editor/src/test/kotlin/com/mobilegamestudio/editor/WorkspaceViewModelTest.kt
+          grep -q "incompatible creation cannot replace selection during pending target" editor/src/test/kotlin/com/mobilegamestudio/editor/WorkspaceViewModelTest.kt
 
       - name: Persist preserved source fixes
         if: github.event_name == 'push' && github.ref_name == 'feature/world-studio-v4-foundation'

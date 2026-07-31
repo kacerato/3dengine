@@ -22,8 +22,8 @@ include(
     ":core:contracts",
     ":core:common",
     ":projects",
+    ":editor-domain",
     ":editor",
     ":runtime",
     ":scripting",
 )
-

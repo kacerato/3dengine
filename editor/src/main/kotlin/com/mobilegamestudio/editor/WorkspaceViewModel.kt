@@ -614,6 +614,7 @@ class WorkspaceViewModel(
                 message = "${asset.displayName} adicionado à cena.",
             )
         }
+        synchronizeCreatedAuthoringSelection(newObject.id)
     }
 
     fun addPrimitive(primitive: PrimitiveMesh) {
@@ -662,6 +663,7 @@ class WorkspaceViewModel(
                 activeSection = WorkspaceSection.SCENE,
             )
         }
+        synchronizeCreatedAuthoringSelection(newObject.id)
     }
 
     fun addSceneObject(type: EditorObjectType) {
@@ -711,6 +713,7 @@ class WorkspaceViewModel(
                 isScriptDirty = false,
             )
         }
+        synchronizeCreatedAuthoringSelection(newObject.id)
     }
 
     fun createPlayableWorld() {

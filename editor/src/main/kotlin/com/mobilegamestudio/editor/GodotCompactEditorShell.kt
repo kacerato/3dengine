@@ -51,6 +51,8 @@ import com.mobilegamestudio.core.model.AssetRecord
 import com.mobilegamestudio.core.model.PrimitiveMesh
 import com.mobilegamestudio.core.model.TerrainBrushMode
 import com.mobilegamestudio.core.model.WorldLayerKind
+import com.mobilegamestudio.editor.domain.EditorToolId
+import com.mobilegamestudio.editor.domain.EditorToolset
 import java.io.File
 
 /**
@@ -67,6 +69,10 @@ internal fun GodotCompactEditorShell(
     onBack: () -> Unit,
     onReportDiagnostic: (String) -> Unit,
     onToolSelected: (EditorTool) -> Unit,
+    onAuthoringToolsetSelected: (EditorToolset) -> Unit,
+    onAuthoringToolSelected: (EditorToolId) -> Unit,
+    onCancelPendingAuthoringOperation: () -> Unit,
+    onConfirmPendingAuthoringConversion: (Int) -> Unit,
     onUndo: () -> Unit,
     onRedo: () -> Unit,
     onTogglePreview: () -> Unit,
@@ -210,7 +216,7 @@ internal fun GodotCompactEditorShell(
                         .fillMaxWidth(),
                 )
             } else if (openPanel == StudioPopup.WORLD) {
-                WorldStudioWorkspaceV5(
+                WorldStudioWorkspaceV6(
                     state = state,
                     resolveAsset = resolveAsset,
                     onExit = { show(null) },
@@ -218,11 +224,20 @@ internal fun GodotCompactEditorShell(
                     onRedo = onRedo,
                     onSave = onSaveScene,
                     onPlay = onTogglePreview,
-                    onToolSelected = onToolSelected,
+                    onActivateToolset = onAuthoringToolsetSelected,
+                    onActivateTool = onAuthoringToolSelected,
+                    onCancelPendingOperation = onCancelPendingAuthoringOperation,
+                    onConfirmPendingConversion = onConfirmPendingAuthoringConversion,
+                    onLegacyToolSelected = onToolSelected,
                     onSelectObject = onSelectObject,
                     onViewportObjectSelected = onViewportObjectSelected,
+                    onToggleVisibility = onToggleVisibility,
+                    onDuplicateSelected = onDuplicateSelected,
+                    onDeleteSelected = onDeleteSelected,
+                    onRenameSelected = onRenameSelected,
                     onTransformDrag = onTransformDrag,
                     onTransformChange = onTransformChange,
+                    onTransformValueChange = onTransformValueChange,
                     onDiagnostic = onReportDiagnostic,
                     onTerrainToolChange = onTerrainToolChange,
                     onTerrainFalloffChange = onTerrainFalloffChange,
@@ -230,22 +245,18 @@ internal fun GodotCompactEditorShell(
                     onTerrainStrokePoint = onTerrainStrokePoint,
                     onTerrainStrokeEnd = onTerrainStrokeEnd,
                     onCreateFlatTerrain = onCreateFlatTerrain,
-                    onCreatePlayableWorld = onCreatePlayableWorld,
+                    onCreateEditableMesh = onCreateEditableMesh,
+                    onCreateVoxelVolume = onCreateVoxelVolume,
+                    onAddPrimitive = onAddPrimitive,
+                    onAddSceneObject = onAddSceneObject,
                     onCreateWorldLayer = onCreateWorldLayer,
                     onSelectWorldLayer = onSelectWorldLayer,
-                    onRenameWorldLayer = onRenameWorldLayer,
-                    onMoveWorldLayer = onMoveWorldLayer,
                     onToggleWorldLayerVisibility = onToggleWorldLayerVisibility,
                     onToggleWorldLayerLock = onToggleWorldLayerLock,
                     onToggleWorldLayerSolo = onToggleWorldLayerSolo,
                     onAssignSelectedToWorldLayer = onAssignSelectedToWorldLayer,
-                    onAddPrimitive = onAddPrimitive,
-                    onAddSceneObject = onAddSceneObject,
-                    onCreateEditableMesh = onCreateEditableMesh,
-                    onConvertSelectedToEditableMesh = onConvertSelectedToEditableMesh,
-                    onCreateVoxelVolume = onCreateVoxelVolume,
-                    onConvertMeshToVoxel = onConvertMeshToVoxel,
                     onImportAsset = onImportAsset,
+                    onAddAsset = onAddAsset,
                     onPreviewAction = onPreviewAction,
                 )
             } else {

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -75,6 +76,12 @@ private enum class WorldStudioV6OutlinerTab {
     OBJECTS,
     LAYERS,
 }
+
+private data class WorldStudioV6WorldStudioV6PaletteAction(
+    val label: String,
+    val hint: String,
+    val action: () -> Unit,
+)
 
 @Composable
 internal fun WorldStudioWorkspaceV6(
@@ -1039,32 +1046,31 @@ private fun WorldStudioV6CommandPalette(
     onDelete: () -> Unit,
 ) {
     var search by rememberSaveable { mutableStateOf("") }
-    data class PaletteAction(val label: String, val hint: String, val action: () -> Unit)
     val contextual = EditorCommandRegistry.availableFor(state.editorContext).map { command ->
         when (command.id) {
-            EditorCommandId.CREATE_TERRAIN -> PaletteAction(command.label, "Nova superfície editável", onCreateTerrain)
-            EditorCommandId.CREATE_EDITABLE_MESH -> PaletteAction(command.label, "Nova malha com topologia", onCreateMesh)
-            EditorCommandId.CREATE_VOLUME -> PaletteAction(command.label, "Novo volume voxel", onCreateVolume)
-            EditorCommandId.CONVERT_TO_EDITABLE_MESH -> PaletteAction(command.label, "Conversão transacional") {
+            EditorCommandId.CREATE_TERRAIN -> WorldStudioV6PaletteAction(command.label, "Nova superfície editável", onCreateTerrain)
+            EditorCommandId.CREATE_EDITABLE_MESH -> WorldStudioV6PaletteAction(command.label, "Nova malha com topologia", onCreateMesh)
+            EditorCommandId.CREATE_VOLUME -> WorldStudioV6PaletteAction(command.label, "Novo volume voxel", onCreateVolume)
+            EditorCommandId.CONVERT_TO_EDITABLE_MESH -> WorldStudioV6PaletteAction(command.label, "Conversão transacional") {
                 onActivateToolset(EditorToolset.MESH)
             }
-            EditorCommandId.CONVERT_TO_VOLUME -> PaletteAction(command.label, "Conversão transacional") {
+            EditorCommandId.CONVERT_TO_VOLUME -> WorldStudioV6PaletteAction(command.label, "Conversão transacional") {
                 onActivateToolset(EditorToolset.VOLUME)
             }
-            EditorCommandId.DUPLICATE_SELECTION -> PaletteAction(command.label, "Duplica o objeto selecionado", onDuplicate)
-            EditorCommandId.DELETE_SELECTION -> PaletteAction(command.label, "Exclui com suporte a Undo", onDelete)
+            EditorCommandId.DUPLICATE_SELECTION -> WorldStudioV6PaletteAction(command.label, "Duplica o objeto selecionado", onDuplicate)
+            EditorCommandId.DELETE_SELECTION -> WorldStudioV6PaletteAction(command.label, "Exclui com suporte a Undo", onDelete)
         }
     }
     val fixed = listOf(
-        PaletteAction("Criar cubo", "Primitiva renderizável", onAddCube),
-        PaletteAction("Criar terreno", "65 × 65 · 96 m", onCreateTerrain),
-        PaletteAction("Criar malha editável", "Cubo com topologia", onCreateMesh),
-        PaletteAction("Criar volume voxel", "Resolução inicial 24", onCreateVolume),
-        PaletteAction("Adicionar câmera", "Objeto técnico de cena", onAddCamera),
-        PaletteAction("Adicionar luz direcional", "Iluminação principal", onAddLight),
+        WorldStudioV6PaletteAction("Criar cubo", "Primitiva renderizável", onAddCube),
+        WorldStudioV6PaletteAction("Criar terreno", "65 × 65 · 96 m", onCreateTerrain),
+        WorldStudioV6PaletteAction("Criar malha editável", "Cubo com topologia", onCreateMesh),
+        WorldStudioV6PaletteAction("Criar volume voxel", "Resolução inicial 24", onCreateVolume),
+        WorldStudioV6PaletteAction("Adicionar câmera", "Objeto técnico de cena", onAddCamera),
+        WorldStudioV6PaletteAction("Adicionar luz direcional", "Iluminação principal", onAddLight),
     )
     val actions = (contextual + fixed)
-        .distinctBy(PaletteAction::label)
+        .distinctBy(WorldStudioV6PaletteAction::label)
         .filter { search.isBlank() || it.label.contains(search, true) || it.hint.contains(search, true) }
 
     Box(
@@ -1320,7 +1326,7 @@ private fun WorldStudioV6PaneFrame(
     width: Dp,
     onClose: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable Column.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -1361,7 +1367,7 @@ private fun WorldStudioV6PaneTitle(title: String, onClose: () -> Unit) {
 @Composable
 private fun WorldStudioV6Section(
     title: String,
-    content: @Composable Column.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -1428,7 +1434,7 @@ private fun WorldStudioV6NumberField(
         onValueChange = { next ->
             val filtered = next.take(12)
             text = filtered
-            filtered.replace(',', '.').toFloatOrNull()?.takeIf(Float::isFinite)?.let(onValue)
+            filtered.replace(',', '.').toFloatOrNull()?.takeIf { it.isFinite() }?.let(onValue)
         },
         label = { Text(axis) },
         enabled = enabled,

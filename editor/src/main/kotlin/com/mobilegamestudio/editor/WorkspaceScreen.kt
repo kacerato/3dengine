@@ -155,17 +155,25 @@ fun WorkspaceRoute(
                 onTerrainStrokePoint = viewModel::continueTerrainStroke,
                 onTerrainStrokeEnd = viewModel::endTerrainStroke,
                 onCreateFlatTerrain = viewModel::createFlatTerrain,
+
                 onCreatePlayableWorld = viewModel::createPlayableWorld,
-                onCreatePlayableWorld = viewModel::createPlayableWorld,
-                onCreatePlayableWorld = viewModel::createPlayableWorld,
+
                 onCreateWorldLayer = viewModel::createWorldLayer,
+
                 onSelectWorldLayer = viewModel::selectWorldLayer,
+
                 onRenameWorldLayer = viewModel::renameWorldLayer,
+
                 onMoveWorldLayer = viewModel::moveWorldLayer,
+
                 onToggleWorldLayerVisibility = viewModel::toggleWorldLayerVisibility,
+
                 onToggleWorldLayerLock = viewModel::toggleWorldLayerLock,
+
                 onToggleWorldLayerSolo = viewModel::toggleWorldLayerSolo,
+
                 onAssignSelectedToWorldLayer = viewModel::assignSelectedObjectToWorldLayer,
+
                 onAssignTerrainTexture = viewModel::assignTerrainTexture,
                 onCreateEditableMesh = viewModel::createEditableMesh,
                 onConvertSelectedToEditableMesh = viewModel::convertSelectedToEditableMesh,

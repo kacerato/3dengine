@@ -116,8 +116,6 @@ internal fun GodotCompactEditorShell(
     onTerrainStrokeEnd: (Boolean) -> Unit,
     onCreateFlatTerrain: (Int, Float, Float) -> Unit,
     onCreatePlayableWorld: () -> Unit,
-    onCreatePlayableWorld: () -> Unit,
-    onCreatePlayableWorld: () -> Unit,
     onCreateWorldLayer: (String, WorldLayerKind) -> Unit,
     onSelectWorldLayer: (String) -> Unit,
     onRenameWorldLayer: (String, String) -> Unit,
@@ -225,20 +223,27 @@ internal fun GodotCompactEditorShell(
                         onTerrainStrokePoint = onTerrainStrokePoint,
                         onTerrainStrokeEnd = onTerrainStrokeEnd,
                         onCreateFlatTerrain = onCreateFlatTerrain,
+
                         onCreatePlayableWorld = onCreatePlayableWorld,
-                        onPlay = onTogglePreview,
-                        onCreatePlayableWorld = onCreatePlayableWorld,
-                        onPlay = onTogglePreview,
-                        onCreatePlayableWorld = onCreatePlayableWorld,
+
                         onCreateWorldLayer = onCreateWorldLayer,
+
                         onSelectWorldLayer = onSelectWorldLayer,
+
                         onRenameWorldLayer = onRenameWorldLayer,
+
                         onMoveWorldLayer = onMoveWorldLayer,
+
                         onToggleWorldLayerVisibility = onToggleWorldLayerVisibility,
+
                         onToggleWorldLayerLock = onToggleWorldLayerLock,
+
                         onToggleWorldLayerSolo = onToggleWorldLayerSolo,
+
                         onAssignSelectedToWorldLayer = onAssignSelectedToWorldLayer,
+
                         onPlay = onTogglePreview,
+
                         onAssignTerrainTexture = onAssignTerrainTexture,
                         onImportAsset = onImportAsset,
                         onImportHeightmap = onImportTerrainHeightmap,

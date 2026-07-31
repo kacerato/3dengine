@@ -88,6 +88,8 @@ jobs:
         run: |
           python tools/apply_world_studio_v4_validation_fixes.py
           python tools/apply_world_studio_v4_validation_round2.py
+          python tools/apply_world_studio_v4_color_fix.py
+          ! grep -R "colorArgb.toULong()" editor/src/main/kotlin
 
       - name: Persist World Studio validation fixes
         if: github.event_name == 'push' && github.ref_name == 'feature/world-studio-v4-foundation'
@@ -99,7 +101,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "World Studio validation fixes already persisted"
           else
-            git commit -m "fix: keep one free-camera viewport in World Studio"
+            git commit -m "fix: decode world layer colors as 32-bit ARGB"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -138,7 +140,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-world-studio-v4-inline-validation-debug
+          name: mobile-game-studio-world-studio-v4-color-crash-fix-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

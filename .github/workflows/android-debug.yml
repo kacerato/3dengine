@@ -81,10 +81,14 @@ jobs:
           test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldAuthoringContext.kt
           test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioV4Panels.kt
           test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV5.kt
+          test -f editor-domain/src/main/kotlin/com/mobilegamestudio/editor/domain/EditorDomain.kt
+          test -f editor-domain/src/test/kotlin/com/mobilegamestudio/editor/domain/EditorContextReducerTest.kt
+          grep -q 'include(' settings.gradle.kts
+          grep -q '":editor-domain"' settings.gradle.kts
           grep -q "fun createWorldLayer" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
-          echo "World Studio persisted source is available"
+          echo "World Studio persisted source and V6 editor domain are available"
 
-      - name: Apply World Studio validation and V5 workspace
+      - name: Apply preserved World Studio fixes
         shell: bash
         run: |
           if ! grep -q "isEditable = mode == EditorMode.EDITOR && transformGesturesEnabled" runtime/src/main/kotlin/com/mobilegamestudio/runtime/RuntimeSceneViewport.kt; then
@@ -105,9 +109,8 @@ jobs:
           ! grep -R "EditorCameraDock(" editor/src/main/kotlin/com/mobilegamestudio/editor/SceneViewport.kt
           ! grep -R "onDoubleTap = { _, node ->" runtime/src/main/kotlin/com/mobilegamestudio/runtime/RuntimeSceneViewport.kt
           ! grep -q "private val WorldV5Panel =" editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV5.kt
-          grep -q "WorldStudioWorkspaceV5(" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt
 
-      - name: Persist World Studio source changes
+      - name: Persist preserved source fixes
         if: github.event_name == 'push' && github.ref_name == 'feature/world-studio-v4-foundation'
         shell: bash
         run: |
@@ -115,9 +118,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add editor/src/main/kotlin/com/mobilegamestudio/editor runtime/src/main/kotlin/com/mobilegamestudio/runtime
           if git diff --cached --quiet; then
-            echo "World Studio source already persisted"
+            echo "Preserved source fixes already persisted"
           else
-            git commit -m "feat: activate dedicated responsive World Studio V5"
+            git commit -m "fix: preserve validated viewport behavior"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -147,7 +150,10 @@ jobs:
       - name: Make wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Unit tests
+      - name: Editor domain tests
+        run: ./gradlew :editor-domain:test --stacktrace
+
+      - name: Android unit tests
         run: ./gradlew testDebugUnitTest --stacktrace
 
       - name: Build debug APK
@@ -156,7 +162,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-world-studio-v5-dedicated-debug
+          name: mobile-game-studio-world-studio-v6-r1-domain-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

@@ -9,6 +9,14 @@ on:
       - 'godot-patches/**'
       - 'tools/godot/**'
       - '.github/workflows/godot-derived-android-editor.yml'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - 'godot-upstream/**'
+      - 'godot-patches/**'
+      - 'tools/godot/**'
+      - '.github/workflows/godot-derived-android-editor.yml'
   workflow_dispatch:
 
 permissions:

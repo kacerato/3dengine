@@ -73,18 +73,18 @@ jobs:
           python tools/apply_native_editor_validation.py
           python tools/apply_world_authoring_v2_fixed.py
 
-      - name: Verify persisted World Studio V4 source
+      - name: Verify persisted World Studio source
         if: github.head_ref == 'feature/world-studio-v4-foundation' || github.ref_name == 'feature/world-studio-v4-foundation'
         shell: bash
         run: |
           test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldLayerModels.kt
           test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldAuthoringContext.kt
           test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioV4Panels.kt
-          grep -q "WorldStudioV4ContextStrip" editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV3.kt
+          test -f editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV5.kt
           grep -q "fun createWorldLayer" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt
-          echo "World Studio V4 source is persisted; no generator replay required"
+          echo "World Studio persisted source is available"
 
-      - name: Apply World Studio validation fixes
+      - name: Apply World Studio validation and V5 workspace
         shell: bash
         run: |
           if ! grep -q "isEditable = mode == EditorMode.EDITOR && transformGesturesEnabled" runtime/src/main/kotlin/com/mobilegamestudio/runtime/RuntimeSceneViewport.kt; then
@@ -95,15 +95,17 @@ jobs:
           if ! grep -q "WorldStudioV4InlineDock" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt; then
             python tools/apply_world_studio_v4_validation_round2.py
           else
-            echo "World Studio inline dock already persisted"
+            echo "World Studio inline source already persisted"
           fi
           python tools/apply_world_studio_v4_freecam_cleanup.py
           python tools/apply_world_studio_v4_color_fix.py
+          python tools/apply_world_studio_v5_dedicated.py
           ! grep -R "colorArgb.toULong()" editor/src/main/kotlin
           ! grep -R "EditorCameraDock(" editor/src/main/kotlin/com/mobilegamestudio/editor/SceneViewport.kt
           ! grep -R "onDoubleTap = { _, node ->" runtime/src/main/kotlin/com/mobilegamestudio/runtime/RuntimeSceneViewport.kt
+          grep -q "WorldStudioWorkspaceV5(" editor/src/main/kotlin/com/mobilegamestudio/editor/GodotCompactEditorShell.kt
 
-      - name: Persist World Studio validation fixes
+      - name: Persist World Studio source changes
         if: github.event_name == 'push' && github.ref_name == 'feature/world-studio-v4-foundation'
         shell: bash
         run: |
@@ -111,9 +113,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add editor/src/main/kotlin/com/mobilegamestudio/editor runtime/src/main/kotlin/com/mobilegamestudio/runtime
           if git diff --cached --quiet; then
-            echo "World Studio validation fixes already persisted"
+            echo "World Studio source already persisted"
           else
-            git commit -m "fix: preserve free cam and decode layer ARGB safely"
+            git commit -m "feat: activate dedicated responsive World Studio V5"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 
@@ -152,7 +154,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-world-studio-v4-argb-freecam-fix-debug
+          name: mobile-game-studio-world-studio-v5-dedicated-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
           retention-days: 14

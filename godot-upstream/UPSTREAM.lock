@@ -1,0 +1,12 @@
+# Upstream source used by the editor refoundation.
+# Keep this file machine-readable: KEY=VALUE, one entry per line.
+
+UPSTREAM_REPOSITORY=https://github.com/godotengine/godot.git
+UPSTREAM_TAG=4.6.3-stable
+UPSTREAM_COMMIT=35e80b3a8822a9df9be390814b62f44c0a9c69e8
+UPSTREAM_LICENSE=MIT
+PRODUCT_NAME=Mobile Game Studio
+PRODUCT_APPLICATION_ID=com.mobilegamestudio.editor
+PRODUCT_ARCHIVE_NAME=mobile_game_studio_editor
+PRODUCT_BASE_ENGINE=Godot Engine 4.6.3
+BASELINE_DATE=2026-07-31

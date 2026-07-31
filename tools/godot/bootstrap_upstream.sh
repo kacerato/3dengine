@@ -10,8 +10,25 @@ if [[ ! -f "$LOCK_FILE" ]]; then
   exit 1
 fi
 
-# shellcheck disable=SC1090
-source "$LOCK_FILE"
+while IFS='=' read -r raw_key raw_value; do
+  key="${raw_key//[[:space:]]/}"
+  value="${raw_value#${raw_value%%[![:space:]]*}}"
+  value="${value%${value##*[![:space:]]}}"
+  [[ -z "$key" || "$key" == \#* ]] && continue
+  if [[ ! "$key" =~ ^[A-Z0-9_]+$ ]]; then
+    echo "Chave inválida no lock: $key" >&2
+    exit 1
+  fi
+  printf -v "$key" '%s' "$value"
+done < "$LOCK_FILE"
+
+required_keys=(UPSTREAM_REPOSITORY UPSTREAM_TAG UPSTREAM_COMMIT)
+for key in "${required_keys[@]}"; do
+  if [[ -z "${!key:-}" ]]; then
+    echo "Chave obrigatória ausente no lock: $key" >&2
+    exit 1
+  fi
+done
 
 for command in git python3; do
   if ! command -v "$command" >/dev/null 2>&1; then

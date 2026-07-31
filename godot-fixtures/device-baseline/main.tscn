@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/baseline_controller.gd" id="1_script"]
 
@@ -17,6 +17,14 @@ roughness = 0.32
 [sub_resource type="BoxMesh" id="BoxMesh_cube"]
 material = SubResource("Material_cube")
 size = Vector3(1.5, 1.5, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="Material_floor"]
+albedo_color = Color(0.11, 0.15, 0.2, 1)
+roughness = 0.88
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_floor"]
+material = SubResource("Material_floor")
+size = Vector2(9, 9)
 
 [node name="DeviceBaseline" type="Node3D"]
 script = ExtResource("1_script")
@@ -39,7 +47,7 @@ mesh = SubResource("BoxMesh_cube")
 
 [node name="ReferenceFloor" type="MeshInstance3D" parent="."]
 position = Vector3(0, -1.15, 0)
-mesh = null
+mesh = SubResource("PlaneMesh_floor")
 
 [node name="HUD" type="CanvasLayer" parent="."]
 

@@ -90,14 +90,20 @@ jobs:
       - name: Apply functional world authoring v2
         run: python tools/apply_world_authoring_v2_fixed.py
 
-      - name: Apply World Studio V4 foundation
-        run: python tools/apply_world_studio_v4_foundation.py
-
-      - name: Normalize World Studio V4 foundation
-        run: python tools/apply_world_studio_v4_hotfix.py
+      - name: Ensure World Studio V4 foundation
+        shell: bash
+        run: |
+          if grep -q "WorldStudioV4ContextStrip" editor/src/main/kotlin/com/mobilegamestudio/editor/WorldStudioWorkspaceV3.kt \
+             && grep -q "fun createWorldLayer" editor/src/main/kotlin/com/mobilegamestudio/editor/WorkspaceViewModel.kt \
+             && test -f core/model/src/main/kotlin/com/mobilegamestudio/core/model/WorldLayerModels.kt; then
+            echo "World Studio V4 foundation already persisted"
+          else
+            python tools/apply_world_studio_v4_foundation.py
+            python tools/apply_world_studio_v4_hotfix.py
+          fi
 
       - name: Persist generated source changes
-        if: github.event_name == 'push'
+        if: github.event_name == 'push' && github.ref_name != 'feature/world-studio-v4-foundation'
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -106,7 +112,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No generated changes"
           else
-            git commit -m "feat: world studio v4 layer and context foundation"
+            git commit -m "feat: generated editor source updates"
             git push origin HEAD:${GITHUB_REF_NAME}
           fi
 

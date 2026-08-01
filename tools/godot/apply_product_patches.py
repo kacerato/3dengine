@@ -69,20 +69,6 @@ def patch_android_distribution(godot_dir: Path, lock: dict[str, str]) -> None:
     build_file.write_text(source, encoding="utf-8")
 
 
-def patch_editor_product_title(godot_dir: Path, lock: dict[str, str]) -> None:
-    version_file = godot_dir / "version.py"
-    source = version_file.read_text(encoding="utf-8")
-    source = replace_exact(
-        source,
-        'name = "Godot Engine"',
-        f'name = "{lock["PRODUCT_NAME"]}"',
-        "editor product title",
-    )
-    # Keep short_name="godot" and the Godot website/docs. They are part of the
-    # compatibility and attribution boundary of this early derivative.
-    version_file.write_text(source, encoding="utf-8")
-
-
 def write_derivative_notice(godot_dir: Path, lock: dict[str, str]) -> None:
     notice = godot_dir / "MOBILE_GAME_STUDIO_DERIVATIVE.txt"
     notice.write_text(
@@ -129,7 +115,6 @@ def main() -> None:
     lock = load_lock(root_dir / "godot-upstream/UPSTREAM.lock")
 
     patch_android_distribution(godot_dir, lock)
-    patch_editor_product_title(godot_dir, lock)
     write_derivative_notice(godot_dir, lock)
     copy_license_bundle(root_dir, godot_dir)
 

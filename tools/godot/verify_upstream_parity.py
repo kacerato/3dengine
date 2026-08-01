@@ -23,7 +23,6 @@ CRITICAL_EDITOR_FILES = (
 
 ALLOWED_TRACKED_PATCHES = {
     "platform/android/java/editor/build.gradle",
-    "version.py",
 }
 
 
@@ -66,7 +65,7 @@ def main() -> None:
     version_source = (godot_dir / "version.py").read_text(encoding="utf-8")
     required_version_lines = (
         'short_name = "godot"',
-        'name = "Mobile Game Studio"',
+        'name = "Godot Engine"',
         'website = "https://godotengine.org"',
         'docs = "4.6"',
     )
@@ -92,6 +91,7 @@ def main() -> None:
 
     print("Godot editor parity boundary verified")
     print(f"Upstream commit: {actual_commit}")
+    print("Internal identity: Godot Engine / godot")
     print("Tracked product patches:")
     for path in sorted(changed):
         print(f"  - {path}")

@@ -64,15 +64,41 @@ ARTIFACT_DIR="$ROOT_DIR/artifacts/godot-editor"
 rm -rf "$ARTIFACT_DIR"
 mkdir -p "$ARTIFACT_DIR"
 
-find bin/android_editor_builds -maxdepth 1 -type f \
-  \( -name '*.apk' -o -name '*.aab' \) \
-  -print -exec cp -f {} "$ARTIFACT_DIR/" \;
+mapfile -t apk_files < <(
+  find bin/android_editor_builds -maxdepth 1 -type f -name '*.apk' -print | sort
+)
+mapfile -t aab_files < <(
+  find bin/android_editor_builds -maxdepth 1 -type f -name '*.aab' -print | sort
+)
 
-cp -f LICENSE.txt COPYRIGHT.txt MOBILE_GAME_STUDIO_DERIVATIVE.txt "$ARTIFACT_DIR/"
-
-if ! find "$ARTIFACT_DIR" -maxdepth 1 -type f -name '*.apk' | grep -q .; then
-  echo "Nenhum APK foi produzido em $ARTIFACT_DIR" >&2
+if [[ ${#apk_files[@]} -ne 1 ]]; then
+  echo "Esperado exatamente 1 APK; encontrados ${#apk_files[@]}" >&2
+  printf '  %s\n' "${apk_files[@]:-}" >&2
+  exit 1
+fi
+if [[ ${#aab_files[@]} -ne 1 ]]; then
+  echo "Esperado exatamente 1 AAB; encontrados ${#aab_files[@]}" >&2
+  printf '  %s\n' "${aab_files[@]:-}" >&2
   exit 1
 fi
 
+cp -f "${apk_files[0]}" "$ARTIFACT_DIR/MobileGameStudio-Godot-Foundation.apk"
+cp -f "${aab_files[0]}" "$ARTIFACT_DIR/MobileGameStudio-Godot-Foundation.aab"
+cp -f LICENSE.txt COPYRIGHT.txt MOBILE_GAME_STUDIO_DERIVATIVE.txt "$ARTIFACT_DIR/"
+
+required_artifacts=(
+  "MobileGameStudio-Godot-Foundation.apk"
+  "MobileGameStudio-Godot-Foundation.aab"
+  "LICENSE.txt"
+  "COPYRIGHT.txt"
+  "MOBILE_GAME_STUDIO_DERIVATIVE.txt"
+)
+for artifact in "${required_artifacts[@]}"; do
+  if [[ ! -s "$ARTIFACT_DIR/$artifact" ]]; then
+    echo "Artifact obrigatório ausente ou vazio: $artifact" >&2
+    exit 1
+  fi
+done
+
 echo "Artifacts disponíveis em: $ARTIFACT_DIR"
+printf '  %s\n' "${required_artifacts[@]}"

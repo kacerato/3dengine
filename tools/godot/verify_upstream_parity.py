@@ -80,18 +80,25 @@ def main() -> None:
         'namespace = "org.godotengine.editor"',
         'applicationId "com.mobilegamestudio.editor"',
         'editorAppName: "Mobile Game Studio"',
-        'archivesName = "mobile_game_studio_editor"',
+        'archivesName = "android_editor"',
     )
     for expected in required_build_lines:
         if expected not in build_source:
-            raise SystemExit(f"Identidade Android ausente: {expected}")
+            raise SystemExit(f"Fronteira Android ausente: {expected}")
+
+    forbidden_build_lines = (
+        'archivesName = "mobile_game_studio_editor"',
+    )
+    for forbidden in forbidden_build_lines:
+        if forbidden in build_source:
+            raise SystemExit(f"Interno Android renomeado indevidamente: {forbidden}")
 
     if not (godot_dir / "MOBILE_GAME_STUDIO_DERIVATIVE.txt").is_file():
         raise SystemExit("Aviso de derivação não foi criado")
 
     print("Godot editor parity boundary verified")
     print(f"Upstream commit: {actual_commit}")
-    print("Internal identity: Godot Engine / godot")
+    print("Internal identity: Godot Engine / godot / android_editor")
     print("Tracked product patches:")
     for path in sorted(changed):
         print(f"  - {path}")

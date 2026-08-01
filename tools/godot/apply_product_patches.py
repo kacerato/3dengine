@@ -52,8 +52,20 @@ def patch_android_distribution(godot_dir: Path, lock: dict[str, str]) -> None:
         f'editorAppName: "{lock["PRODUCT_NAME"]}"',
         "editorAppName",
     )
+    source = replace_exact(
+        source,
+        '            applicationIdSuffix ".debug"',
+        "            // Canonical product package retained for the device-validation APK.",
+        "debug applicationId suffix",
+    )
+    source = replace_exact(
+        source,
+        '            manifestPlaceholders += [editorBuildSuffix: " (debug)"]',
+        "            // Canonical public app label retained for the device-validation APK.",
+        "debug app-name suffix",
+    )
 
-    marker = "// MOBILE_GAME_STUDIO_PRODUCT_PATCH_V3"
+    marker = "// MOBILE_GAME_STUDIO_PRODUCT_PATCH_V4"
     if marker not in source:
         source = source.replace(
             "// Gradle build config for Godot Engine's Android port.\n",
@@ -73,6 +85,7 @@ def write_derivative_notice(godot_dir: Path, lock: dict[str, str]) -> None:
                 f"Pinned upstream commit: {lock['UPSTREAM_COMMIT']}",
                 "Godot Engine is licensed under the MIT License.",
                 "Godot names, internal APIs and file formats are retained where required for compatibility.",
+                "This foundation APK is development-signed for direct device validation.",
                 "See LICENSE.txt and COPYRIGHT.txt from the upstream source tree.",
                 "",
             ]
@@ -117,6 +130,7 @@ def main() -> None:
     print(f"Nome público: {lock['PRODUCT_NAME']}")
     print(f"Application ID: {lock['PRODUCT_APPLICATION_ID']}")
     print("Identidade interna preservada: Godot Engine / godot / android_editor")
+    print("APK de validação: identidade pública canônica, assinatura de desenvolvimento")
     print(f"Base: {lock['PRODUCT_BASE_ENGINE']} @ {lock['UPSTREAM_COMMIT']}")
 
 

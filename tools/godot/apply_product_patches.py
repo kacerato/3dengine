@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Apply the public product identity without forking Godot internals blindly.
+"""Apply public product identity without renaming Godot build internals.
 
-The patch intentionally keeps Godot class names, Java/Kotlin packages, scene
-formats, APIs and extension compatibility. Public Android identity, archive
-names and the editor product title are changed. Godot attribution remains in
-the derivative notice and copied MIT/copyright files.
+The patch intentionally keeps Godot class names, Java/Kotlin namespaces,
+version identity, archive prefixes, scene formats, APIs and extension
+compatibility. Only the public Android application identity and visible editor
+name are changed. Final distributable files are renamed by the packaging step.
+Godot attribution remains in the derivative notice and copied license files.
 """
 
 from __future__ import annotations
@@ -51,14 +52,8 @@ def patch_android_distribution(godot_dir: Path, lock: dict[str, str]) -> None:
         f'editorAppName: "{lock["PRODUCT_NAME"]}"',
         "editorAppName",
     )
-    source = replace_exact(
-        source,
-        'archivesName = "android_editor"',
-        f'archivesName = "{lock["PRODUCT_ARCHIVE_NAME"]}"',
-        "archivesName",
-    )
 
-    marker = "// MOBILE_GAME_STUDIO_PRODUCT_PATCH_V2"
+    marker = "// MOBILE_GAME_STUDIO_PRODUCT_PATCH_V3"
     if marker not in source:
         source = source.replace(
             "// Gradle build config for Godot Engine's Android port.\n",
@@ -121,6 +116,7 @@ def main() -> None:
     print(f"Produto preparado em {godot_dir}")
     print(f"Nome público: {lock['PRODUCT_NAME']}")
     print(f"Application ID: {lock['PRODUCT_APPLICATION_ID']}")
+    print("Identidade interna preservada: Godot Engine / godot / android_editor")
     print(f"Base: {lock['PRODUCT_BASE_ENGINE']} @ {lock['UPSTREAM_COMMIT']}")
 
 

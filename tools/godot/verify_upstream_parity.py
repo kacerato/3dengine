@@ -21,6 +21,7 @@ CRITICAL_EDITOR_FILES = (
 )
 
 ALLOWED_PATCHES = {
+    "MOBILE_GAME_STUDIO_DERIVATIVE.txt",
     "icon.svg",
     "editor/icons/Godot.svg",
     "editor/icons/GodotMonochrome.svg",

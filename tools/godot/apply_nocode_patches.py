@@ -82,7 +82,6 @@ def patch_project_manager(godot_dir: Path) -> None:
         '\t\ttitle_bar_logo->set_flat(true);\n\t\ttitle_bar_logo->set_text("Mobile Game Studio");',
         '\t\ttitle_bar_logo->set_flat(true);\n'
         '\t\ttitle_bar_logo->set_button_icon(mgs_create_brand_texture(int(34 * EDSCALE)));\n'
-        '\t\ttitle_bar_logo->set_icon_max_width(int(34 * EDSCALE));\n'
         '\t\ttitle_bar_logo->set_text("Mobile Game Studio");',
         "Project Manager exact brand texture",
     )

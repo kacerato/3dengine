@@ -21,9 +21,14 @@ def replace_exact(text: str, old: str, new: str, label: str) -> str:
     return text.replace(old, new, 1)
 
 
+def normalize_base64(text: str) -> str:
+    encoded = "".join(text.split()).rstrip("=")
+    return encoded + ("=" * (-len(encoded) % 4))
+
+
 def decode_logo(root_dir: Path, godot_dir: Path) -> bytes:
     encoded_path = root_dir / "godot-patches/branding/mobile_game_studio_logo.webp.base64"
-    encoded = "".join(encoded_path.read_text(encoding="utf-8").split())
+    encoded = normalize_base64(encoded_path.read_text(encoding="utf-8"))
     data = base64.b64decode(encoded, validate=True)
     digest = hashlib.sha256(data).hexdigest()
     if digest != EXPECTED_LOGO_SHA256:

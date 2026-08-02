@@ -6,6 +6,11 @@ on:
       - feature/mgs-nocode-foundation
     paths:
       - '.github/workflows/validate-nocode-artifact.yml'
+  pull_request:
+    branches:
+      - feature/godot-editor-refoundation-clean
+    paths:
+      - '.github/workflows/validate-nocode-artifact.yml'
   workflow_dispatch:
 
 permissions:

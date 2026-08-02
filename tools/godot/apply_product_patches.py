@@ -1,16 +1,10 @@
 #!/usr/bin/env python3
-"""Apply public product identity without renaming Godot build internals.
-
-The patch intentionally keeps Godot class names, Java/Kotlin namespaces,
-version identity, archive prefixes, scene formats, APIs and extension
-compatibility. Only the public Android application identity and visible editor
-name are changed. Final distributable files are renamed by the packaging step.
-Godot attribution remains in the derivative notice and copied license files.
-"""
+"""Apply Mobile Game Studio public branding while preserving Godot internals."""
 
 from __future__ import annotations
 
 import argparse
+import shutil
 from pathlib import Path
 
 
@@ -39,99 +33,128 @@ def replace_exact(text: str, old: str, new: str, label: str) -> str:
 def patch_android_distribution(godot_dir: Path, lock: dict[str, str]) -> None:
     build_file = godot_dir / "platform/android/java/editor/build.gradle"
     source = build_file.read_text(encoding="utf-8")
-
-    source = replace_exact(
-        source,
-        'applicationId "org.godotengine.editor.v4"',
-        f'applicationId "{lock["PRODUCT_APPLICATION_ID"]}"',
-        "applicationId",
-    )
-    source = replace_exact(
-        source,
-        'editorAppName: "Godot Engine 4"',
-        f'editorAppName: "{lock["PRODUCT_NAME"]}"',
-        "editorAppName",
-    )
-    source = replace_exact(
-        source,
-        '            applicationIdSuffix ".debug"',
-        "            // Canonical product package retained for the device-validation APK.",
-        "debug applicationId suffix",
-    )
-    source = replace_exact(
-        source,
-        '            manifestPlaceholders += [editorBuildSuffix: " (debug)"]',
-        "            // Canonical public app label retained for the device-validation APK.",
-        "debug app-name suffix",
-    )
-
-    marker = "// MOBILE_GAME_STUDIO_PRODUCT_PATCH_V4"
+    source = replace_exact(source, 'applicationId "org.godotengine.editor.v4"', f'applicationId "{lock["PRODUCT_APPLICATION_ID"]}"', "applicationId")
+    source = replace_exact(source, 'editorAppName: "Godot Engine 4"', f'editorAppName: "{lock["PRODUCT_NAME"]}"', "editorAppName")
+    source = replace_exact(source, '            applicationIdSuffix ".debug"', "            // Canonical product package retained for the device-validation APK.", "debug applicationId suffix")
+    source = replace_exact(source, '            manifestPlaceholders += [editorBuildSuffix: " (debug)"]', "            // Canonical public app label retained for the device-validation APK.", "debug app-name suffix")
+    marker = "// MOBILE_GAME_STUDIO_PRODUCT_PATCH_V5"
     if marker not in source:
-        source = source.replace(
-            "// Gradle build config for Godot Engine's Android port.\n",
-            "// Gradle build config for Godot Engine's Android port.\n"
-            f"{marker}\n",
-            1,
-        )
+        source = source.replace("// Gradle build config for Godot Engine's Android port.\n", "// Gradle build config for Godot Engine's Android port.\n" + marker + "\n", 1)
     build_file.write_text(source, encoding="utf-8")
+
+    manifest_file = godot_dir / "platform/android/java/editor/src/main/AndroidManifest.xml"
+    manifest = manifest_file.read_text(encoding="utf-8")
+    old_icon = 'android:icon="@mipmap/themed_icon"'
+    if '@drawable/mobile_game_studio_logo' not in manifest:
+        count = manifest.count(old_icon)
+        if count != 3:
+            raise RuntimeError(f"Android editor icons: esperado 3, encontrado {count}")
+        manifest = manifest.replace(old_icon, 'android:icon="@drawable/mobile_game_studio_logo"')
+    manifest_file.write_text(manifest, encoding="utf-8")
+
+    themes_file = godot_dir / "platform/android/java/editor/src/main/res/values/themes.xml"
+    themes = themes_file.read_text(encoding="utf-8")
+    anchor = '\t\t<item name="postSplashScreenTheme">@style/GodotEditorTheme</item>'
+    branded = (
+        '\t\t<item name="windowSplashScreenAnimatedIcon">@drawable/mobile_game_studio_logo</item>\n'
+        '\t\t<item name="windowSplashScreenBackground">#0A0710</item>\n'
+        '\t\t<item name="windowSplashScreenIconBackgroundColor">#0A0710</item>\n'
+        + anchor
+    )
+    themes = replace_exact(themes, anchor, branded, "Android splash branding")
+    themes_file.write_text(themes, encoding="utf-8")
+
+    drawable = godot_dir / "platform/android/java/editor/src/main/res/drawable/mobile_game_studio_logo.xml"
+    drawable.parent.mkdir(parents=True, exist_ok=True)
+    drawable.write_text(
+        '''<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="100" android:viewportHeight="100">
+    <path android:fillColor="#0A0710" android:pathData="M2,2 H98 V98 H2 Z"/>
+    <path android:fillColor="#00000000" android:strokeColor="#7C3AED" android:strokeWidth="6" android:pathData="M8,5 H92 Q95,5 95,8 V92 Q95,95 92,95 H8 Q5,95 5,92 V8 Q5,5 8,5 Z"/>
+    <path android:fillColor="#00000000" android:strokeColor="#8B5CF6" android:strokeWidth="5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M20,40 L11,50 L20,60 M80,40 L89,50 L80,60"/>
+    <path android:fillColor="#A855F7" android:pathData="M50,19 C34,19 26,31 26,47 V62 C26,73 31,82 40,87 L45,76 L52,91 L60,77 L69,88 L74,75 V47 C74,31 66,19 50,19 Z"/>
+    <path android:fillColor="#0A0710" android:pathData="M34,47 C34,35 40,29 50,29 C60,29 66,35 66,47 C66,59 60,65 50,65 C40,65 34,59 34,47 Z"/>
+    <path android:fillColor="#F8F7FF" android:pathData="M39,45 C42,40 46,39 48,41 C48,46 45,49 41,49 C39,48 38,47 39,45 Z M61,45 C58,40 54,39 52,41 C52,46 55,49 59,49 C61,48 62,47 61,45 Z"/>
+</vector>
+''',
+        encoding="utf-8",
+    )
+
+
+def patch_editor_branding(root_dir: Path, godot_dir: Path, product_name: str) -> None:
+    branding = root_dir / "godot-patches/branding"
+    copies = {
+        "icon.svg": ("icon.svg", "editor/icons/DefaultProjectIcon.svg"),
+        "Godot.svg": ("editor/icons/Godot.svg",),
+        "GodotMonochrome.svg": ("editor/icons/GodotMonochrome.svg",),
+        "TitleBarLogo.svg": ("editor/icons/TitleBarLogo.svg", "editor/icons/Logo.svg"),
+    }
+    for source_name, destinations in copies.items():
+        source = branding / source_name
+        if not source.is_file():
+            raise FileNotFoundError(source)
+        for destination in destinations:
+            target = godot_dir / destination
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, target)
+
+    manager_file = godot_dir / "editor/project_manager/project_manager.cpp"
+    manager = manager_file.read_text(encoding="utf-8")
+    old_manager_title = 'SceneTree::get_singleton()->get_root()->set_title(GODOT_VERSION_NAME + String(" - ") + TTR("Project Manager", "Application"));'
+    new_manager_title = f'SceneTree::get_singleton()->get_root()->set_title(String("{product_name} - ") + TTR("Project Manager", "Application"));'
+    manager = replace_exact(manager, old_manager_title, new_manager_title, "Project Manager title")
+    old_logo_button = '\t\ttitle_bar_logo->set_flat(true);\n\t\ttitle_bar_logo->set_tooltip_text(TTR("About Godot"));'
+    new_logo_button = f'\t\ttitle_bar_logo->set_flat(true);\n\t\ttitle_bar_logo->set_text("{product_name}");\n\t\ttitle_bar_logo->set_tooltip_text(TTR("About {product_name}"));'
+    manager = replace_exact(manager, old_logo_button, new_logo_button, "Project Manager product label")
+    manager_file.write_text(manager, encoding="utf-8")
+
+    editor_file = godot_dir / "editor/editor_node.cpp"
+    editor = editor_file.read_text(encoding="utf-8")
+    old_editor_title = 'DisplayServer::get_singleton()->window_set_title(title + String(" - ") + GODOT_VERSION_NAME);'
+    new_editor_title = f'DisplayServer::get_singleton()->window_set_title(title + String(" - {product_name}"));'
+    editor = replace_exact(editor, old_editor_title, new_editor_title, "Editor window title")
+    editor = replace_exact(editor, 'TTRC("About Godot...")', f'TTRC("About {product_name}...")', "Editor About label")
+    editor_file.write_text(editor, encoding="utf-8")
 
 
 def write_derivative_notice(godot_dir: Path, lock: dict[str, str]) -> None:
-    notice = godot_dir / "MOBILE_GAME_STUDIO_DERIVATIVE.txt"
-    notice.write_text(
-        "\n".join(
-            [
-                f"{lock['PRODUCT_NAME']} is a derivative editor based on {lock['PRODUCT_BASE_ENGINE']}.",
-                f"Pinned upstream commit: {lock['UPSTREAM_COMMIT']}",
-                "Godot Engine is licensed under the MIT License.",
-                "Godot names, internal APIs and file formats are retained where required for compatibility.",
-                "This foundation APK is development-signed for direct device validation.",
-                "See LICENSE.txt and COPYRIGHT.txt from the upstream source tree.",
-                "",
-            ]
-        ),
-        encoding="utf-8",
-    )
+    (godot_dir / "MOBILE_GAME_STUDIO_DERIVATIVE.txt").write_text(
+        "\n".join([
+            f"{lock['PRODUCT_NAME']} is a derivative editor based on {lock['PRODUCT_BASE_ENGINE']}.",
+            f"Pinned upstream commit: {lock['UPSTREAM_COMMIT']}",
+            "Godot Engine is licensed under the MIT License.",
+            "Godot names, internal APIs and file formats are retained where required for compatibility.",
+            "Public editor titles, icons and splash screens use the Mobile Game Studio identity.",
+            "This foundation APK is development-signed for direct device validation.",
+            "See LICENSE.txt and COPYRIGHT.txt from the upstream source tree.", "",
+        ]), encoding="utf-8")
 
 
 def copy_license_bundle(root_dir: Path, godot_dir: Path) -> None:
     destination = root_dir / "godot-upstream/licenses"
     destination.mkdir(parents=True, exist_ok=True)
-    for source_name, destination_name in (
-        ("LICENSE.txt", "GODOT_LICENSE.txt"),
-        ("COPYRIGHT.txt", "GODOT_COPYRIGHT.txt"),
-        ("MOBILE_GAME_STUDIO_DERIVATIVE.txt", "DERIVATIVE_NOTICE.txt"),
-    ):
-        source = godot_dir / source_name
-        if not source.exists():
-            raise FileNotFoundError(source)
-        (destination / destination_name).write_bytes(source.read_bytes())
+    for source_name, destination_name in (("LICENSE.txt", "GODOT_LICENSE.txt"), ("COPYRIGHT.txt", "GODOT_COPYRIGHT.txt"), ("MOBILE_GAME_STUDIO_DERIVATIVE.txt", "DERIVATIVE_NOTICE.txt")):
+        (destination / destination_name).write_bytes((godot_dir / source_name).read_bytes())
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--godot-dir", type=Path, required=True)
-    parser.add_argument(
-        "--root-dir",
-        type=Path,
-        default=Path(__file__).resolve().parents[2],
-    )
+    parser.add_argument("--root-dir", type=Path, default=Path(__file__).resolve().parents[2])
     args = parser.parse_args()
-
     root_dir = args.root_dir.resolve()
     godot_dir = args.godot_dir.resolve()
     lock = load_lock(root_dir / "godot-upstream/UPSTREAM.lock")
-
     patch_android_distribution(godot_dir, lock)
+    patch_editor_branding(root_dir, godot_dir, lock["PRODUCT_NAME"])
     write_derivative_notice(godot_dir, lock)
     copy_license_bundle(root_dir, godot_dir)
-
     print(f"Produto preparado em {godot_dir}")
-    print(f"Nome público: {lock['PRODUCT_NAME']}")
-    print(f"Application ID: {lock['PRODUCT_APPLICATION_ID']}")
+    print(f"Identidade pública: {lock['PRODUCT_NAME']} / {lock['PRODUCT_APPLICATION_ID']}")
+    print("Marca aplicada: launcher, splash, Project Manager, editor, title bar e ícones padrão")
     print("Identidade interna preservada: Godot Engine / godot / android_editor")
-    print("APK de validação: identidade pública canônica, assinatura de desenvolvimento")
-    print(f"Base: {lock['PRODUCT_BASE_ENGINE']} @ {lock['UPSTREAM_COMMIT']}")
 
 
 if __name__ == "__main__":

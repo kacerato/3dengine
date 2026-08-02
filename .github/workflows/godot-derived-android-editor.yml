@@ -8,16 +8,21 @@ on:
       - 'godot-upstream/**'
       - 'godot-patches/**'
       - 'tools/godot/**'
+      - 'tests/**'
       - 'docs/refoundation/**'
+      - 'docs/nocode/**'
       - '.github/workflows/godot-derived-android-editor.yml'
   pull_request:
     branches:
       - master
+      - feature/godot-editor-refoundation-clean
     paths:
       - 'godot-upstream/**'
       - 'godot-patches/**'
       - 'tools/godot/**'
+      - 'tests/**'
       - 'docs/refoundation/**'
+      - 'docs/nocode/**'
       - '.github/workflows/godot-derived-android-editor.yml'
   workflow_dispatch:
 
@@ -55,6 +60,15 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Test optional NoCode contract
+        shell: bash
+        run: |
+          if [[ -f tools/godot/test_nocode_contract.py ]]; then
+            python tools/godot/test_nocode_contract.py
+          else
+            echo "No optional NoCode module in this branch."
+          fi
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
@@ -95,6 +109,21 @@ jobs:
           test -f godot-upstream/licenses/GODOT_COPYRIGHT.txt
           test -f godot-upstream/licenses/DERIVATIVE_NOTICE.txt
 
+      - name: Apply and verify optional NoCode module
+        shell: bash
+        run: |
+          if [[ -f tools/godot/apply_nocode_patches.py ]]; then
+            python tools/godot/apply_nocode_patches.py \
+              --godot-dir "$GODOT_WORK_DIR" \
+              --root-dir "$GITHUB_WORKSPACE"
+            expected="$(grep '^UPSTREAM_COMMIT=' godot-upstream/UPSTREAM.lock | cut -d= -f2-)"
+            python tools/godot/verify_nocode_patch.py \
+              --godot-dir "$GODOT_WORK_DIR" \
+              --expected-commit "$expected"
+          else
+            echo "No optional NoCode patch in this branch."
+          fi
+
       - name: Build Android editor
         shell: bash
         run: tools/godot/build_android_editor.sh
@@ -107,7 +136,7 @@ jobs:
       - name: Upload Android editor
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-godot-4.6.3-clean-foundation
+          name: mobile-game-studio-godot-4.6.3-editor
           path: artifacts/godot-editor/*
           if-no-files-found: error
           retention-days: 14

@@ -1,0 +1,154 @@
+#!/usr/bin/env python3
+"""Fast contract tests for the legacy-compatible native NoCode foundation."""
+
+from __future__ import annotations
+
+import base64
+import copy
+import hashlib
+import json
+import unittest
+from collections import defaultdict, deque
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+FIXTURE = ROOT / "tests/nocode/legacy_smoke.graph.json"
+MODULE = ROOT / "godot-patches/modules/mobile_game_studio_nocode"
+LOGO = ROOT / "godot-patches/branding/mobile_game_studio_logo.webp.base64"
+EXPECTED_LOGO_SHA256 = "0538d32f34d0b9a3a5f2fb4f1e1d8ae3d003360f4fedf093b57aa7f8f20b9da1"
+
+LEGACY_TYPES = {
+    "ON_START": "event.scene.start",
+    "ON_TOUCH": "event.object.touch",
+    "ON_BUTTON_PRESSED": "event.input.button_pressed",
+    "ROTATE_OBJECT": "transform.rotate.y",
+    "SET_SCALE": "transform.scale.uniform",
+    "PRINT_LOG": "debug.log.info",
+    "SEQUENCE": "flow.sequence.2",
+}
+
+SUPPORTED = {
+    "event.scene.start", "event.object.touch", "event.input.button_pressed", "event.custom.received",
+    "flow.sequence.2", "flow.branch", "debug.log.info", "debug.log.warning", "debug.log.error",
+    "variable.set", "variable.get", "variable.add", "math.add", "math.subtract", "math.multiply",
+    "math.divide", "compare.equal", "compare.greater", "compare.less", "object.set_visible",
+    "object.set_enabled", "transform.set_position", "transform.move", "transform.rotate.y",
+    "transform.scale.uniform", "world.change_scene",
+}
+
+
+def definition(node: dict) -> str:
+    explicit = node.get("definitionId") or node.get("definition_id")
+    return explicit or LEGACY_TYPES.get(str(node.get("type", "")).upper(), "")
+
+
+def validate(document: dict) -> list[str]:
+    errors: list[str] = []
+    nodes = document.get("nodes", [])
+    connections = document.get("connections", [])
+    if document.get("schemaVersion", 1) not in (1, 2): errors.append("schema")
+    if len(nodes) > 512 or len(connections) > 1024: errors.append("limit")
+    ids: set[str] = set()
+    for node in nodes:
+        node_id = str(node.get("id", "")).strip()
+        if not node_id or node_id in ids: errors.append("node-id")
+        ids.add(node_id)
+        if definition(node) not in SUPPORTED: errors.append("definition")
+    edges: set[tuple[str, str, str, str]] = set()
+    for connection in connections:
+        edge = (
+            connection.get("fromNodeId", connection.get("from_node_id", "")),
+            connection.get("fromPortId", connection.get("from_port_id", "flow")),
+            connection.get("toNodeId", connection.get("to_node_id", "")),
+            connection.get("toPortId", connection.get("to_port_id", "flow")),
+        )
+        if edge[0] not in ids or edge[2] not in ids or edge[0] == edge[2] or edge in edges: errors.append("connection")
+        edges.add(edge)
+    return errors
+
+
+def literal(value):
+    if not isinstance(value, str): return value
+    normalized = value.strip()
+    if normalized.lower() in ("true", "false"): return normalized.lower() == "true"
+    try: return float(normalized) if "." in normalized else int(normalized)
+    except ValueError: return normalized
+
+
+def execute(document: dict, max_nodes: int = 128) -> tuple[dict, list[str], int]:
+    errors = validate(document)
+    if errors: raise ValueError(errors[0])
+    nodes = {node["id"]: node for node in document["nodes"]}
+    outgoing: dict[str, list[dict]] = defaultdict(list)
+    for connection in document["connections"]: outgoing[connection["fromNodeId"]].append(connection)
+    queue = deque(node["id"] for node in document["nodes"] if definition(node) == "event.scene.start")
+    variables = dict(document.get("variables", {}))
+    logs: list[str] = []
+    visits: dict[str, int] = defaultdict(int)
+    executed = 0
+    while queue:
+        node_id = queue.popleft()
+        node = nodes[node_id]
+        executed += 1
+        visits[node_id] += 1
+        if executed > max_nodes or visits[node_id] > 16: raise RuntimeError("cycle guard")
+        node_definition = definition(node)
+        values = node.get("values", {})
+        if node_definition == "variable.set": variables[values["name"]] = literal(values.get("value"))
+        elif node_definition == "variable.add": variables[values["name"]] = float(variables.get(values["name"], 0)) + float(literal(values.get("amount", 0)))
+        elif node_definition == "debug.log.info": logs.append(values.get("message") or node.get("textValue", ""))
+        selected = None
+        if node_definition == "flow.branch": selected = "true" if bool(literal(values.get("condition", False))) else "false"
+        for connection in outgoing[node_id]:
+            port = connection.get("fromPortId", "flow")
+            if selected is None or port == selected or (selected == "flow" and port.startswith("then")): queue.append(connection["toNodeId"])
+    return variables, logs, executed
+
+
+def decode_logo() -> bytes:
+    encoded = "".join(LOGO.read_text(encoding="utf-8").split()).rstrip("=")
+    encoded += "=" * (-len(encoded) % 4)
+    return base64.b64decode(encoded, validate=True)
+
+
+class NoCodeContractTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.document = json.loads(FIXTURE.read_text(encoding="utf-8"))
+
+    def test_legacy_graph_is_valid_and_executable(self) -> None:
+        self.assertEqual([], validate(self.document))
+        variables, logs, executed = execute(self.document)
+        self.assertEqual(3.0, variables["score"])
+        self.assertEqual(["NoCode legacy graph executed"], logs)
+        self.assertEqual(5, executed)
+        self.assertEqual("transform.rotate.y", definition(self.document["nodes"][-1]))
+
+    def test_duplicate_ids_are_rejected(self) -> None:
+        broken = copy.deepcopy(self.document)
+        broken["nodes"][1]["id"] = "start"
+        self.assertIn("node-id", validate(broken))
+
+    def test_cycles_are_guarded(self) -> None:
+        cyclic = copy.deepcopy(self.document)
+        cyclic["connections"].append({"fromNodeId": "log-ok", "toNodeId": "set-score", "fromPortId": "flow", "toPortId": "flow"})
+        with self.assertRaisesRegex(RuntimeError, "cycle guard"): execute(cyclic)
+
+    def test_exact_legacy_logo_is_preserved(self) -> None:
+        payload = decode_logo()
+        self.assertEqual(EXPECTED_LOGO_SHA256, hashlib.sha256(payload).hexdigest())
+        self.assertEqual(b"RIFF", payload[:4])
+        self.assertEqual(b"WEBP", payload[8:12])
+
+    def test_native_module_has_runtime_editor_and_guards(self) -> None:
+        required = {
+            "mgs_nocode_graph.cpp": ("import_legacy_json", "512", "1024"),
+            "mgs_nocode_runner.cpp": ("max_executed_nodes", "Possível ciclo infinito detectado", "graph_error"),
+            "editor/mgs_nocode_editor_plugin.cpp": ("GraphEdit", "Importar", "Validar"),
+            "register_types.cpp": ("GDREGISTER_CLASS(MGSNoCodeGraph)", "MGSNoCodeRunner", "EditorPlugins::add_by_type"),
+        }
+        for relative, needles in required.items():
+            text = (MODULE / relative).read_text(encoding="utf-8")
+            for needle in needles: self.assertIn(needle, text, f"{needle!r} missing from {relative}")
+
+
+if __name__ == "__main__": unittest.main(verbosity=2)

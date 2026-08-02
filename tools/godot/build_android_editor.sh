@@ -9,9 +9,24 @@ if [[ ! -d "$WORK_DIR/.git" ]]; then
   "$ROOT_DIR/tools/godot/bootstrap_upstream.sh"
 fi
 
-python3 "$ROOT_DIR/tools/godot/apply_product_patches.py" \
-  --godot-dir "$WORK_DIR" \
-  --root-dir "$ROOT_DIR"
+product_build_file="$WORK_DIR/platform/android/java/editor/build.gradle"
+if ! grep -q 'MOBILE_GAME_STUDIO_PRODUCT_PATCH_V5' "$product_build_file"; then
+  python3 "$ROOT_DIR/tools/godot/apply_product_patches.py" \
+    --godot-dir "$WORK_DIR" \
+    --root-dir "$ROOT_DIR"
+else
+  echo "Product identity already applied; skipping duplicate patch."
+fi
+
+if [[ -f "$ROOT_DIR/tools/godot/apply_nocode_patches.py" ]]; then
+  if [[ ! -d "$WORK_DIR/modules/mobile_game_studio_nocode" ]]; then
+    python3 "$ROOT_DIR/tools/godot/apply_nocode_patches.py" \
+      --godot-dir "$WORK_DIR" \
+      --root-dir "$ROOT_DIR"
+  else
+    echo "Native NoCode module already applied; skipping duplicate patch."
+  fi
+fi
 
 cd "$WORK_DIR"
 
@@ -82,17 +97,40 @@ if [[ ${#aab_files[@]} -ne 1 ]]; then
   exit 1
 fi
 
-cp -f "${apk_files[0]}" "$ARTIFACT_DIR/MobileGameStudio-Godot-Foundation.apk"
-cp -f "${aab_files[0]}" "$ARTIFACT_DIR/MobileGameStudio-Godot-Foundation.aab"
+if [[ -d "$WORK_DIR/modules/mobile_game_studio_nocode" ]]; then
+  apk_name="MobileGameStudio-NoCode-Foundation.apk"
+  aab_name="MobileGameStudio-NoCode-Foundation.aab"
+else
+  apk_name="MobileGameStudio-Godot-Foundation.apk"
+  aab_name="MobileGameStudio-Godot-Foundation.aab"
+fi
+
+cp -f "${apk_files[0]}" "$ARTIFACT_DIR/$apk_name"
+cp -f "${aab_files[0]}" "$ARTIFACT_DIR/$aab_name"
 cp -f LICENSE.txt COPYRIGHT.txt MOBILE_GAME_STUDIO_DERIVATIVE.txt "$ARTIFACT_DIR/"
 
 required_artifacts=(
-  "MobileGameStudio-Godot-Foundation.apk"
-  "MobileGameStudio-Godot-Foundation.aab"
+  "$apk_name"
+  "$aab_name"
   "LICENSE.txt"
   "COPYRIGHT.txt"
   "MOBILE_GAME_STUDIO_DERIVATIVE.txt"
 )
+
+if [[ -d "$WORK_DIR/modules/mobile_game_studio_nocode" ]]; then
+  cat > "$ARTIFACT_DIR/NOCODE_FOUNDATION.txt" <<'EOF'
+Mobile Game Studio native NoCode foundation
+
+- Native Godot module: MGSNoCodeGraph and MGSNoCodeRunner
+- Editor workspace: GraphEdit/GraphNode bottom panel
+- Legacy import/export: *.graph.json schema versions 1 and 2
+- Runtime guards: graph validation, 512-node/1024-edge limits, execution limit and cycle detection
+- Initial executable actions: start/button events, sequence/branch, log, variables, arithmetic/comparison, visibility, enabled state, Node3D transforms and scene change
+- Exact legacy Mobile Game Studio logo bundled in Android launcher, splash and Project Manager
+EOF
+  required_artifacts+=("NOCODE_FOUNDATION.txt")
+fi
+
 for artifact in "${required_artifacts[@]}"; do
   if [[ ! -s "$ARTIFACT_DIR/$artifact" ]]; then
     echo "Artifact obrigatório ausente ou vazio: $artifact" >&2

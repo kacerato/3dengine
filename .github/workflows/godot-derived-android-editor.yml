@@ -126,7 +126,18 @@ jobs:
 
       - name: Build Android editor
         shell: bash
-        run: tools/godot/build_android_editor.sh
+        run: |
+          set -o pipefail
+          tools/godot/build_android_editor.sh 2>&1 | tee "$GITHUB_WORKSPACE/build-nocode.log"
+
+      - name: Upload build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nocode-build-diagnostics
+          path: build-nocode.log
+          if-no-files-found: warn
+          retention-days: 3
 
       - name: List generated artifacts
         run: |

@@ -1,15 +1,14 @@
-name: Mobile Game Studio NoCode Android editor
+name: Godot-derived Android editor
 
 on:
   push:
     branches:
       - feature/godot-editor-refoundation-clean
-      - feature/mgs-nocode-foundation
     paths:
       - 'godot-upstream/**'
       - 'godot-patches/**'
       - 'tools/godot/**'
-      - 'tests/nocode/**'
+      - 'tests/**'
       - 'docs/refoundation/**'
       - 'docs/nocode/**'
       - '.github/workflows/godot-derived-android-editor.yml'
@@ -21,7 +20,7 @@ on:
       - 'godot-upstream/**'
       - 'godot-patches/**'
       - 'tools/godot/**'
-      - 'tests/nocode/**'
+      - 'tests/**'
       - 'docs/refoundation/**'
       - 'docs/nocode/**'
       - '.github/workflows/godot-derived-android-editor.yml'
@@ -62,8 +61,14 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Test legacy NoCode contract
-        run: python tools/godot/test_nocode_contract.py
+      - name: Test optional NoCode contract
+        shell: bash
+        run: |
+          if [[ -f tools/godot/test_nocode_contract.py ]]; then
+            python tools/godot/test_nocode_contract.py
+          else
+            echo "No optional NoCode module in this branch."
+          fi
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
@@ -104,22 +109,22 @@ jobs:
           test -f godot-upstream/licenses/GODOT_COPYRIGHT.txt
           test -f godot-upstream/licenses/DERIVATIVE_NOTICE.txt
 
-      - name: Apply native NoCode and exact legacy logo
+      - name: Apply and verify optional NoCode module
         shell: bash
         run: |
-          python tools/godot/apply_nocode_patches.py \
-            --godot-dir "$GODOT_WORK_DIR" \
-            --root-dir "$GITHUB_WORKSPACE"
+          if [[ -f tools/godot/apply_nocode_patches.py ]]; then
+            python tools/godot/apply_nocode_patches.py \
+              --godot-dir "$GODOT_WORK_DIR" \
+              --root-dir "$GITHUB_WORKSPACE"
+            expected="$(grep '^UPSTREAM_COMMIT=' godot-upstream/UPSTREAM.lock | cut -d= -f2-)"
+            python tools/godot/verify_nocode_patch.py \
+              --godot-dir "$GODOT_WORK_DIR" \
+              --expected-commit "$expected"
+          else
+            echo "No optional NoCode patch in this branch."
+          fi
 
-      - name: Verify native NoCode boundary
-        shell: bash
-        run: |
-          expected="$(grep '^UPSTREAM_COMMIT=' godot-upstream/UPSTREAM.lock | cut -d= -f2-)"
-          python tools/godot/verify_nocode_patch.py \
-            --godot-dir "$GODOT_WORK_DIR" \
-            --expected-commit "$expected"
-
-      - name: Build Android editor with NoCode
+      - name: Build Android editor
         shell: bash
         run: tools/godot/build_android_editor.sh
 
@@ -131,7 +136,7 @@ jobs:
       - name: Upload Android editor
         uses: actions/upload-artifact@v4
         with:
-          name: mobile-game-studio-godot-4.6.3-nocode-foundation
+          name: mobile-game-studio-godot-4.6.3-editor
           path: artifacts/godot-editor/*
           if-no-files-found: error
           retention-days: 14

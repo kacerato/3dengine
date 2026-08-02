@@ -1,0 +1,7 @@
+Mobile Game Studio is a derivative editor based on Godot Engine 4.6.3.
+Pinned upstream commit: 35e80b3a8822a9df9be390814b62f44c0a9c69e8
+Godot Engine is licensed under the MIT License.
+Godot names, internal APIs and file formats are retained where required for compatibility.
+Public editor titles, icons and splash screens use the Mobile Game Studio identity.
+This foundation APK is development-signed for direct device validation.
+See LICENSE.txt and COPYRIGHT.txt from the upstream source tree.

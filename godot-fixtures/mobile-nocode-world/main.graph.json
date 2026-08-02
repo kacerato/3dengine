@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 2,
+  "graphId": "mobile-character-controller",
+  "name": "Controle mobile NoCode",
+  "variables": {},
+  "nodes": [
+    {"id":"start","type":"CATALOG","definitionId":"event.scene.start","positionX":40,"positionY":60,"values":{}},
+    {"id":"speed","type":"CATALOG","definitionId":"world.character_set_speed","positionX":320,"positionY":60,"values":{"target_path":"../Player","speed":"6"}},
+    {"id":"frame","type":"CATALOG","definitionId":"event.frame.update","positionX":40,"positionY":300,"values":{}},
+    {"id":"move","type":"CATALOG","definitionId":"world.character_move","positionX":320,"positionY":300,"values":{"target_path":"../Player","speed":"6"}},
+    {"id":"look","type":"CATALOG","definitionId":"world.character_look","positionX":620,"positionY":300,"values":{"target_path":"../Player/CameraPivot","sensitivity":"0.055"}},
+    {"id":"jump_event","type":"CATALOG","definitionId":"event.input.button_pressed","positionX":40,"positionY":520,"values":{"action":"jump"}},
+    {"id":"jump","type":"CATALOG","definitionId":"world.character_jump","positionX":320,"positionY":520,"values":{"target_path":"../Player","force":"7"}}
+  ],
+  "connections": [
+    {"fromNodeId":"start","fromPortId":"flow","toNodeId":"speed","toPortId":"flow"},
+    {"fromNodeId":"frame","fromPortId":"flow","toNodeId":"move","toPortId":"flow"},
+    {"fromNodeId":"move","fromPortId":"flow","toNodeId":"look","toPortId":"flow"},
+    {"fromNodeId":"jump_event","fromPortId":"flow","toNodeId":"jump","toPortId":"flow"}
+  ]
+}

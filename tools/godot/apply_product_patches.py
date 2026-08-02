@@ -100,6 +100,15 @@ def patch_editor_branding(root_dir: Path, godot_dir: Path, product_name: str) ->
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, target)
 
+    # Godot displays a second, engine-owned boot image after Android's system
+    # splash. Brand both generated splash inputs so the Godot robot never
+    # flashes between the Android splash and the editor UI.
+    splash_source = root_dir / "app/src/main/res/drawable-nodpi/magic_ghost_logo.png"
+    if not splash_source.is_file():
+        raise FileNotFoundError(splash_source)
+    shutil.copyfile(splash_source, godot_dir / "main/splash.png")
+    shutil.copyfile(splash_source, godot_dir / "main/splash_editor.png")
+
     manager_file = godot_dir / "editor/project_manager/project_manager.cpp"
     manager = manager_file.read_text(encoding="utf-8")
     old_manager_title = 'SceneTree::get_singleton()->get_root()->set_title(GODOT_VERSION_NAME + String(" - ") + TTR("Project Manager", "Application"));'
@@ -107,7 +116,8 @@ def patch_editor_branding(root_dir: Path, godot_dir: Path, product_name: str) ->
     manager = replace_exact(manager, old_manager_title, new_manager_title, "Project Manager title")
     old_logo_button = '\t\ttitle_bar_logo->set_flat(true);\n\t\ttitle_bar_logo->set_tooltip_text(TTR("About Godot"));'
     new_logo_button = f'\t\ttitle_bar_logo->set_flat(true);\n\t\ttitle_bar_logo->set_text("{product_name}");\n\t\ttitle_bar_logo->set_tooltip_text(TTR("About {product_name}"));'
-    manager = replace_exact(manager, old_logo_button, new_logo_button, "Project Manager product label")
+    if f'title_bar_logo->set_text("{product_name}")' not in manager:
+        manager = replace_exact(manager, old_logo_button, new_logo_button, "Project Manager product label")
     manager_file.write_text(manager, encoding="utf-8")
 
     editor_file = godot_dir / "editor/editor_node.cpp"

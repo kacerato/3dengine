@@ -4,6 +4,7 @@
 #include "core/input/input.h"
 #include "core/object/class_db.h"
 #include "scene/3d/node_3d.h"
+#include "scene/3d/physics/character_body_3d.h"
 #include "scene/main/canvas_item.h"
 #include "scene/main/scene_tree.h"
 
@@ -66,6 +67,7 @@ void MGSNoCodeRunner::_notification(int p_what) {
         if (run_on_ready && !Engine::get_singleton()->is_editor_hint()) execute_event("event.scene.start");
     } else if (p_what == NOTIFICATION_PROCESS && !Engine::get_singleton()->is_editor_hint()) {
         _poll_input_events();
+        execute_event("event.frame.update", get_process_delta_time());
     }
 }
 
@@ -172,6 +174,14 @@ Array MGSNoCodeRunner::_flow_connections_from(const String &p_node_id, const Str
 
 bool MGSNoCodeRunner::_execute_node(const Dictionary &p_node, const Dictionary &p_outputs, const Dictionary &p_incoming, Dictionary &r_outputs, String &r_error) {
     const String definition = graph->get_definition_id(p_node);
+    String operation = definition;
+    const PackedStringArray definition_parts = definition.split(".");
+    // The Compose engine used typed catalog IDs (math.number.add,
+    // compare.text.equal, ...), while its executor dispatched the shared
+    // operation (math.add, compare.equal, ...). Preserve that contract.
+    if ((definition.begins_with("math.") || definition.begins_with("compare.")) && definition_parts.size() == 3) {
+        operation = definition_parts[0] + "." + definition_parts[2];
+    }
     Node *target = nullptr;
 
     if (definition.begins_with("event.") || definition.begins_with("flow.")) return true;
@@ -199,30 +209,104 @@ bool MGSNoCodeRunner::_execute_node(const Dictionary &p_node, const Dictionary &
         r_outputs[mgs_string(p_node, SNAME("id")) + ":value"] = current + amount;
         return true;
     }
-    if (definition == "math.add" || definition == "math.subtract" || definition == "math.multiply" || definition == "math.divide") {
+    if (operation == "math.add" || operation == "math.subtract" || operation == "math.multiply" || operation == "math.divide") {
         const double a = double(_resolve_input_value(p_node, "a", p_outputs, p_incoming));
         const double b = double(_resolve_input_value(p_node, "b", p_outputs, p_incoming));
         double value = 0.0;
-        if (definition == "math.add") value = a + b;
-        else if (definition == "math.subtract") value = a - b;
-        else if (definition == "math.multiply") value = a * b;
+        if (operation == "math.add") value = a + b;
+        else if (operation == "math.subtract") value = a - b;
+        else if (operation == "math.multiply") value = a * b;
         else value = b == 0.0 ? 0.0 : a / b;
         r_outputs[mgs_string(p_node, SNAME("id")) + ":value"] = value;
+        r_outputs[mgs_string(p_node, SNAME("id")) + ":result"] = value;
         return true;
     }
-    if (definition == "compare.equal" || definition == "compare.greater" || definition == "compare.less") {
+    if (operation == "compare.equal" || operation == "compare.greater" || operation == "compare.less") {
         Variant a = _resolve_input_value(p_node, "a", p_outputs, p_incoming);
         Variant b = _resolve_input_value(p_node, "b", p_outputs, p_incoming);
         bool value = false;
-        if (definition == "compare.equal") value = a == b;
-        else if (definition == "compare.greater") value = double(a) > double(b);
+        if (operation == "compare.equal") value = a == b;
+        else if (operation == "compare.greater") value = double(a) > double(b);
         else value = double(a) < double(b);
         r_outputs[mgs_string(p_node, SNAME("id")) + ":value"] = value;
+        r_outputs[mgs_string(p_node, SNAME("id")) + ":result"] = value;
+        return true;
+    }
+
+    if (definition == "input.gamepad.axis" || definition == "world.joystick_get_axis") {
+        const String negative = String(_resolve_input_value(p_node, "negative", p_outputs, p_incoming));
+        const String positive = String(_resolve_input_value(p_node, "positive", p_outputs, p_incoming));
+        const double value = Input::get_singleton()->get_axis(
+                negative.is_empty() ? StringName("ui_left") : StringName(negative),
+                positive.is_empty() ? StringName("ui_right") : StringName(positive));
+        const String id = mgs_string(p_node, SNAME("id"));
+        r_outputs[id + ":value"] = value;
+        r_outputs[id + ":axis"] = value;
         return true;
     }
 
     target = _resolve_target(p_node);
     if (!target) { r_error = "Objeto alvo não encontrado."; return false; }
+
+    if (definition == "world.character_set_speed") {
+        const double speed = double(_resolve_input_value(p_node, "speed", p_outputs, p_incoming));
+        target->set_meta(SNAME("mgs_character_speed"), speed > 0.0 ? speed : 5.0);
+        return true;
+    }
+    if (definition == "world.character_move") {
+        CharacterBody3D *body = Object::cast_to<CharacterBody3D>(target);
+        if (!body) { r_error = "Mover personagem exige CharacterBody3D."; return false; }
+        double x = double(_resolve_input_value(p_node, "x", p_outputs, p_incoming));
+        double y = double(_resolve_input_value(p_node, "y", p_outputs, p_incoming));
+        if (Math::is_zero_approx(x) && Math::is_zero_approx(y)) {
+            x = Input::get_singleton()->get_axis(SNAME("ui_left"), SNAME("ui_right"));
+            y = Input::get_singleton()->get_axis(SNAME("ui_up"), SNAME("ui_down"));
+        }
+        const double speed = double(target->get_meta(SNAME("mgs_character_speed"), 5.0));
+        Vector3 velocity = body->get_velocity();
+        Vector3 direction(x, 0.0, y);
+        if (direction.length_squared() > 1.0) direction.normalize();
+        // Movement follows the camera yaw, matching the direction visible to
+        // the player after rotating the third-person view.
+        Node3D *camera_pivot = Object::cast_to<Node3D>(body->get_node_or_null(NodePath("CameraPivot")));
+        if (camera_pivot) {
+            direction = camera_pivot->get_global_basis().xform(direction);
+            direction.y = 0.0;
+            if (!direction.is_zero_approx()) direction.normalize();
+        }
+        velocity.x = direction.x * speed;
+        velocity.z = direction.z * speed;
+        if (!body->is_on_floor()) velocity.y -= 18.0 * get_process_delta_time();
+        else velocity.y = MIN(velocity.y, 0.0);
+        body->set_velocity(velocity);
+        body->move_and_slide();
+        return true;
+    }
+    if (definition == "world.character_look") {
+        Node3D *pivot = Object::cast_to<Node3D>(target);
+        if (!pivot) { r_error = "Girar camera exige um Node3D como pivo."; return false; }
+        const double horizontal = Input::get_singleton()->get_axis(SNAME("look_left"), SNAME("look_right"));
+        const double vertical = Input::get_singleton()->get_axis(SNAME("look_up"), SNAME("look_down"));
+        const double configured = double(_resolve_input_value(p_node, "sensitivity", p_outputs, p_incoming));
+        const double sensitivity = configured > 0.0 ? configured : 0.055;
+        Vector3 rotation = pivot->get_rotation();
+        rotation.y -= horizontal * sensitivity;
+        rotation.x = CLAMP(rotation.x - vertical * sensitivity, Math::deg_to_rad(-65.0), Math::deg_to_rad(35.0));
+        pivot->set_rotation(rotation);
+        return true;
+    }
+    if (definition == "world.character_jump") {
+        CharacterBody3D *body = Object::cast_to<CharacterBody3D>(target);
+        if (!body) { r_error = "Pular exige CharacterBody3D."; return false; }
+        if (body->is_on_floor()) {
+            Vector3 velocity = body->get_velocity();
+            velocity.y = double(_resolve_input_value(p_node, "force", p_outputs, p_incoming));
+            if (velocity.y <= 0.0) velocity.y = 6.5;
+            body->set_velocity(velocity);
+            body->set_meta(SNAME("mgs_last_jump_ok"), true);
+        }
+        return true;
+    }
 
     if (definition == "object.set_visible") {
         const bool visible = bool(_resolve_input_value(p_node, "visible", p_outputs, p_incoming));

@@ -1,0 +1,1 @@
+NOCODE_DEMO_PASS score=5 rotation_y=15 scale=2

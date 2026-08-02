@@ -1,42 +1,32 @@
 #pragma once
 
 #include "editor/plugins/editor_plugin.h"
+#include "../mgs_nocode_catalog.h"
 #include "../mgs_nocode_graph.h"
 
 class EditorFileDialog;
 class GraphEdit;
 class GraphNode;
+class ItemList;
 class Label;
-class MenuButton;
+class LineEdit;
+class PopupPanel;
 class VBoxContainer;
 
 class MGSNoCodeEditorPlugin : public EditorPlugin {
     GDCLASS(MGSNoCodeEditorPlugin, EditorPlugin);
 
-    enum AddNodeMenu {
-        ADD_EVENT_START,
-        ADD_EVENT_BUTTON,
-        ADD_FLOW_SEQUENCE,
-        ADD_FLOW_BRANCH,
-        ADD_DEBUG_LOG,
-        ADD_VARIABLE_SET,
-        ADD_VARIABLE_GET,
-        ADD_VARIABLE_ADD,
-        ADD_OBJECT_VISIBLE,
-        ADD_OBJECT_ENABLED,
-        ADD_TRANSFORM_POSITION,
-        ADD_TRANSFORM_MOVE,
-        ADD_TRANSFORM_ROTATE_Y,
-        ADD_TRANSFORM_SCALE,
-        ADD_SCENE_CHANGE,
-    };
-
     VBoxContainer *panel = nullptr;
     GraphEdit *graph_edit = nullptr;
     Label *status = nullptr;
-    MenuButton *add_node_menu = nullptr;
     EditorFileDialog *open_dialog = nullptr;
     EditorFileDialog *save_dialog = nullptr;
+    PopupPanel *catalog_popup = nullptr;
+    LineEdit *catalog_search = nullptr;
+    ItemList *catalog_list = nullptr;
+    Label *catalog_count = nullptr;
+    Vector<int> filtered_catalog;
+    String selected_catalog_id;
     Ref<MGSNoCodeGraph> graph;
     int node_serial = 1;
 
@@ -44,9 +34,14 @@ class MGSNoCodeEditorPlugin : public EditorPlugin {
     void _open_graph();
     void _save_graph();
     void _validate_graph();
+    void _arrange_graph();
     void _file_opened(const String &p_path);
     void _file_saved(const String &p_path);
-    void _add_node_selected(int p_id);
+    void _open_catalog();
+    void _filter_catalog(const String &p_query);
+    void _catalog_item_selected(int64_t p_index);
+    void _catalog_item_activated(int64_t p_index);
+    void _add_catalog_selection();
     void _connection_requested(const StringName &p_from_node, int p_from_port, const StringName &p_to_node, int p_to_port);
     void _disconnection_requested(const StringName &p_from_node, int p_from_port, const StringName &p_to_node, int p_to_port);
     void _delete_nodes_request(const Array &p_nodes);

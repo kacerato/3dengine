@@ -9,7 +9,7 @@ import hashlib
 import shutil
 from pathlib import Path
 
-EXPECTED_LOGO_SHA256 = "0538d32f34d0b9a3a5f2fb4f1e1d8ae3d003360f4fedf093b57aa7f8f20b9da1"
+EXPECTED_LOGO_SHA256 = "531c9db5609e283708a11d8f8ee41e1e599d4e4638776eaf6adb95a2580d435b"
 
 
 def replace_exact(text: str, old: str, new: str, label: str) -> str:
@@ -32,7 +32,7 @@ def decode_logo(root_dir: Path, godot_dir: Path) -> bytes:
     data = base64.b64decode(encoded, validate=True)
     digest = hashlib.sha256(data).hexdigest()
     if digest != EXPECTED_LOGO_SHA256:
-        raise RuntimeError(f"Logo legada incorreta: esperado {EXPECTED_LOGO_SHA256}, atual {digest}")
+        raise RuntimeError(f"Logo do produto incorreta: esperado {EXPECTED_LOGO_SHA256}, atual {digest}")
 
     drawable_dir = godot_dir / "platform/android/java/editor/src/main/res/drawable-nodpi"
     drawable_dir.mkdir(parents=True, exist_ok=True)
@@ -112,7 +112,7 @@ def main() -> None:
 
     print("Mobile Game Studio NoCode patch applied")
     print(f"Module: {module_dir}")
-    print(f"Exact legacy logo SHA-256: {EXPECTED_LOGO_SHA256}")
+    print(f"Exact product logo SHA-256: {EXPECTED_LOGO_SHA256}")
     print("Legacy .graph.json compatibility and native Godot runtime enabled")
 
 

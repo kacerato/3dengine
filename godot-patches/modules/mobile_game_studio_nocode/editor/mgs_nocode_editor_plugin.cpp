@@ -2,14 +2,15 @@
 
 #include "editor/gui/editor_file_dialog.h"
 #include "editor/themes/editor_scale.h"
+#include "../mgs_nocode_catalog.h"
 #include "scene/gui/box_container.h"
 #include "scene/gui/button.h"
 #include "scene/gui/graph_edit.h"
 #include "scene/gui/graph_node.h"
 #include "scene/gui/label.h"
 #include "scene/gui/line_edit.h"
-#include "scene/gui/menu_button.h"
-#include "scene/gui/popup_menu.h"
+#include "scene/gui/item_list.h"
+#include "scene/gui/popup.h"
 #include "scene/gui/separator.h"
 
 static String mgs_editor_string(const Dictionary &p_dictionary, const StringName &p_key, const StringName &p_fallback = StringName()) {
@@ -27,17 +28,18 @@ void MGSNoCodeEditorPlugin::_set_status(const String &p_text, bool p_error) {
 }
 
 String MGSNoCodeEditorPlugin::_title_for_definition(const String &p_definition) const {
+    if (const MGSNoCodeDefinition *catalog_definition = MGSNoCodeCatalog::find(p_definition)) return catalog_definition->title;
     if (p_definition == "event.scene.start") return "Ao iniciar";
-    if (p_definition == "event.input.button_pressed") return "Botão pressionado";
-    if (p_definition == "flow.sequence.2") return "Sequência";
-    if (p_definition == "flow.branch") return "Condição";
+    if (p_definition == "event.input.button_pressed") return "Botao pressionado";
+    if (p_definition == "flow.sequence.2") return "Sequencia";
+    if (p_definition == "flow.branch") return "Condicao";
     if (p_definition == "debug.log.info") return "Mostrar no log";
-    if (p_definition == "variable.set") return "Definir variável";
-    if (p_definition == "variable.get") return "Ler variável";
-    if (p_definition == "variable.add") return "Somar variável";
+    if (p_definition == "variable.set") return "Definir variavel";
+    if (p_definition == "variable.get") return "Ler variavel";
+    if (p_definition == "variable.add") return "Somar variavel";
     if (p_definition == "object.set_visible") return "Visibilidade";
     if (p_definition == "object.set_enabled") return "Ativar objeto";
-    if (p_definition == "transform.set_position") return "Definir posição";
+    if (p_definition == "transform.set_position") return "Definir posicao";
     if (p_definition == "transform.move") return "Mover objeto";
     if (p_definition == "transform.rotate.y") return "Girar no eixo Y";
     if (p_definition == "transform.scale.uniform") return "Escala uniforme";
@@ -66,6 +68,9 @@ Dictionary MGSNoCodeEditorPlugin::_make_node(const String &p_definition, const V
     if (p_definition == "transform.rotate.y") values[SNAME("degrees")] = "15";
     if (p_definition == "transform.scale.uniform") values[SNAME("scale")] = "1";
     if (p_definition == "world.change_scene") values[SNAME("path")] = "res://main.tscn";
+    if (p_definition == "world.character_move") { values[SNAME("speed")] = "5"; values[SNAME("target_path")] = "../Player"; }
+    if (p_definition == "world.character_look") { values[SNAME("sensitivity")] = "0.055"; values[SNAME("target_path")] = "../Player/CameraPivot"; }
+    if (p_definition == "world.character_set_speed") { values[SNAME("speed")] = "5"; values[SNAME("target_path")] = "../Player"; }
     if (p_definition.begins_with("object.") || p_definition.begins_with("transform.")) values[SNAME("target_path")] = ".";
     node[SNAME("values")] = values;
     return node;
@@ -94,7 +99,7 @@ void MGSNoCodeEditorPlugin::_create_default_graph() {
 void MGSNoCodeEditorPlugin::_new_graph() {
     _create_default_graph();
     _rebuild_graph();
-    _set_status("Novo grafo funcional criado: Ao iniciar → Mostrar no log.");
+    _set_status("Novo grafo funcional criado: Ao iniciar -> Mostrar no log.");
 }
 
 void MGSNoCodeEditorPlugin::_open_graph() {
@@ -114,7 +119,7 @@ void MGSNoCodeEditorPlugin::_save_graph() {
 void MGSNoCodeEditorPlugin::_validate_graph() {
     _sync_node_positions_and_values();
     PackedStringArray errors = graph->validate();
-    if (errors.is_empty()) _set_status(vformat("Grafo válido: %d nós e %d conexões.", graph->get_nodes().size(), graph->get_connections().size()));
+    if (errors.is_empty()) _set_status(vformat("Grafo valido: %d nos e %d conexoes.", graph->get_nodes().size(), graph->get_connections().size()));
     else _set_status(vformat("%d problema(s): %s", errors.size(), errors[0]), true);
 }
 
@@ -135,7 +140,8 @@ void MGSNoCodeEditorPlugin::_file_opened(const String &p_path) {
     }
     node_serial = highest + 1;
     _rebuild_graph();
-    _set_status(vformat("Grafo legado importado: %d nós.", graph->get_nodes().size()));
+    graph_edit->call_deferred(SNAME("arrange_nodes"));
+    _set_status(vformat("Grafo legado importado: %d nos.", graph->get_nodes().size()));
 }
 
 void MGSNoCodeEditorPlugin::_file_saved(const String &p_path) {
@@ -198,10 +204,18 @@ GraphNode *MGSNoCodeEditorPlugin::_make_graph_node(const Dictionary &p_node) {
     else if (definition == "transform.rotate.y") { add_field("Graus", SNAME("degrees"), "15"); add_field("NodePath alvo", SNAME("target_path"), "."); }
     else if (definition == "transform.scale.uniform") { add_field("Escala", SNAME("scale"), "1"); add_field("NodePath alvo", SNAME("target_path"), "."); }
     else if (definition == "world.change_scene") add_field("Cena .tscn", SNAME("path"), "res://main.tscn");
+    else if (definition == "world.character_move") { add_field("Velocidade", SNAME("speed"), "5"); add_field("NodePath do personagem", SNAME("target_path"), "../Player"); }
+    else if (definition == "world.character_set_speed") { add_field("Velocidade", SNAME("speed"), "5"); add_field("NodePath do personagem", SNAME("target_path"), "../Player"); }
+    else if (definition == "world.character_look") { add_field("Sensibilidade", SNAME("sensitivity"), "0.055"); add_field("Pivo da camera", SNAME("target_path"), "../Player/CameraPivot"); }
     else {
-        Label *description = memnew(Label(definition.begins_with("event.") ? "Evento" : "Fluxo"));
-        description->set_custom_minimum_size(Size2(190, 42) * EDSCALE);
-        visual->add_child(description);
+        if (definition.begins_with("event.")) {
+            Label *description = memnew(Label("Evento nativo Godot"));
+            description->set_custom_minimum_size(Size2(190, 42) * EDSCALE);
+            visual->add_child(description);
+        } else {
+            add_field("Valor / parametro", SNAME("value"), "");
+            if (definition.begins_with("object.") || definition.begins_with("transform.") || definition.begins_with("physics.") || definition.begins_with("vehicle.") || definition.begins_with("audio.") || definition.begins_with("animation.") || definition.begins_with("material.") || definition.begins_with("ui.")) add_field("NodePath alvo", SNAME("target_path"), ".");
+        }
     }
 
     const bool is_event = definition.begins_with("event.");
@@ -340,32 +354,72 @@ void MGSNoCodeEditorPlugin::_delete_nodes_request(const Array &p_nodes) {
     _set_status(vformat("%d nó(s) removido(s).", removed.size()));
 }
 
-void MGSNoCodeEditorPlugin::_add_node_selected(int p_id) {
-    String definition;
-    switch (p_id) {
-        case ADD_EVENT_START: definition = "event.scene.start"; break;
-        case ADD_EVENT_BUTTON: definition = "event.input.button_pressed"; break;
-        case ADD_FLOW_SEQUENCE: definition = "flow.sequence.2"; break;
-        case ADD_FLOW_BRANCH: definition = "flow.branch"; break;
-        case ADD_DEBUG_LOG: definition = "debug.log.info"; break;
-        case ADD_VARIABLE_SET: definition = "variable.set"; break;
-        case ADD_VARIABLE_GET: definition = "variable.get"; break;
-        case ADD_VARIABLE_ADD: definition = "variable.add"; break;
-        case ADD_OBJECT_VISIBLE: definition = "object.set_visible"; break;
-        case ADD_OBJECT_ENABLED: definition = "object.set_enabled"; break;
-        case ADD_TRANSFORM_POSITION: definition = "transform.set_position"; break;
-        case ADD_TRANSFORM_MOVE: definition = "transform.move"; break;
-        case ADD_TRANSFORM_ROTATE_Y: definition = "transform.rotate.y"; break;
-        case ADD_TRANSFORM_SCALE: definition = "transform.scale.uniform"; break;
-        case ADD_SCENE_CHANGE: definition = "world.change_scene"; break;
-        default: return;
+void MGSNoCodeEditorPlugin::_open_catalog() {
+    catalog_search->clear();
+    _filter_catalog(String());
+    catalog_popup->popup_centered_ratio(0.88);
+    catalog_search->grab_focus();
+}
+
+void MGSNoCodeEditorPlugin::_arrange_graph() {
+    graph_edit->arrange_nodes();
+    graph_edit->set_scroll_offset(Vector2());
+    _sync_node_positions_and_values();
+    _set_status("Grafo organizado automaticamente por fluxo.");
+}
+
+void MGSNoCodeEditorPlugin::_filter_catalog(const String &p_query) {
+    catalog_list->clear();
+    filtered_catalog.clear();
+    selected_catalog_id = String();
+    const String query = p_query.strip_edges().to_lower();
+    const Vector<MGSNoCodeDefinition> &definitions = MGSNoCodeCatalog::definitions();
+    String current_category;
+    int match_count = 0;
+    for (int i = 0; i < definitions.size(); i++) {
+        const MGSNoCodeDefinition &definition = definitions[i];
+        const String haystack = (definition.title + " " + definition.id + " " + definition.category).to_lower();
+        if (!query.is_empty() && !haystack.contains(query)) continue;
+        if (definition.category != current_category) {
+            current_category = definition.category;
+            const int header = catalog_list->add_item("●  " + current_category.to_upper() + "   ›");
+            catalog_list->set_item_disabled(header, true);
+            catalog_list->set_item_custom_fg_color(header, Color(0.68, 0.43, 1.0));
+            filtered_catalog.push_back(-1);
+        }
+        const int item = catalog_list->add_item("    " + definition.title + "   ·   " + definition.id);
+        catalog_list->set_item_tooltip(item, definition.category + " / " + definition.id);
+        filtered_catalog.push_back(i);
+        match_count++;
+    }
+    catalog_count->set_text(vformat("%d de %d blocos", match_count, definitions.size()));
+}
+
+void MGSNoCodeEditorPlugin::_catalog_item_selected(int64_t p_index) {
+    if (p_index < 0 || p_index >= filtered_catalog.size()) return;
+    const int definition_index = filtered_catalog[p_index];
+    if (definition_index < 0) return;
+    selected_catalog_id = MGSNoCodeCatalog::definitions()[definition_index].id;
+}
+
+void MGSNoCodeEditorPlugin::_catalog_item_activated(int64_t p_index) {
+    _catalog_item_selected(p_index);
+    _add_catalog_selection();
+}
+
+void MGSNoCodeEditorPlugin::_add_catalog_selection() {
+    const String definition = selected_catalog_id;
+    if (definition.is_empty()) {
+        _set_status("Selecione um bloco na biblioteca.", true);
+        return;
     }
     Array nodes = graph->get_nodes();
     Vector2 position = graph_edit->get_scroll_offset() + Vector2(180, 120);
     nodes.push_back(_make_node(definition, position));
     graph->set_nodes(nodes);
     _rebuild_graph();
-    _set_status("Nó adicionado: " + _title_for_definition(definition));
+    catalog_popup->hide();
+    _set_status("Bloco adicionado: " + _title_for_definition(definition));
 }
 
 MGSNoCodeEditorPlugin::MGSNoCodeEditorPlugin() {
@@ -378,7 +432,7 @@ MGSNoCodeEditorPlugin::MGSNoCodeEditorPlugin() {
 
     auto add_button = [&](const String &text, const Callable &callable) {
         Button *button = memnew(Button(text));
-        button->set_custom_minimum_size(Size2(104, 44) * EDSCALE);
+        button->set_custom_minimum_size(Size2(76, 44) * EDSCALE);
         button->connect(SceneStringName(pressed), callable);
         toolbar->add_child(button);
     };
@@ -386,36 +440,15 @@ MGSNoCodeEditorPlugin::MGSNoCodeEditorPlugin() {
     add_button("Importar", callable_mp(this, &MGSNoCodeEditorPlugin::_open_graph));
     add_button("Salvar", callable_mp(this, &MGSNoCodeEditorPlugin::_save_graph));
     add_button("Validar", callable_mp(this, &MGSNoCodeEditorPlugin::_validate_graph));
+    add_button("Organizar", callable_mp(this, &MGSNoCodeEditorPlugin::_arrange_graph));
 
     toolbar->add_child(memnew(VSeparator));
-    add_node_menu = memnew(MenuButton("Adicionar nó"));
-    add_node_menu->set_custom_minimum_size(Size2(150, 44) * EDSCALE);
-    toolbar->add_child(add_node_menu);
-    PopupMenu *popup = add_node_menu->get_popup();
-    popup->add_item("Evento · Ao iniciar", ADD_EVENT_START);
-    popup->add_item("Evento · Botão pressionado", ADD_EVENT_BUTTON);
-    popup->add_separator("Fluxo");
-    popup->add_item("Sequência", ADD_FLOW_SEQUENCE);
-    popup->add_item("Condição", ADD_FLOW_BRANCH);
-    popup->add_separator("Dados e depuração");
-    popup->add_item("Mostrar no log", ADD_DEBUG_LOG);
-    popup->add_item("Definir variável", ADD_VARIABLE_SET);
-    popup->add_item("Ler variável", ADD_VARIABLE_GET);
-    popup->add_item("Somar variável", ADD_VARIABLE_ADD);
-    popup->add_separator("Cena");
-    popup->add_item("Visibilidade", ADD_OBJECT_VISIBLE);
-    popup->add_item("Ativar objeto", ADD_OBJECT_ENABLED);
-    popup->add_item("Definir posição", ADD_TRANSFORM_POSITION);
-    popup->add_item("Mover objeto", ADD_TRANSFORM_MOVE);
-    popup->add_item("Girar no eixo Y", ADD_TRANSFORM_ROTATE_Y);
-    popup->add_item("Escala uniforme", ADD_TRANSFORM_SCALE);
-    popup->add_item("Trocar cena", ADD_SCENE_CHANGE);
-    popup->connect(SceneStringName(id_pressed), callable_mp(this, &MGSNoCodeEditorPlugin::_add_node_selected));
+    add_button("Biblioteca", callable_mp(this, &MGSNoCodeEditorPlugin::_open_catalog));
 
-    status = memnew(Label("NoCode pronto."));
+    status = memnew(Label(vformat("NoCode pronto: %d blocos nativos.", MGSNoCodeCatalog::size())));
     status->set_h_size_flags(Control::SIZE_EXPAND_FILL);
     status->set_text_overrun_behavior(TextServer::OVERRUN_TRIM_ELLIPSIS);
-    toolbar->add_child(status);
+    panel->add_child(status);
 
     graph_edit = memnew(GraphEdit);
     graph_edit->set_v_size_flags(Control::SIZE_EXPAND_FILL);
@@ -442,6 +475,31 @@ MGSNoCodeEditorPlugin::MGSNoCodeEditorPlugin() {
     save_dialog->set_current_file("main.graph.json");
     save_dialog->connect(SNAME("file_selected"), callable_mp(this, &MGSNoCodeEditorPlugin::_file_saved));
     panel->add_child(save_dialog);
+
+    catalog_popup = memnew(PopupPanel);
+    VBoxContainer *catalog_box = memnew(VBoxContainer);
+    catalog_box->set_custom_minimum_size(Size2(620, 480) * EDSCALE);
+    catalog_popup->add_child(catalog_box);
+    Label *catalog_title = memnew(Label("Adicionar bloco NoCode  •  961 operações nativas"));
+    catalog_box->add_child(catalog_title);
+    catalog_search = memnew(LineEdit);
+    catalog_search->set_placeholder("Buscar por nome, categoria ou ID...");
+    catalog_search->set_clear_button_enabled(true);
+    catalog_search->connect(SceneStringName(text_changed), callable_mp(this, &MGSNoCodeEditorPlugin::_filter_catalog));
+    catalog_box->add_child(catalog_search);
+    catalog_count = memnew(Label);
+    catalog_box->add_child(catalog_count);
+    catalog_list = memnew(ItemList);
+    catalog_list->set_v_size_flags(Control::SIZE_EXPAND_FILL);
+    catalog_list->set_select_mode(ItemList::SELECT_SINGLE);
+    catalog_list->connect(SNAME("item_selected"), callable_mp(this, &MGSNoCodeEditorPlugin::_catalog_item_selected));
+    catalog_list->connect(SNAME("item_activated"), callable_mp(this, &MGSNoCodeEditorPlugin::_catalog_item_activated));
+    catalog_box->add_child(catalog_list);
+    Button *catalog_add = memnew(Button("Adicionar bloco selecionado"));
+    catalog_add->set_custom_minimum_size(Size2(220, 48) * EDSCALE);
+    catalog_add->connect(SceneStringName(pressed), callable_mp(this, &MGSNoCodeEditorPlugin::_add_catalog_selection));
+    catalog_box->add_child(catalog_add);
+    panel->add_child(catalog_popup);
 
     add_control_to_bottom_panel(panel, "NoCode");
     _create_default_graph();

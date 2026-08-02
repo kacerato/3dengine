@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "graphId": "native-legacy-compat-proof",
+  "name": "Native legacy compatibility proof",
+  "variables": { "score": 0 },
+  "nodes": [
+    { "id": "start", "type": "ON_START", "positionX": 40, "positionY": 80, "values": {} },
+    { "id": "sum", "type": "CATALOG", "definitionId": "math.number.add", "positionX": 280, "positionY": 80, "values": { "a": "2", "b": "3" } },
+    { "id": "score", "type": "CATALOG", "definitionId": "variable.set", "positionX": 520, "positionY": 80, "values": { "name": "score" } },
+    { "id": "rotate", "type": "ROTATE_OBJECT", "objectName": "Player", "numberValue": 15, "positionX": 760, "positionY": 80, "values": { "target_path": "../Player", "degrees": "15" } },
+    { "id": "scale", "type": "SET_SCALE", "objectName": "Player", "numberValue": 2, "positionX": 1000, "positionY": 80, "values": { "target_path": "../Player", "scale": "2" } },
+    { "id": "log", "type": "PRINT_LOG", "textValue": "NOCODE_DEMO_PASS", "positionX": 1240, "positionY": 80, "values": { "message": "NOCODE_DEMO_PASS" } }
+  ],
+  "connections": [
+    { "fromNodeId": "start", "fromPortId": "flow", "toNodeId": "sum", "toPortId": "flowIn" },
+    { "fromNodeId": "sum", "fromPortId": "flow", "toNodeId": "score", "toPortId": "flowIn" },
+    { "fromNodeId": "sum", "fromPortId": "result", "toNodeId": "score", "toPortId": "value" },
+    { "fromNodeId": "score", "fromPortId": "flow", "toNodeId": "rotate", "toPortId": "flowIn" },
+    { "fromNodeId": "rotate", "fromPortId": "flow", "toNodeId": "scale", "toPortId": "flowIn" },
+    { "fromNodeId": "scale", "fromPortId": "flow", "toNodeId": "log", "toPortId": "flowIn" }
+  ]
+}

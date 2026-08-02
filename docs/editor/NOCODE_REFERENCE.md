@@ -1,8 +1,14 @@
 # NoCode — referência da linguagem visual
 
-## Fonte de verdade
+## Fonte de verdade atual
 
-O catálogo completo está em:
+O catálogo usado pelo editor Godot atual está em:
+
+```text
+godot-patches/modules/mobile_game_studio_nocode/mgs_nocode_catalog.cpp
+```
+
+A referência individual gerada está em `docs/nocode/NATIVE_NODE_CATALOG.md` e contém 961 IDs únicos. O catálogo Kotlin abaixo é a fonte histórica da engine anterior, mantida para compatibilidade de importação:
 
 ```text
 core/model/src/main/kotlin/com/mobilegamestudio/core/model/VisualNodeCatalog.kt

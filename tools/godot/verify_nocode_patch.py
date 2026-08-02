@@ -8,7 +8,7 @@ import hashlib
 import subprocess
 from pathlib import Path
 
-EXPECTED_LOGO_SHA256 = "0538d32f34d0b9a3a5f2fb4f1e1d8ae3d003360f4fedf093b57aa7f8f20b9da1"
+EXPECTED_LOGO_SHA256 = "531c9db5609e283708a11d8f8ee41e1e599d4e4638776eaf6adb95a2580d435b"
 
 PRODUCT_PATCHES = {
     "MOBILE_GAME_STUDIO_DERIVATIVE.txt",

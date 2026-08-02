@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 2,
+  "graphId": "legacy-smoke",
+  "name": "Legacy NoCode smoke test",
+  "variables": {
+    "score": 0
+  },
+  "nodes": [
+    {
+      "id": "start",
+      "type": "ON_START",
+      "positionX": 40,
+      "positionY": 80,
+      "values": {}
+    },
+    {
+      "id": "set-score",
+      "type": "CATALOG",
+      "definitionId": "variable.set",
+      "positionX": 300,
+      "positionY": 80,
+      "values": {
+        "name": "score",
+        "value": "1"
+      }
+    },
+    {
+      "id": "add-score",
+      "type": "CATALOG",
+      "definitionId": "variable.add",
+      "positionX": 560,
+      "positionY": 80,
+      "values": {
+        "name": "score",
+        "amount": "2"
+      }
+    },
+    {
+      "id": "condition",
+      "type": "CATALOG",
+      "definitionId": "flow.branch",
+      "positionX": 820,
+      "positionY": 80,
+      "values": {
+        "condition": "true"
+      }
+    },
+    {
+      "id": "log-ok",
+      "type": "PRINT_LOG",
+      "textValue": "NoCode legacy graph executed",
+      "positionX": 1080,
+      "positionY": 40,
+      "values": {
+        "message": "NoCode legacy graph executed"
+      }
+    },
+    {
+      "id": "rotate-legacy",
+      "type": "ROTATE_OBJECT",
+      "objectName": "Player",
+      "numberValue": 15,
+      "positionX": 1080,
+      "positionY": 220,
+      "values": {
+        "target_path": "../Player",
+        "degrees": "15"
+      }
+    }
+  ],
+  "connections": [
+    {
+      "fromNodeId": "start",
+      "toNodeId": "set-score",
+      "fromPortId": "flow",
+      "toPortId": "flow"
+    },
+    {
+      "fromNodeId": "set-score",
+      "toNodeId": "add-score",
+      "fromPortId": "flow",
+      "toPortId": "flow"
+    },
+    {
+      "fromNodeId": "add-score",
+      "toNodeId": "condition",
+      "fromPortId": "flow",
+      "toPortId": "flow"
+    },
+    {
+      "fromNodeId": "condition",
+      "toNodeId": "log-ok",
+      "fromPortId": "true",
+      "toPortId": "flow"
+    },
+    {
+      "fromNodeId": "condition",
+      "toNodeId": "rotate-legacy",
+      "fromPortId": "false",
+      "toPortId": "flow"
+    }
+  ]
+}

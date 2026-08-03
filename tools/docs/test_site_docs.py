@@ -24,6 +24,7 @@ for forbidden in (
     "Executa a ação", "alvo compatível", "ajuste os parâmetros", "conforme a operação",
     "operações de consulta", "parâmetros exibidos", "no próprio bloco", "valores exibidos",
     "demais pinos", "ação relacionada", "→ Debug Info",
+    "resposta de gameplay", "→ Sequence 2",
 ):
     assert not any(forbidden in field for item in catalog for field in item.values() if isinstance(field, str)), forbidden
 assert len(set(re.findall(r'\bid="([^"]+)"', html))) == len(re.findall(r'\bid="([^"]+)"', html))

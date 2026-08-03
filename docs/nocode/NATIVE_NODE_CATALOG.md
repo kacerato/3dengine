@@ -8,110 +8,110 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `event.scene.start`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `scene` informa `start`. Use este evento para carregar a configuração inicial da fase exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `scene` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Start → Sequence 2`; na primeira saída, carregar a configuração inicial da fase; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `scene` informa `start`. Use para inicializar a fase na primeira execução, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Start → Variable Set`, nome `score`, valor `0`; depois `Start → Audio Play`, alvo `../Music`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 2. Ready
 
 - **ID:** `event.scene.ready`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `scene` informa `ready`. Use este evento para carregar a configuração inicial da fase exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `scene` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Ready → Sequence 2`; na primeira saída, carregar a configuração inicial da fase; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `scene` informa `ready`. Use para configurar objetos assim que a SceneTree terminou de prepará-los, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Ready → Object Find By Name (Player) → Camera Set Target` para ligar a câmera ao personagem existente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 3. Exit
 
 - **ID:** `event.scene.exit`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `scene` informa `exit`. Use este evento para carregar a configuração inicial da fase exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `scene` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Exit → Sequence 2`; na primeira saída, carregar a configuração inicial da fase; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `scene` informa `exit`. Use para salvar ou liberar estado antes de a cena sair, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Exit → Save Vector3`, chave `player_position`, valor vindo de `Transform Position Get`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 4. Update
 
 - **ID:** `event.frame.update`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `frame` informa `update`. Use este evento para atualizar movimento ou interface exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `frame` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Update → Sequence 2`; na primeira saída, atualizar movimento ou interface; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `frame` informa `update`. Use para atualizar lógica visual dependente de cada quadro, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Update → Joystick Get Axis → Character Move`, multiplicando velocidade por `Delta` quando necessário.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 5. Fixed Update
 
 - **ID:** `event.frame.fixed_update`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `frame` informa `fixed update`. Use este evento para atualizar movimento ou interface exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `frame` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Fixed Update → Sequence 2`; na primeira saída, atualizar movimento ou interface; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `frame` informa `fixed update`. Use para executar física no passo fixo, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Fixed Update → Add Force`, alvo `../Ball`, força `Vector3(0, 0, -8)`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 6. Touch
 
 - **ID:** `event.object.touch`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `touch`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Touch → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `object` informa `touch`. Use para reagir quando um objeto 3D/2D é tocado, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Touch → Material Set Emission`, usando o objeto do payload para destacar o item selecionado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 7. Click
 
 - **ID:** `event.object.click`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `click`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Click → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `object` informa `click`. Use para executar uma ação pontual ao clicar em um objeto, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Click → Object Send Event`, evento `inspect`, alvo vindo do objeto clicado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 8. Enabled
 
 - **ID:** `event.object.enabled`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `enabled`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Enabled → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `object` informa `enabled`. Use para reagir quando um Node volta a processar, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Enabled → Animation Play`, animação `wake_up`, no objeto habilitado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 9. Disabled
 
 - **ID:** `event.object.disabled`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `disabled`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Disabled → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `object` informa `disabled`. Use para reagir quando um Node deixa de processar, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Disabled → Audio Stop`, alvo de áudio filho do objeto desativado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 10. Created
 
 - **ID:** `event.object.created`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `created`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Created → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `object` informa `created`. Use para configurar uma instância recém-criada, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Created → Transform Scale Set`, valor `Vector3(0.5,0.5,0.5)`, alvo vindo do payload.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 11. Destroyed
 
 - **ID:** `event.object.destroyed`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `destroyed`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Destroyed → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `object` informa `destroyed`. Use para atualizar contadores após remover um objeto, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Destroyed → Variable Add`, nome `enemies_defeated`, quantidade `1`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 12. Button Pressed
@@ -128,10 +128,10 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `event.input.button_released`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `input` informa `button released`. Use este evento para iniciar a resposta de gameplay exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `input` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Button Released → Sequence 2`; na primeira saída, iniciar a resposta de gameplay; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `input` informa `button released`. Use para encerrar uma ação quando o botão é solto, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Button Released (aim) → Camera Set FOV`, valor `75`, retornando a visão após mirar.
 - **Erros:** Se não disparar, verifique foco da janela, nome exato da ação no Input Map, dispositivo selecionado e se outro Control está consumindo o evento.
 
 ## 14. Key Down
@@ -158,40 +158,40 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `event.input.axis`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `input` informa `axis`. Use este evento para iniciar a resposta de gameplay exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `input` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Axis → Sequence 2`; na primeira saída, iniciar a resposta de gameplay; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `input` informa `axis`. Use para receber mudanças de um eixo configurado, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Axis (move_x) → Vector3 Make → Character Move` para dirigir o personagem lateralmente.
 - **Erros:** Se não disparar, verifique foco da janela, nome exato da ação no Input Map, dispositivo selecionado e se outro Control está consumindo o evento.
 
 ## 17. Down
 
 - **ID:** `event.pointer.down`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `pointer` informa `down`. Use este evento para iniciar a resposta de gameplay exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `pointer` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Down → Sequence 2`; na primeira saída, iniciar a resposta de gameplay; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `pointer` informa `down`. Use para iniciar interação no instante em que o dedo toca a tela, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Pointer Down → UI Set Position`, levando a mira para `position` do toque.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 18. Up
 
 - **ID:** `event.pointer.up`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `pointer` informa `up`. Use este evento para iniciar a resposta de gameplay exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `pointer` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Up → Sequence 2`; na primeira saída, iniciar a resposta de gameplay; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `pointer` informa `up`. Use para finalizar uma interação quando o dedo sai da tela, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Pointer Up → Object Send Event`, evento `release`, para soltar o item arrastado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 19. Move
 
 - **ID:** `event.pointer.move`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `pointer` informa `move`. Use este evento para iniciar a resposta de gameplay exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `pointer` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Move → Sequence 2`; na primeira saída, iniciar a resposta de gameplay; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `pointer` informa `move`. Use para acompanhar a posição do ponteiro sem exigir arrasto, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Pointer Move → UI Set Position`, alvo `../HUD/Cursor`, valor `position`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 20. Drag
@@ -208,200 +208,200 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `event.collision.enter`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `collision` informa `enter`. Use este evento para aplicar dano ao objeto que colidiu exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `collision` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Enter → Sequence 2`; na primeira saída, aplicar dano ao objeto que colidiu; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `collision` informa `enter`. Use para agir no primeiro contato entre colliders, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Collision Enter → Variable Add`, nome `health`, quantidade `-10`, usando o corpo atingido do payload.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 22. Stay
 
 - **ID:** `event.collision.stay`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `collision` informa `stay`. Use este evento para aplicar dano ao objeto que colidiu exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `collision` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Stay → Sequence 2`; na primeira saída, aplicar dano ao objeto que colidiu; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `collision` informa `stay`. Use para aplicar efeito enquanto a colisão continua, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Collision Stay → Add Force`, força `Vector3(0,12,0)`, criando uma corrente de ar.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 23. Exit
 
 - **ID:** `event.collision.exit`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `collision` informa `exit`. Use este evento para aplicar dano ao objeto que colidiu exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `collision` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Exit → Sequence 2`; na primeira saída, aplicar dano ao objeto que colidiu; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `collision` informa `exit`. Use para agir quando os colliders deixam de se tocar, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Collision Exit → UI Hide`, alvo `../HUD/CollisionHint`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 24. Enter
 
 - **ID:** `event.trigger.enter`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `trigger` informa `enter`. Use este evento para abrir uma porta ou iniciar uma área exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `trigger` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Enter → Sequence 2`; na primeira saída, abrir uma porta ou iniciar uma área; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `trigger` informa `enter`. Use para ativar uma área quando um corpo entra, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Trigger Enter → Object Enable`, alvo `../Enemies/AmbushGroup`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 25. Stay
 
 - **ID:** `event.trigger.stay`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `trigger` informa `stay`. Use este evento para abrir uma porta ou iniciar uma área exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `trigger` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Stay → Sequence 2`; na primeira saída, abrir uma porta ou iniciar uma área; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `trigger` informa `stay`. Use para manter um efeito enquanto o corpo permanece na área, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Trigger Stay → Variable Add`, nome `oxygen`, quantidade `-0.1 × Delta`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 26. Exit
 
 - **ID:** `event.trigger.exit`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `trigger` informa `exit`. Use este evento para abrir uma porta ou iniciar uma área exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `trigger` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Exit → Sequence 2`; na primeira saída, abrir uma porta ou iniciar uma área; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `trigger` informa `exit`. Use para encerrar o efeito quando o corpo sai da área, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Trigger Exit → Object Disable`, alvo `../Zone/DamageEffect`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 27. Started
 
 - **ID:** `event.animation.started`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `animation` informa `started`. Use este evento para encadear a próxima animação exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `animation` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Started → Sequence 2`; na primeira saída, encadear a próxima animação; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `animation` informa `started`. Use para sincronizar efeitos com o começo de uma animação, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Animation Started (attack) → Audio Play`, alvo `../SwordSwing`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 28. Finished
 
 - **ID:** `event.animation.finished`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `animation` informa `finished`. Use este evento para encadear a próxima animação exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `animation` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Finished → Sequence 2`; na primeira saída, encadear a próxima animação; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `animation` informa `finished`. Use para encadear estado após uma animação terminar, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Animation Finished (death) → Object Destroy`, alvo do personagem que terminou a animação.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 29. Finished
 
 - **ID:** `event.audio.finished`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `audio` informa `finished`. Use este evento para atualizar a interface quando o som terminar exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `audio` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Finished → Sequence 2`; na primeira saída, atualizar a interface quando o som terminar; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `audio` informa `finished`. Use para continuar uma sequência quando o áudio termina, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Audio Finished → World Load`, cena `res://levels/next_level.tscn` após a narração.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 30. Focused
 
 - **ID:** `event.ui.focused`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `ui` informa `focused`. Use este evento para responder à alteração do controle exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `ui` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Focused → Sequence 2`; na primeira saída, responder à alteração do controle; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `ui` informa `focused`. Use para mostrar ajuda para o controle de interface selecionado, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `UI Focused → UI Set Text`, alvo `../Help`, texto `Pressione para confirmar`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 31. Value Changed
 
 - **ID:** `event.ui.value_changed`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `ui` informa `value changed`. Use este evento para responder à alteração do controle exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `ui` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Value Changed → Sequence 2`; na primeira saída, responder à alteração do controle; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `ui` informa `value changed`. Use para aplicar imediatamente o novo valor de slider/campo, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Value Changed → Audio Set Volume`, conectando `value` ao volume do bus principal.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 32. Elapsed
 
 - **ID:** `event.timer.elapsed`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `timer` informa `elapsed`. Use este evento para liberar uma habilidade após o tempo exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `timer` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Elapsed → Sequence 2`; na primeira saída, liberar uma habilidade após o tempo; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `timer` informa `elapsed`. Use para executar algo quando uma contagem nomeada termina, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Timer Elapsed (spawn_delay) → Object Create`, cena `res://enemy.tscn`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 33. Connected
 
 - **ID:** `event.network.connected`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `network` informa `connected`. Use este evento para mostrar o estado da conexão exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `network` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Connected → Sequence 2`; na primeira saída, mostrar o estado da conexão; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `network` informa `connected`. Use para liberar recursos online após conectar, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Connected → UI Set Text`, texto `Online`, alvo `../HUD/NetworkStatus`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 34. Disconnected
 
 - **ID:** `event.network.disconnected`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `network` informa `disconnected`. Use este evento para mostrar o estado da conexão exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `network` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Disconnected → Sequence 2`; na primeira saída, mostrar o estado da conexão; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `network` informa `disconnected`. Use para bloquear ações online e informar perda de conexão, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Disconnected → UI Open Panel`, alvo `../HUD/ReconnectPanel`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 35. Loaded
 
 - **ID:** `event.save.loaded`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `save` informa `loaded`. Use este evento para atualizar a tela depois da gravação exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `save` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Loaded → Sequence 2`; na primeira saída, atualizar a tela depois da gravação; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `save` informa `loaded`. Use para aplicar dados depois que um save foi carregado, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Save Loaded → Transform Position Set`, alvo `../Player`, valor `player_position` carregado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 36. Completed
 
 - **ID:** `event.save.completed`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `save` informa `completed`. Use este evento para atualizar a tela depois da gravação exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `save` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Completed → Sequence 2`; na primeira saída, atualizar a tela depois da gravação; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `save` informa `completed`. Use para confirmar visualmente uma gravação concluída, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Save Completed → UI Toast`, texto `Jogo salvo`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 37. Loaded
 
 - **ID:** `event.world.loaded`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `world` informa `loaded`. Use este evento para configurar a fase carregada exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `world` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Loaded → Sequence 2`; na primeira saída, configurar a fase carregada; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `world` informa `loaded`. Use para preparar uma fase depois do carregamento, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `World Loaded → Object Find By Tag (spawn) → Transform Position Set` para posicionar o jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 38. Unloaded
 
 - **ID:** `event.world.unloaded`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `world` informa `unloaded`. Use este evento para configurar a fase carregada exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `world` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Unloaded → Sequence 2`; na primeira saída, configurar a fase carregada; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `world` informa `unloaded`. Use para limpar estado ligado ao mundo removido, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `World Unloaded → List Object Clear`, lista `tracked_enemies`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 39. Received
 
 - **ID:** `event.custom.received`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `custom` informa `received`. Use este evento para reagir ao evento nomeado exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `custom` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Received → Sequence 2`; na primeira saída, reagir ao evento nomeado; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `custom` informa `received`. Use para receber uma mensagem definida pelo próprio projeto, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Custom Received (quest_complete) → UI Open Panel`, alvo `../HUD/QuestReward`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 40. Changed
 
 - **ID:** `event.component.changed`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `component` informa `changed`. Use este evento para sincronizar a interface com o componente exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Defina o filtro de `component` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
-- **Exemplo:** Mecânica: `Changed → Sequence 2`; na primeira saída, sincronizar a interface com o componente; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
+- **Finalidade:** Dispara o fluxo quando `component` informa `changed`. Use para sincronizar sistemas quando uma propriedade muda, somente no momento da ocorrência.
+- **Entradas/alvo:** Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.
+- **Exemplo:** Mecânica: `Component Changed (health) → UI Set Value`, alvo `../HUD/HealthBar`, valor do payload.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 41. Sequência 2

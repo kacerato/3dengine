@@ -144,9 +144,46 @@ def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
             return EVENT_HELP[node_id]
         event = node_id.removeprefix("event.").replace("_", " ")
         subject, action = event.rsplit(".", 1) if "." in event else ("engine", event)
-        event_actions = {"scene":"carregar a configuração inicial da fase", "frame":"atualizar movimento ou interface", "object":"alterar o Node recebido no payload", "collision":"aplicar dano ao objeto que colidiu", "trigger":"abrir uma porta ou iniciar uma área", "animation":"encadear a próxima animação", "audio":"atualizar a interface quando o som terminar", "ui":"responder à alteração do controle", "timer":"liberar uma habilidade após o tempo", "network":"mostrar o estado da conexão", "save":"atualizar a tela depois da gravação", "world":"configurar a fase carregada", "custom":"reagir ao evento nomeado", "component":"sincronizar a interface com o componente"}
-        use = event_actions.get(subject, "iniciar a resposta de gameplay")
-        return (f"Dispara o fluxo quando `{subject}` informa `{action}`. Use este evento para {use} exatamente no momento da ocorrência, sem consultar o estado a cada quadro.", f"Defina o filtro de `{subject}` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.", "Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.", f"Mecânica: `{title} → Sequence 2`; na primeira saída, {use}; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.")
+        event_guides = {
+            "event.scene.start": ("inicializar a fase na primeira execução", "`Start → Variable Set`, nome `score`, valor `0`; depois `Start → Audio Play`, alvo `../Music`"),
+            "event.scene.ready": ("configurar objetos assim que a SceneTree terminou de prepará-los", "`Ready → Object Find By Name (Player) → Camera Set Target` para ligar a câmera ao personagem existente"),
+            "event.scene.exit": ("salvar ou liberar estado antes de a cena sair", "`Exit → Save Vector3`, chave `player_position`, valor vindo de `Transform Position Get`"),
+            "event.frame.update": ("atualizar lógica visual dependente de cada quadro", "`Update → Joystick Get Axis → Character Move`, multiplicando velocidade por `Delta` quando necessário"),
+            "event.frame.fixed_update": ("executar física no passo fixo", "`Fixed Update → Add Force`, alvo `../Ball`, força `Vector3(0, 0, -8)`"),
+            "event.object.touch": ("reagir quando um objeto 3D/2D é tocado", "`Touch → Material Set Emission`, usando o objeto do payload para destacar o item selecionado"),
+            "event.object.click": ("executar uma ação pontual ao clicar em um objeto", "`Click → Object Send Event`, evento `inspect`, alvo vindo do objeto clicado"),
+            "event.object.enabled": ("reagir quando um Node volta a processar", "`Enabled → Animation Play`, animação `wake_up`, no objeto habilitado"),
+            "event.object.disabled": ("reagir quando um Node deixa de processar", "`Disabled → Audio Stop`, alvo de áudio filho do objeto desativado"),
+            "event.object.created": ("configurar uma instância recém-criada", "`Created → Transform Scale Set`, valor `Vector3(0.5,0.5,0.5)`, alvo vindo do payload"),
+            "event.object.destroyed": ("atualizar contadores após remover um objeto", "`Destroyed → Variable Add`, nome `enemies_defeated`, quantidade `1`"),
+            "event.input.button_released": ("encerrar uma ação quando o botão é solto", "`Button Released (aim) → Camera Set FOV`, valor `75`, retornando a visão após mirar"),
+            "event.input.axis": ("receber mudanças de um eixo configurado", "`Axis (move_x) → Vector3 Make → Character Move` para dirigir o personagem lateralmente"),
+            "event.pointer.down": ("iniciar interação no instante em que o dedo toca a tela", "`Pointer Down → UI Set Position`, levando a mira para `position` do toque"),
+            "event.pointer.up": ("finalizar uma interação quando o dedo sai da tela", "`Pointer Up → Object Send Event`, evento `release`, para soltar o item arrastado"),
+            "event.pointer.move": ("acompanhar a posição do ponteiro sem exigir arrasto", "`Pointer Move → UI Set Position`, alvo `../HUD/Cursor`, valor `position`"),
+            "event.collision.enter": ("agir no primeiro contato entre colliders", "`Collision Enter → Variable Add`, nome `health`, quantidade `-10`, usando o corpo atingido do payload"),
+            "event.collision.stay": ("aplicar efeito enquanto a colisão continua", "`Collision Stay → Add Force`, força `Vector3(0,12,0)`, criando uma corrente de ar"),
+            "event.collision.exit": ("agir quando os colliders deixam de se tocar", "`Collision Exit → UI Hide`, alvo `../HUD/CollisionHint`"),
+            "event.trigger.enter": ("ativar uma área quando um corpo entra", "`Trigger Enter → Object Enable`, alvo `../Enemies/AmbushGroup`"),
+            "event.trigger.stay": ("manter um efeito enquanto o corpo permanece na área", "`Trigger Stay → Variable Add`, nome `oxygen`, quantidade `-0.1 × Delta`"),
+            "event.trigger.exit": ("encerrar o efeito quando o corpo sai da área", "`Trigger Exit → Object Disable`, alvo `../Zone/DamageEffect`"),
+            "event.animation.started": ("sincronizar efeitos com o começo de uma animação", "`Animation Started (attack) → Audio Play`, alvo `../SwordSwing`"),
+            "event.animation.finished": ("encadear estado após uma animação terminar", "`Animation Finished (death) → Object Destroy`, alvo do personagem que terminou a animação"),
+            "event.audio.finished": ("continuar uma sequência quando o áudio termina", "`Audio Finished → World Load`, cena `res://levels/next_level.tscn` após a narração"),
+            "event.ui.focused": ("mostrar ajuda para o controle de interface selecionado", "`UI Focused → UI Set Text`, alvo `../Help`, texto `Pressione para confirmar`"),
+            "event.ui.value_changed": ("aplicar imediatamente o novo valor de slider/campo", "`Value Changed → Audio Set Volume`, conectando `value` ao volume do bus principal"),
+            "event.timer.elapsed": ("executar algo quando uma contagem nomeada termina", "`Timer Elapsed (spawn_delay) → Object Create`, cena `res://enemy.tscn`"),
+            "event.network.connected": ("liberar recursos online após conectar", "`Connected → UI Set Text`, texto `Online`, alvo `../HUD/NetworkStatus`"),
+            "event.network.disconnected": ("bloquear ações online e informar perda de conexão", "`Disconnected → UI Open Panel`, alvo `../HUD/ReconnectPanel`"),
+            "event.save.loaded": ("aplicar dados depois que um save foi carregado", "`Save Loaded → Transform Position Set`, alvo `../Player`, valor `player_position` carregado"),
+            "event.save.completed": ("confirmar visualmente uma gravação concluída", "`Save Completed → UI Toast`, texto `Jogo salvo`"),
+            "event.world.loaded": ("preparar uma fase depois do carregamento", "`World Loaded → Object Find By Tag (spawn) → Transform Position Set` para posicionar o jogador"),
+            "event.world.unloaded": ("limpar estado ligado ao mundo removido", "`World Unloaded → List Object Clear`, lista `tracked_enemies`"),
+            "event.custom.received": ("receber uma mensagem definida pelo próprio projeto", "`Custom Received (quest_complete) → UI Open Panel`, alvo `../HUD/QuestReward`"),
+            "event.component.changed": ("sincronizar sistemas quando uma propriedade muda", "`Component Changed (health) → UI Set Value`, alvo `../HUD/HealthBar`, valor do payload"),
+        }
+        use, example = event_guides[node_id]
+        return (f"Dispara o fluxo quando `{subject}` informa `{action}`. Use para {use}, somente no momento da ocorrência.", f"Configure o filtro mostrado pelo evento, como nome, ação ou alvo. Quando houver objeto/valor envolvido, ele chega pelos pinos do payload.", "Emite `flow` uma vez por ocorrência e expõe os dados específicos do evento para as próximas conexões.", f"Mecânica: {example}.")
     if node_id.startswith("flow.sequence."):
         count = node_id.rsplit(".", 1)[-1]
         return (f"Executa {count} ramificações de fluxo em ordem, da saída 1 até a {count}.", "Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.", f"Emite {count} saídas sequenciais no mesmo quadro.", f"`Button Pressed → Sequência {count}` para tocar som, atualizar UI e executar outras ações em ordem.")

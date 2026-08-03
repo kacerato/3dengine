@@ -19,7 +19,12 @@ assert len(catalog) == 961, len(catalog)
 assert len({item["id"] for item in catalog}) == len(catalog)
 assert all({"title", "id", "category", "purpose", "inputs", "outputs", "example", "errors"} <= item.keys() for item in catalog)
 assert all(len(item["example"]) >= 40 for item in catalog)
-for forbidden in ("Executa a operação registrada", "Use os pinos mostrados", "envie a saída para `Debug Info`"):
+for forbidden in (
+    "Executa a operação registrada", "Use os pinos mostrados", "envie a saída para `Debug Info`",
+    "Executa a ação", "alvo compatível", "ajuste os parâmetros", "conforme a operação",
+    "operações de consulta", "parâmetros exibidos", "no próprio bloco", "valores exibidos",
+    "demais pinos", "ação relacionada", "→ Debug Info",
+):
     assert not any(forbidden in field for item in catalog for field in item.values() if isinstance(field, str)), forbidden
 assert len(set(re.findall(r'\bid="([^"]+)"', html))) == len(re.findall(r'\bid="([^"]+)"', html))
 assert 'src="nocode-catalog.js"' in html

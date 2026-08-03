@@ -144,7 +144,9 @@ def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
             return EVENT_HELP[node_id]
         event = node_id.removeprefix("event.").replace("_", " ")
         subject, action = event.rsplit(".", 1) if "." in event else ("engine", event)
-        return (f"Dispara o fluxo quando `{subject}` informa `{action}`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.", f"Filtros exibidos no bloco limitam qual `{subject}` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.", "Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.", f"Exemplo de gameplay: conecte `{title}` a uma ação relacionada a `{subject}`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.")
+        event_actions = {"scene":"carregar a configuração inicial da fase", "frame":"atualizar movimento ou interface", "object":"alterar o Node recebido no payload", "collision":"aplicar dano ao objeto que colidiu", "trigger":"abrir uma porta ou iniciar uma área", "animation":"encadear a próxima animação", "audio":"atualizar a interface quando o som terminar", "ui":"responder à alteração do controle", "timer":"liberar uma habilidade após o tempo", "network":"mostrar o estado da conexão", "save":"atualizar a tela depois da gravação", "world":"configurar a fase carregada", "custom":"reagir ao evento nomeado", "component":"sincronizar a interface com o componente"}
+        use = event_actions.get(subject, "iniciar a resposta de gameplay")
+        return (f"Dispara o fluxo quando `{subject}` informa `{action}`. Use este evento para {use} exatamente no momento da ocorrência, sem consultar o estado a cada quadro.", f"Defina o filtro de `{subject}` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.", "Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.", f"Mecânica: `{title} → Sequence 2`; na primeira saída, {use}; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.")
     if node_id.startswith("flow.sequence."):
         count = node_id.rsplit(".", 1)[-1]
         return (f"Executa {count} ramificações de fluxo em ordem, da saída 1 até a {count}.", "Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.", f"Emite {count} saídas sequenciais no mesmo quadro.", f"`Button Pressed → Sequência {count}` para tocar som, atualizar UI e executar outras ações em ordem.")
@@ -157,7 +159,20 @@ def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
     kind = parts[-2].replace("_", " ") if len(parts) > 2 else prefix
     if prefix == "input":
         device = parts[1]
-        return (f"Lê `{readable}` do dispositivo `{device}` sem precisar escrever código de plataforma.", f"Nome da ação/controle e índice do dispositivo quando aplicável; `{operation}` pode exigir eixo ou botão.", "Retorna o estado, valor, posição ou disponibilidade em `value`.", f"`Update → {title} → Debug Info` para visualizar o valor recebido do {device}.")
+        input_uses = {
+            "pressed": ("detecta o instante em que o controle é pressionado", "`action`/botão e índice opcional do dispositivo", "`true` somente no primeiro quadro", "inicie um ataque sem repeti-lo enquanto o botão estiver segurado"),
+            "released": ("detecta o instante em que o controle é solto", "`action`/botão e índice opcional", "`true` no quadro da liberação", "solte uma flecha depois de carregar o arco"),
+            "held": ("informa se o controle continua pressionado", "`action`/botão", "booleano atualizado a cada quadro", "mantenha corrida ou disparo contínuo enquanto houver pressão"),
+            "axis": ("lê um eixo analógico ou par negativo/positivo", "ações negativa e positiva, eixo e dispositivo", "número entre `-1.0` e `1.0`", "controle movimento ou direção com joystick/teclas"),
+            "position": ("lê a posição atual do ponteiro/toque", "índice do toque ou ponteiro", "`Vector2` em pixels da viewport", "posicione uma mira onde o jogador toca"),
+            "delta": ("lê quanto o ponteiro/toque se moveu", "índice do toque ou ponteiro", "`Vector2` desde a leitura anterior", "gire a câmera pela distância arrastada"),
+            "pressure": ("lê a intensidade de pressão disponível", "índice do toque/caneta", "número normalmente entre `0.0` e `1.0`", "varie a espessura de pintura ou força de uma ação"),
+            "count": ("conta controles/toques ativos", "tipo ou índice do dispositivo quando disponível", "quantidade inteira", "ative gesto de zoom somente com dois dedos"),
+            "available": ("verifica se o dispositivo/recurso existe", "índice opcional do dispositivo", "booleano", "mostre controles touch quando não houver gamepad"),
+            "name": ("obtém o nome apresentado pelo dispositivo", "índice do dispositivo", "texto com o nome", "mostre `Xbox Controller` na tela de controles"),
+        }
+        action, inputs, result, use = input_uses[operation]
+        return (f"No dispositivo `{device}`, {action}. Use para {use}.", inputs.capitalize() + ".", result.capitalize() + " em `value`.", f"Mecânica: `Update → {title}`; conecte `value` a um `Branch`, movimento, câmera ou UI para {use}.")
     if prefix in ("math", "vector", "compare"):
         if operation.startswith("is_"):
             inputs = f"`value`: valor {kind} que será testado."
@@ -165,23 +180,90 @@ def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
             inputs = f"`value`: valor {kind} de entrada."
         else:
             inputs = f"`a` e `b`: valores {kind}; parâmetros adicionais aparecem quando a operação exige limite ou fator."
-        return (f"Calcula `{readable}` para valores do tipo {kind}; não modifica objetos da cena.", inputs, "Retorna o cálculo tipado em `value`/`result`.", f"Conecte constantes ou saídas anteriores a `{title}` e use o resultado em `Debug Info` ou em outro bloco compatível.")
+        math_uses = {
+            "add": "somar 100 pontos à pontuação", "subtract": "retirar dano da vida", "multiply": "aplicar um multiplicador de dano", "divide": "calcular a média por jogador", "modulo": "executar algo a cada N quadros", "power": "criar uma curva exponencial", "minimum": "limitar ao menor valor", "maximum": "garantir um valor mínimo", "average": "calcular média de valores", "absolute": "remover o sinal", "negative": "inverter direção/sinal", "sqrt": "obter uma raiz", "floor": "arredondar para baixo", "ceil": "arredondar para cima", "round": "arredondar ao inteiro mais próximo", "sin": "produzir oscilação suave", "cos": "produzir oscilação deslocada", "lerp": "interpolar suavemente", "move_towards": "aproximar sem ultrapassar", "distance": "medir distância entre pontos", "normalize": "obter somente a direção", "length": "obter magnitude/velocidade", "dot": "medir alinhamento entre direções", "cross": "obter o eixo perpendicular", "equal": "testar igualdade", "not_equal": "testar diferença", "greater": "testar se ultrapassou um limite", "less": "testar se ficou abaixo de um limite", "greater_equal": "testar limite mínimo inclusivo", "less_equal": "testar limite máximo inclusivo", "between": "testar se está dentro de uma faixa", "outside": "testar se saiu de uma faixa", "approximately": "comparar números com tolerância", "is_null": "verificar ausência de objeto",
+        }
+        use = math_uses.get(operation, f"calcular {readable} antes de alimentar outro bloco")
+        if prefix == "compare":
+            example = f"`Update → {title} → Branch`; use a saída True para {use} e a False para manter o estado atual."
+        elif prefix == "vector":
+            example = f"`Get Velocity → {title} → UI Set Text` ou conecte o vetor resultante a movimento/força para {use}."
+        else:
+            example = f"Conecte os valores a `{title}` e leve `result` a `Variable Set` ou `UI Set Text` para {use}."
+        return (f"Calcula `{readable}` para valores do tipo {kind}; use para {use}. Não modifica a cena sozinho.", inputs, "Retorna o cálculo tipado em `value` e `result`.", example)
     if prefix == "list":
-        return (f"Executa `{readable}` em uma lista de {kind}.", "`list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.", "Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.", f"`List {kind.title()} Create → {title} → Debug Info` demonstra o resultado da operação.")
+        list_behaviors = {
+            "create": ("cria uma lista vazia", "nenhuma entrada", "uma nova lista vazia", "use a saída como inventário inicial"),
+            "add": ("adiciona um item ao final", "`list` e `value`", "a lista com o novo item", "adicione uma moeda coletada ao inventário"),
+            "insert": ("insere um item em uma posição", "`list`, `index` e `value`", "a lista com o item inserido", "insira uma missão no topo usando índice `0`"),
+            "set": ("substitui o item de uma posição", "`list`, `index` e `value`", "a lista atualizada", "troque o item do slot selecionado"),
+            "get": ("obtém o item de uma posição", "`list` e `index`", "o item encontrado em `value`", "leia o item do slot `2` e mostre seu nome"),
+            "first": ("obtém o primeiro item", "`list`", "o primeiro item ou valor vazio", "selecione a primeira missão da fila"),
+            "last": ("obtém o último item", "`list`", "o último item ou valor vazio", "recupere o checkpoint mais recente"),
+            "remove": ("remove a primeira ocorrência de um valor", "`list` e `value`", "a lista sem o item e um booleano de sucesso", "remova a chave usada do inventário"),
+            "remove_at": ("remove o item de um índice", "`list` e `index`", "a lista sem aquela posição", "exclua o slot `1` da barra rápida"),
+            "clear": ("remove todos os itens", "`list`", "a mesma lista vazia", "limpe inimigos rastreados ao trocar de fase"),
+            "contains": ("verifica se um valor existe", "`list` e `value`", "`true` ou `false`", "use Branch para permitir uma porta somente se houver uma chave"),
+            "index_of": ("procura a primeira posição de um valor", "`list` e `value`", "índice ou `-1`", "localize a primeira poção no inventário"),
+            "last_index_of": ("procura a última posição de um valor", "`list` e `value`", "índice ou `-1`", "localize o último checkpoint repetido"),
+            "count": ("conta os itens", "`list`", "quantidade inteira", "atualize `Itens: 8` na interface"),
+            "is_empty": ("verifica se não há itens", "`list`", "`true` quando a lista está vazia", "encerre a onda quando a lista de inimigos ficar vazia"),
+            "reverse": ("inverte a ordem", "`list`", "lista em ordem inversa", "mostre o histórico do mais recente ao mais antigo"),
+            "shuffle": ("embaralha a ordem", "`list`", "lista embaralhada", "embaralhe cartas antes de distribuí-las"),
+            "sort": ("ordena os valores", "`list` e direção opcional", "lista ordenada", "ordene pontuações antes do placar"),
+            "distinct": ("remove valores duplicados", "`list`", "lista apenas com valores únicos", "elimine IDs de alvos repetidos"),
+            "slice": ("recorta um intervalo", "`list`, `start` e `length`", "uma nova sublista", "mostre somente os primeiros dez resultados"),
+            "concat": ("une duas listas", "`list` e `other`", "uma lista com ambas em sequência", "junte inventário normal e itens temporários"),
+            "filter": ("mantém itens aprovados por uma condição", "`list` e condição/filtro", "lista filtrada", "mantenha somente inimigos ainda vivos"),
+            "map": ("transforma cada item", "`list` e transformação", "nova lista transformada", "converta pontuações numéricas para textos"),
+            "reduce": ("combina todos os itens em um resultado", "`list`, valor inicial e operação", "valor acumulado", "some todos os danos para obter o dano total"),
+            "random": ("escolhe um item aleatório", "`list`", "um item da lista", "escolha aleatoriamente um ponto de spawn"),
+        }
+        action, inputs, result, use = list_behaviors[operation]
+        return (f"{action.capitalize()} em uma lista de {kind}. Use para {use}.", inputs.capitalize() + ".", result.capitalize() + ". A lista de entrada permanece disponível para outras conexões.", f"Mecânica: crie ou carregue a lista de {kind}, conecte-a a `{title}` e use a saída para {use}.")
     if prefix == "save":
         return (f"Executa `{readable}` para um valor persistente do tipo {kind} no armazenamento do jogo.", "`key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.", "Retorna o valor carregado/estado da chave e emite `flow` após concluir.", f"Use a chave `player_{kind}`: `Button Pressed → {title}` e conecte o resultado à interface.")
     if prefix in FAMILY_NAMES:
         family = FAMILY_NAMES[prefix]
+        if prefix == "object" and operation in ("enable", "disable", "toggle_enabled"):
+            modes = {"enable": ("reativa", "ativo", "desativado"), "disable": ("desativa", "desativado", "ativo"), "toggle_enabled": ("alterna", "estado oposto", "estado atual")}
+            verb, result_state, previous = modes[operation]
+            return (f"{verb.capitalize()} o processamento de um Node da cena. Use `Enable` para devolver comportamento a inimigos, plataformas ou controladores que foram desativados; isso não é o mesmo que apenas torná-los visíveis.", "`target_path`: caminho do Node a controlar, por exemplo `../Enemies/Guard`. Não recebe valor adicional.", f"Coloca o alvo no estado {result_state} por meio do modo de processamento e emite `flow`. O Node continua existindo na SceneTree.", f"Inimigo por proximidade: `Trigger Enter → Enable`, alvo `../Enemies/Guard`; ao entrar na área, o guarda volta a processar IA e movimento. Use `Disable` no `Trigger Exit` para interrompê-lo novamente.")
         if operation.startswith("set_"):
             prop = operation.removeprefix("set_").replace("_", " ")
             return (f"Define `{prop}` no sistema de {family} do alvo indicado.", f"`target_path`: nó compatível; `value`: novo valor de {prop}, pelo inspetor ou por conexão tipada.", f"Atualiza {prop} no alvo e emite `flow`.", f"`Button Pressed → {title}`, selecione o alvo da cena e conecte uma constante ao pino `value`.")
         if operation.startswith("get_"):
             prop = operation.removeprefix("get_").replace("_", " ")
-            return (f"Consulta `{prop}` no sistema de {family} sem alterar o alvo.", "`target_path`: nó compatível que será consultado.", f"Retorna {prop} em `value` e permite continuar o fluxo.", f"`Update → {title} → Debug Info` mostra o valor atual de {prop}.")
-        return (f"Executa a ação `{readable}` no sistema de {family} usando a API segura registrada pela engine.", "`target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.", "Aplica a ação e emite `flow`; operações de consulta também retornam `value`.", f"`Button Pressed → {title}`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.")
+            return (f"Consulta `{prop}` no sistema de {family} sem alterar o alvo.", "`target_path`: Node que será consultado.", f"Retorna {prop} em `value` e permite continuar o fluxo.", f"`Update → {title} → UI Set Text` mostra {prop} no HUD; use `Number To Text` antes quando o retorno for numérico.")
+        action_words = {
+            "play": "inicia a reprodução", "pause": "pausa", "resume": "retoma", "stop": "interrompe", "destroy": "remove da cena", "clone": "duplica", "create": "cria", "show": "torna visível", "hide": "oculta", "focus": "move o foco", "unfocus": "remove o foco", "clear": "limpa", "repair": "restaura", "teleport": "reposiciona imediatamente", "quit": "encerra o jogo", "reload": "recarrega", "load": "carrega", "unload": "descarrega", "open_door": "abre a porta", "close_door": "fecha a porta", "shift_up": "aumenta a marcha", "shift_down": "reduz a marcha", "wake_up": "acorda o corpo físico", "sleep": "coloca o corpo físico em repouso",
+        }
+        action = action_words.get(operation, readable)
+        parameter_hints = {
+            "find_by_name":"`name`: nome exato procurado na SceneTree", "find_by_tag":"`tag`: etiqueta cadastrada", "find_by_id":"`id`: identificador persistente", "create":"`scene`/`class_name` e `parent_path`", "clone":"`target_path` e `parent_path` opcional", "destroy":"somente `target_path`", "add_child":"`target_path` do pai e `child_path`", "remove_child":"`target_path` do pai e `child_path`", "send_event":"`target_path` e `event_name`", "play":"`target_path` e recurso/nome a reproduzir", "pause":"somente `target_path`", "resume":"somente `target_path`", "stop":"somente `target_path`", "fade_in":"`target_path`, `duration` em segundos e volume final", "fade_out":"`target_path` e `duration` em segundos", "teleport":"`target_path`, `position` e rotação opcional", "raycast":"`origin`, `direction`, `distance` e máscara", "open_door":"`target_path` da porta", "close_door":"`target_path` da porta", "shift_up":"`target_path` do veículo", "shift_down":"`target_path` do veículo", "show":"`target_path` do Control/CanvasItem", "hide":"`target_path` do Control/CanvasItem", "quit":"nenhuma entrada", "reload":"cena/mundo ativo", "load":"`scene_path` ou recurso a carregar", "unload":"`scene_path`/identificador carregado",
+        }
+        parameters = parameter_hints.get(operation, f"`target_path` e `value` de `{readable}` com o tipo indicado no conector")
+        return (f"{action.capitalize()} no sistema de {family}. Use este bloco quando a mecânica precisa aplicar `{readable}` ao componente selecionado durante o jogo.", parameters.capitalize() + ".", f"Executa `{readable}` no alvo e, após concluir, libera a saída `flow` para a próxima ação.", f"Mecânica: conecte o evento que inicia a ação a `{title}`, preencha {parameters} e use `flow` para atualizar a interface ou encadear o próximo comportamento.")
     if prefix == "transform":
         prop = parts[1].replace("_", " ")
-        return (f"Executa `{readable}` sobre a {prop} de um `Node2D`/`Node3D`.", f"`target_path`: nó da cena; valor de {prop}, destino ou fator conforme a operação.", f"Retorna ou modifica a {prop} e emite `flow` quando houver efeito na cena.", f"`Update → {title}`, alvo `../Player`; conecte um Vector compatível ao pino de valor.")
+        transform_inputs = {
+            "get": ("somente `target_path`", "lê o valor atual", "mostre a posição do jogador no HUD"),
+            "set": (f"`target_path` e `value` com a nova {prop}", "substitui o valor atual", "teleporte o jogador para um ponto definido"),
+            "add": (f"`target_path` e `value` a somar à {prop}", "soma o deslocamento", "mova uma plataforma 2 metros para cima"),
+            "subtract": (f"`target_path` e `value` a subtrair da {prop}", "subtrai o deslocamento", "afaste um objeto do ponto atual"),
+            "multiply": (f"`target_path` e `factor` para multiplicar a {prop}", "multiplica cada componente", "dobre a escala de um item coletado"),
+            "lerp": (f"`target_path`, `target_value` e `weight` entre 0 e 1", "interpola entre valor atual e destino", "suavize a câmera até o ponto desejado"),
+            "move_towards": (f"`target_path`, `target_value` e `delta` máximo", "aproxima sem ultrapassar o destino", "mova uma plataforma até a parada"),
+            "local_to_world": ("`target_path` e coordenada local em `value`", "converte para coordenada global", "descubra onde fica o cano da arma no mundo"),
+            "world_to_local": ("`target_path` e coordenada global em `value`", "converte para o espaço local", "converta o ponto atingido para coordenadas do objeto"),
+            "reset": ("somente `target_path`", "restaura posição/rotação para zero ou escala para um", "reinicie a transformação após respawn"),
+            "look_at": ("`target_path`, ponto global `target` e eixo superior opcional", "gira para olhar o ponto", "faça uma torre mirar no jogador"),
+            "face_direction": ("`target_path` e vetor `direction`", "gira para a direção informada", "vire o personagem para o sentido do movimento"),
+            "y": ("`target_path` e ângulo `value` em graus/radianos indicado pelo bloco", "gira somente no eixo Y", "gire uma moeda ou plataforma horizontalmente"),
+            "uniform": ("`target_path` e número `value`", "aplica o mesmo tamanho em X, Y e Z", "aumente um power-up sem deformá-lo"),
+        }
+        inputs, result, use = transform_inputs[operation]
+        return (f"Manipula a {prop} de um `Node2D`/`Node3D`: {result}. Use para {use}.", inputs.capitalize() + ". O caminho é relativo ao `MGSNoCodeRunner`.", f"{result.capitalize()} e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.", f"Mecânica: `Update → {title}`, alvo `../Player`; conecte a entrada descrita acima e use a saída para {use}.")
     if prefix == "time":
         time_guides = {
             "delta": ("tempo em segundos desde o quadro anterior", "multiplicar movimento por Delta para manter a mesma velocidade em aparelhos rápidos e lentos", "`Update → Delta → Multiply (speed) → Transform Position Add`"),
@@ -211,7 +293,7 @@ def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
         flow_guides = {
             "branch": "escolhe entre as saídas True e False usando uma condição booleana", "gate": "abre ou fecha a passagem de pulsos sem desconectar o grafo", "once": "deixa o fluxo passar somente na primeira chamada até ser reiniciado", "do_n": "limita a passagem do fluxo a uma quantidade configurada", "while": "repete o corpo enquanto a condição permanecer verdadeira, respeitando o limite de segurança", "for": "repete usando índice inicial, final e passo", "foreach": "executa o corpo uma vez para cada item de uma lista", "delay": "continua o fluxo após uma duração", "debounce": "executa somente depois que chamadas rápidas pararem", "throttle": "limita quantas vezes um fluxo pode executar por intervalo", "race": "executa caminhos concorrentes e continua com o primeiro que terminar", "parallel": "inicia vários caminhos no mesmo disparo", "cancel": "cancela uma execução atrasada ou concorrente identificada", "break": "encerra o laço atual", "continue": "pula o restante da iteração e inicia a próxima", "switch_bool": "encaminha um booleano para uma saída nomeada", "switch_number": "encaminha um número para o caso correspondente", "switch_text": "encaminha um texto para o caso correspondente", "switch_object": "encaminha um objeto para o caso correspondente", "flip_flop": "alterna entre as saídas A e B a cada disparo",
         }
-        return (f"Controla a ordem do grafo: {flow_guides[operation]}.", "Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.", "Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.", f"Exemplo: `Button Pressed → {title}`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.")
+        return (f"Controla a ordem do grafo: {flow_guides[operation]}.", "Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.", "Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.", f"Mecânica: `Button Pressed → {title}`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.")
     if prefix == "text":
         return (f"Aplica `{readable}` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.", "`text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.", "Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.", f"Exemplo: conecte `UI Get Text → {title} → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.")
     if prefix == "color":

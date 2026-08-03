@@ -8,110 +8,110 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `event.scene.start`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `scene` informa `start`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `scene` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Start` a uma ação relacionada a `scene`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `scene` informa `start`. Use este evento para carregar a configuração inicial da fase exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `scene` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Start → Sequence 2`; na primeira saída, carregar a configuração inicial da fase; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 2. Ready
 
 - **ID:** `event.scene.ready`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `scene` informa `ready`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `scene` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Ready` a uma ação relacionada a `scene`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `scene` informa `ready`. Use este evento para carregar a configuração inicial da fase exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `scene` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Ready → Sequence 2`; na primeira saída, carregar a configuração inicial da fase; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 3. Exit
 
 - **ID:** `event.scene.exit`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `scene` informa `exit`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `scene` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Exit` a uma ação relacionada a `scene`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `scene` informa `exit`. Use este evento para carregar a configuração inicial da fase exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `scene` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Exit → Sequence 2`; na primeira saída, carregar a configuração inicial da fase; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 4. Update
 
 - **ID:** `event.frame.update`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `frame` informa `update`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `frame` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Update` a uma ação relacionada a `frame`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `frame` informa `update`. Use este evento para atualizar movimento ou interface exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `frame` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Update → Sequence 2`; na primeira saída, atualizar movimento ou interface; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 5. Fixed Update
 
 - **ID:** `event.frame.fixed_update`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `frame` informa `fixed update`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `frame` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Fixed Update` a uma ação relacionada a `frame`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `frame` informa `fixed update`. Use este evento para atualizar movimento ou interface exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `frame` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Fixed Update → Sequence 2`; na primeira saída, atualizar movimento ou interface; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 6. Touch
 
 - **ID:** `event.object.touch`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `touch`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Touch` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `object` informa `touch`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Touch → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 7. Click
 
 - **ID:** `event.object.click`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `click`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Click` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `object` informa `click`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Click → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 8. Enabled
 
 - **ID:** `event.object.enabled`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `enabled`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Enabled` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `object` informa `enabled`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Enabled → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 9. Disabled
 
 - **ID:** `event.object.disabled`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `disabled`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Disabled` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `object` informa `disabled`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Disabled → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 10. Created
 
 - **ID:** `event.object.created`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `created`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Created` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `object` informa `created`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Created → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 11. Destroyed
 
 - **ID:** `event.object.destroyed`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `object` informa `destroyed`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Destroyed` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `object` informa `destroyed`. Use este evento para alterar o Node recebido no payload exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `object` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Destroyed → Sequence 2`; na primeira saída, alterar o Node recebido no payload; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 12. Button Pressed
@@ -128,10 +128,10 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `event.input.button_released`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `input` informa `button released`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `input` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Button Released` a uma ação relacionada a `input`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `input` informa `button released`. Use este evento para iniciar a resposta de gameplay exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `input` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Button Released → Sequence 2`; na primeira saída, iniciar a resposta de gameplay; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Se não disparar, verifique foco da janela, nome exato da ação no Input Map, dispositivo selecionado e se outro Control está consumindo o evento.
 
 ## 14. Key Down
@@ -158,40 +158,40 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `event.input.axis`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `input` informa `axis`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `input` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Axis` a uma ação relacionada a `input`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `input` informa `axis`. Use este evento para iniciar a resposta de gameplay exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `input` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Axis → Sequence 2`; na primeira saída, iniciar a resposta de gameplay; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Se não disparar, verifique foco da janela, nome exato da ação no Input Map, dispositivo selecionado e se outro Control está consumindo o evento.
 
 ## 17. Down
 
 - **ID:** `event.pointer.down`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `pointer` informa `down`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `pointer` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Down` a uma ação relacionada a `pointer`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `pointer` informa `down`. Use este evento para iniciar a resposta de gameplay exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `pointer` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Down → Sequence 2`; na primeira saída, iniciar a resposta de gameplay; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 18. Up
 
 - **ID:** `event.pointer.up`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `pointer` informa `up`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `pointer` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Up` a uma ação relacionada a `pointer`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `pointer` informa `up`. Use este evento para iniciar a resposta de gameplay exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `pointer` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Up → Sequence 2`; na primeira saída, iniciar a resposta de gameplay; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 19. Move
 
 - **ID:** `event.pointer.move`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `pointer` informa `move`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `pointer` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Move` a uma ação relacionada a `pointer`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `pointer` informa `move`. Use este evento para iniciar a resposta de gameplay exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `pointer` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Move → Sequence 2`; na primeira saída, iniciar a resposta de gameplay; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 20. Drag
@@ -208,200 +208,200 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `event.collision.enter`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `collision` informa `enter`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `collision` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Enter` a uma ação relacionada a `collision`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `collision` informa `enter`. Use este evento para aplicar dano ao objeto que colidiu exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `collision` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Enter → Sequence 2`; na primeira saída, aplicar dano ao objeto que colidiu; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 22. Stay
 
 - **ID:** `event.collision.stay`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `collision` informa `stay`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `collision` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Stay` a uma ação relacionada a `collision`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `collision` informa `stay`. Use este evento para aplicar dano ao objeto que colidiu exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `collision` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Stay → Sequence 2`; na primeira saída, aplicar dano ao objeto que colidiu; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 23. Exit
 
 - **ID:** `event.collision.exit`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `collision` informa `exit`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `collision` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Exit` a uma ação relacionada a `collision`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `collision` informa `exit`. Use este evento para aplicar dano ao objeto que colidiu exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `collision` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Exit → Sequence 2`; na primeira saída, aplicar dano ao objeto que colidiu; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 24. Enter
 
 - **ID:** `event.trigger.enter`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `trigger` informa `enter`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `trigger` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Enter` a uma ação relacionada a `trigger`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `trigger` informa `enter`. Use este evento para abrir uma porta ou iniciar uma área exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `trigger` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Enter → Sequence 2`; na primeira saída, abrir uma porta ou iniciar uma área; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 25. Stay
 
 - **ID:** `event.trigger.stay`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `trigger` informa `stay`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `trigger` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Stay` a uma ação relacionada a `trigger`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `trigger` informa `stay`. Use este evento para abrir uma porta ou iniciar uma área exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `trigger` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Stay → Sequence 2`; na primeira saída, abrir uma porta ou iniciar uma área; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 26. Exit
 
 - **ID:** `event.trigger.exit`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `trigger` informa `exit`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `trigger` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Exit` a uma ação relacionada a `trigger`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `trigger` informa `exit`. Use este evento para abrir uma porta ou iniciar uma área exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `trigger` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Exit → Sequence 2`; na primeira saída, abrir uma porta ou iniciar uma área; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 27. Started
 
 - **ID:** `event.animation.started`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `animation` informa `started`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `animation` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Started` a uma ação relacionada a `animation`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `animation` informa `started`. Use este evento para encadear a próxima animação exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `animation` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Started → Sequence 2`; na primeira saída, encadear a próxima animação; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 28. Finished
 
 - **ID:** `event.animation.finished`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `animation` informa `finished`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `animation` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Finished` a uma ação relacionada a `animation`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `animation` informa `finished`. Use este evento para encadear a próxima animação exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `animation` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Finished → Sequence 2`; na primeira saída, encadear a próxima animação; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 29. Finished
 
 - **ID:** `event.audio.finished`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `audio` informa `finished`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `audio` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Finished` a uma ação relacionada a `audio`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `audio` informa `finished`. Use este evento para atualizar a interface quando o som terminar exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `audio` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Finished → Sequence 2`; na primeira saída, atualizar a interface quando o som terminar; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 30. Focused
 
 - **ID:** `event.ui.focused`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `ui` informa `focused`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `ui` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Focused` a uma ação relacionada a `ui`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `ui` informa `focused`. Use este evento para responder à alteração do controle exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `ui` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Focused → Sequence 2`; na primeira saída, responder à alteração do controle; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 31. Value Changed
 
 - **ID:** `event.ui.value_changed`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `ui` informa `value changed`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `ui` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Value Changed` a uma ação relacionada a `ui`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `ui` informa `value changed`. Use este evento para responder à alteração do controle exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `ui` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Value Changed → Sequence 2`; na primeira saída, responder à alteração do controle; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 32. Elapsed
 
 - **ID:** `event.timer.elapsed`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `timer` informa `elapsed`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `timer` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Elapsed` a uma ação relacionada a `timer`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `timer` informa `elapsed`. Use este evento para liberar uma habilidade após o tempo exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `timer` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Elapsed → Sequence 2`; na primeira saída, liberar uma habilidade após o tempo; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 33. Connected
 
 - **ID:** `event.network.connected`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `network` informa `connected`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `network` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Connected` a uma ação relacionada a `network`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `network` informa `connected`. Use este evento para mostrar o estado da conexão exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `network` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Connected → Sequence 2`; na primeira saída, mostrar o estado da conexão; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 34. Disconnected
 
 - **ID:** `event.network.disconnected`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `network` informa `disconnected`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `network` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Disconnected` a uma ação relacionada a `network`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `network` informa `disconnected`. Use este evento para mostrar o estado da conexão exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `network` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Disconnected → Sequence 2`; na primeira saída, mostrar o estado da conexão; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 35. Loaded
 
 - **ID:** `event.save.loaded`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `save` informa `loaded`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `save` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Loaded` a uma ação relacionada a `save`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `save` informa `loaded`. Use este evento para atualizar a tela depois da gravação exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `save` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Loaded → Sequence 2`; na primeira saída, atualizar a tela depois da gravação; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 36. Completed
 
 - **ID:** `event.save.completed`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `save` informa `completed`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `save` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Completed` a uma ação relacionada a `save`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `save` informa `completed`. Use este evento para atualizar a tela depois da gravação exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `save` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Completed → Sequence 2`; na primeira saída, atualizar a tela depois da gravação; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 37. Loaded
 
 - **ID:** `event.world.loaded`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `world` informa `loaded`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `world` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Loaded` a uma ação relacionada a `world`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `world` informa `loaded`. Use este evento para configurar a fase carregada exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `world` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Loaded → Sequence 2`; na primeira saída, configurar a fase carregada; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 38. Unloaded
 
 - **ID:** `event.world.unloaded`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `world` informa `unloaded`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `world` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Unloaded` a uma ação relacionada a `world`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `world` informa `unloaded`. Use este evento para configurar a fase carregada exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `world` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Unloaded → Sequence 2`; na primeira saída, configurar a fase carregada; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 39. Received
 
 - **ID:** `event.custom.received`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `custom` informa `received`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `custom` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Received` a uma ação relacionada a `custom`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `custom` informa `received`. Use este evento para reagir ao evento nomeado exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `custom` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Received → Sequence 2`; na primeira saída, reagir ao evento nomeado; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 40. Changed
 
 - **ID:** `event.component.changed`
 - **Categoria:** Eventos
-- **Finalidade:** Dispara o fluxo quando `component` informa `changed`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
-- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `component` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
-- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
-- **Exemplo:** Exemplo de gameplay: conecte `Changed` a uma ação relacionada a `component`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Finalidade:** Dispara o fluxo quando `component` informa `changed`. Use este evento para sincronizar a interface com o componente exatamente no momento da ocorrência, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Defina o filtro de `component` apresentado pelo evento. Quando houver objeto envolvido, sua referência chega no payload; eventos nomeados recebem o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e entrega o payload específico nos pinos de dados.
+- **Exemplo:** Mecânica: `Changed → Sequence 2`; na primeira saída, sincronizar a interface com o componente; na segunda, use `Audio Play` ou `UI Set Text` para dar retorno ao jogador.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 41. Sequência 2
@@ -489,9 +489,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.branch`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: escolhe entre as saídas True e False usando uma condição booleana.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Branch`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Branch`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 50. Gate
@@ -499,9 +499,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.gate`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: abre ou fecha a passagem de pulsos sem desconectar o grafo.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Gate`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Gate`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 51. Once
@@ -509,9 +509,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.once`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: deixa o fluxo passar somente na primeira chamada até ser reiniciado.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Once`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Once`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 52. Do N
@@ -519,9 +519,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.do_n`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: limita a passagem do fluxo a uma quantidade configurada.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Do N`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Do N`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 53. While
@@ -529,9 +529,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.while`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: repete o corpo enquanto a condição permanecer verdadeira, respeitando o limite de segurança.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → While`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → While`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 54. For
@@ -539,9 +539,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.for`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: repete usando índice inicial, final e passo.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → For`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → For`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 55. Foreach
@@ -549,9 +549,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.foreach`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: executa o corpo uma vez para cada item de uma lista.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Foreach`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Foreach`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 56. Delay
@@ -559,9 +559,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.delay`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: continua o fluxo após uma duração.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Delay`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Delay`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 57. Debounce
@@ -569,9 +569,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.debounce`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: executa somente depois que chamadas rápidas pararem.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Debounce`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Debounce`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 58. Throttle
@@ -579,9 +579,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.throttle`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: limita quantas vezes um fluxo pode executar por intervalo.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Throttle`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Throttle`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 59. Race
@@ -589,9 +589,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.race`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: executa caminhos concorrentes e continua com o primeiro que terminar.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Race`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Race`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 60. Parallel
@@ -599,9 +599,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.parallel`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: inicia vários caminhos no mesmo disparo.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Parallel`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Parallel`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 61. Cancel
@@ -609,9 +609,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.cancel`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: cancela uma execução atrasada ou concorrente identificada.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Cancel`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Cancel`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 62. Break
@@ -619,9 +619,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.break`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: encerra o laço atual.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Break`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Break`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 63. Continue
@@ -629,9 +629,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.continue`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: pula o restante da iteração e inicia a próxima.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Continue`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Continue`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 64. Switch Bool
@@ -639,9 +639,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.switch_bool`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: encaminha um booleano para uma saída nomeada.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Switch Bool`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Switch Bool`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 65. Switch Number
@@ -649,9 +649,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.switch_number`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: encaminha um número para o caso correspondente.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Switch Number`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Switch Number`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 66. Switch Text
@@ -659,9 +659,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.switch_text`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: encaminha um texto para o caso correspondente.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Switch Text`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Switch Text`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 67. Switch Object
@@ -669,9 +669,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.switch_object`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: encaminha um objeto para o caso correspondente.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Switch Object`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Switch Object`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 68. Flip Flop
@@ -679,3479 +679,3479 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `flow.flip_flop`
 - **Categoria:** Fluxo
 - **Finalidade:** Controla a ordem do grafo: alterna entre as saídas A e B a cada disparo.
-- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
-- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
-- **Exemplo:** Exemplo: `Button Pressed → Flip Flop`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
+- **Entradas/alvo:** Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.
+- **Saídas/efeito:** Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.
+- **Exemplo:** Mecânica: `Button Pressed → Flip Flop`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 69. Pressed
 
 - **ID:** `input.keyboard.pressed`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `pressed` do dispositivo `keyboard` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressed` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Pressed → Debug Info` para visualizar o valor recebido do keyboard.
+- **Finalidade:** No dispositivo `keyboard`, detecta o instante em que o controle é pressionado. Use para inicie um ataque sem repeti-lo enquanto o botão estiver segurado.
+- **Entradas/alvo:** `action`/botão e índice opcional do dispositivo.
+- **Saídas/efeito:** `true` somente no primeiro quadro em `value`.
+- **Exemplo:** Mecânica: `Update → Pressed`; conecte `value` a um `Branch`, movimento, câmera ou UI para inicie um ataque sem repeti-lo enquanto o botão estiver segurado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 70. Released
 
 - **ID:** `input.keyboard.released`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `released` do dispositivo `keyboard` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `released` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Released → Debug Info` para visualizar o valor recebido do keyboard.
+- **Finalidade:** No dispositivo `keyboard`, detecta o instante em que o controle é solto. Use para solte uma flecha depois de carregar o arco.
+- **Entradas/alvo:** `action`/botão e índice opcional.
+- **Saídas/efeito:** `true` no quadro da liberação em `value`.
+- **Exemplo:** Mecânica: `Update → Released`; conecte `value` a um `Branch`, movimento, câmera ou UI para solte uma flecha depois de carregar o arco.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 71. Held
 
 - **ID:** `input.keyboard.held`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `held` do dispositivo `keyboard` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `held` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Held → Debug Info` para visualizar o valor recebido do keyboard.
+- **Finalidade:** No dispositivo `keyboard`, informa se o controle continua pressionado. Use para mantenha corrida ou disparo contínuo enquanto houver pressão.
+- **Entradas/alvo:** `action`/botão.
+- **Saídas/efeito:** Booleano atualizado a cada quadro em `value`.
+- **Exemplo:** Mecânica: `Update → Held`; conecte `value` a um `Branch`, movimento, câmera ou UI para mantenha corrida ou disparo contínuo enquanto houver pressão.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 72. Axis
 
 - **ID:** `input.keyboard.axis`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `axis` do dispositivo `keyboard` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `axis` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Axis → Debug Info` para visualizar o valor recebido do keyboard.
+- **Finalidade:** No dispositivo `keyboard`, lê um eixo analógico ou par negativo/positivo. Use para controle movimento ou direção com joystick/teclas.
+- **Entradas/alvo:** Ações negativa e positiva, eixo e dispositivo.
+- **Saídas/efeito:** Número entre `-1.0` e `1.0` em `value`.
+- **Exemplo:** Mecânica: `Update → Axis`; conecte `value` a um `Branch`, movimento, câmera ou UI para controle movimento ou direção com joystick/teclas.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 73. Position
 
 - **ID:** `input.keyboard.position`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `position` do dispositivo `keyboard` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `position` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Position → Debug Info` para visualizar o valor recebido do keyboard.
+- **Finalidade:** No dispositivo `keyboard`, lê a posição atual do ponteiro/toque. Use para posicione uma mira onde o jogador toca.
+- **Entradas/alvo:** Índice do toque ou ponteiro.
+- **Saídas/efeito:** `vector2` em pixels da viewport em `value`.
+- **Exemplo:** Mecânica: `Update → Position`; conecte `value` a um `Branch`, movimento, câmera ou UI para posicione uma mira onde o jogador toca.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 74. Delta
 
 - **ID:** `input.keyboard.delta`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `delta` do dispositivo `keyboard` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `delta` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Delta → Debug Info` para visualizar o valor recebido do keyboard.
+- **Finalidade:** No dispositivo `keyboard`, lê quanto o ponteiro/toque se moveu. Use para gire a câmera pela distância arrastada.
+- **Entradas/alvo:** Índice do toque ou ponteiro.
+- **Saídas/efeito:** `vector2` desde a leitura anterior em `value`.
+- **Exemplo:** Mecânica: `Update → Delta`; conecte `value` a um `Branch`, movimento, câmera ou UI para gire a câmera pela distância arrastada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 75. Pressure
 
 - **ID:** `input.keyboard.pressure`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `pressure` do dispositivo `keyboard` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressure` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Pressure → Debug Info` para visualizar o valor recebido do keyboard.
+- **Finalidade:** No dispositivo `keyboard`, lê a intensidade de pressão disponível. Use para varie a espessura de pintura ou força de uma ação.
+- **Entradas/alvo:** Índice do toque/caneta.
+- **Saídas/efeito:** Número normalmente entre `0.0` e `1.0` em `value`.
+- **Exemplo:** Mecânica: `Update → Pressure`; conecte `value` a um `Branch`, movimento, câmera ou UI para varie a espessura de pintura ou força de uma ação.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 76. Count
 
 - **ID:** `input.keyboard.count`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `count` do dispositivo `keyboard` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `count` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Count → Debug Info` para visualizar o valor recebido do keyboard.
+- **Finalidade:** No dispositivo `keyboard`, conta controles/toques ativos. Use para ative gesto de zoom somente com dois dedos.
+- **Entradas/alvo:** Tipo ou índice do dispositivo quando disponível.
+- **Saídas/efeito:** Quantidade inteira em `value`.
+- **Exemplo:** Mecânica: `Update → Count`; conecte `value` a um `Branch`, movimento, câmera ou UI para ative gesto de zoom somente com dois dedos.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 77. Available
 
 - **ID:** `input.keyboard.available`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `available` do dispositivo `keyboard` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `available` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Available → Debug Info` para visualizar o valor recebido do keyboard.
+- **Finalidade:** No dispositivo `keyboard`, verifica se o dispositivo/recurso existe. Use para mostre controles touch quando não houver gamepad.
+- **Entradas/alvo:** Índice opcional do dispositivo.
+- **Saídas/efeito:** Booleano em `value`.
+- **Exemplo:** Mecânica: `Update → Available`; conecte `value` a um `Branch`, movimento, câmera ou UI para mostre controles touch quando não houver gamepad.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 78. Name
 
 - **ID:** `input.keyboard.name`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `name` do dispositivo `keyboard` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `name` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Name → Debug Info` para visualizar o valor recebido do keyboard.
+- **Finalidade:** No dispositivo `keyboard`, obtém o nome apresentado pelo dispositivo. Use para mostre `Xbox Controller` na tela de controles.
+- **Entradas/alvo:** Índice do dispositivo.
+- **Saídas/efeito:** Texto com o nome em `value`.
+- **Exemplo:** Mecânica: `Update → Name`; conecte `value` a um `Branch`, movimento, câmera ou UI para mostre `Xbox Controller` na tela de controles.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 79. Pressed
 
 - **ID:** `input.mouse.pressed`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `pressed` do dispositivo `mouse` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressed` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Pressed → Debug Info` para visualizar o valor recebido do mouse.
+- **Finalidade:** No dispositivo `mouse`, detecta o instante em que o controle é pressionado. Use para inicie um ataque sem repeti-lo enquanto o botão estiver segurado.
+- **Entradas/alvo:** `action`/botão e índice opcional do dispositivo.
+- **Saídas/efeito:** `true` somente no primeiro quadro em `value`.
+- **Exemplo:** Mecânica: `Update → Pressed`; conecte `value` a um `Branch`, movimento, câmera ou UI para inicie um ataque sem repeti-lo enquanto o botão estiver segurado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 80. Released
 
 - **ID:** `input.mouse.released`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `released` do dispositivo `mouse` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `released` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Released → Debug Info` para visualizar o valor recebido do mouse.
+- **Finalidade:** No dispositivo `mouse`, detecta o instante em que o controle é solto. Use para solte uma flecha depois de carregar o arco.
+- **Entradas/alvo:** `action`/botão e índice opcional.
+- **Saídas/efeito:** `true` no quadro da liberação em `value`.
+- **Exemplo:** Mecânica: `Update → Released`; conecte `value` a um `Branch`, movimento, câmera ou UI para solte uma flecha depois de carregar o arco.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 81. Held
 
 - **ID:** `input.mouse.held`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `held` do dispositivo `mouse` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `held` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Held → Debug Info` para visualizar o valor recebido do mouse.
+- **Finalidade:** No dispositivo `mouse`, informa se o controle continua pressionado. Use para mantenha corrida ou disparo contínuo enquanto houver pressão.
+- **Entradas/alvo:** `action`/botão.
+- **Saídas/efeito:** Booleano atualizado a cada quadro em `value`.
+- **Exemplo:** Mecânica: `Update → Held`; conecte `value` a um `Branch`, movimento, câmera ou UI para mantenha corrida ou disparo contínuo enquanto houver pressão.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 82. Axis
 
 - **ID:** `input.mouse.axis`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `axis` do dispositivo `mouse` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `axis` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Axis → Debug Info` para visualizar o valor recebido do mouse.
+- **Finalidade:** No dispositivo `mouse`, lê um eixo analógico ou par negativo/positivo. Use para controle movimento ou direção com joystick/teclas.
+- **Entradas/alvo:** Ações negativa e positiva, eixo e dispositivo.
+- **Saídas/efeito:** Número entre `-1.0` e `1.0` em `value`.
+- **Exemplo:** Mecânica: `Update → Axis`; conecte `value` a um `Branch`, movimento, câmera ou UI para controle movimento ou direção com joystick/teclas.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 83. Position
 
 - **ID:** `input.mouse.position`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `position` do dispositivo `mouse` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `position` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Position → Debug Info` para visualizar o valor recebido do mouse.
+- **Finalidade:** No dispositivo `mouse`, lê a posição atual do ponteiro/toque. Use para posicione uma mira onde o jogador toca.
+- **Entradas/alvo:** Índice do toque ou ponteiro.
+- **Saídas/efeito:** `vector2` em pixels da viewport em `value`.
+- **Exemplo:** Mecânica: `Update → Position`; conecte `value` a um `Branch`, movimento, câmera ou UI para posicione uma mira onde o jogador toca.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 84. Delta
 
 - **ID:** `input.mouse.delta`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `delta` do dispositivo `mouse` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `delta` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Delta → Debug Info` para visualizar o valor recebido do mouse.
+- **Finalidade:** No dispositivo `mouse`, lê quanto o ponteiro/toque se moveu. Use para gire a câmera pela distância arrastada.
+- **Entradas/alvo:** Índice do toque ou ponteiro.
+- **Saídas/efeito:** `vector2` desde a leitura anterior em `value`.
+- **Exemplo:** Mecânica: `Update → Delta`; conecte `value` a um `Branch`, movimento, câmera ou UI para gire a câmera pela distância arrastada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 85. Pressure
 
 - **ID:** `input.mouse.pressure`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `pressure` do dispositivo `mouse` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressure` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Pressure → Debug Info` para visualizar o valor recebido do mouse.
+- **Finalidade:** No dispositivo `mouse`, lê a intensidade de pressão disponível. Use para varie a espessura de pintura ou força de uma ação.
+- **Entradas/alvo:** Índice do toque/caneta.
+- **Saídas/efeito:** Número normalmente entre `0.0` e `1.0` em `value`.
+- **Exemplo:** Mecânica: `Update → Pressure`; conecte `value` a um `Branch`, movimento, câmera ou UI para varie a espessura de pintura ou força de uma ação.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 86. Count
 
 - **ID:** `input.mouse.count`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `count` do dispositivo `mouse` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `count` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Count → Debug Info` para visualizar o valor recebido do mouse.
+- **Finalidade:** No dispositivo `mouse`, conta controles/toques ativos. Use para ative gesto de zoom somente com dois dedos.
+- **Entradas/alvo:** Tipo ou índice do dispositivo quando disponível.
+- **Saídas/efeito:** Quantidade inteira em `value`.
+- **Exemplo:** Mecânica: `Update → Count`; conecte `value` a um `Branch`, movimento, câmera ou UI para ative gesto de zoom somente com dois dedos.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 87. Available
 
 - **ID:** `input.mouse.available`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `available` do dispositivo `mouse` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `available` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Available → Debug Info` para visualizar o valor recebido do mouse.
+- **Finalidade:** No dispositivo `mouse`, verifica se o dispositivo/recurso existe. Use para mostre controles touch quando não houver gamepad.
+- **Entradas/alvo:** Índice opcional do dispositivo.
+- **Saídas/efeito:** Booleano em `value`.
+- **Exemplo:** Mecânica: `Update → Available`; conecte `value` a um `Branch`, movimento, câmera ou UI para mostre controles touch quando não houver gamepad.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 88. Name
 
 - **ID:** `input.mouse.name`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `name` do dispositivo `mouse` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `name` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Name → Debug Info` para visualizar o valor recebido do mouse.
+- **Finalidade:** No dispositivo `mouse`, obtém o nome apresentado pelo dispositivo. Use para mostre `Xbox Controller` na tela de controles.
+- **Entradas/alvo:** Índice do dispositivo.
+- **Saídas/efeito:** Texto com o nome em `value`.
+- **Exemplo:** Mecânica: `Update → Name`; conecte `value` a um `Branch`, movimento, câmera ou UI para mostre `Xbox Controller` na tela de controles.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 89. Pressed
 
 - **ID:** `input.touch.pressed`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `pressed` do dispositivo `touch` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressed` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Pressed → Debug Info` para visualizar o valor recebido do touch.
+- **Finalidade:** No dispositivo `touch`, detecta o instante em que o controle é pressionado. Use para inicie um ataque sem repeti-lo enquanto o botão estiver segurado.
+- **Entradas/alvo:** `action`/botão e índice opcional do dispositivo.
+- **Saídas/efeito:** `true` somente no primeiro quadro em `value`.
+- **Exemplo:** Mecânica: `Update → Pressed`; conecte `value` a um `Branch`, movimento, câmera ou UI para inicie um ataque sem repeti-lo enquanto o botão estiver segurado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 90. Released
 
 - **ID:** `input.touch.released`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `released` do dispositivo `touch` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `released` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Released → Debug Info` para visualizar o valor recebido do touch.
+- **Finalidade:** No dispositivo `touch`, detecta o instante em que o controle é solto. Use para solte uma flecha depois de carregar o arco.
+- **Entradas/alvo:** `action`/botão e índice opcional.
+- **Saídas/efeito:** `true` no quadro da liberação em `value`.
+- **Exemplo:** Mecânica: `Update → Released`; conecte `value` a um `Branch`, movimento, câmera ou UI para solte uma flecha depois de carregar o arco.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 91. Held
 
 - **ID:** `input.touch.held`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `held` do dispositivo `touch` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `held` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Held → Debug Info` para visualizar o valor recebido do touch.
+- **Finalidade:** No dispositivo `touch`, informa se o controle continua pressionado. Use para mantenha corrida ou disparo contínuo enquanto houver pressão.
+- **Entradas/alvo:** `action`/botão.
+- **Saídas/efeito:** Booleano atualizado a cada quadro em `value`.
+- **Exemplo:** Mecânica: `Update → Held`; conecte `value` a um `Branch`, movimento, câmera ou UI para mantenha corrida ou disparo contínuo enquanto houver pressão.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 92. Axis
 
 - **ID:** `input.touch.axis`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `axis` do dispositivo `touch` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `axis` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Axis → Debug Info` para visualizar o valor recebido do touch.
+- **Finalidade:** No dispositivo `touch`, lê um eixo analógico ou par negativo/positivo. Use para controle movimento ou direção com joystick/teclas.
+- **Entradas/alvo:** Ações negativa e positiva, eixo e dispositivo.
+- **Saídas/efeito:** Número entre `-1.0` e `1.0` em `value`.
+- **Exemplo:** Mecânica: `Update → Axis`; conecte `value` a um `Branch`, movimento, câmera ou UI para controle movimento ou direção com joystick/teclas.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 93. Position
 
 - **ID:** `input.touch.position`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `position` do dispositivo `touch` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `position` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Position → Debug Info` para visualizar o valor recebido do touch.
+- **Finalidade:** No dispositivo `touch`, lê a posição atual do ponteiro/toque. Use para posicione uma mira onde o jogador toca.
+- **Entradas/alvo:** Índice do toque ou ponteiro.
+- **Saídas/efeito:** `vector2` em pixels da viewport em `value`.
+- **Exemplo:** Mecânica: `Update → Position`; conecte `value` a um `Branch`, movimento, câmera ou UI para posicione uma mira onde o jogador toca.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 94. Delta
 
 - **ID:** `input.touch.delta`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `delta` do dispositivo `touch` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `delta` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Delta → Debug Info` para visualizar o valor recebido do touch.
+- **Finalidade:** No dispositivo `touch`, lê quanto o ponteiro/toque se moveu. Use para gire a câmera pela distância arrastada.
+- **Entradas/alvo:** Índice do toque ou ponteiro.
+- **Saídas/efeito:** `vector2` desde a leitura anterior em `value`.
+- **Exemplo:** Mecânica: `Update → Delta`; conecte `value` a um `Branch`, movimento, câmera ou UI para gire a câmera pela distância arrastada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 95. Pressure
 
 - **ID:** `input.touch.pressure`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `pressure` do dispositivo `touch` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressure` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Pressure → Debug Info` para visualizar o valor recebido do touch.
+- **Finalidade:** No dispositivo `touch`, lê a intensidade de pressão disponível. Use para varie a espessura de pintura ou força de uma ação.
+- **Entradas/alvo:** Índice do toque/caneta.
+- **Saídas/efeito:** Número normalmente entre `0.0` e `1.0` em `value`.
+- **Exemplo:** Mecânica: `Update → Pressure`; conecte `value` a um `Branch`, movimento, câmera ou UI para varie a espessura de pintura ou força de uma ação.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 96. Count
 
 - **ID:** `input.touch.count`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `count` do dispositivo `touch` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `count` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Count → Debug Info` para visualizar o valor recebido do touch.
+- **Finalidade:** No dispositivo `touch`, conta controles/toques ativos. Use para ative gesto de zoom somente com dois dedos.
+- **Entradas/alvo:** Tipo ou índice do dispositivo quando disponível.
+- **Saídas/efeito:** Quantidade inteira em `value`.
+- **Exemplo:** Mecânica: `Update → Count`; conecte `value` a um `Branch`, movimento, câmera ou UI para ative gesto de zoom somente com dois dedos.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 97. Available
 
 - **ID:** `input.touch.available`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `available` do dispositivo `touch` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `available` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Available → Debug Info` para visualizar o valor recebido do touch.
+- **Finalidade:** No dispositivo `touch`, verifica se o dispositivo/recurso existe. Use para mostre controles touch quando não houver gamepad.
+- **Entradas/alvo:** Índice opcional do dispositivo.
+- **Saídas/efeito:** Booleano em `value`.
+- **Exemplo:** Mecânica: `Update → Available`; conecte `value` a um `Branch`, movimento, câmera ou UI para mostre controles touch quando não houver gamepad.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 98. Name
 
 - **ID:** `input.touch.name`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `name` do dispositivo `touch` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `name` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Name → Debug Info` para visualizar o valor recebido do touch.
+- **Finalidade:** No dispositivo `touch`, obtém o nome apresentado pelo dispositivo. Use para mostre `Xbox Controller` na tela de controles.
+- **Entradas/alvo:** Índice do dispositivo.
+- **Saídas/efeito:** Texto com o nome em `value`.
+- **Exemplo:** Mecânica: `Update → Name`; conecte `value` a um `Branch`, movimento, câmera ou UI para mostre `Xbox Controller` na tela de controles.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 99. Pressed
 
 - **ID:** `input.gamepad.pressed`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `pressed` do dispositivo `gamepad` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressed` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Pressed → Debug Info` para visualizar o valor recebido do gamepad.
+- **Finalidade:** No dispositivo `gamepad`, detecta o instante em que o controle é pressionado. Use para inicie um ataque sem repeti-lo enquanto o botão estiver segurado.
+- **Entradas/alvo:** `action`/botão e índice opcional do dispositivo.
+- **Saídas/efeito:** `true` somente no primeiro quadro em `value`.
+- **Exemplo:** Mecânica: `Update → Pressed`; conecte `value` a um `Branch`, movimento, câmera ou UI para inicie um ataque sem repeti-lo enquanto o botão estiver segurado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 100. Released
 
 - **ID:** `input.gamepad.released`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `released` do dispositivo `gamepad` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `released` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Released → Debug Info` para visualizar o valor recebido do gamepad.
+- **Finalidade:** No dispositivo `gamepad`, detecta o instante em que o controle é solto. Use para solte uma flecha depois de carregar o arco.
+- **Entradas/alvo:** `action`/botão e índice opcional.
+- **Saídas/efeito:** `true` no quadro da liberação em `value`.
+- **Exemplo:** Mecânica: `Update → Released`; conecte `value` a um `Branch`, movimento, câmera ou UI para solte uma flecha depois de carregar o arco.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 101. Held
 
 - **ID:** `input.gamepad.held`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `held` do dispositivo `gamepad` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `held` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Held → Debug Info` para visualizar o valor recebido do gamepad.
+- **Finalidade:** No dispositivo `gamepad`, informa se o controle continua pressionado. Use para mantenha corrida ou disparo contínuo enquanto houver pressão.
+- **Entradas/alvo:** `action`/botão.
+- **Saídas/efeito:** Booleano atualizado a cada quadro em `value`.
+- **Exemplo:** Mecânica: `Update → Held`; conecte `value` a um `Branch`, movimento, câmera ou UI para mantenha corrida ou disparo contínuo enquanto houver pressão.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 102. Axis
 
 - **ID:** `input.gamepad.axis`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `axis` do dispositivo `gamepad` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `axis` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Axis → Debug Info` para visualizar o valor recebido do gamepad.
+- **Finalidade:** No dispositivo `gamepad`, lê um eixo analógico ou par negativo/positivo. Use para controle movimento ou direção com joystick/teclas.
+- **Entradas/alvo:** Ações negativa e positiva, eixo e dispositivo.
+- **Saídas/efeito:** Número entre `-1.0` e `1.0` em `value`.
+- **Exemplo:** Mecânica: `Update → Axis`; conecte `value` a um `Branch`, movimento, câmera ou UI para controle movimento ou direção com joystick/teclas.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 103. Position
 
 - **ID:** `input.gamepad.position`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `position` do dispositivo `gamepad` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `position` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Position → Debug Info` para visualizar o valor recebido do gamepad.
+- **Finalidade:** No dispositivo `gamepad`, lê a posição atual do ponteiro/toque. Use para posicione uma mira onde o jogador toca.
+- **Entradas/alvo:** Índice do toque ou ponteiro.
+- **Saídas/efeito:** `vector2` em pixels da viewport em `value`.
+- **Exemplo:** Mecânica: `Update → Position`; conecte `value` a um `Branch`, movimento, câmera ou UI para posicione uma mira onde o jogador toca.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 104. Delta
 
 - **ID:** `input.gamepad.delta`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `delta` do dispositivo `gamepad` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `delta` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Delta → Debug Info` para visualizar o valor recebido do gamepad.
+- **Finalidade:** No dispositivo `gamepad`, lê quanto o ponteiro/toque se moveu. Use para gire a câmera pela distância arrastada.
+- **Entradas/alvo:** Índice do toque ou ponteiro.
+- **Saídas/efeito:** `vector2` desde a leitura anterior em `value`.
+- **Exemplo:** Mecânica: `Update → Delta`; conecte `value` a um `Branch`, movimento, câmera ou UI para gire a câmera pela distância arrastada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 105. Pressure
 
 - **ID:** `input.gamepad.pressure`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `pressure` do dispositivo `gamepad` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressure` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Pressure → Debug Info` para visualizar o valor recebido do gamepad.
+- **Finalidade:** No dispositivo `gamepad`, lê a intensidade de pressão disponível. Use para varie a espessura de pintura ou força de uma ação.
+- **Entradas/alvo:** Índice do toque/caneta.
+- **Saídas/efeito:** Número normalmente entre `0.0` e `1.0` em `value`.
+- **Exemplo:** Mecânica: `Update → Pressure`; conecte `value` a um `Branch`, movimento, câmera ou UI para varie a espessura de pintura ou força de uma ação.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 106. Count
 
 - **ID:** `input.gamepad.count`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `count` do dispositivo `gamepad` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `count` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Count → Debug Info` para visualizar o valor recebido do gamepad.
+- **Finalidade:** No dispositivo `gamepad`, conta controles/toques ativos. Use para ative gesto de zoom somente com dois dedos.
+- **Entradas/alvo:** Tipo ou índice do dispositivo quando disponível.
+- **Saídas/efeito:** Quantidade inteira em `value`.
+- **Exemplo:** Mecânica: `Update → Count`; conecte `value` a um `Branch`, movimento, câmera ou UI para ative gesto de zoom somente com dois dedos.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 107. Available
 
 - **ID:** `input.gamepad.available`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `available` do dispositivo `gamepad` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `available` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Available → Debug Info` para visualizar o valor recebido do gamepad.
+- **Finalidade:** No dispositivo `gamepad`, verifica se o dispositivo/recurso existe. Use para mostre controles touch quando não houver gamepad.
+- **Entradas/alvo:** Índice opcional do dispositivo.
+- **Saídas/efeito:** Booleano em `value`.
+- **Exemplo:** Mecânica: `Update → Available`; conecte `value` a um `Branch`, movimento, câmera ou UI para mostre controles touch quando não houver gamepad.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 108. Name
 
 - **ID:** `input.gamepad.name`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `name` do dispositivo `gamepad` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `name` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Name → Debug Info` para visualizar o valor recebido do gamepad.
+- **Finalidade:** No dispositivo `gamepad`, obtém o nome apresentado pelo dispositivo. Use para mostre `Xbox Controller` na tela de controles.
+- **Entradas/alvo:** Índice do dispositivo.
+- **Saídas/efeito:** Texto com o nome em `value`.
+- **Exemplo:** Mecânica: `Update → Name`; conecte `value` a um `Branch`, movimento, câmera ou UI para mostre `Xbox Controller` na tela de controles.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 109. Pressed
 
 - **ID:** `input.sensor.pressed`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `pressed` do dispositivo `sensor` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressed` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Pressed → Debug Info` para visualizar o valor recebido do sensor.
+- **Finalidade:** No dispositivo `sensor`, detecta o instante em que o controle é pressionado. Use para inicie um ataque sem repeti-lo enquanto o botão estiver segurado.
+- **Entradas/alvo:** `action`/botão e índice opcional do dispositivo.
+- **Saídas/efeito:** `true` somente no primeiro quadro em `value`.
+- **Exemplo:** Mecânica: `Update → Pressed`; conecte `value` a um `Branch`, movimento, câmera ou UI para inicie um ataque sem repeti-lo enquanto o botão estiver segurado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 110. Released
 
 - **ID:** `input.sensor.released`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `released` do dispositivo `sensor` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `released` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Released → Debug Info` para visualizar o valor recebido do sensor.
+- **Finalidade:** No dispositivo `sensor`, detecta o instante em que o controle é solto. Use para solte uma flecha depois de carregar o arco.
+- **Entradas/alvo:** `action`/botão e índice opcional.
+- **Saídas/efeito:** `true` no quadro da liberação em `value`.
+- **Exemplo:** Mecânica: `Update → Released`; conecte `value` a um `Branch`, movimento, câmera ou UI para solte uma flecha depois de carregar o arco.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 111. Held
 
 - **ID:** `input.sensor.held`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `held` do dispositivo `sensor` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `held` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Held → Debug Info` para visualizar o valor recebido do sensor.
+- **Finalidade:** No dispositivo `sensor`, informa se o controle continua pressionado. Use para mantenha corrida ou disparo contínuo enquanto houver pressão.
+- **Entradas/alvo:** `action`/botão.
+- **Saídas/efeito:** Booleano atualizado a cada quadro em `value`.
+- **Exemplo:** Mecânica: `Update → Held`; conecte `value` a um `Branch`, movimento, câmera ou UI para mantenha corrida ou disparo contínuo enquanto houver pressão.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 112. Axis
 
 - **ID:** `input.sensor.axis`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `axis` do dispositivo `sensor` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `axis` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Axis → Debug Info` para visualizar o valor recebido do sensor.
+- **Finalidade:** No dispositivo `sensor`, lê um eixo analógico ou par negativo/positivo. Use para controle movimento ou direção com joystick/teclas.
+- **Entradas/alvo:** Ações negativa e positiva, eixo e dispositivo.
+- **Saídas/efeito:** Número entre `-1.0` e `1.0` em `value`.
+- **Exemplo:** Mecânica: `Update → Axis`; conecte `value` a um `Branch`, movimento, câmera ou UI para controle movimento ou direção com joystick/teclas.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 113. Position
 
 - **ID:** `input.sensor.position`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `position` do dispositivo `sensor` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `position` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Position → Debug Info` para visualizar o valor recebido do sensor.
+- **Finalidade:** No dispositivo `sensor`, lê a posição atual do ponteiro/toque. Use para posicione uma mira onde o jogador toca.
+- **Entradas/alvo:** Índice do toque ou ponteiro.
+- **Saídas/efeito:** `vector2` em pixels da viewport em `value`.
+- **Exemplo:** Mecânica: `Update → Position`; conecte `value` a um `Branch`, movimento, câmera ou UI para posicione uma mira onde o jogador toca.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 114. Delta
 
 - **ID:** `input.sensor.delta`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `delta` do dispositivo `sensor` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `delta` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Delta → Debug Info` para visualizar o valor recebido do sensor.
+- **Finalidade:** No dispositivo `sensor`, lê quanto o ponteiro/toque se moveu. Use para gire a câmera pela distância arrastada.
+- **Entradas/alvo:** Índice do toque ou ponteiro.
+- **Saídas/efeito:** `vector2` desde a leitura anterior em `value`.
+- **Exemplo:** Mecânica: `Update → Delta`; conecte `value` a um `Branch`, movimento, câmera ou UI para gire a câmera pela distância arrastada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 115. Pressure
 
 - **ID:** `input.sensor.pressure`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `pressure` do dispositivo `sensor` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressure` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Pressure → Debug Info` para visualizar o valor recebido do sensor.
+- **Finalidade:** No dispositivo `sensor`, lê a intensidade de pressão disponível. Use para varie a espessura de pintura ou força de uma ação.
+- **Entradas/alvo:** Índice do toque/caneta.
+- **Saídas/efeito:** Número normalmente entre `0.0` e `1.0` em `value`.
+- **Exemplo:** Mecânica: `Update → Pressure`; conecte `value` a um `Branch`, movimento, câmera ou UI para varie a espessura de pintura ou força de uma ação.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 116. Count
 
 - **ID:** `input.sensor.count`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `count` do dispositivo `sensor` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `count` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Count → Debug Info` para visualizar o valor recebido do sensor.
+- **Finalidade:** No dispositivo `sensor`, conta controles/toques ativos. Use para ative gesto de zoom somente com dois dedos.
+- **Entradas/alvo:** Tipo ou índice do dispositivo quando disponível.
+- **Saídas/efeito:** Quantidade inteira em `value`.
+- **Exemplo:** Mecânica: `Update → Count`; conecte `value` a um `Branch`, movimento, câmera ou UI para ative gesto de zoom somente com dois dedos.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 117. Available
 
 - **ID:** `input.sensor.available`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `available` do dispositivo `sensor` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `available` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Available → Debug Info` para visualizar o valor recebido do sensor.
+- **Finalidade:** No dispositivo `sensor`, verifica se o dispositivo/recurso existe. Use para mostre controles touch quando não houver gamepad.
+- **Entradas/alvo:** Índice opcional do dispositivo.
+- **Saídas/efeito:** Booleano em `value`.
+- **Exemplo:** Mecânica: `Update → Available`; conecte `value` a um `Branch`, movimento, câmera ou UI para mostre controles touch quando não houver gamepad.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 118. Name
 
 - **ID:** `input.sensor.name`
 - **Categoria:** Entrada
-- **Finalidade:** Lê `name` do dispositivo `sensor` sem precisar escrever código de plataforma.
-- **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `name` pode exigir eixo ou botão.
-- **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
-- **Exemplo:** `Update → Name → Debug Info` para visualizar o valor recebido do sensor.
+- **Finalidade:** No dispositivo `sensor`, obtém o nome apresentado pelo dispositivo. Use para mostre `Xbox Controller` na tela de controles.
+- **Entradas/alvo:** Índice do dispositivo.
+- **Saídas/efeito:** Texto com o nome em `value`.
+- **Exemplo:** Mecânica: `Update → Name`; conecte `value` a um `Branch`, movimento, câmera ou UI para mostre `Xbox Controller` na tela de controles.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 119. Add
 
 - **ID:** `math.number.add`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `add` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `add` para valores do tipo number; use para somar 100 pontos à pontuação. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Add` e leve `result` a `Variable Set` ou `UI Set Text` para somar 100 pontos à pontuação.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 120. Subtract
 
 - **ID:** `math.number.subtract`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `subtract` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `subtract` para valores do tipo number; use para retirar dano da vida. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Subtract` e leve `result` a `Variable Set` ou `UI Set Text` para retirar dano da vida.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 121. Multiply
 
 - **ID:** `math.number.multiply`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `multiply` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `multiply` para valores do tipo number; use para aplicar um multiplicador de dano. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Multiply` e leve `result` a `Variable Set` ou `UI Set Text` para aplicar um multiplicador de dano.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 122. Divide
 
 - **ID:** `math.number.divide`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `divide` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `divide` para valores do tipo number; use para calcular a média por jogador. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Divide` e leve `result` a `Variable Set` ou `UI Set Text` para calcular a média por jogador.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 123. Modulo
 
 - **ID:** `math.number.modulo`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `modulo` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `modulo` para valores do tipo number; use para executar algo a cada N quadros. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Modulo` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Modulo` e leve `result` a `Variable Set` ou `UI Set Text` para executar algo a cada N quadros.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 124. Power
 
 - **ID:** `math.number.power`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `power` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `power` para valores do tipo number; use para criar uma curva exponencial. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Power` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Power` e leve `result` a `Variable Set` ou `UI Set Text` para criar uma curva exponencial.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 125. Minimum
 
 - **ID:** `math.number.minimum`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `minimum` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `minimum` para valores do tipo number; use para limitar ao menor valor. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Minimum` e leve `result` a `Variable Set` ou `UI Set Text` para limitar ao menor valor.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 126. Maximum
 
 - **ID:** `math.number.maximum`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `maximum` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `maximum` para valores do tipo number; use para garantir um valor mínimo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Maximum` e leve `result` a `Variable Set` ou `UI Set Text` para garantir um valor mínimo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 127. Average
 
 - **ID:** `math.number.average`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `average` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `average` para valores do tipo number; use para calcular média de valores. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Average` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Average` e leve `result` a `Variable Set` ou `UI Set Text` para calcular média de valores.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 128. Atan2
 
 - **ID:** `math.number.atan2`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `atan2` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `atan2` para valores do tipo number; use para calcular atan2 antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Atan2` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Atan2` e leve `result` a `Variable Set` ou `UI Set Text` para calcular atan2 antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 129. Log Base
 
 - **ID:** `math.number.log_base`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `log base` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `log base` para valores do tipo number; use para calcular log base antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Log Base` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Log Base` e leve `result` a `Variable Set` ou `UI Set Text` para calcular log base antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 130. Copy Sign
 
 - **ID:** `math.number.copy_sign`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `copy sign` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `copy sign` para valores do tipo number; use para calcular copy sign antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Copy Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Copy Sign` e leve `result` a `Variable Set` ou `UI Set Text` para calcular copy sign antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 131. Absolute
 
 - **ID:** `math.number.absolute`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `absolute` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `absolute` para valores do tipo number; use para remover o sinal. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor number de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Absolute` e leve `result` a `Variable Set` ou `UI Set Text` para remover o sinal.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 132. Negative
 
 - **ID:** `math.number.negative`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `negative` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `negative` para valores do tipo number; use para inverter direção/sinal. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor number de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Negative` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Negative` e leve `result` a `Variable Set` ou `UI Set Text` para inverter direção/sinal.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 133. Sqrt
 
 - **ID:** `math.number.sqrt`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `sqrt` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `sqrt` para valores do tipo number; use para obter uma raiz. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor number de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Sqrt` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Sqrt` e leve `result` a `Variable Set` ou `UI Set Text` para obter uma raiz.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 134. Cube Root
 
 - **ID:** `math.number.cube_root`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `cube root` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `cube root` para valores do tipo number; use para calcular cube root antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Cube Root` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Cube Root` e leve `result` a `Variable Set` ou `UI Set Text` para calcular cube root antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 135. Exp
 
 - **ID:** `math.number.exp`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `exp` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `exp` para valores do tipo number; use para calcular exp antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Exp` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Exp` e leve `result` a `Variable Set` ou `UI Set Text` para calcular exp antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 136. Log
 
 - **ID:** `math.number.log`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `log` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `log` para valores do tipo number; use para calcular log antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Log` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Log` e leve `result` a `Variable Set` ou `UI Set Text` para calcular log antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 137. Log10
 
 - **ID:** `math.number.log10`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `log10` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `log10` para valores do tipo number; use para calcular log10 antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Log10` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Log10` e leve `result` a `Variable Set` ou `UI Set Text` para calcular log10 antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 138. Floor
 
 - **ID:** `math.number.floor`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `floor` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `floor` para valores do tipo number; use para arredondar para baixo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor number de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Floor` e leve `result` a `Variable Set` ou `UI Set Text` para arredondar para baixo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 139. Ceil
 
 - **ID:** `math.number.ceil`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `ceil` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `ceil` para valores do tipo number; use para arredondar para cima. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor number de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Ceil` e leve `result` a `Variable Set` ou `UI Set Text` para arredondar para cima.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 140. Round
 
 - **ID:** `math.number.round`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `round` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `round` para valores do tipo number; use para arredondar ao inteiro mais próximo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor number de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Round` e leve `result` a `Variable Set` ou `UI Set Text` para arredondar ao inteiro mais próximo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 141. Truncate
 
 - **ID:** `math.number.truncate`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `truncate` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `truncate` para valores do tipo number; use para calcular truncate antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Truncate` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Truncate` e leve `result` a `Variable Set` ou `UI Set Text` para calcular truncate antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 142. Fraction
 
 - **ID:** `math.number.fraction`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `fraction` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `fraction` para valores do tipo number; use para calcular fraction antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Fraction` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Fraction` e leve `result` a `Variable Set` ou `UI Set Text` para calcular fraction antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 143. Sign
 
 - **ID:** `math.number.sign`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `sign` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `sign` para valores do tipo number; use para calcular sign antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Sign` e leve `result` a `Variable Set` ou `UI Set Text` para calcular sign antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 144. Sin
 
 - **ID:** `math.number.sin`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `sin` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `sin` para valores do tipo number; use para produzir oscilação suave. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Sin` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Sin` e leve `result` a `Variable Set` ou `UI Set Text` para produzir oscilação suave.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 145. Cos
 
 - **ID:** `math.number.cos`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `cos` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `cos` para valores do tipo number; use para produzir oscilação deslocada. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Cos` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Cos` e leve `result` a `Variable Set` ou `UI Set Text` para produzir oscilação deslocada.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 146. Tan
 
 - **ID:** `math.number.tan`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `tan` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `tan` para valores do tipo number; use para calcular tan antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Tan` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Tan` e leve `result` a `Variable Set` ou `UI Set Text` para calcular tan antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 147. Asin
 
 - **ID:** `math.number.asin`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `asin` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `asin` para valores do tipo number; use para calcular asin antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Asin` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Asin` e leve `result` a `Variable Set` ou `UI Set Text` para calcular asin antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 148. Acos
 
 - **ID:** `math.number.acos`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `acos` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `acos` para valores do tipo number; use para calcular acos antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Acos` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Acos` e leve `result` a `Variable Set` ou `UI Set Text` para calcular acos antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 149. Atan
 
 - **ID:** `math.number.atan`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `atan` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `atan` para valores do tipo number; use para calcular atan antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Atan` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Atan` e leve `result` a `Variable Set` ou `UI Set Text` para calcular atan antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 150. Degrees
 
 - **ID:** `math.number.degrees`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `degrees` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `degrees` para valores do tipo number; use para calcular degrees antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Degrees` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Degrees` e leve `result` a `Variable Set` ou `UI Set Text` para calcular degrees antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 151. Radians
 
 - **ID:** `math.number.radians`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `radians` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `radians` para valores do tipo number; use para calcular radians antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Radians` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Radians` e leve `result` a `Variable Set` ou `UI Set Text` para calcular radians antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 152. Saturate
 
 - **ID:** `math.number.saturate`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `saturate` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `saturate` para valores do tipo number; use para calcular saturate antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Saturate` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Saturate` e leve `result` a `Variable Set` ou `UI Set Text` para calcular saturate antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 153. Is Finite
 
 - **ID:** `math.number.is_finite`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `is finite` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `is finite` para valores do tipo number; use para calcular is finite antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor number que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Is Finite` e leve `result` a `Variable Set` ou `UI Set Text` para calcular is finite antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 154. Is Nan
 
 - **ID:** `math.number.is_nan`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `is nan` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `is nan` para valores do tipo number; use para calcular is nan antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor number que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Nan` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Is Nan` e leve `result` a `Variable Set` ou `UI Set Text` para calcular is nan antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 155. Add
 
 - **ID:** `math.integer.add`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `add` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `add` para valores do tipo integer; use para somar 100 pontos à pontuação. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Add` e leve `result` a `Variable Set` ou `UI Set Text` para somar 100 pontos à pontuação.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 156. Subtract
 
 - **ID:** `math.integer.subtract`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `subtract` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `subtract` para valores do tipo integer; use para retirar dano da vida. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Subtract` e leve `result` a `Variable Set` ou `UI Set Text` para retirar dano da vida.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 157. Multiply
 
 - **ID:** `math.integer.multiply`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `multiply` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `multiply` para valores do tipo integer; use para aplicar um multiplicador de dano. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Multiply` e leve `result` a `Variable Set` ou `UI Set Text` para aplicar um multiplicador de dano.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 158. Divide
 
 - **ID:** `math.integer.divide`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `divide` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `divide` para valores do tipo integer; use para calcular a média por jogador. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Divide` e leve `result` a `Variable Set` ou `UI Set Text` para calcular a média por jogador.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 159. Modulo
 
 - **ID:** `math.integer.modulo`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `modulo` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `modulo` para valores do tipo integer; use para executar algo a cada N quadros. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Modulo` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Modulo` e leve `result` a `Variable Set` ou `UI Set Text` para executar algo a cada N quadros.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 160. Power
 
 - **ID:** `math.integer.power`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `power` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `power` para valores do tipo integer; use para criar uma curva exponencial. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Power` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Power` e leve `result` a `Variable Set` ou `UI Set Text` para criar uma curva exponencial.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 161. Minimum
 
 - **ID:** `math.integer.minimum`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `minimum` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `minimum` para valores do tipo integer; use para limitar ao menor valor. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Minimum` e leve `result` a `Variable Set` ou `UI Set Text` para limitar ao menor valor.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 162. Maximum
 
 - **ID:** `math.integer.maximum`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `maximum` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `maximum` para valores do tipo integer; use para garantir um valor mínimo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Maximum` e leve `result` a `Variable Set` ou `UI Set Text` para garantir um valor mínimo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 163. Average
 
 - **ID:** `math.integer.average`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `average` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `average` para valores do tipo integer; use para calcular média de valores. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Average` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Average` e leve `result` a `Variable Set` ou `UI Set Text` para calcular média de valores.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 164. Atan2
 
 - **ID:** `math.integer.atan2`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `atan2` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `atan2` para valores do tipo integer; use para calcular atan2 antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Atan2` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Atan2` e leve `result` a `Variable Set` ou `UI Set Text` para calcular atan2 antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 165. Log Base
 
 - **ID:** `math.integer.log_base`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `log base` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `log base` para valores do tipo integer; use para calcular log base antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Log Base` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Log Base` e leve `result` a `Variable Set` ou `UI Set Text` para calcular log base antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 166. Copy Sign
 
 - **ID:** `math.integer.copy_sign`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `copy sign` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `copy sign` para valores do tipo integer; use para calcular copy sign antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Copy Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Copy Sign` e leve `result` a `Variable Set` ou `UI Set Text` para calcular copy sign antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 167. Absolute
 
 - **ID:** `math.integer.absolute`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `absolute` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `absolute` para valores do tipo integer; use para remover o sinal. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor integer de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Absolute` e leve `result` a `Variable Set` ou `UI Set Text` para remover o sinal.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 168. Negative
 
 - **ID:** `math.integer.negative`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `negative` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `negative` para valores do tipo integer; use para inverter direção/sinal. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor integer de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Negative` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Negative` e leve `result` a `Variable Set` ou `UI Set Text` para inverter direção/sinal.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 169. Sqrt
 
 - **ID:** `math.integer.sqrt`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `sqrt` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `sqrt` para valores do tipo integer; use para obter uma raiz. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor integer de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Sqrt` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Sqrt` e leve `result` a `Variable Set` ou `UI Set Text` para obter uma raiz.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 170. Cube Root
 
 - **ID:** `math.integer.cube_root`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `cube root` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `cube root` para valores do tipo integer; use para calcular cube root antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Cube Root` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Cube Root` e leve `result` a `Variable Set` ou `UI Set Text` para calcular cube root antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 171. Exp
 
 - **ID:** `math.integer.exp`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `exp` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `exp` para valores do tipo integer; use para calcular exp antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Exp` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Exp` e leve `result` a `Variable Set` ou `UI Set Text` para calcular exp antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 172. Log
 
 - **ID:** `math.integer.log`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `log` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `log` para valores do tipo integer; use para calcular log antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Log` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Log` e leve `result` a `Variable Set` ou `UI Set Text` para calcular log antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 173. Log10
 
 - **ID:** `math.integer.log10`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `log10` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `log10` para valores do tipo integer; use para calcular log10 antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Log10` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Log10` e leve `result` a `Variable Set` ou `UI Set Text` para calcular log10 antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 174. Floor
 
 - **ID:** `math.integer.floor`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `floor` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `floor` para valores do tipo integer; use para arredondar para baixo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor integer de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Floor` e leve `result` a `Variable Set` ou `UI Set Text` para arredondar para baixo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 175. Ceil
 
 - **ID:** `math.integer.ceil`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `ceil` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `ceil` para valores do tipo integer; use para arredondar para cima. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor integer de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Ceil` e leve `result` a `Variable Set` ou `UI Set Text` para arredondar para cima.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 176. Round
 
 - **ID:** `math.integer.round`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `round` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `round` para valores do tipo integer; use para arredondar ao inteiro mais próximo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor integer de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Round` e leve `result` a `Variable Set` ou `UI Set Text` para arredondar ao inteiro mais próximo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 177. Truncate
 
 - **ID:** `math.integer.truncate`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `truncate` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `truncate` para valores do tipo integer; use para calcular truncate antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Truncate` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Truncate` e leve `result` a `Variable Set` ou `UI Set Text` para calcular truncate antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 178. Fraction
 
 - **ID:** `math.integer.fraction`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `fraction` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `fraction` para valores do tipo integer; use para calcular fraction antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Fraction` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Fraction` e leve `result` a `Variable Set` ou `UI Set Text` para calcular fraction antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 179. Sign
 
 - **ID:** `math.integer.sign`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `sign` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `sign` para valores do tipo integer; use para calcular sign antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Sign` e leve `result` a `Variable Set` ou `UI Set Text` para calcular sign antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 180. Sin
 
 - **ID:** `math.integer.sin`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `sin` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `sin` para valores do tipo integer; use para produzir oscilação suave. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Sin` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Sin` e leve `result` a `Variable Set` ou `UI Set Text` para produzir oscilação suave.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 181. Cos
 
 - **ID:** `math.integer.cos`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `cos` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `cos` para valores do tipo integer; use para produzir oscilação deslocada. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Cos` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Cos` e leve `result` a `Variable Set` ou `UI Set Text` para produzir oscilação deslocada.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 182. Tan
 
 - **ID:** `math.integer.tan`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `tan` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `tan` para valores do tipo integer; use para calcular tan antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Tan` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Tan` e leve `result` a `Variable Set` ou `UI Set Text` para calcular tan antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 183. Asin
 
 - **ID:** `math.integer.asin`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `asin` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `asin` para valores do tipo integer; use para calcular asin antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Asin` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Asin` e leve `result` a `Variable Set` ou `UI Set Text` para calcular asin antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 184. Acos
 
 - **ID:** `math.integer.acos`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `acos` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `acos` para valores do tipo integer; use para calcular acos antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Acos` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Acos` e leve `result` a `Variable Set` ou `UI Set Text` para calcular acos antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 185. Atan
 
 - **ID:** `math.integer.atan`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `atan` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `atan` para valores do tipo integer; use para calcular atan antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Atan` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Atan` e leve `result` a `Variable Set` ou `UI Set Text` para calcular atan antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 186. Degrees
 
 - **ID:** `math.integer.degrees`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `degrees` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `degrees` para valores do tipo integer; use para calcular degrees antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Degrees` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Degrees` e leve `result` a `Variable Set` ou `UI Set Text` para calcular degrees antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 187. Radians
 
 - **ID:** `math.integer.radians`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `radians` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `radians` para valores do tipo integer; use para calcular radians antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Radians` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Radians` e leve `result` a `Variable Set` ou `UI Set Text` para calcular radians antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 188. Saturate
 
 - **ID:** `math.integer.saturate`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `saturate` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `saturate` para valores do tipo integer; use para calcular saturate antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Saturate` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Saturate` e leve `result` a `Variable Set` ou `UI Set Text` para calcular saturate antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 189. Is Finite
 
 - **ID:** `math.integer.is_finite`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `is finite` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `is finite` para valores do tipo integer; use para calcular is finite antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor integer que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Is Finite` e leve `result` a `Variable Set` ou `UI Set Text` para calcular is finite antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 190. Is Nan
 
 - **ID:** `math.integer.is_nan`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `is nan` para valores do tipo integer; não modifica objetos da cena.
+- **Finalidade:** Calcula `is nan` para valores do tipo integer; use para calcular is nan antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor integer que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Nan` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Is Nan` e leve `result` a `Variable Set` ou `UI Set Text` para calcular is nan antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 191. Add
 
 - **ID:** `math.angle.add`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `add` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `add` para valores do tipo angle; use para somar 100 pontos à pontuação. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Add` e leve `result` a `Variable Set` ou `UI Set Text` para somar 100 pontos à pontuação.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 192. Subtract
 
 - **ID:** `math.angle.subtract`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `subtract` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `subtract` para valores do tipo angle; use para retirar dano da vida. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Subtract` e leve `result` a `Variable Set` ou `UI Set Text` para retirar dano da vida.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 193. Multiply
 
 - **ID:** `math.angle.multiply`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `multiply` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `multiply` para valores do tipo angle; use para aplicar um multiplicador de dano. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Multiply` e leve `result` a `Variable Set` ou `UI Set Text` para aplicar um multiplicador de dano.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 194. Divide
 
 - **ID:** `math.angle.divide`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `divide` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `divide` para valores do tipo angle; use para calcular a média por jogador. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Divide` e leve `result` a `Variable Set` ou `UI Set Text` para calcular a média por jogador.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 195. Modulo
 
 - **ID:** `math.angle.modulo`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `modulo` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `modulo` para valores do tipo angle; use para executar algo a cada N quadros. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Modulo` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Modulo` e leve `result` a `Variable Set` ou `UI Set Text` para executar algo a cada N quadros.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 196. Power
 
 - **ID:** `math.angle.power`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `power` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `power` para valores do tipo angle; use para criar uma curva exponencial. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Power` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Power` e leve `result` a `Variable Set` ou `UI Set Text` para criar uma curva exponencial.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 197. Minimum
 
 - **ID:** `math.angle.minimum`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `minimum` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `minimum` para valores do tipo angle; use para limitar ao menor valor. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Minimum` e leve `result` a `Variable Set` ou `UI Set Text` para limitar ao menor valor.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 198. Maximum
 
 - **ID:** `math.angle.maximum`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `maximum` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `maximum` para valores do tipo angle; use para garantir um valor mínimo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Maximum` e leve `result` a `Variable Set` ou `UI Set Text` para garantir um valor mínimo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 199. Average
 
 - **ID:** `math.angle.average`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `average` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `average` para valores do tipo angle; use para calcular média de valores. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Average` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Average` e leve `result` a `Variable Set` ou `UI Set Text` para calcular média de valores.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 200. Atan2
 
 - **ID:** `math.angle.atan2`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `atan2` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `atan2` para valores do tipo angle; use para calcular atan2 antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Atan2` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Atan2` e leve `result` a `Variable Set` ou `UI Set Text` para calcular atan2 antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 201. Log Base
 
 - **ID:** `math.angle.log_base`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `log base` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `log base` para valores do tipo angle; use para calcular log base antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Log Base` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Log Base` e leve `result` a `Variable Set` ou `UI Set Text` para calcular log base antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 202. Copy Sign
 
 - **ID:** `math.angle.copy_sign`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `copy sign` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `copy sign` para valores do tipo angle; use para calcular copy sign antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Copy Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Copy Sign` e leve `result` a `Variable Set` ou `UI Set Text` para calcular copy sign antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 203. Absolute
 
 - **ID:** `math.angle.absolute`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `absolute` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `absolute` para valores do tipo angle; use para remover o sinal. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor angle de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Absolute` e leve `result` a `Variable Set` ou `UI Set Text` para remover o sinal.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 204. Negative
 
 - **ID:** `math.angle.negative`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `negative` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `negative` para valores do tipo angle; use para inverter direção/sinal. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor angle de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Negative` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Negative` e leve `result` a `Variable Set` ou `UI Set Text` para inverter direção/sinal.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 205. Sqrt
 
 - **ID:** `math.angle.sqrt`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `sqrt` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `sqrt` para valores do tipo angle; use para obter uma raiz. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor angle de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Sqrt` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Sqrt` e leve `result` a `Variable Set` ou `UI Set Text` para obter uma raiz.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 206. Cube Root
 
 - **ID:** `math.angle.cube_root`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `cube root` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `cube root` para valores do tipo angle; use para calcular cube root antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Cube Root` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Cube Root` e leve `result` a `Variable Set` ou `UI Set Text` para calcular cube root antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 207. Exp
 
 - **ID:** `math.angle.exp`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `exp` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `exp` para valores do tipo angle; use para calcular exp antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Exp` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Exp` e leve `result` a `Variable Set` ou `UI Set Text` para calcular exp antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 208. Log
 
 - **ID:** `math.angle.log`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `log` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `log` para valores do tipo angle; use para calcular log antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Log` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Log` e leve `result` a `Variable Set` ou `UI Set Text` para calcular log antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 209. Log10
 
 - **ID:** `math.angle.log10`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `log10` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `log10` para valores do tipo angle; use para calcular log10 antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Log10` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Log10` e leve `result` a `Variable Set` ou `UI Set Text` para calcular log10 antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 210. Floor
 
 - **ID:** `math.angle.floor`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `floor` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `floor` para valores do tipo angle; use para arredondar para baixo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor angle de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Floor` e leve `result` a `Variable Set` ou `UI Set Text` para arredondar para baixo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 211. Ceil
 
 - **ID:** `math.angle.ceil`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `ceil` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `ceil` para valores do tipo angle; use para arredondar para cima. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor angle de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Ceil` e leve `result` a `Variable Set` ou `UI Set Text` para arredondar para cima.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 212. Round
 
 - **ID:** `math.angle.round`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `round` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `round` para valores do tipo angle; use para arredondar ao inteiro mais próximo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor angle de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Round` e leve `result` a `Variable Set` ou `UI Set Text` para arredondar ao inteiro mais próximo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 213. Truncate
 
 - **ID:** `math.angle.truncate`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `truncate` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `truncate` para valores do tipo angle; use para calcular truncate antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Truncate` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Truncate` e leve `result` a `Variable Set` ou `UI Set Text` para calcular truncate antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 214. Fraction
 
 - **ID:** `math.angle.fraction`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `fraction` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `fraction` para valores do tipo angle; use para calcular fraction antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Fraction` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Fraction` e leve `result` a `Variable Set` ou `UI Set Text` para calcular fraction antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 215. Sign
 
 - **ID:** `math.angle.sign`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `sign` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `sign` para valores do tipo angle; use para calcular sign antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Sign` e leve `result` a `Variable Set` ou `UI Set Text` para calcular sign antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 216. Sin
 
 - **ID:** `math.angle.sin`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `sin` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `sin` para valores do tipo angle; use para produzir oscilação suave. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Sin` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Sin` e leve `result` a `Variable Set` ou `UI Set Text` para produzir oscilação suave.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 217. Cos
 
 - **ID:** `math.angle.cos`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `cos` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `cos` para valores do tipo angle; use para produzir oscilação deslocada. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Cos` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Cos` e leve `result` a `Variable Set` ou `UI Set Text` para produzir oscilação deslocada.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 218. Tan
 
 - **ID:** `math.angle.tan`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `tan` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `tan` para valores do tipo angle; use para calcular tan antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Tan` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Tan` e leve `result` a `Variable Set` ou `UI Set Text` para calcular tan antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 219. Asin
 
 - **ID:** `math.angle.asin`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `asin` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `asin` para valores do tipo angle; use para calcular asin antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Asin` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Asin` e leve `result` a `Variable Set` ou `UI Set Text` para calcular asin antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 220. Acos
 
 - **ID:** `math.angle.acos`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `acos` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `acos` para valores do tipo angle; use para calcular acos antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Acos` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Acos` e leve `result` a `Variable Set` ou `UI Set Text` para calcular acos antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 221. Atan
 
 - **ID:** `math.angle.atan`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `atan` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `atan` para valores do tipo angle; use para calcular atan antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Atan` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Atan` e leve `result` a `Variable Set` ou `UI Set Text` para calcular atan antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 222. Degrees
 
 - **ID:** `math.angle.degrees`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `degrees` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `degrees` para valores do tipo angle; use para calcular degrees antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Degrees` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Degrees` e leve `result` a `Variable Set` ou `UI Set Text` para calcular degrees antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 223. Radians
 
 - **ID:** `math.angle.radians`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `radians` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `radians` para valores do tipo angle; use para calcular radians antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Radians` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Radians` e leve `result` a `Variable Set` ou `UI Set Text` para calcular radians antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 224. Saturate
 
 - **ID:** `math.angle.saturate`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `saturate` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `saturate` para valores do tipo angle; use para calcular saturate antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Saturate` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Saturate` e leve `result` a `Variable Set` ou `UI Set Text` para calcular saturate antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 225. Is Finite
 
 - **ID:** `math.angle.is_finite`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `is finite` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `is finite` para valores do tipo angle; use para calcular is finite antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor angle que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Is Finite` e leve `result` a `Variable Set` ou `UI Set Text` para calcular is finite antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 226. Is Nan
 
 - **ID:** `math.angle.is_nan`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `is nan` para valores do tipo angle; não modifica objetos da cena.
+- **Finalidade:** Calcula `is nan` para valores do tipo angle; use para calcular is nan antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor angle que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Nan` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Is Nan` e leve `result` a `Variable Set` ou `UI Set Text` para calcular is nan antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 227. Clamp
 
 - **ID:** `math.range.clamp`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `clamp` para valores do tipo range; não modifica objetos da cena.
+- **Finalidade:** Calcula `clamp` para valores do tipo range; use para calcular clamp antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Clamp` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Clamp` e leve `result` a `Variable Set` ou `UI Set Text` para calcular clamp antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 228. Lerp
 
 - **ID:** `math.range.lerp`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `lerp` para valores do tipo range; não modifica objetos da cena.
+- **Finalidade:** Calcula `lerp` para valores do tipo range; use para interpolar suavemente. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Lerp` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Lerp` e leve `result` a `Variable Set` ou `UI Set Text` para interpolar suavemente.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 229. Inverse Lerp
 
 - **ID:** `math.range.inverse_lerp`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `inverse lerp` para valores do tipo range; não modifica objetos da cena.
+- **Finalidade:** Calcula `inverse lerp` para valores do tipo range; use para calcular inverse lerp antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Inverse Lerp` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Inverse Lerp` e leve `result` a `Variable Set` ou `UI Set Text` para calcular inverse lerp antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 230. Remap
 
 - **ID:** `math.range.remap`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `remap` para valores do tipo range; não modifica objetos da cena.
+- **Finalidade:** Calcula `remap` para valores do tipo range; use para calcular remap antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Remap` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Remap` e leve `result` a `Variable Set` ou `UI Set Text` para calcular remap antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 231. Smoothstep
 
 - **ID:** `math.range.smoothstep`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `smoothstep` para valores do tipo range; não modifica objetos da cena.
+- **Finalidade:** Calcula `smoothstep` para valores do tipo range; use para calcular smoothstep antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Smoothstep` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Smoothstep` e leve `result` a `Variable Set` ou `UI Set Text` para calcular smoothstep antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 232. Move Towards
 
 - **ID:** `math.range.move_towards`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `move towards` para valores do tipo range; não modifica objetos da cena.
+- **Finalidade:** Calcula `move towards` para valores do tipo range; use para aproximar sem ultrapassar. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Move Towards` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Move Towards` e leve `result` a `Variable Set` ou `UI Set Text` para aproximar sem ultrapassar.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 233. Random Range
 
 - **ID:** `math.range.random_range`
 - **Categoria:** Matemática
-- **Finalidade:** Calcula `random range` para valores do tipo range; não modifica objetos da cena.
+- **Finalidade:** Calcula `random range` para valores do tipo range; use para calcular random range antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Random Range` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** Conecte os valores a `Random Range` e leve `result` a `Variable Set` ou `UI Set Text` para calcular random range antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 234. Equal
 
 - **ID:** `compare.boolean.equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `equal` para valores do tipo boolean; não modifica objetos da cena.
+- **Finalidade:** Calcula `equal` para valores do tipo boolean; use para testar igualdade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Equal → Branch`; use a saída True para testar igualdade e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 235. Not Equal
 
 - **ID:** `compare.boolean.not_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `not equal` para valores do tipo boolean; não modifica objetos da cena.
+- **Finalidade:** Calcula `not equal` para valores do tipo boolean; use para testar diferença. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Not Equal → Branch`; use a saída True para testar diferença e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 236. Greater
 
 - **ID:** `compare.boolean.greater`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater` para valores do tipo boolean; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater` para valores do tipo boolean; use para testar se ultrapassou um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater → Branch`; use a saída True para testar se ultrapassou um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 237. Greater Equal
 
 - **ID:** `compare.boolean.greater_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater equal` para valores do tipo boolean; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater equal` para valores do tipo boolean; use para testar limite mínimo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater Equal → Branch`; use a saída True para testar limite mínimo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 238. Less
 
 - **ID:** `compare.boolean.less`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less` para valores do tipo boolean; não modifica objetos da cena.
+- **Finalidade:** Calcula `less` para valores do tipo boolean; use para testar se ficou abaixo de um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less → Branch`; use a saída True para testar se ficou abaixo de um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 239. Less Equal
 
 - **ID:** `compare.boolean.less_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less equal` para valores do tipo boolean; não modifica objetos da cena.
+- **Finalidade:** Calcula `less equal` para valores do tipo boolean; use para testar limite máximo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less Equal → Branch`; use a saída True para testar limite máximo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 240. Between
 
 - **ID:** `compare.boolean.between`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `between` para valores do tipo boolean; não modifica objetos da cena.
+- **Finalidade:** Calcula `between` para valores do tipo boolean; use para testar se está dentro de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Between → Branch`; use a saída True para testar se está dentro de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 241. Outside
 
 - **ID:** `compare.boolean.outside`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `outside` para valores do tipo boolean; não modifica objetos da cena.
+- **Finalidade:** Calcula `outside` para valores do tipo boolean; use para testar se saiu de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Outside → Branch`; use a saída True para testar se saiu de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 242. Approximately
 
 - **ID:** `compare.boolean.approximately`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `approximately` para valores do tipo boolean; não modifica objetos da cena.
+- **Finalidade:** Calcula `approximately` para valores do tipo boolean; use para comparar números com tolerância. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Approximately → Branch`; use a saída True para comparar números com tolerância e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 243. Is Null
 
 - **ID:** `compare.boolean.is_null`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `is null` para valores do tipo boolean; não modifica objetos da cena.
+- **Finalidade:** Calcula `is null` para valores do tipo boolean; use para verificar ausência de objeto. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor boolean que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Is Null → Branch`; use a saída True para verificar ausência de objeto e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 244. Equal
 
 - **ID:** `compare.number.equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `equal` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `equal` para valores do tipo number; use para testar igualdade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Equal → Branch`; use a saída True para testar igualdade e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 245. Not Equal
 
 - **ID:** `compare.number.not_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `not equal` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `not equal` para valores do tipo number; use para testar diferença. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Not Equal → Branch`; use a saída True para testar diferença e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 246. Greater
 
 - **ID:** `compare.number.greater`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater` para valores do tipo number; use para testar se ultrapassou um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater → Branch`; use a saída True para testar se ultrapassou um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 247. Greater Equal
 
 - **ID:** `compare.number.greater_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater equal` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater equal` para valores do tipo number; use para testar limite mínimo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater Equal → Branch`; use a saída True para testar limite mínimo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 248. Less
 
 - **ID:** `compare.number.less`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `less` para valores do tipo number; use para testar se ficou abaixo de um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less → Branch`; use a saída True para testar se ficou abaixo de um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 249. Less Equal
 
 - **ID:** `compare.number.less_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less equal` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `less equal` para valores do tipo number; use para testar limite máximo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less Equal → Branch`; use a saída True para testar limite máximo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 250. Between
 
 - **ID:** `compare.number.between`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `between` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `between` para valores do tipo number; use para testar se está dentro de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Between → Branch`; use a saída True para testar se está dentro de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 251. Outside
 
 - **ID:** `compare.number.outside`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `outside` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `outside` para valores do tipo number; use para testar se saiu de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Outside → Branch`; use a saída True para testar se saiu de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 252. Approximately
 
 - **ID:** `compare.number.approximately`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `approximately` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `approximately` para valores do tipo number; use para comparar números com tolerância. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Approximately → Branch`; use a saída True para comparar números com tolerância e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 253. Is Null
 
 - **ID:** `compare.number.is_null`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `is null` para valores do tipo number; não modifica objetos da cena.
+- **Finalidade:** Calcula `is null` para valores do tipo number; use para verificar ausência de objeto. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor number que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Is Null → Branch`; use a saída True para verificar ausência de objeto e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 254. Equal
 
 - **ID:** `compare.text.equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `equal` para valores do tipo text; não modifica objetos da cena.
+- **Finalidade:** Calcula `equal` para valores do tipo text; use para testar igualdade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Equal → Branch`; use a saída True para testar igualdade e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 255. Not Equal
 
 - **ID:** `compare.text.not_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `not equal` para valores do tipo text; não modifica objetos da cena.
+- **Finalidade:** Calcula `not equal` para valores do tipo text; use para testar diferença. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Not Equal → Branch`; use a saída True para testar diferença e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 256. Greater
 
 - **ID:** `compare.text.greater`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater` para valores do tipo text; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater` para valores do tipo text; use para testar se ultrapassou um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater → Branch`; use a saída True para testar se ultrapassou um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 257. Greater Equal
 
 - **ID:** `compare.text.greater_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater equal` para valores do tipo text; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater equal` para valores do tipo text; use para testar limite mínimo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater Equal → Branch`; use a saída True para testar limite mínimo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 258. Less
 
 - **ID:** `compare.text.less`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less` para valores do tipo text; não modifica objetos da cena.
+- **Finalidade:** Calcula `less` para valores do tipo text; use para testar se ficou abaixo de um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less → Branch`; use a saída True para testar se ficou abaixo de um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 259. Less Equal
 
 - **ID:** `compare.text.less_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less equal` para valores do tipo text; não modifica objetos da cena.
+- **Finalidade:** Calcula `less equal` para valores do tipo text; use para testar limite máximo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less Equal → Branch`; use a saída True para testar limite máximo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 260. Between
 
 - **ID:** `compare.text.between`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `between` para valores do tipo text; não modifica objetos da cena.
+- **Finalidade:** Calcula `between` para valores do tipo text; use para testar se está dentro de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Between → Branch`; use a saída True para testar se está dentro de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 261. Outside
 
 - **ID:** `compare.text.outside`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `outside` para valores do tipo text; não modifica objetos da cena.
+- **Finalidade:** Calcula `outside` para valores do tipo text; use para testar se saiu de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Outside → Branch`; use a saída True para testar se saiu de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 262. Approximately
 
 - **ID:** `compare.text.approximately`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `approximately` para valores do tipo text; não modifica objetos da cena.
+- **Finalidade:** Calcula `approximately` para valores do tipo text; use para comparar números com tolerância. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Approximately → Branch`; use a saída True para comparar números com tolerância e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 263. Is Null
 
 - **ID:** `compare.text.is_null`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `is null` para valores do tipo text; não modifica objetos da cena.
+- **Finalidade:** Calcula `is null` para valores do tipo text; use para verificar ausência de objeto. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor text que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Is Null → Branch`; use a saída True para verificar ausência de objeto e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 264. Equal
 
 - **ID:** `compare.vector2.equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `equal` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `equal` para valores do tipo vector2; use para testar igualdade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Equal → Branch`; use a saída True para testar igualdade e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 265. Not Equal
 
 - **ID:** `compare.vector2.not_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `not equal` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `not equal` para valores do tipo vector2; use para testar diferença. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Not Equal → Branch`; use a saída True para testar diferença e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 266. Greater
 
 - **ID:** `compare.vector2.greater`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater` para valores do tipo vector2; use para testar se ultrapassou um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater → Branch`; use a saída True para testar se ultrapassou um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 267. Greater Equal
 
 - **ID:** `compare.vector2.greater_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater equal` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater equal` para valores do tipo vector2; use para testar limite mínimo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater Equal → Branch`; use a saída True para testar limite mínimo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 268. Less
 
 - **ID:** `compare.vector2.less`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `less` para valores do tipo vector2; use para testar se ficou abaixo de um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less → Branch`; use a saída True para testar se ficou abaixo de um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 269. Less Equal
 
 - **ID:** `compare.vector2.less_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less equal` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `less equal` para valores do tipo vector2; use para testar limite máximo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less Equal → Branch`; use a saída True para testar limite máximo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 270. Between
 
 - **ID:** `compare.vector2.between`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `between` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `between` para valores do tipo vector2; use para testar se está dentro de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Between → Branch`; use a saída True para testar se está dentro de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 271. Outside
 
 - **ID:** `compare.vector2.outside`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `outside` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `outside` para valores do tipo vector2; use para testar se saiu de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Outside → Branch`; use a saída True para testar se saiu de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 272. Approximately
 
 - **ID:** `compare.vector2.approximately`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `approximately` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `approximately` para valores do tipo vector2; use para comparar números com tolerância. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Approximately → Branch`; use a saída True para comparar números com tolerância e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 273. Is Null
 
 - **ID:** `compare.vector2.is_null`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `is null` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `is null` para valores do tipo vector2; use para verificar ausência de objeto. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector2 que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Is Null → Branch`; use a saída True para verificar ausência de objeto e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 274. Equal
 
 - **ID:** `compare.vector3.equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `equal` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `equal` para valores do tipo vector3; use para testar igualdade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Equal → Branch`; use a saída True para testar igualdade e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 275. Not Equal
 
 - **ID:** `compare.vector3.not_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `not equal` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `not equal` para valores do tipo vector3; use para testar diferença. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Not Equal → Branch`; use a saída True para testar diferença e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 276. Greater
 
 - **ID:** `compare.vector3.greater`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater` para valores do tipo vector3; use para testar se ultrapassou um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater → Branch`; use a saída True para testar se ultrapassou um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 277. Greater Equal
 
 - **ID:** `compare.vector3.greater_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater equal` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater equal` para valores do tipo vector3; use para testar limite mínimo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater Equal → Branch`; use a saída True para testar limite mínimo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 278. Less
 
 - **ID:** `compare.vector3.less`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `less` para valores do tipo vector3; use para testar se ficou abaixo de um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less → Branch`; use a saída True para testar se ficou abaixo de um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 279. Less Equal
 
 - **ID:** `compare.vector3.less_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less equal` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `less equal` para valores do tipo vector3; use para testar limite máximo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less Equal → Branch`; use a saída True para testar limite máximo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 280. Between
 
 - **ID:** `compare.vector3.between`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `between` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `between` para valores do tipo vector3; use para testar se está dentro de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Between → Branch`; use a saída True para testar se está dentro de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 281. Outside
 
 - **ID:** `compare.vector3.outside`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `outside` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `outside` para valores do tipo vector3; use para testar se saiu de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Outside → Branch`; use a saída True para testar se saiu de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 282. Approximately
 
 - **ID:** `compare.vector3.approximately`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `approximately` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `approximately` para valores do tipo vector3; use para comparar números com tolerância. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Approximately → Branch`; use a saída True para comparar números com tolerância e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 283. Is Null
 
 - **ID:** `compare.vector3.is_null`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `is null` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `is null` para valores do tipo vector3; use para verificar ausência de objeto. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector3 que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Is Null → Branch`; use a saída True para verificar ausência de objeto e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 284. Equal
 
 - **ID:** `compare.color.equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `equal` para valores do tipo color; não modifica objetos da cena.
+- **Finalidade:** Calcula `equal` para valores do tipo color; use para testar igualdade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Equal → Branch`; use a saída True para testar igualdade e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 285. Not Equal
 
 - **ID:** `compare.color.not_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `not equal` para valores do tipo color; não modifica objetos da cena.
+- **Finalidade:** Calcula `not equal` para valores do tipo color; use para testar diferença. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Not Equal → Branch`; use a saída True para testar diferença e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 286. Greater
 
 - **ID:** `compare.color.greater`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater` para valores do tipo color; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater` para valores do tipo color; use para testar se ultrapassou um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater → Branch`; use a saída True para testar se ultrapassou um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 287. Greater Equal
 
 - **ID:** `compare.color.greater_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater equal` para valores do tipo color; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater equal` para valores do tipo color; use para testar limite mínimo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater Equal → Branch`; use a saída True para testar limite mínimo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 288. Less
 
 - **ID:** `compare.color.less`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less` para valores do tipo color; não modifica objetos da cena.
+- **Finalidade:** Calcula `less` para valores do tipo color; use para testar se ficou abaixo de um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less → Branch`; use a saída True para testar se ficou abaixo de um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 289. Less Equal
 
 - **ID:** `compare.color.less_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less equal` para valores do tipo color; não modifica objetos da cena.
+- **Finalidade:** Calcula `less equal` para valores do tipo color; use para testar limite máximo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less Equal → Branch`; use a saída True para testar limite máximo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 290. Between
 
 - **ID:** `compare.color.between`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `between` para valores do tipo color; não modifica objetos da cena.
+- **Finalidade:** Calcula `between` para valores do tipo color; use para testar se está dentro de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Between → Branch`; use a saída True para testar se está dentro de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 291. Outside
 
 - **ID:** `compare.color.outside`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `outside` para valores do tipo color; não modifica objetos da cena.
+- **Finalidade:** Calcula `outside` para valores do tipo color; use para testar se saiu de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Outside → Branch`; use a saída True para testar se saiu de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 292. Approximately
 
 - **ID:** `compare.color.approximately`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `approximately` para valores do tipo color; não modifica objetos da cena.
+- **Finalidade:** Calcula `approximately` para valores do tipo color; use para comparar números com tolerância. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Approximately → Branch`; use a saída True para comparar números com tolerância e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 293. Is Null
 
 - **ID:** `compare.color.is_null`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `is null` para valores do tipo color; não modifica objetos da cena.
+- **Finalidade:** Calcula `is null` para valores do tipo color; use para verificar ausência de objeto. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor color que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Is Null → Branch`; use a saída True para verificar ausência de objeto e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 294. Equal
 
 - **ID:** `compare.object.equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `equal` para valores do tipo object; não modifica objetos da cena.
+- **Finalidade:** Calcula `equal` para valores do tipo object; use para testar igualdade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Equal → Branch`; use a saída True para testar igualdade e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 295. Not Equal
 
 - **ID:** `compare.object.not_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `not equal` para valores do tipo object; não modifica objetos da cena.
+- **Finalidade:** Calcula `not equal` para valores do tipo object; use para testar diferença. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Not Equal → Branch`; use a saída True para testar diferença e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 296. Greater
 
 - **ID:** `compare.object.greater`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater` para valores do tipo object; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater` para valores do tipo object; use para testar se ultrapassou um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater → Branch`; use a saída True para testar se ultrapassou um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 297. Greater Equal
 
 - **ID:** `compare.object.greater_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater equal` para valores do tipo object; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater equal` para valores do tipo object; use para testar limite mínimo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater Equal → Branch`; use a saída True para testar limite mínimo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 298. Less
 
 - **ID:** `compare.object.less`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less` para valores do tipo object; não modifica objetos da cena.
+- **Finalidade:** Calcula `less` para valores do tipo object; use para testar se ficou abaixo de um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less → Branch`; use a saída True para testar se ficou abaixo de um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 299. Less Equal
 
 - **ID:** `compare.object.less_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less equal` para valores do tipo object; não modifica objetos da cena.
+- **Finalidade:** Calcula `less equal` para valores do tipo object; use para testar limite máximo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less Equal → Branch`; use a saída True para testar limite máximo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 300. Between
 
 - **ID:** `compare.object.between`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `between` para valores do tipo object; não modifica objetos da cena.
+- **Finalidade:** Calcula `between` para valores do tipo object; use para testar se está dentro de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Between → Branch`; use a saída True para testar se está dentro de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 301. Outside
 
 - **ID:** `compare.object.outside`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `outside` para valores do tipo object; não modifica objetos da cena.
+- **Finalidade:** Calcula `outside` para valores do tipo object; use para testar se saiu de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Outside → Branch`; use a saída True para testar se saiu de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 302. Approximately
 
 - **ID:** `compare.object.approximately`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `approximately` para valores do tipo object; não modifica objetos da cena.
+- **Finalidade:** Calcula `approximately` para valores do tipo object; use para comparar números com tolerância. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Approximately → Branch`; use a saída True para comparar números com tolerância e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 303. Is Null
 
 - **ID:** `compare.object.is_null`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `is null` para valores do tipo object; não modifica objetos da cena.
+- **Finalidade:** Calcula `is null` para valores do tipo object; use para verificar ausência de objeto. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor object que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Is Null → Branch`; use a saída True para verificar ausência de objeto e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 304. Equal
 
 - **ID:** `compare.asset.equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `equal` para valores do tipo asset; não modifica objetos da cena.
+- **Finalidade:** Calcula `equal` para valores do tipo asset; use para testar igualdade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Equal → Branch`; use a saída True para testar igualdade e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 305. Not Equal
 
 - **ID:** `compare.asset.not_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `not equal` para valores do tipo asset; não modifica objetos da cena.
+- **Finalidade:** Calcula `not equal` para valores do tipo asset; use para testar diferença. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Not Equal → Branch`; use a saída True para testar diferença e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 306. Greater
 
 - **ID:** `compare.asset.greater`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater` para valores do tipo asset; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater` para valores do tipo asset; use para testar se ultrapassou um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater → Branch`; use a saída True para testar se ultrapassou um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 307. Greater Equal
 
 - **ID:** `compare.asset.greater_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `greater equal` para valores do tipo asset; não modifica objetos da cena.
+- **Finalidade:** Calcula `greater equal` para valores do tipo asset; use para testar limite mínimo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Greater Equal → Branch`; use a saída True para testar limite mínimo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 308. Less
 
 - **ID:** `compare.asset.less`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less` para valores do tipo asset; não modifica objetos da cena.
+- **Finalidade:** Calcula `less` para valores do tipo asset; use para testar se ficou abaixo de um limite. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less → Branch`; use a saída True para testar se ficou abaixo de um limite e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 309. Less Equal
 
 - **ID:** `compare.asset.less_equal`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `less equal` para valores do tipo asset; não modifica objetos da cena.
+- **Finalidade:** Calcula `less equal` para valores do tipo asset; use para testar limite máximo inclusivo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Less Equal → Branch`; use a saída True para testar limite máximo inclusivo e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 310. Between
 
 - **ID:** `compare.asset.between`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `between` para valores do tipo asset; não modifica objetos da cena.
+- **Finalidade:** Calcula `between` para valores do tipo asset; use para testar se está dentro de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Between → Branch`; use a saída True para testar se está dentro de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 311. Outside
 
 - **ID:** `compare.asset.outside`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `outside` para valores do tipo asset; não modifica objetos da cena.
+- **Finalidade:** Calcula `outside` para valores do tipo asset; use para testar se saiu de uma faixa. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Outside → Branch`; use a saída True para testar se saiu de uma faixa e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 312. Approximately
 
 - **ID:** `compare.asset.approximately`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `approximately` para valores do tipo asset; não modifica objetos da cena.
+- **Finalidade:** Calcula `approximately` para valores do tipo asset; use para comparar números com tolerância. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Approximately → Branch`; use a saída True para comparar números com tolerância e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 313. Is Null
 
 - **ID:** `compare.asset.is_null`
 - **Categoria:** Comparação
-- **Finalidade:** Calcula `is null` para valores do tipo asset; não modifica objetos da cena.
+- **Finalidade:** Calcula `is null` para valores do tipo asset; use para verificar ausência de objeto. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor asset que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Update → Is Null → Branch`; use a saída True para verificar ausência de objeto e a False para manter o estado atual.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 314. Add
 
 - **ID:** `vector.vector2.add`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `add` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `add` para valores do tipo vector2; use para somar 100 pontos à pontuação. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Add → UI Set Text` ou conecte o vetor resultante a movimento/força para somar 100 pontos à pontuação.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 315. Subtract
 
 - **ID:** `vector.vector2.subtract`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `subtract` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `subtract` para valores do tipo vector2; use para retirar dano da vida. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Subtract → UI Set Text` ou conecte o vetor resultante a movimento/força para retirar dano da vida.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 316. Multiply
 
 - **ID:** `vector.vector2.multiply`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `multiply` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `multiply` para valores do tipo vector2; use para aplicar um multiplicador de dano. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Multiply → UI Set Text` ou conecte o vetor resultante a movimento/força para aplicar um multiplicador de dano.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 317. Divide
 
 - **ID:** `vector.vector2.divide`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `divide` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `divide` para valores do tipo vector2; use para calcular a média por jogador. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Divide → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular a média por jogador.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 318. Scale
 
 - **ID:** `vector.vector2.scale`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `scale` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `scale` para valores do tipo vector2; use para calcular scale antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Scale` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Scale → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular scale antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 319. Normalize
 
 - **ID:** `vector.vector2.normalize`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `normalize` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `normalize` para valores do tipo vector2; use para obter somente a direção. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Normalize` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Normalize → UI Set Text` ou conecte o vetor resultante a movimento/força para obter somente a direção.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 320. Length
 
 - **ID:** `vector.vector2.length`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `length` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `length` para valores do tipo vector2; use para obter magnitude/velocidade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Length → UI Set Text` ou conecte o vetor resultante a movimento/força para obter magnitude/velocidade.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 321. Length Squared
 
 - **ID:** `vector.vector2.length_squared`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `length squared` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `length squared` para valores do tipo vector2; use para calcular length squared antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Length Squared` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Length Squared → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular length squared antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 322. Distance
 
 - **ID:** `vector.vector2.distance`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `distance` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `distance` para valores do tipo vector2; use para medir distância entre pontos. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Distance` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Distance → UI Set Text` ou conecte o vetor resultante a movimento/força para medir distância entre pontos.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 323. Dot
 
 - **ID:** `vector.vector2.dot`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `dot` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `dot` para valores do tipo vector2; use para medir alinhamento entre direções. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Dot` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Dot → UI Set Text` ou conecte o vetor resultante a movimento/força para medir alinhamento entre direções.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 324. Cross
 
 - **ID:** `vector.vector2.cross`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `cross` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `cross` para valores do tipo vector2; use para obter o eixo perpendicular. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Cross` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Cross → UI Set Text` ou conecte o vetor resultante a movimento/força para obter o eixo perpendicular.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 325. Lerp
 
 - **ID:** `vector.vector2.lerp`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `lerp` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `lerp` para valores do tipo vector2; use para interpolar suavemente. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Lerp` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Lerp → UI Set Text` ou conecte o vetor resultante a movimento/força para interpolar suavemente.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 326. Move Towards
 
 - **ID:** `vector.vector2.move_towards`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `move towards` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `move towards` para valores do tipo vector2; use para aproximar sem ultrapassar. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Move Towards` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Move Towards → UI Set Text` ou conecte o vetor resultante a movimento/força para aproximar sem ultrapassar.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 327. Reflect
 
 - **ID:** `vector.vector2.reflect`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `reflect` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `reflect` para valores do tipo vector2; use para calcular reflect antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Reflect` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Reflect → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular reflect antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 328. Project
 
 - **ID:** `vector.vector2.project`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `project` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `project` para valores do tipo vector2; use para calcular project antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Project` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Project → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular project antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 329. Angle
 
 - **ID:** `vector.vector2.angle`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `angle` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `angle` para valores do tipo vector2; use para calcular angle antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Angle` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Angle → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular angle antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 330. Clamp Length
 
 - **ID:** `vector.vector2.clamp_length`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `clamp length` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `clamp length` para valores do tipo vector2; use para calcular clamp length antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Clamp Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Clamp Length → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular clamp length antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 331. Minimum
 
 - **ID:** `vector.vector2.minimum`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `minimum` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `minimum` para valores do tipo vector2; use para limitar ao menor valor. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Minimum → UI Set Text` ou conecte o vetor resultante a movimento/força para limitar ao menor valor.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 332. Maximum
 
 - **ID:** `vector.vector2.maximum`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `maximum` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `maximum` para valores do tipo vector2; use para garantir um valor mínimo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Maximum → UI Set Text` ou conecte o vetor resultante a movimento/força para garantir um valor mínimo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 333. Absolute
 
 - **ID:** `vector.vector2.absolute`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `absolute` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `absolute` para valores do tipo vector2; use para remover o sinal. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Absolute → UI Set Text` ou conecte o vetor resultante a movimento/força para remover o sinal.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 334. Floor
 
 - **ID:** `vector.vector2.floor`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `floor` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `floor` para valores do tipo vector2; use para arredondar para baixo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Floor → UI Set Text` ou conecte o vetor resultante a movimento/força para arredondar para baixo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 335. Ceil
 
 - **ID:** `vector.vector2.ceil`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `ceil` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `ceil` para valores do tipo vector2; use para arredondar para cima. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Ceil → UI Set Text` ou conecte o vetor resultante a movimento/força para arredondar para cima.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 336. Round
 
 - **ID:** `vector.vector2.round`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `round` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `round` para valores do tipo vector2; use para arredondar ao inteiro mais próximo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Round → UI Set Text` ou conecte o vetor resultante a movimento/força para arredondar ao inteiro mais próximo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 337. Snap
 
 - **ID:** `vector.vector2.snap`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `snap` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `snap` para valores do tipo vector2; use para calcular snap antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Snap` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Snap → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular snap antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 338. Rotate
 
 - **ID:** `vector.vector2.rotate`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `rotate` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `rotate` para valores do tipo vector2; use para calcular rotate antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Rotate` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Rotate → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular rotate antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 339. Inverse
 
 - **ID:** `vector.vector2.inverse`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `inverse` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `inverse` para valores do tipo vector2; use para calcular inverse antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Inverse` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Inverse → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular inverse antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 340. Is Zero
 
 - **ID:** `vector.vector2.is_zero`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `is zero` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `is zero` para valores do tipo vector2; use para calcular is zero antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector2 que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Zero` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Is Zero → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular is zero antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 341. Is Finite
 
 - **ID:** `vector.vector2.is_finite`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `is finite` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `is finite` para valores do tipo vector2; use para calcular is finite antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector2 que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Is Finite → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular is finite antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 342. Make
 
 - **ID:** `vector.vector2.make`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `make` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `make` para valores do tipo vector2; use para calcular make antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Make` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Make → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular make antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 343. Split
 
 - **ID:** `vector.vector2.split`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `split` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `split` para valores do tipo vector2; use para calcular split antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Split` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Split → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular split antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 344. With X
 
 - **ID:** `vector.vector2.with_x`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with x` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `with x` para valores do tipo vector2; use para calcular with x antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With X` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With X → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with x antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 345. With Y
 
 - **ID:** `vector.vector2.with_y`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with y` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `with y` para valores do tipo vector2; use para calcular with y antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With Y` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With Y → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with y antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 346. With Z
 
 - **ID:** `vector.vector2.with_z`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with z` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `with z` para valores do tipo vector2; use para calcular with z antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With Z` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With Z → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with z antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 347. With W
 
 - **ID:** `vector.vector2.with_w`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with w` para valores do tipo vector2; não modifica objetos da cena.
+- **Finalidade:** Calcula `with w` para valores do tipo vector2; use para calcular with w antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With W` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With W → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with w antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 348. Add
 
 - **ID:** `vector.vector3.add`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `add` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `add` para valores do tipo vector3; use para somar 100 pontos à pontuação. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Add → UI Set Text` ou conecte o vetor resultante a movimento/força para somar 100 pontos à pontuação.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 349. Subtract
 
 - **ID:** `vector.vector3.subtract`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `subtract` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `subtract` para valores do tipo vector3; use para retirar dano da vida. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Subtract → UI Set Text` ou conecte o vetor resultante a movimento/força para retirar dano da vida.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 350. Multiply
 
 - **ID:** `vector.vector3.multiply`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `multiply` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `multiply` para valores do tipo vector3; use para aplicar um multiplicador de dano. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Multiply → UI Set Text` ou conecte o vetor resultante a movimento/força para aplicar um multiplicador de dano.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 351. Divide
 
 - **ID:** `vector.vector3.divide`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `divide` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `divide` para valores do tipo vector3; use para calcular a média por jogador. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Divide → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular a média por jogador.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 352. Scale
 
 - **ID:** `vector.vector3.scale`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `scale` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `scale` para valores do tipo vector3; use para calcular scale antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Scale` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Scale → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular scale antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 353. Normalize
 
 - **ID:** `vector.vector3.normalize`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `normalize` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `normalize` para valores do tipo vector3; use para obter somente a direção. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Normalize` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Normalize → UI Set Text` ou conecte o vetor resultante a movimento/força para obter somente a direção.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 354. Length
 
 - **ID:** `vector.vector3.length`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `length` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `length` para valores do tipo vector3; use para obter magnitude/velocidade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Length → UI Set Text` ou conecte o vetor resultante a movimento/força para obter magnitude/velocidade.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 355. Length Squared
 
 - **ID:** `vector.vector3.length_squared`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `length squared` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `length squared` para valores do tipo vector3; use para calcular length squared antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Length Squared` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Length Squared → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular length squared antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 356. Distance
 
 - **ID:** `vector.vector3.distance`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `distance` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `distance` para valores do tipo vector3; use para medir distância entre pontos. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Distance` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Distance → UI Set Text` ou conecte o vetor resultante a movimento/força para medir distância entre pontos.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 357. Dot
 
 - **ID:** `vector.vector3.dot`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `dot` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `dot` para valores do tipo vector3; use para medir alinhamento entre direções. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Dot` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Dot → UI Set Text` ou conecte o vetor resultante a movimento/força para medir alinhamento entre direções.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 358. Cross
 
 - **ID:** `vector.vector3.cross`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `cross` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `cross` para valores do tipo vector3; use para obter o eixo perpendicular. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Cross` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Cross → UI Set Text` ou conecte o vetor resultante a movimento/força para obter o eixo perpendicular.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 359. Lerp
 
 - **ID:** `vector.vector3.lerp`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `lerp` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `lerp` para valores do tipo vector3; use para interpolar suavemente. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Lerp` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Lerp → UI Set Text` ou conecte o vetor resultante a movimento/força para interpolar suavemente.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 360. Move Towards
 
 - **ID:** `vector.vector3.move_towards`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `move towards` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `move towards` para valores do tipo vector3; use para aproximar sem ultrapassar. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Move Towards` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Move Towards → UI Set Text` ou conecte o vetor resultante a movimento/força para aproximar sem ultrapassar.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 361. Reflect
 
 - **ID:** `vector.vector3.reflect`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `reflect` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `reflect` para valores do tipo vector3; use para calcular reflect antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Reflect` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Reflect → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular reflect antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 362. Project
 
 - **ID:** `vector.vector3.project`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `project` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `project` para valores do tipo vector3; use para calcular project antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Project` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Project → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular project antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 363. Angle
 
 - **ID:** `vector.vector3.angle`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `angle` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `angle` para valores do tipo vector3; use para calcular angle antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Angle` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Angle → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular angle antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 364. Clamp Length
 
 - **ID:** `vector.vector3.clamp_length`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `clamp length` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `clamp length` para valores do tipo vector3; use para calcular clamp length antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Clamp Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Clamp Length → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular clamp length antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 365. Minimum
 
 - **ID:** `vector.vector3.minimum`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `minimum` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `minimum` para valores do tipo vector3; use para limitar ao menor valor. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Minimum → UI Set Text` ou conecte o vetor resultante a movimento/força para limitar ao menor valor.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 366. Maximum
 
 - **ID:** `vector.vector3.maximum`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `maximum` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `maximum` para valores do tipo vector3; use para garantir um valor mínimo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Maximum → UI Set Text` ou conecte o vetor resultante a movimento/força para garantir um valor mínimo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 367. Absolute
 
 - **ID:** `vector.vector3.absolute`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `absolute` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `absolute` para valores do tipo vector3; use para remover o sinal. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Absolute → UI Set Text` ou conecte o vetor resultante a movimento/força para remover o sinal.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 368. Floor
 
 - **ID:** `vector.vector3.floor`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `floor` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `floor` para valores do tipo vector3; use para arredondar para baixo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Floor → UI Set Text` ou conecte o vetor resultante a movimento/força para arredondar para baixo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 369. Ceil
 
 - **ID:** `vector.vector3.ceil`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `ceil` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `ceil` para valores do tipo vector3; use para arredondar para cima. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Ceil → UI Set Text` ou conecte o vetor resultante a movimento/força para arredondar para cima.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 370. Round
 
 - **ID:** `vector.vector3.round`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `round` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `round` para valores do tipo vector3; use para arredondar ao inteiro mais próximo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Round → UI Set Text` ou conecte o vetor resultante a movimento/força para arredondar ao inteiro mais próximo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 371. Snap
 
 - **ID:** `vector.vector3.snap`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `snap` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `snap` para valores do tipo vector3; use para calcular snap antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Snap` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Snap → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular snap antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 372. Rotate
 
 - **ID:** `vector.vector3.rotate`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `rotate` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `rotate` para valores do tipo vector3; use para calcular rotate antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Rotate` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Rotate → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular rotate antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 373. Inverse
 
 - **ID:** `vector.vector3.inverse`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `inverse` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `inverse` para valores do tipo vector3; use para calcular inverse antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Inverse` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Inverse → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular inverse antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 374. Is Zero
 
 - **ID:** `vector.vector3.is_zero`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `is zero` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `is zero` para valores do tipo vector3; use para calcular is zero antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector3 que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Zero` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Is Zero → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular is zero antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 375. Is Finite
 
 - **ID:** `vector.vector3.is_finite`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `is finite` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `is finite` para valores do tipo vector3; use para calcular is finite antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector3 que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Is Finite → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular is finite antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 376. Make
 
 - **ID:** `vector.vector3.make`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `make` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `make` para valores do tipo vector3; use para calcular make antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Make` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Make → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular make antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 377. Split
 
 - **ID:** `vector.vector3.split`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `split` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `split` para valores do tipo vector3; use para calcular split antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Split` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Split → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular split antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 378. With X
 
 - **ID:** `vector.vector3.with_x`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with x` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `with x` para valores do tipo vector3; use para calcular with x antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With X` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With X → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with x antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 379. With Y
 
 - **ID:** `vector.vector3.with_y`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with y` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `with y` para valores do tipo vector3; use para calcular with y antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With Y` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With Y → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with y antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 380. With Z
 
 - **ID:** `vector.vector3.with_z`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with z` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `with z` para valores do tipo vector3; use para calcular with z antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With Z` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With Z → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with z antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 381. With W
 
 - **ID:** `vector.vector3.with_w`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with w` para valores do tipo vector3; não modifica objetos da cena.
+- **Finalidade:** Calcula `with w` para valores do tipo vector3; use para calcular with w antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With W` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With W → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with w antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 382. Add
 
 - **ID:** `vector.vector4.add`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `add` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `add` para valores do tipo vector4; use para somar 100 pontos à pontuação. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Add → UI Set Text` ou conecte o vetor resultante a movimento/força para somar 100 pontos à pontuação.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 383. Subtract
 
 - **ID:** `vector.vector4.subtract`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `subtract` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `subtract` para valores do tipo vector4; use para retirar dano da vida. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Subtract → UI Set Text` ou conecte o vetor resultante a movimento/força para retirar dano da vida.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 384. Multiply
 
 - **ID:** `vector.vector4.multiply`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `multiply` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `multiply` para valores do tipo vector4; use para aplicar um multiplicador de dano. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Multiply → UI Set Text` ou conecte o vetor resultante a movimento/força para aplicar um multiplicador de dano.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 385. Divide
 
 - **ID:** `vector.vector4.divide`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `divide` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `divide` para valores do tipo vector4; use para calcular a média por jogador. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Divide → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular a média por jogador.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 386. Scale
 
 - **ID:** `vector.vector4.scale`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `scale` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `scale` para valores do tipo vector4; use para calcular scale antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Scale` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Scale → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular scale antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 387. Normalize
 
 - **ID:** `vector.vector4.normalize`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `normalize` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `normalize` para valores do tipo vector4; use para obter somente a direção. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Normalize` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Normalize → UI Set Text` ou conecte o vetor resultante a movimento/força para obter somente a direção.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 388. Length
 
 - **ID:** `vector.vector4.length`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `length` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `length` para valores do tipo vector4; use para obter magnitude/velocidade. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Length → UI Set Text` ou conecte o vetor resultante a movimento/força para obter magnitude/velocidade.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 389. Length Squared
 
 - **ID:** `vector.vector4.length_squared`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `length squared` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `length squared` para valores do tipo vector4; use para calcular length squared antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Length Squared` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Length Squared → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular length squared antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 390. Distance
 
 - **ID:** `vector.vector4.distance`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `distance` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `distance` para valores do tipo vector4; use para medir distância entre pontos. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Distance` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Distance → UI Set Text` ou conecte o vetor resultante a movimento/força para medir distância entre pontos.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 391. Dot
 
 - **ID:** `vector.vector4.dot`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `dot` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `dot` para valores do tipo vector4; use para medir alinhamento entre direções. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Dot` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Dot → UI Set Text` ou conecte o vetor resultante a movimento/força para medir alinhamento entre direções.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 392. Cross
 
 - **ID:** `vector.vector4.cross`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `cross` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `cross` para valores do tipo vector4; use para obter o eixo perpendicular. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Cross` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Cross → UI Set Text` ou conecte o vetor resultante a movimento/força para obter o eixo perpendicular.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 393. Lerp
 
 - **ID:** `vector.vector4.lerp`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `lerp` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `lerp` para valores do tipo vector4; use para interpolar suavemente. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Lerp` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Lerp → UI Set Text` ou conecte o vetor resultante a movimento/força para interpolar suavemente.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 394. Move Towards
 
 - **ID:** `vector.vector4.move_towards`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `move towards` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `move towards` para valores do tipo vector4; use para aproximar sem ultrapassar. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Move Towards` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Move Towards → UI Set Text` ou conecte o vetor resultante a movimento/força para aproximar sem ultrapassar.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 395. Reflect
 
 - **ID:** `vector.vector4.reflect`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `reflect` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `reflect` para valores do tipo vector4; use para calcular reflect antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Reflect` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Reflect → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular reflect antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 396. Project
 
 - **ID:** `vector.vector4.project`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `project` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `project` para valores do tipo vector4; use para calcular project antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Project` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Project → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular project antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 397. Angle
 
 - **ID:** `vector.vector4.angle`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `angle` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `angle` para valores do tipo vector4; use para calcular angle antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Angle` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Angle → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular angle antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 398. Clamp Length
 
 - **ID:** `vector.vector4.clamp_length`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `clamp length` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `clamp length` para valores do tipo vector4; use para calcular clamp length antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Clamp Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Clamp Length → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular clamp length antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 399. Minimum
 
 - **ID:** `vector.vector4.minimum`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `minimum` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `minimum` para valores do tipo vector4; use para limitar ao menor valor. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Minimum → UI Set Text` ou conecte o vetor resultante a movimento/força para limitar ao menor valor.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 400. Maximum
 
 - **ID:** `vector.vector4.maximum`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `maximum` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `maximum` para valores do tipo vector4; use para garantir um valor mínimo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Maximum → UI Set Text` ou conecte o vetor resultante a movimento/força para garantir um valor mínimo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 401. Absolute
 
 - **ID:** `vector.vector4.absolute`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `absolute` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `absolute` para valores do tipo vector4; use para remover o sinal. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Absolute → UI Set Text` ou conecte o vetor resultante a movimento/força para remover o sinal.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 402. Floor
 
 - **ID:** `vector.vector4.floor`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `floor` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `floor` para valores do tipo vector4; use para arredondar para baixo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Floor → UI Set Text` ou conecte o vetor resultante a movimento/força para arredondar para baixo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 403. Ceil
 
 - **ID:** `vector.vector4.ceil`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `ceil` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `ceil` para valores do tipo vector4; use para arredondar para cima. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Ceil → UI Set Text` ou conecte o vetor resultante a movimento/força para arredondar para cima.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 404. Round
 
 - **ID:** `vector.vector4.round`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `round` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `round` para valores do tipo vector4; use para arredondar ao inteiro mais próximo. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Round → UI Set Text` ou conecte o vetor resultante a movimento/força para arredondar ao inteiro mais próximo.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 405. Snap
 
 - **ID:** `vector.vector4.snap`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `snap` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `snap` para valores do tipo vector4; use para calcular snap antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Snap` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Snap → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular snap antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 406. Rotate
 
 - **ID:** `vector.vector4.rotate`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `rotate` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `rotate` para valores do tipo vector4; use para calcular rotate antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Rotate` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Rotate → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular rotate antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 407. Inverse
 
 - **ID:** `vector.vector4.inverse`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `inverse` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `inverse` para valores do tipo vector4; use para calcular inverse antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Inverse` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Inverse → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular inverse antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 408. Is Zero
 
 - **ID:** `vector.vector4.is_zero`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `is zero` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `is zero` para valores do tipo vector4; use para calcular is zero antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector4 que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Zero` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Is Zero → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular is zero antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 409. Is Finite
 
 - **ID:** `vector.vector4.is_finite`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `is finite` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `is finite` para valores do tipo vector4; use para calcular is finite antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `value`: valor vector4 que será testado.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Is Finite → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular is finite antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 410. Make
 
 - **ID:** `vector.vector4.make`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `make` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `make` para valores do tipo vector4; use para calcular make antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Make` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Make → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular make antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 411. Split
 
 - **ID:** `vector.vector4.split`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `split` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `split` para valores do tipo vector4; use para calcular split antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `Split` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → Split → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular split antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 412. With X
 
 - **ID:** `vector.vector4.with_x`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with x` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `with x` para valores do tipo vector4; use para calcular with x antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With X` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With X → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with x antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 413. With Y
 
 - **ID:** `vector.vector4.with_y`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with y` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `with y` para valores do tipo vector4; use para calcular with y antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With Y` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With Y → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with y antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 414. With Z
 
 - **ID:** `vector.vector4.with_z`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with z` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `with z` para valores do tipo vector4; use para calcular with z antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With Z` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With Z → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with z antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 415. With W
 
 - **ID:** `vector.vector4.with_w`
 - **Categoria:** Vetor
-- **Finalidade:** Calcula `with w` para valores do tipo vector4; não modifica objetos da cena.
+- **Finalidade:** Calcula `with w` para valores do tipo vector4; use para calcular with w antes de alimentar outro bloco. Não modifica a cena sozinho.
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
-- **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
-- **Exemplo:** Conecte constantes ou saídas anteriores a `With W` e use o resultado em `Debug Info` ou em outro bloco compatível.
+- **Saídas/efeito:** Retorna o cálculo tipado em `value` e `result`.
+- **Exemplo:** `Get Velocity → With W → UI Set Text` ou conecte o vetor resultante a movimento/força para calcular with w antes de alimentar outro bloco.
 - **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 416. Make Rgb
@@ -4758,90 +4758,90 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `object.find_by_name`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `find by name` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Find By Name`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Find by name no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `find by name` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `name`: nome exato procurado na scenetree.
+- **Saídas/efeito:** Executa `find by name` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Find By Name`, preencha `name`: nome exato procurado na SceneTree e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 477. Find By Tag
 
 - **ID:** `object.find_by_tag`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `find by tag` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Find By Tag`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Find by tag no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `find by tag` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `tag`: etiqueta cadastrada.
+- **Saídas/efeito:** Executa `find by tag` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Find By Tag`, preencha `tag`: etiqueta cadastrada e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 478. Find By Id
 
 - **ID:** `object.find_by_id`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `find by id` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Find By Id`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Find by id no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `find by id` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `id`: identificador persistente.
+- **Saídas/efeito:** Executa `find by id` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Find By Id`, preencha `id`: identificador persistente e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 479. Create
 
 - **ID:** `object.create`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `create` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Create`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Cria no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `create` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `scene`/`class_name` e `parent_path`.
+- **Saídas/efeito:** Executa `create` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Create`, preencha `scene`/`class_name` e `parent_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 480. Clone
 
 - **ID:** `object.clone`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `clone` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Clone`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Duplica no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `clone` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `parent_path` opcional.
+- **Saídas/efeito:** Executa `clone` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Clone`, preencha `target_path` e `parent_path` opcional e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 481. Destroy
 
 - **ID:** `object.destroy`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `destroy` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Destroy`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Remove da cena no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `destroy` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Somente `target_path`.
+- **Saídas/efeito:** Executa `destroy` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Destroy`, preencha somente `target_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 482. Enable
 
 - **ID:** `object.enable`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `enable` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Enable`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Reativa o processamento de um Node da cena. Use `Enable` para devolver comportamento a inimigos, plataformas ou controladores que foram desativados; isso não é o mesmo que apenas torná-los visíveis.
+- **Entradas/alvo:** `target_path`: caminho do Node a controlar, por exemplo `../Enemies/Guard`. Não recebe valor adicional.
+- **Saídas/efeito:** Coloca o alvo no estado ativo por meio do modo de processamento e emite `flow`. O Node continua existindo na SceneTree.
+- **Exemplo:** Inimigo por proximidade: `Trigger Enter → Enable`, alvo `../Enemies/Guard`; ao entrar na área, o guarda volta a processar IA e movimento. Use `Disable` no `Trigger Exit` para interrompê-lo novamente.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 483. Disable
 
 - **ID:** `object.disable`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `disable` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Disable`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Desativa o processamento de um Node da cena. Use `Enable` para devolver comportamento a inimigos, plataformas ou controladores que foram desativados; isso não é o mesmo que apenas torná-los visíveis.
+- **Entradas/alvo:** `target_path`: caminho do Node a controlar, por exemplo `../Enemies/Guard`. Não recebe valor adicional.
+- **Saídas/efeito:** Coloca o alvo no estado desativado por meio do modo de processamento e emite `flow`. O Node continua existindo na SceneTree.
+- **Exemplo:** Inimigo por proximidade: `Trigger Enter → Enable`, alvo `../Enemies/Guard`; ao entrar na área, o guarda volta a processar IA e movimento. Use `Disable` no `Trigger Exit` para interrompê-lo novamente.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 484. Toggle Enabled
 
 - **ID:** `object.toggle_enabled`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `toggle enabled` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Toggle Enabled`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Alterna o processamento de um Node da cena. Use `Enable` para devolver comportamento a inimigos, plataformas ou controladores que foram desativados; isso não é o mesmo que apenas torná-los visíveis.
+- **Entradas/alvo:** `target_path`: caminho do Node a controlar, por exemplo `../Enemies/Guard`. Não recebe valor adicional.
+- **Saídas/efeito:** Coloca o alvo no estado estado oposto por meio do modo de processamento e emite `flow`. O Node continua existindo na SceneTree.
+- **Exemplo:** Inimigo por proximidade: `Trigger Enter → Enable`, alvo `../Enemies/Guard`; ao entrar na área, o guarda volta a processar IA e movimento. Use `Disable` no `Trigger Exit` para interrompê-lo novamente.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 485. Set Name
@@ -4859,9 +4859,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `object.get_name`
 - **Categoria:** Objeto
 - **Finalidade:** Consulta `name` no sistema de objeto da cena sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna name em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Name → Debug Info` mostra o valor atual de name.
+- **Exemplo:** `Update → Get Name → UI Set Text` mostra name no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 487. Set Parent
@@ -4879,29 +4879,29 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `object.get_parent`
 - **Categoria:** Objeto
 - **Finalidade:** Consulta `parent` no sistema de objeto da cena sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna parent em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Parent → Debug Info` mostra o valor atual de parent.
+- **Exemplo:** `Update → Get Parent → UI Set Text` mostra parent no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 489. Add Child
 
 - **ID:** `object.add_child`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `add child` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Add Child`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Add child no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `add child` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` do pai e `child_path`.
+- **Saídas/efeito:** Executa `add child` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Add Child`, preencha `target_path` do pai e `child_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 490. Remove Child
 
 - **ID:** `object.remove_child`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `remove child` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Remove Child`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Remove child no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `remove child` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` do pai e `child_path`.
+- **Saídas/efeito:** Executa `remove child` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Remove Child`, preencha `target_path` do pai e `child_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 491. Get Child
@@ -4909,89 +4909,89 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `object.get_child`
 - **Categoria:** Objeto
 - **Finalidade:** Consulta `child` no sistema de objeto da cena sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna child em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Child → Debug Info` mostra o valor atual de child.
+- **Exemplo:** `Update → Get Child → UI Set Text` mostra child no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 492. Child Count
 
 - **ID:** `object.child_count`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `child count` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Child Count`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Child count no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `child count` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `child count` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `child count` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Child Count`, preencha `target_path` e `value` de `child count` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 493. Add Tag
 
 - **ID:** `object.add_tag`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `add tag` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Add Tag`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Add tag no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `add tag` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `add tag` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `add tag` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Add Tag`, preencha `target_path` e `value` de `add tag` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 494. Remove Tag
 
 - **ID:** `object.remove_tag`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `remove tag` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Remove Tag`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Remove tag no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `remove tag` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `remove tag` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `remove tag` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Remove Tag`, preencha `target_path` e `value` de `remove tag` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 495. Has Tag
 
 - **ID:** `object.has_tag`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `has tag` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Has Tag`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Has tag no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `has tag` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `has tag` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `has tag` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Has Tag`, preencha `target_path` e `value` de `has tag` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 496. Send Event
 
 - **ID:** `object.send_event`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `send event` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Send Event`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Send event no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `send event` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `event_name`.
+- **Saídas/efeito:** Executa `send event` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Send Event`, preencha `target_path` e `event_name` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 497. Send Event Bool
 
 - **ID:** `object.send_event_bool`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `send event bool` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Send Event Bool`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Send event bool no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `send event bool` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `send event bool` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `send event bool` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Send Event Bool`, preencha `target_path` e `value` de `send event bool` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 498. Send Event Number
 
 - **ID:** `object.send_event_number`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `send event number` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Send Event Number`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Send event number no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `send event number` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `send event number` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `send event number` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Send Event Number`, preencha `target_path` e `value` de `send event number` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 499. Send Event Text
 
 - **ID:** `object.send_event_text`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `send event text` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Send Event Text`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Send event text no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `send event text` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `send event text` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `send event text` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Send Event Text`, preencha `target_path` e `value` de `send event text` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 500. Get Component
@@ -4999,39 +4999,39 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `object.get_component`
 - **Categoria:** Objeto
 - **Finalidade:** Consulta `component` no sistema de objeto da cena sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna component em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Component → Debug Info` mostra o valor atual de component.
+- **Exemplo:** `Update → Get Component → UI Set Text` mostra component no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 501. Has Component
 
 - **ID:** `object.has_component`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `has component` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Has Component`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Has component no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `has component` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `has component` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `has component` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Has Component`, preencha `target_path` e `value` de `has component` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 502. Add Component
 
 - **ID:** `object.add_component`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `add component` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Add Component`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Add component no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `add component` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `add component` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `add component` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Add Component`, preencha `target_path` e `value` de `add component` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 503. Remove Component
 
 - **ID:** `object.remove_component`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `remove component` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Remove Component`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Remove component no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `remove component` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `remove component` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `remove component` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Remove Component`, preencha `target_path` e `value` de `remove component` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 504. Set Layer
@@ -5049,9 +5049,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `object.get_layer`
 - **Categoria:** Objeto
 - **Finalidade:** Consulta `layer` no sistema de objeto da cena sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna layer em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Layer → Debug Info` mostra o valor atual de layer.
+- **Exemplo:** `Update → Get Layer → UI Set Text` mostra layer no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 506. Set Visible
@@ -5068,10 +5068,10 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `object.is_visible`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `is visible` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Is Visible`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Is visible no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `is visible` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `is visible` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `is visible` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Is Visible`, preencha `target_path` e `value` de `is visible` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 508. Set Static
@@ -5088,1640 +5088,1640 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `object.is_static`
 - **Categoria:** Objeto
-- **Finalidade:** Executa a ação `is static` no sistema de objeto da cena usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Is Static`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Is static no sistema de objeto da cena. Use este bloco quando a mecânica precisa aplicar `is static` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `is static` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `is static` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Is Static`, preencha `target_path` e `value` de `is static` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 510. Create
 
 - **ID:** `list.number.create`
 - **Categoria:** Listas
-- **Finalidade:** Executa `create` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Create → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Cria uma lista vazia em uma lista de number. Use para use a saída como inventário inicial.
+- **Entradas/alvo:** Nenhuma entrada.
+- **Saídas/efeito:** Uma nova lista vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Create` e use a saída para use a saída como inventário inicial.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 511. Add
 
 - **ID:** `list.number.add`
 - **Categoria:** Listas
-- **Finalidade:** Executa `add` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Add → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Adiciona um item ao final em uma lista de number. Use para adicione uma moeda coletada ao inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** A lista com o novo item. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Add` e use a saída para adicione uma moeda coletada ao inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 512. Insert
 
 - **ID:** `list.number.insert`
 - **Categoria:** Listas
-- **Finalidade:** Executa `insert` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Insert → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Insere um item em uma posição em uma lista de number. Use para insira uma missão no topo usando índice `0`.
+- **Entradas/alvo:** `list`, `index` e `value`.
+- **Saídas/efeito:** A lista com o item inserido. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Insert` e use a saída para insira uma missão no topo usando índice `0`.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 513. Set
 
 - **ID:** `list.number.set`
 - **Categoria:** Listas
-- **Finalidade:** Executa `set` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Set → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Substitui o item de uma posição em uma lista de number. Use para troque o item do slot selecionado.
+- **Entradas/alvo:** `list`, `index` e `value`.
+- **Saídas/efeito:** A lista atualizada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Set` e use a saída para troque o item do slot selecionado.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 514. Get
 
 - **ID:** `list.number.get`
 - **Categoria:** Listas
-- **Finalidade:** Executa `get` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Get → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o item de uma posição em uma lista de number. Use para leia o item do slot `2` e mostre seu nome.
+- **Entradas/alvo:** `list` e `index`.
+- **Saídas/efeito:** O item encontrado em `value`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Get` e use a saída para leia o item do slot `2` e mostre seu nome.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 515. First
 
 - **ID:** `list.number.first`
 - **Categoria:** Listas
-- **Finalidade:** Executa `first` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → First → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o primeiro item em uma lista de number. Use para selecione a primeira missão da fila.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** O primeiro item ou valor vazio. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `First` e use a saída para selecione a primeira missão da fila.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 516. Last
 
 - **ID:** `list.number.last`
 - **Categoria:** Listas
-- **Finalidade:** Executa `last` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Last → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o último item em uma lista de number. Use para recupere o checkpoint mais recente.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** O último item ou valor vazio. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Last` e use a saída para recupere o checkpoint mais recente.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 517. Remove
 
 - **ID:** `list.number.remove`
 - **Categoria:** Listas
-- **Finalidade:** Executa `remove` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Remove → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove a primeira ocorrência de um valor em uma lista de number. Use para remova a chave usada do inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** A lista sem o item e um booleano de sucesso. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Remove` e use a saída para remova a chave usada do inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 518. Remove At
 
 - **ID:** `list.number.remove_at`
 - **Categoria:** Listas
-- **Finalidade:** Executa `remove at` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Remove At → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove o item de um índice em uma lista de number. Use para exclua o slot `1` da barra rápida.
+- **Entradas/alvo:** `list` e `index`.
+- **Saídas/efeito:** A lista sem aquela posição. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Remove At` e use a saída para exclua o slot `1` da barra rápida.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 519. Clear
 
 - **ID:** `list.number.clear`
 - **Categoria:** Listas
-- **Finalidade:** Executa `clear` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Clear → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove todos os itens em uma lista de number. Use para limpe inimigos rastreados ao trocar de fase.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** A mesma lista vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Clear` e use a saída para limpe inimigos rastreados ao trocar de fase.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 520. Contains
 
 - **ID:** `list.number.contains`
 - **Categoria:** Listas
-- **Finalidade:** Executa `contains` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Contains → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Verifica se um valor existe em uma lista de number. Use para use Branch para permitir uma porta somente se houver uma chave.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** `true` ou `false`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Contains` e use a saída para use Branch para permitir uma porta somente se houver uma chave.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 521. Index Of
 
 - **ID:** `list.number.index_of`
 - **Categoria:** Listas
-- **Finalidade:** Executa `index of` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Index Of → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Procura a primeira posição de um valor em uma lista de number. Use para localize a primeira poção no inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** Índice ou `-1`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Index Of` e use a saída para localize a primeira poção no inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 522. Last Index Of
 
 - **ID:** `list.number.last_index_of`
 - **Categoria:** Listas
-- **Finalidade:** Executa `last index of` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Last Index Of → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Procura a última posição de um valor em uma lista de number. Use para localize o último checkpoint repetido.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** Índice ou `-1`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Last Index Of` e use a saída para localize o último checkpoint repetido.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 523. Count
 
 - **ID:** `list.number.count`
 - **Categoria:** Listas
-- **Finalidade:** Executa `count` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Count → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Conta os itens em uma lista de number. Use para atualize `Itens: 8` na interface.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Quantidade inteira. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Count` e use a saída para atualize `Itens: 8` na interface.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 524. Is Empty
 
 - **ID:** `list.number.is_empty`
 - **Categoria:** Listas
-- **Finalidade:** Executa `is empty` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Is Empty → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Verifica se não há itens em uma lista de number. Use para encerre a onda quando a lista de inimigos ficar vazia.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** `true` quando a lista está vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Is Empty` e use a saída para encerre a onda quando a lista de inimigos ficar vazia.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 525. Reverse
 
 - **ID:** `list.number.reverse`
 - **Categoria:** Listas
-- **Finalidade:** Executa `reverse` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Reverse → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Inverte a ordem em uma lista de number. Use para mostre o histórico do mais recente ao mais antigo.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista em ordem inversa. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Reverse` e use a saída para mostre o histórico do mais recente ao mais antigo.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 526. Shuffle
 
 - **ID:** `list.number.shuffle`
 - **Categoria:** Listas
-- **Finalidade:** Executa `shuffle` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Shuffle → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Embaralha a ordem em uma lista de number. Use para embaralhe cartas antes de distribuí-las.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista embaralhada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Shuffle` e use a saída para embaralhe cartas antes de distribuí-las.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 527. Sort
 
 - **ID:** `list.number.sort`
 - **Categoria:** Listas
-- **Finalidade:** Executa `sort` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Sort → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Ordena os valores em uma lista de number. Use para ordene pontuações antes do placar.
+- **Entradas/alvo:** `list` e direção opcional.
+- **Saídas/efeito:** Lista ordenada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Sort` e use a saída para ordene pontuações antes do placar.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 528. Distinct
 
 - **ID:** `list.number.distinct`
 - **Categoria:** Listas
-- **Finalidade:** Executa `distinct` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Distinct → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove valores duplicados em uma lista de number. Use para elimine IDs de alvos repetidos.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista apenas com valores únicos. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Distinct` e use a saída para elimine IDs de alvos repetidos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 529. Slice
 
 - **ID:** `list.number.slice`
 - **Categoria:** Listas
-- **Finalidade:** Executa `slice` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Slice → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Recorta um intervalo em uma lista de number. Use para mostre somente os primeiros dez resultados.
+- **Entradas/alvo:** `list`, `start` e `length`.
+- **Saídas/efeito:** Uma nova sublista. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Slice` e use a saída para mostre somente os primeiros dez resultados.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 530. Concat
 
 - **ID:** `list.number.concat`
 - **Categoria:** Listas
-- **Finalidade:** Executa `concat` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Concat → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Une duas listas em uma lista de number. Use para junte inventário normal e itens temporários.
+- **Entradas/alvo:** `list` e `other`.
+- **Saídas/efeito:** Uma lista com ambas em sequência. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Concat` e use a saída para junte inventário normal e itens temporários.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 531. Filter
 
 - **ID:** `list.number.filter`
 - **Categoria:** Listas
-- **Finalidade:** Executa `filter` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Filter → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Mantém itens aprovados por uma condição em uma lista de number. Use para mantenha somente inimigos ainda vivos.
+- **Entradas/alvo:** `list` e condição/filtro.
+- **Saídas/efeito:** Lista filtrada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Filter` e use a saída para mantenha somente inimigos ainda vivos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 532. Map
 
 - **ID:** `list.number.map`
 - **Categoria:** Listas
-- **Finalidade:** Executa `map` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Map → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Transforma cada item em uma lista de number. Use para converta pontuações numéricas para textos.
+- **Entradas/alvo:** `list` e transformação.
+- **Saídas/efeito:** Nova lista transformada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Map` e use a saída para converta pontuações numéricas para textos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 533. Reduce
 
 - **ID:** `list.number.reduce`
 - **Categoria:** Listas
-- **Finalidade:** Executa `reduce` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Reduce → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Combina todos os itens em um resultado em uma lista de number. Use para some todos os danos para obter o dano total.
+- **Entradas/alvo:** `list`, valor inicial e operação.
+- **Saídas/efeito:** Valor acumulado. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Reduce` e use a saída para some todos os danos para obter o dano total.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 534. Random
 
 - **ID:** `list.number.random`
 - **Categoria:** Listas
-- **Finalidade:** Executa `random` em uma lista de number.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Number Create → Random → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Escolhe um item aleatório em uma lista de number. Use para escolha aleatoriamente um ponto de spawn.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Um item da lista. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de number, conecte-a a `Random` e use a saída para escolha aleatoriamente um ponto de spawn.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 535. Create
 
 - **ID:** `list.text.create`
 - **Categoria:** Listas
-- **Finalidade:** Executa `create` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Create → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Cria uma lista vazia em uma lista de text. Use para use a saída como inventário inicial.
+- **Entradas/alvo:** Nenhuma entrada.
+- **Saídas/efeito:** Uma nova lista vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Create` e use a saída para use a saída como inventário inicial.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 536. Add
 
 - **ID:** `list.text.add`
 - **Categoria:** Listas
-- **Finalidade:** Executa `add` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Add → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Adiciona um item ao final em uma lista de text. Use para adicione uma moeda coletada ao inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** A lista com o novo item. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Add` e use a saída para adicione uma moeda coletada ao inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 537. Insert
 
 - **ID:** `list.text.insert`
 - **Categoria:** Listas
-- **Finalidade:** Executa `insert` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Insert → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Insere um item em uma posição em uma lista de text. Use para insira uma missão no topo usando índice `0`.
+- **Entradas/alvo:** `list`, `index` e `value`.
+- **Saídas/efeito:** A lista com o item inserido. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Insert` e use a saída para insira uma missão no topo usando índice `0`.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 538. Set
 
 - **ID:** `list.text.set`
 - **Categoria:** Listas
-- **Finalidade:** Executa `set` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Set → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Substitui o item de uma posição em uma lista de text. Use para troque o item do slot selecionado.
+- **Entradas/alvo:** `list`, `index` e `value`.
+- **Saídas/efeito:** A lista atualizada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Set` e use a saída para troque o item do slot selecionado.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 539. Get
 
 - **ID:** `list.text.get`
 - **Categoria:** Listas
-- **Finalidade:** Executa `get` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Get → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o item de uma posição em uma lista de text. Use para leia o item do slot `2` e mostre seu nome.
+- **Entradas/alvo:** `list` e `index`.
+- **Saídas/efeito:** O item encontrado em `value`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Get` e use a saída para leia o item do slot `2` e mostre seu nome.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 540. First
 
 - **ID:** `list.text.first`
 - **Categoria:** Listas
-- **Finalidade:** Executa `first` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → First → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o primeiro item em uma lista de text. Use para selecione a primeira missão da fila.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** O primeiro item ou valor vazio. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `First` e use a saída para selecione a primeira missão da fila.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 541. Last
 
 - **ID:** `list.text.last`
 - **Categoria:** Listas
-- **Finalidade:** Executa `last` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Last → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o último item em uma lista de text. Use para recupere o checkpoint mais recente.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** O último item ou valor vazio. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Last` e use a saída para recupere o checkpoint mais recente.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 542. Remove
 
 - **ID:** `list.text.remove`
 - **Categoria:** Listas
-- **Finalidade:** Executa `remove` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Remove → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove a primeira ocorrência de um valor em uma lista de text. Use para remova a chave usada do inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** A lista sem o item e um booleano de sucesso. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Remove` e use a saída para remova a chave usada do inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 543. Remove At
 
 - **ID:** `list.text.remove_at`
 - **Categoria:** Listas
-- **Finalidade:** Executa `remove at` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Remove At → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove o item de um índice em uma lista de text. Use para exclua o slot `1` da barra rápida.
+- **Entradas/alvo:** `list` e `index`.
+- **Saídas/efeito:** A lista sem aquela posição. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Remove At` e use a saída para exclua o slot `1` da barra rápida.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 544. Clear
 
 - **ID:** `list.text.clear`
 - **Categoria:** Listas
-- **Finalidade:** Executa `clear` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Clear → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove todos os itens em uma lista de text. Use para limpe inimigos rastreados ao trocar de fase.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** A mesma lista vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Clear` e use a saída para limpe inimigos rastreados ao trocar de fase.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 545. Contains
 
 - **ID:** `list.text.contains`
 - **Categoria:** Listas
-- **Finalidade:** Executa `contains` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Contains → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Verifica se um valor existe em uma lista de text. Use para use Branch para permitir uma porta somente se houver uma chave.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** `true` ou `false`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Contains` e use a saída para use Branch para permitir uma porta somente se houver uma chave.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 546. Index Of
 
 - **ID:** `list.text.index_of`
 - **Categoria:** Listas
-- **Finalidade:** Executa `index of` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Index Of → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Procura a primeira posição de um valor em uma lista de text. Use para localize a primeira poção no inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** Índice ou `-1`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Index Of` e use a saída para localize a primeira poção no inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 547. Last Index Of
 
 - **ID:** `list.text.last_index_of`
 - **Categoria:** Listas
-- **Finalidade:** Executa `last index of` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Last Index Of → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Procura a última posição de um valor em uma lista de text. Use para localize o último checkpoint repetido.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** Índice ou `-1`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Last Index Of` e use a saída para localize o último checkpoint repetido.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 548. Count
 
 - **ID:** `list.text.count`
 - **Categoria:** Listas
-- **Finalidade:** Executa `count` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Count → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Conta os itens em uma lista de text. Use para atualize `Itens: 8` na interface.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Quantidade inteira. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Count` e use a saída para atualize `Itens: 8` na interface.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 549. Is Empty
 
 - **ID:** `list.text.is_empty`
 - **Categoria:** Listas
-- **Finalidade:** Executa `is empty` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Is Empty → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Verifica se não há itens em uma lista de text. Use para encerre a onda quando a lista de inimigos ficar vazia.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** `true` quando a lista está vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Is Empty` e use a saída para encerre a onda quando a lista de inimigos ficar vazia.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 550. Reverse
 
 - **ID:** `list.text.reverse`
 - **Categoria:** Listas
-- **Finalidade:** Executa `reverse` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Reverse → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Inverte a ordem em uma lista de text. Use para mostre o histórico do mais recente ao mais antigo.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista em ordem inversa. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Reverse` e use a saída para mostre o histórico do mais recente ao mais antigo.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 551. Shuffle
 
 - **ID:** `list.text.shuffle`
 - **Categoria:** Listas
-- **Finalidade:** Executa `shuffle` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Shuffle → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Embaralha a ordem em uma lista de text. Use para embaralhe cartas antes de distribuí-las.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista embaralhada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Shuffle` e use a saída para embaralhe cartas antes de distribuí-las.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 552. Sort
 
 - **ID:** `list.text.sort`
 - **Categoria:** Listas
-- **Finalidade:** Executa `sort` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Sort → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Ordena os valores em uma lista de text. Use para ordene pontuações antes do placar.
+- **Entradas/alvo:** `list` e direção opcional.
+- **Saídas/efeito:** Lista ordenada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Sort` e use a saída para ordene pontuações antes do placar.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 553. Distinct
 
 - **ID:** `list.text.distinct`
 - **Categoria:** Listas
-- **Finalidade:** Executa `distinct` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Distinct → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove valores duplicados em uma lista de text. Use para elimine IDs de alvos repetidos.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista apenas com valores únicos. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Distinct` e use a saída para elimine IDs de alvos repetidos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 554. Slice
 
 - **ID:** `list.text.slice`
 - **Categoria:** Listas
-- **Finalidade:** Executa `slice` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Slice → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Recorta um intervalo em uma lista de text. Use para mostre somente os primeiros dez resultados.
+- **Entradas/alvo:** `list`, `start` e `length`.
+- **Saídas/efeito:** Uma nova sublista. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Slice` e use a saída para mostre somente os primeiros dez resultados.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 555. Concat
 
 - **ID:** `list.text.concat`
 - **Categoria:** Listas
-- **Finalidade:** Executa `concat` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Concat → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Une duas listas em uma lista de text. Use para junte inventário normal e itens temporários.
+- **Entradas/alvo:** `list` e `other`.
+- **Saídas/efeito:** Uma lista com ambas em sequência. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Concat` e use a saída para junte inventário normal e itens temporários.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 556. Filter
 
 - **ID:** `list.text.filter`
 - **Categoria:** Listas
-- **Finalidade:** Executa `filter` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Filter → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Mantém itens aprovados por uma condição em uma lista de text. Use para mantenha somente inimigos ainda vivos.
+- **Entradas/alvo:** `list` e condição/filtro.
+- **Saídas/efeito:** Lista filtrada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Filter` e use a saída para mantenha somente inimigos ainda vivos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 557. Map
 
 - **ID:** `list.text.map`
 - **Categoria:** Listas
-- **Finalidade:** Executa `map` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Map → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Transforma cada item em uma lista de text. Use para converta pontuações numéricas para textos.
+- **Entradas/alvo:** `list` e transformação.
+- **Saídas/efeito:** Nova lista transformada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Map` e use a saída para converta pontuações numéricas para textos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 558. Reduce
 
 - **ID:** `list.text.reduce`
 - **Categoria:** Listas
-- **Finalidade:** Executa `reduce` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Reduce → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Combina todos os itens em um resultado em uma lista de text. Use para some todos os danos para obter o dano total.
+- **Entradas/alvo:** `list`, valor inicial e operação.
+- **Saídas/efeito:** Valor acumulado. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Reduce` e use a saída para some todos os danos para obter o dano total.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 559. Random
 
 - **ID:** `list.text.random`
 - **Categoria:** Listas
-- **Finalidade:** Executa `random` em uma lista de text.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Text Create → Random → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Escolhe um item aleatório em uma lista de text. Use para escolha aleatoriamente um ponto de spawn.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Um item da lista. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de text, conecte-a a `Random` e use a saída para escolha aleatoriamente um ponto de spawn.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 560. Create
 
 - **ID:** `list.bool.create`
 - **Categoria:** Listas
-- **Finalidade:** Executa `create` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Create → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Cria uma lista vazia em uma lista de bool. Use para use a saída como inventário inicial.
+- **Entradas/alvo:** Nenhuma entrada.
+- **Saídas/efeito:** Uma nova lista vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Create` e use a saída para use a saída como inventário inicial.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 561. Add
 
 - **ID:** `list.bool.add`
 - **Categoria:** Listas
-- **Finalidade:** Executa `add` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Add → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Adiciona um item ao final em uma lista de bool. Use para adicione uma moeda coletada ao inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** A lista com o novo item. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Add` e use a saída para adicione uma moeda coletada ao inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 562. Insert
 
 - **ID:** `list.bool.insert`
 - **Categoria:** Listas
-- **Finalidade:** Executa `insert` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Insert → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Insere um item em uma posição em uma lista de bool. Use para insira uma missão no topo usando índice `0`.
+- **Entradas/alvo:** `list`, `index` e `value`.
+- **Saídas/efeito:** A lista com o item inserido. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Insert` e use a saída para insira uma missão no topo usando índice `0`.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 563. Set
 
 - **ID:** `list.bool.set`
 - **Categoria:** Listas
-- **Finalidade:** Executa `set` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Set → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Substitui o item de uma posição em uma lista de bool. Use para troque o item do slot selecionado.
+- **Entradas/alvo:** `list`, `index` e `value`.
+- **Saídas/efeito:** A lista atualizada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Set` e use a saída para troque o item do slot selecionado.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 564. Get
 
 - **ID:** `list.bool.get`
 - **Categoria:** Listas
-- **Finalidade:** Executa `get` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Get → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o item de uma posição em uma lista de bool. Use para leia o item do slot `2` e mostre seu nome.
+- **Entradas/alvo:** `list` e `index`.
+- **Saídas/efeito:** O item encontrado em `value`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Get` e use a saída para leia o item do slot `2` e mostre seu nome.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 565. First
 
 - **ID:** `list.bool.first`
 - **Categoria:** Listas
-- **Finalidade:** Executa `first` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → First → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o primeiro item em uma lista de bool. Use para selecione a primeira missão da fila.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** O primeiro item ou valor vazio. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `First` e use a saída para selecione a primeira missão da fila.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 566. Last
 
 - **ID:** `list.bool.last`
 - **Categoria:** Listas
-- **Finalidade:** Executa `last` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Last → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o último item em uma lista de bool. Use para recupere o checkpoint mais recente.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** O último item ou valor vazio. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Last` e use a saída para recupere o checkpoint mais recente.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 567. Remove
 
 - **ID:** `list.bool.remove`
 - **Categoria:** Listas
-- **Finalidade:** Executa `remove` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Remove → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove a primeira ocorrência de um valor em uma lista de bool. Use para remova a chave usada do inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** A lista sem o item e um booleano de sucesso. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Remove` e use a saída para remova a chave usada do inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 568. Remove At
 
 - **ID:** `list.bool.remove_at`
 - **Categoria:** Listas
-- **Finalidade:** Executa `remove at` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Remove At → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove o item de um índice em uma lista de bool. Use para exclua o slot `1` da barra rápida.
+- **Entradas/alvo:** `list` e `index`.
+- **Saídas/efeito:** A lista sem aquela posição. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Remove At` e use a saída para exclua o slot `1` da barra rápida.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 569. Clear
 
 - **ID:** `list.bool.clear`
 - **Categoria:** Listas
-- **Finalidade:** Executa `clear` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Clear → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove todos os itens em uma lista de bool. Use para limpe inimigos rastreados ao trocar de fase.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** A mesma lista vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Clear` e use a saída para limpe inimigos rastreados ao trocar de fase.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 570. Contains
 
 - **ID:** `list.bool.contains`
 - **Categoria:** Listas
-- **Finalidade:** Executa `contains` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Contains → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Verifica se um valor existe em uma lista de bool. Use para use Branch para permitir uma porta somente se houver uma chave.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** `true` ou `false`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Contains` e use a saída para use Branch para permitir uma porta somente se houver uma chave.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 571. Index Of
 
 - **ID:** `list.bool.index_of`
 - **Categoria:** Listas
-- **Finalidade:** Executa `index of` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Index Of → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Procura a primeira posição de um valor em uma lista de bool. Use para localize a primeira poção no inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** Índice ou `-1`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Index Of` e use a saída para localize a primeira poção no inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 572. Last Index Of
 
 - **ID:** `list.bool.last_index_of`
 - **Categoria:** Listas
-- **Finalidade:** Executa `last index of` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Last Index Of → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Procura a última posição de um valor em uma lista de bool. Use para localize o último checkpoint repetido.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** Índice ou `-1`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Last Index Of` e use a saída para localize o último checkpoint repetido.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 573. Count
 
 - **ID:** `list.bool.count`
 - **Categoria:** Listas
-- **Finalidade:** Executa `count` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Count → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Conta os itens em uma lista de bool. Use para atualize `Itens: 8` na interface.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Quantidade inteira. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Count` e use a saída para atualize `Itens: 8` na interface.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 574. Is Empty
 
 - **ID:** `list.bool.is_empty`
 - **Categoria:** Listas
-- **Finalidade:** Executa `is empty` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Is Empty → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Verifica se não há itens em uma lista de bool. Use para encerre a onda quando a lista de inimigos ficar vazia.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** `true` quando a lista está vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Is Empty` e use a saída para encerre a onda quando a lista de inimigos ficar vazia.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 575. Reverse
 
 - **ID:** `list.bool.reverse`
 - **Categoria:** Listas
-- **Finalidade:** Executa `reverse` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Reverse → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Inverte a ordem em uma lista de bool. Use para mostre o histórico do mais recente ao mais antigo.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista em ordem inversa. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Reverse` e use a saída para mostre o histórico do mais recente ao mais antigo.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 576. Shuffle
 
 - **ID:** `list.bool.shuffle`
 - **Categoria:** Listas
-- **Finalidade:** Executa `shuffle` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Shuffle → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Embaralha a ordem em uma lista de bool. Use para embaralhe cartas antes de distribuí-las.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista embaralhada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Shuffle` e use a saída para embaralhe cartas antes de distribuí-las.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 577. Sort
 
 - **ID:** `list.bool.sort`
 - **Categoria:** Listas
-- **Finalidade:** Executa `sort` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Sort → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Ordena os valores em uma lista de bool. Use para ordene pontuações antes do placar.
+- **Entradas/alvo:** `list` e direção opcional.
+- **Saídas/efeito:** Lista ordenada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Sort` e use a saída para ordene pontuações antes do placar.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 578. Distinct
 
 - **ID:** `list.bool.distinct`
 - **Categoria:** Listas
-- **Finalidade:** Executa `distinct` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Distinct → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove valores duplicados em uma lista de bool. Use para elimine IDs de alvos repetidos.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista apenas com valores únicos. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Distinct` e use a saída para elimine IDs de alvos repetidos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 579. Slice
 
 - **ID:** `list.bool.slice`
 - **Categoria:** Listas
-- **Finalidade:** Executa `slice` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Slice → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Recorta um intervalo em uma lista de bool. Use para mostre somente os primeiros dez resultados.
+- **Entradas/alvo:** `list`, `start` e `length`.
+- **Saídas/efeito:** Uma nova sublista. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Slice` e use a saída para mostre somente os primeiros dez resultados.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 580. Concat
 
 - **ID:** `list.bool.concat`
 - **Categoria:** Listas
-- **Finalidade:** Executa `concat` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Concat → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Une duas listas em uma lista de bool. Use para junte inventário normal e itens temporários.
+- **Entradas/alvo:** `list` e `other`.
+- **Saídas/efeito:** Uma lista com ambas em sequência. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Concat` e use a saída para junte inventário normal e itens temporários.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 581. Filter
 
 - **ID:** `list.bool.filter`
 - **Categoria:** Listas
-- **Finalidade:** Executa `filter` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Filter → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Mantém itens aprovados por uma condição em uma lista de bool. Use para mantenha somente inimigos ainda vivos.
+- **Entradas/alvo:** `list` e condição/filtro.
+- **Saídas/efeito:** Lista filtrada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Filter` e use a saída para mantenha somente inimigos ainda vivos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 582. Map
 
 - **ID:** `list.bool.map`
 - **Categoria:** Listas
-- **Finalidade:** Executa `map` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Map → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Transforma cada item em uma lista de bool. Use para converta pontuações numéricas para textos.
+- **Entradas/alvo:** `list` e transformação.
+- **Saídas/efeito:** Nova lista transformada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Map` e use a saída para converta pontuações numéricas para textos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 583. Reduce
 
 - **ID:** `list.bool.reduce`
 - **Categoria:** Listas
-- **Finalidade:** Executa `reduce` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Reduce → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Combina todos os itens em um resultado em uma lista de bool. Use para some todos os danos para obter o dano total.
+- **Entradas/alvo:** `list`, valor inicial e operação.
+- **Saídas/efeito:** Valor acumulado. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Reduce` e use a saída para some todos os danos para obter o dano total.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 584. Random
 
 - **ID:** `list.bool.random`
 - **Categoria:** Listas
-- **Finalidade:** Executa `random` em uma lista de bool.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Bool Create → Random → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Escolhe um item aleatório em uma lista de bool. Use para escolha aleatoriamente um ponto de spawn.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Um item da lista. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de bool, conecte-a a `Random` e use a saída para escolha aleatoriamente um ponto de spawn.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 585. Create
 
 - **ID:** `list.vector3.create`
 - **Categoria:** Listas
-- **Finalidade:** Executa `create` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Create → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Cria uma lista vazia em uma lista de vector3. Use para use a saída como inventário inicial.
+- **Entradas/alvo:** Nenhuma entrada.
+- **Saídas/efeito:** Uma nova lista vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Create` e use a saída para use a saída como inventário inicial.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 586. Add
 
 - **ID:** `list.vector3.add`
 - **Categoria:** Listas
-- **Finalidade:** Executa `add` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Add → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Adiciona um item ao final em uma lista de vector3. Use para adicione uma moeda coletada ao inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** A lista com o novo item. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Add` e use a saída para adicione uma moeda coletada ao inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 587. Insert
 
 - **ID:** `list.vector3.insert`
 - **Categoria:** Listas
-- **Finalidade:** Executa `insert` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Insert → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Insere um item em uma posição em uma lista de vector3. Use para insira uma missão no topo usando índice `0`.
+- **Entradas/alvo:** `list`, `index` e `value`.
+- **Saídas/efeito:** A lista com o item inserido. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Insert` e use a saída para insira uma missão no topo usando índice `0`.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 588. Set
 
 - **ID:** `list.vector3.set`
 - **Categoria:** Listas
-- **Finalidade:** Executa `set` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Set → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Substitui o item de uma posição em uma lista de vector3. Use para troque o item do slot selecionado.
+- **Entradas/alvo:** `list`, `index` e `value`.
+- **Saídas/efeito:** A lista atualizada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Set` e use a saída para troque o item do slot selecionado.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 589. Get
 
 - **ID:** `list.vector3.get`
 - **Categoria:** Listas
-- **Finalidade:** Executa `get` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Get → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o item de uma posição em uma lista de vector3. Use para leia o item do slot `2` e mostre seu nome.
+- **Entradas/alvo:** `list` e `index`.
+- **Saídas/efeito:** O item encontrado em `value`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Get` e use a saída para leia o item do slot `2` e mostre seu nome.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 590. First
 
 - **ID:** `list.vector3.first`
 - **Categoria:** Listas
-- **Finalidade:** Executa `first` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → First → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o primeiro item em uma lista de vector3. Use para selecione a primeira missão da fila.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** O primeiro item ou valor vazio. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `First` e use a saída para selecione a primeira missão da fila.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 591. Last
 
 - **ID:** `list.vector3.last`
 - **Categoria:** Listas
-- **Finalidade:** Executa `last` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Last → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o último item em uma lista de vector3. Use para recupere o checkpoint mais recente.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** O último item ou valor vazio. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Last` e use a saída para recupere o checkpoint mais recente.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 592. Remove
 
 - **ID:** `list.vector3.remove`
 - **Categoria:** Listas
-- **Finalidade:** Executa `remove` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Remove → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove a primeira ocorrência de um valor em uma lista de vector3. Use para remova a chave usada do inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** A lista sem o item e um booleano de sucesso. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Remove` e use a saída para remova a chave usada do inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 593. Remove At
 
 - **ID:** `list.vector3.remove_at`
 - **Categoria:** Listas
-- **Finalidade:** Executa `remove at` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Remove At → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove o item de um índice em uma lista de vector3. Use para exclua o slot `1` da barra rápida.
+- **Entradas/alvo:** `list` e `index`.
+- **Saídas/efeito:** A lista sem aquela posição. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Remove At` e use a saída para exclua o slot `1` da barra rápida.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 594. Clear
 
 - **ID:** `list.vector3.clear`
 - **Categoria:** Listas
-- **Finalidade:** Executa `clear` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Clear → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove todos os itens em uma lista de vector3. Use para limpe inimigos rastreados ao trocar de fase.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** A mesma lista vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Clear` e use a saída para limpe inimigos rastreados ao trocar de fase.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 595. Contains
 
 - **ID:** `list.vector3.contains`
 - **Categoria:** Listas
-- **Finalidade:** Executa `contains` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Contains → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Verifica se um valor existe em uma lista de vector3. Use para use Branch para permitir uma porta somente se houver uma chave.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** `true` ou `false`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Contains` e use a saída para use Branch para permitir uma porta somente se houver uma chave.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 596. Index Of
 
 - **ID:** `list.vector3.index_of`
 - **Categoria:** Listas
-- **Finalidade:** Executa `index of` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Index Of → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Procura a primeira posição de um valor em uma lista de vector3. Use para localize a primeira poção no inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** Índice ou `-1`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Index Of` e use a saída para localize a primeira poção no inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 597. Last Index Of
 
 - **ID:** `list.vector3.last_index_of`
 - **Categoria:** Listas
-- **Finalidade:** Executa `last index of` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Last Index Of → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Procura a última posição de um valor em uma lista de vector3. Use para localize o último checkpoint repetido.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** Índice ou `-1`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Last Index Of` e use a saída para localize o último checkpoint repetido.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 598. Count
 
 - **ID:** `list.vector3.count`
 - **Categoria:** Listas
-- **Finalidade:** Executa `count` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Count → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Conta os itens em uma lista de vector3. Use para atualize `Itens: 8` na interface.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Quantidade inteira. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Count` e use a saída para atualize `Itens: 8` na interface.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 599. Is Empty
 
 - **ID:** `list.vector3.is_empty`
 - **Categoria:** Listas
-- **Finalidade:** Executa `is empty` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Is Empty → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Verifica se não há itens em uma lista de vector3. Use para encerre a onda quando a lista de inimigos ficar vazia.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** `true` quando a lista está vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Is Empty` e use a saída para encerre a onda quando a lista de inimigos ficar vazia.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 600. Reverse
 
 - **ID:** `list.vector3.reverse`
 - **Categoria:** Listas
-- **Finalidade:** Executa `reverse` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Reverse → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Inverte a ordem em uma lista de vector3. Use para mostre o histórico do mais recente ao mais antigo.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista em ordem inversa. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Reverse` e use a saída para mostre o histórico do mais recente ao mais antigo.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 601. Shuffle
 
 - **ID:** `list.vector3.shuffle`
 - **Categoria:** Listas
-- **Finalidade:** Executa `shuffle` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Shuffle → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Embaralha a ordem em uma lista de vector3. Use para embaralhe cartas antes de distribuí-las.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista embaralhada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Shuffle` e use a saída para embaralhe cartas antes de distribuí-las.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 602. Sort
 
 - **ID:** `list.vector3.sort`
 - **Categoria:** Listas
-- **Finalidade:** Executa `sort` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Sort → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Ordena os valores em uma lista de vector3. Use para ordene pontuações antes do placar.
+- **Entradas/alvo:** `list` e direção opcional.
+- **Saídas/efeito:** Lista ordenada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Sort` e use a saída para ordene pontuações antes do placar.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 603. Distinct
 
 - **ID:** `list.vector3.distinct`
 - **Categoria:** Listas
-- **Finalidade:** Executa `distinct` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Distinct → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove valores duplicados em uma lista de vector3. Use para elimine IDs de alvos repetidos.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista apenas com valores únicos. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Distinct` e use a saída para elimine IDs de alvos repetidos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 604. Slice
 
 - **ID:** `list.vector3.slice`
 - **Categoria:** Listas
-- **Finalidade:** Executa `slice` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Slice → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Recorta um intervalo em uma lista de vector3. Use para mostre somente os primeiros dez resultados.
+- **Entradas/alvo:** `list`, `start` e `length`.
+- **Saídas/efeito:** Uma nova sublista. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Slice` e use a saída para mostre somente os primeiros dez resultados.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 605. Concat
 
 - **ID:** `list.vector3.concat`
 - **Categoria:** Listas
-- **Finalidade:** Executa `concat` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Concat → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Une duas listas em uma lista de vector3. Use para junte inventário normal e itens temporários.
+- **Entradas/alvo:** `list` e `other`.
+- **Saídas/efeito:** Uma lista com ambas em sequência. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Concat` e use a saída para junte inventário normal e itens temporários.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 606. Filter
 
 - **ID:** `list.vector3.filter`
 - **Categoria:** Listas
-- **Finalidade:** Executa `filter` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Filter → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Mantém itens aprovados por uma condição em uma lista de vector3. Use para mantenha somente inimigos ainda vivos.
+- **Entradas/alvo:** `list` e condição/filtro.
+- **Saídas/efeito:** Lista filtrada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Filter` e use a saída para mantenha somente inimigos ainda vivos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 607. Map
 
 - **ID:** `list.vector3.map`
 - **Categoria:** Listas
-- **Finalidade:** Executa `map` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Map → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Transforma cada item em uma lista de vector3. Use para converta pontuações numéricas para textos.
+- **Entradas/alvo:** `list` e transformação.
+- **Saídas/efeito:** Nova lista transformada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Map` e use a saída para converta pontuações numéricas para textos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 608. Reduce
 
 - **ID:** `list.vector3.reduce`
 - **Categoria:** Listas
-- **Finalidade:** Executa `reduce` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Reduce → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Combina todos os itens em um resultado em uma lista de vector3. Use para some todos os danos para obter o dano total.
+- **Entradas/alvo:** `list`, valor inicial e operação.
+- **Saídas/efeito:** Valor acumulado. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Reduce` e use a saída para some todos os danos para obter o dano total.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 609. Random
 
 - **ID:** `list.vector3.random`
 - **Categoria:** Listas
-- **Finalidade:** Executa `random` em uma lista de vector3.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Vector3 Create → Random → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Escolhe um item aleatório em uma lista de vector3. Use para escolha aleatoriamente um ponto de spawn.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Um item da lista. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de vector3, conecte-a a `Random` e use a saída para escolha aleatoriamente um ponto de spawn.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 610. Create
 
 - **ID:** `list.object.create`
 - **Categoria:** Listas
-- **Finalidade:** Executa `create` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Create → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Cria uma lista vazia em uma lista de object. Use para use a saída como inventário inicial.
+- **Entradas/alvo:** Nenhuma entrada.
+- **Saídas/efeito:** Uma nova lista vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Create` e use a saída para use a saída como inventário inicial.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 611. Add
 
 - **ID:** `list.object.add`
 - **Categoria:** Listas
-- **Finalidade:** Executa `add` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Add → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Adiciona um item ao final em uma lista de object. Use para adicione uma moeda coletada ao inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** A lista com o novo item. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Add` e use a saída para adicione uma moeda coletada ao inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 612. Insert
 
 - **ID:** `list.object.insert`
 - **Categoria:** Listas
-- **Finalidade:** Executa `insert` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Insert → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Insere um item em uma posição em uma lista de object. Use para insira uma missão no topo usando índice `0`.
+- **Entradas/alvo:** `list`, `index` e `value`.
+- **Saídas/efeito:** A lista com o item inserido. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Insert` e use a saída para insira uma missão no topo usando índice `0`.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 613. Set
 
 - **ID:** `list.object.set`
 - **Categoria:** Listas
-- **Finalidade:** Executa `set` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Set → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Substitui o item de uma posição em uma lista de object. Use para troque o item do slot selecionado.
+- **Entradas/alvo:** `list`, `index` e `value`.
+- **Saídas/efeito:** A lista atualizada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Set` e use a saída para troque o item do slot selecionado.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 614. Get
 
 - **ID:** `list.object.get`
 - **Categoria:** Listas
-- **Finalidade:** Executa `get` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Get → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o item de uma posição em uma lista de object. Use para leia o item do slot `2` e mostre seu nome.
+- **Entradas/alvo:** `list` e `index`.
+- **Saídas/efeito:** O item encontrado em `value`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Get` e use a saída para leia o item do slot `2` e mostre seu nome.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 615. First
 
 - **ID:** `list.object.first`
 - **Categoria:** Listas
-- **Finalidade:** Executa `first` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → First → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o primeiro item em uma lista de object. Use para selecione a primeira missão da fila.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** O primeiro item ou valor vazio. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `First` e use a saída para selecione a primeira missão da fila.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 616. Last
 
 - **ID:** `list.object.last`
 - **Categoria:** Listas
-- **Finalidade:** Executa `last` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Last → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Obtém o último item em uma lista de object. Use para recupere o checkpoint mais recente.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** O último item ou valor vazio. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Last` e use a saída para recupere o checkpoint mais recente.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 617. Remove
 
 - **ID:** `list.object.remove`
 - **Categoria:** Listas
-- **Finalidade:** Executa `remove` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Remove → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove a primeira ocorrência de um valor em uma lista de object. Use para remova a chave usada do inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** A lista sem o item e um booleano de sucesso. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Remove` e use a saída para remova a chave usada do inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 618. Remove At
 
 - **ID:** `list.object.remove_at`
 - **Categoria:** Listas
-- **Finalidade:** Executa `remove at` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Remove At → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove o item de um índice em uma lista de object. Use para exclua o slot `1` da barra rápida.
+- **Entradas/alvo:** `list` e `index`.
+- **Saídas/efeito:** A lista sem aquela posição. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Remove At` e use a saída para exclua o slot `1` da barra rápida.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 619. Clear
 
 - **ID:** `list.object.clear`
 - **Categoria:** Listas
-- **Finalidade:** Executa `clear` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Clear → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove todos os itens em uma lista de object. Use para limpe inimigos rastreados ao trocar de fase.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** A mesma lista vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Clear` e use a saída para limpe inimigos rastreados ao trocar de fase.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 620. Contains
 
 - **ID:** `list.object.contains`
 - **Categoria:** Listas
-- **Finalidade:** Executa `contains` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Contains → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Verifica se um valor existe em uma lista de object. Use para use Branch para permitir uma porta somente se houver uma chave.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** `true` ou `false`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Contains` e use a saída para use Branch para permitir uma porta somente se houver uma chave.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 621. Index Of
 
 - **ID:** `list.object.index_of`
 - **Categoria:** Listas
-- **Finalidade:** Executa `index of` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Index Of → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Procura a primeira posição de um valor em uma lista de object. Use para localize a primeira poção no inventário.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** Índice ou `-1`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Index Of` e use a saída para localize a primeira poção no inventário.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 622. Last Index Of
 
 - **ID:** `list.object.last_index_of`
 - **Categoria:** Listas
-- **Finalidade:** Executa `last index of` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Last Index Of → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Procura a última posição de um valor em uma lista de object. Use para localize o último checkpoint repetido.
+- **Entradas/alvo:** `list` e `value`.
+- **Saídas/efeito:** Índice ou `-1`. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Last Index Of` e use a saída para localize o último checkpoint repetido.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 623. Count
 
 - **ID:** `list.object.count`
 - **Categoria:** Listas
-- **Finalidade:** Executa `count` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Count → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Conta os itens em uma lista de object. Use para atualize `Itens: 8` na interface.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Quantidade inteira. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Count` e use a saída para atualize `Itens: 8` na interface.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 624. Is Empty
 
 - **ID:** `list.object.is_empty`
 - **Categoria:** Listas
-- **Finalidade:** Executa `is empty` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Is Empty → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Verifica se não há itens em uma lista de object. Use para encerre a onda quando a lista de inimigos ficar vazia.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** `true` quando a lista está vazia. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Is Empty` e use a saída para encerre a onda quando a lista de inimigos ficar vazia.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 625. Reverse
 
 - **ID:** `list.object.reverse`
 - **Categoria:** Listas
-- **Finalidade:** Executa `reverse` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Reverse → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Inverte a ordem em uma lista de object. Use para mostre o histórico do mais recente ao mais antigo.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista em ordem inversa. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Reverse` e use a saída para mostre o histórico do mais recente ao mais antigo.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 626. Shuffle
 
 - **ID:** `list.object.shuffle`
 - **Categoria:** Listas
-- **Finalidade:** Executa `shuffle` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Shuffle → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Embaralha a ordem em uma lista de object. Use para embaralhe cartas antes de distribuí-las.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista embaralhada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Shuffle` e use a saída para embaralhe cartas antes de distribuí-las.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 627. Sort
 
 - **ID:** `list.object.sort`
 - **Categoria:** Listas
-- **Finalidade:** Executa `sort` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Sort → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Ordena os valores em uma lista de object. Use para ordene pontuações antes do placar.
+- **Entradas/alvo:** `list` e direção opcional.
+- **Saídas/efeito:** Lista ordenada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Sort` e use a saída para ordene pontuações antes do placar.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 628. Distinct
 
 - **ID:** `list.object.distinct`
 - **Categoria:** Listas
-- **Finalidade:** Executa `distinct` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Distinct → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Remove valores duplicados em uma lista de object. Use para elimine IDs de alvos repetidos.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Lista apenas com valores únicos. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Distinct` e use a saída para elimine IDs de alvos repetidos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 629. Slice
 
 - **ID:** `list.object.slice`
 - **Categoria:** Listas
-- **Finalidade:** Executa `slice` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Slice → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Recorta um intervalo em uma lista de object. Use para mostre somente os primeiros dez resultados.
+- **Entradas/alvo:** `list`, `start` e `length`.
+- **Saídas/efeito:** Uma nova sublista. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Slice` e use a saída para mostre somente os primeiros dez resultados.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 630. Concat
 
 - **ID:** `list.object.concat`
 - **Categoria:** Listas
-- **Finalidade:** Executa `concat` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Concat → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Une duas listas em uma lista de object. Use para junte inventário normal e itens temporários.
+- **Entradas/alvo:** `list` e `other`.
+- **Saídas/efeito:** Uma lista com ambas em sequência. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Concat` e use a saída para junte inventário normal e itens temporários.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 631. Filter
 
 - **ID:** `list.object.filter`
 - **Categoria:** Listas
-- **Finalidade:** Executa `filter` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Filter → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Mantém itens aprovados por uma condição em uma lista de object. Use para mantenha somente inimigos ainda vivos.
+- **Entradas/alvo:** `list` e condição/filtro.
+- **Saídas/efeito:** Lista filtrada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Filter` e use a saída para mantenha somente inimigos ainda vivos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 632. Map
 
 - **ID:** `list.object.map`
 - **Categoria:** Listas
-- **Finalidade:** Executa `map` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Map → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Transforma cada item em uma lista de object. Use para converta pontuações numéricas para textos.
+- **Entradas/alvo:** `list` e transformação.
+- **Saídas/efeito:** Nova lista transformada. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Map` e use a saída para converta pontuações numéricas para textos.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 633. Reduce
 
 - **ID:** `list.object.reduce`
 - **Categoria:** Listas
-- **Finalidade:** Executa `reduce` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Reduce → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Combina todos os itens em um resultado em uma lista de object. Use para some todos os danos para obter o dano total.
+- **Entradas/alvo:** `list`, valor inicial e operação.
+- **Saídas/efeito:** Valor acumulado. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Reduce` e use a saída para some todos os danos para obter o dano total.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 634. Random
 
 - **ID:** `list.object.random`
 - **Categoria:** Listas
-- **Finalidade:** Executa `random` em uma lista de object.
-- **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
-- **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
-- **Exemplo:** `List Object Create → Random → Debug Info` demonstra o resultado da operação.
+- **Finalidade:** Escolhe um item aleatório em uma lista de object. Use para escolha aleatoriamente um ponto de spawn.
+- **Entradas/alvo:** `list`.
+- **Saídas/efeito:** Um item da lista. A lista de entrada permanece disponível para outras conexões.
+- **Exemplo:** Mecânica: crie ou carregue a lista de object, conecte-a a `Random` e use a saída para escolha aleatoriamente um ponto de spawn.
 - **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 635. Get
 
 - **ID:** `transform.position.get`
 - **Categoria:** Transform
-- **Finalidade:** Executa `get` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Get`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: lê o valor atual. Use para mostre a posição do jogador no HUD.
+- **Entradas/alvo:** Somente `target_path`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Lê o valor atual e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Get`, alvo `../Player`; conecte a entrada descrita acima e use a saída para mostre a posição do jogador no HUD.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 636. Set
 
 - **ID:** `transform.position.set`
 - **Categoria:** Transform
-- **Finalidade:** Executa `set` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Set`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: substitui o valor atual. Use para teleporte o jogador para um ponto definido.
+- **Entradas/alvo:** `target_path` e `value` com a nova position. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Substitui o valor atual e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Set`, alvo `../Player`; conecte a entrada descrita acima e use a saída para teleporte o jogador para um ponto definido.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 637. Add
 
 - **ID:** `transform.position.add`
 - **Categoria:** Transform
-- **Finalidade:** Executa `add` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Add`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: soma o deslocamento. Use para mova uma plataforma 2 metros para cima.
+- **Entradas/alvo:** `target_path` e `value` a somar à position. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Soma o deslocamento e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Add`, alvo `../Player`; conecte a entrada descrita acima e use a saída para mova uma plataforma 2 metros para cima.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 638. Subtract
 
 - **ID:** `transform.position.subtract`
 - **Categoria:** Transform
-- **Finalidade:** Executa `subtract` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Subtract`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: subtrai o deslocamento. Use para afaste um objeto do ponto atual.
+- **Entradas/alvo:** `target_path` e `value` a subtrair da position. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Subtrai o deslocamento e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Subtract`, alvo `../Player`; conecte a entrada descrita acima e use a saída para afaste um objeto do ponto atual.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 639. Multiply
 
 - **ID:** `transform.position.multiply`
 - **Categoria:** Transform
-- **Finalidade:** Executa `multiply` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Multiply`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: multiplica cada componente. Use para dobre a escala de um item coletado.
+- **Entradas/alvo:** `target_path` e `factor` para multiplicar a position. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Multiplica cada componente e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Multiply`, alvo `../Player`; conecte a entrada descrita acima e use a saída para dobre a escala de um item coletado.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 640. Lerp
 
 - **ID:** `transform.position.lerp`
 - **Categoria:** Transform
-- **Finalidade:** Executa `lerp` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Lerp`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: interpola entre valor atual e destino. Use para suavize a câmera até o ponto desejado.
+- **Entradas/alvo:** `target_path`, `target_value` e `weight` entre 0 e 1. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Interpola entre valor atual e destino e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Lerp`, alvo `../Player`; conecte a entrada descrita acima e use a saída para suavize a câmera até o ponto desejado.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 641. Move Towards
 
 - **ID:** `transform.position.move_towards`
 - **Categoria:** Transform
-- **Finalidade:** Executa `move towards` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Move Towards`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: aproxima sem ultrapassar o destino. Use para mova uma plataforma até a parada.
+- **Entradas/alvo:** `target_path`, `target_value` e `delta` máximo. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Aproxima sem ultrapassar o destino e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Move Towards`, alvo `../Player`; conecte a entrada descrita acima e use a saída para mova uma plataforma até a parada.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 642. Local To World
 
 - **ID:** `transform.position.local_to_world`
 - **Categoria:** Transform
-- **Finalidade:** Executa `local to world` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Local To World`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: converte para coordenada global. Use para descubra onde fica o cano da arma no mundo.
+- **Entradas/alvo:** `target_path` e coordenada local em `value`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Converte para coordenada global e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Local To World`, alvo `../Player`; conecte a entrada descrita acima e use a saída para descubra onde fica o cano da arma no mundo.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 643. World To Local
 
 - **ID:** `transform.position.world_to_local`
 - **Categoria:** Transform
-- **Finalidade:** Executa `world to local` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → World To Local`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: converte para o espaço local. Use para converta o ponto atingido para coordenadas do objeto.
+- **Entradas/alvo:** `target_path` e coordenada global em `value`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Converte para o espaço local e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → World To Local`, alvo `../Player`; conecte a entrada descrita acima e use a saída para converta o ponto atingido para coordenadas do objeto.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 644. Reset
 
 - **ID:** `transform.position.reset`
 - **Categoria:** Transform
-- **Finalidade:** Executa `reset` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Reset`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: restaura posição/rotação para zero ou escala para um. Use para reinicie a transformação após respawn.
+- **Entradas/alvo:** Somente `target_path`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Restaura posição/rotação para zero ou escala para um e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Reset`, alvo `../Player`; conecte a entrada descrita acima e use a saída para reinicie a transformação após respawn.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 645. Look At
 
 - **ID:** `transform.position.look_at`
 - **Categoria:** Transform
-- **Finalidade:** Executa `look at` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Look At`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: gira para olhar o ponto. Use para faça uma torre mirar no jogador.
+- **Entradas/alvo:** `target_path`, ponto global `target` e eixo superior opcional. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Gira para olhar o ponto e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Look At`, alvo `../Player`; conecte a entrada descrita acima e use a saída para faça uma torre mirar no jogador.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 646. Face Direction
 
 - **ID:** `transform.position.face_direction`
 - **Categoria:** Transform
-- **Finalidade:** Executa `face direction` sobre a position de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Face Direction`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a position de um `Node2D`/`Node3D`: gira para a direção informada. Use para vire o personagem para o sentido do movimento.
+- **Entradas/alvo:** `target_path` e vetor `direction`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Gira para a direção informada e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Face Direction`, alvo `../Player`; conecte a entrada descrita acima e use a saída para vire o personagem para o sentido do movimento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 647. Get
 
 - **ID:** `transform.rotation.get`
 - **Categoria:** Transform
-- **Finalidade:** Executa `get` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Get`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: lê o valor atual. Use para mostre a posição do jogador no HUD.
+- **Entradas/alvo:** Somente `target_path`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Lê o valor atual e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Get`, alvo `../Player`; conecte a entrada descrita acima e use a saída para mostre a posição do jogador no HUD.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 648. Set
 
 - **ID:** `transform.rotation.set`
 - **Categoria:** Transform
-- **Finalidade:** Executa `set` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Set`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: substitui o valor atual. Use para teleporte o jogador para um ponto definido.
+- **Entradas/alvo:** `target_path` e `value` com a nova rotation. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Substitui o valor atual e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Set`, alvo `../Player`; conecte a entrada descrita acima e use a saída para teleporte o jogador para um ponto definido.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 649. Add
 
 - **ID:** `transform.rotation.add`
 - **Categoria:** Transform
-- **Finalidade:** Executa `add` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Add`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: soma o deslocamento. Use para mova uma plataforma 2 metros para cima.
+- **Entradas/alvo:** `target_path` e `value` a somar à rotation. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Soma o deslocamento e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Add`, alvo `../Player`; conecte a entrada descrita acima e use a saída para mova uma plataforma 2 metros para cima.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 650. Subtract
 
 - **ID:** `transform.rotation.subtract`
 - **Categoria:** Transform
-- **Finalidade:** Executa `subtract` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Subtract`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: subtrai o deslocamento. Use para afaste um objeto do ponto atual.
+- **Entradas/alvo:** `target_path` e `value` a subtrair da rotation. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Subtrai o deslocamento e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Subtract`, alvo `../Player`; conecte a entrada descrita acima e use a saída para afaste um objeto do ponto atual.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 651. Multiply
 
 - **ID:** `transform.rotation.multiply`
 - **Categoria:** Transform
-- **Finalidade:** Executa `multiply` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Multiply`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: multiplica cada componente. Use para dobre a escala de um item coletado.
+- **Entradas/alvo:** `target_path` e `factor` para multiplicar a rotation. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Multiplica cada componente e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Multiply`, alvo `../Player`; conecte a entrada descrita acima e use a saída para dobre a escala de um item coletado.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 652. Lerp
 
 - **ID:** `transform.rotation.lerp`
 - **Categoria:** Transform
-- **Finalidade:** Executa `lerp` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Lerp`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: interpola entre valor atual e destino. Use para suavize a câmera até o ponto desejado.
+- **Entradas/alvo:** `target_path`, `target_value` e `weight` entre 0 e 1. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Interpola entre valor atual e destino e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Lerp`, alvo `../Player`; conecte a entrada descrita acima e use a saída para suavize a câmera até o ponto desejado.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 653. Move Towards
 
 - **ID:** `transform.rotation.move_towards`
 - **Categoria:** Transform
-- **Finalidade:** Executa `move towards` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Move Towards`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: aproxima sem ultrapassar o destino. Use para mova uma plataforma até a parada.
+- **Entradas/alvo:** `target_path`, `target_value` e `delta` máximo. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Aproxima sem ultrapassar o destino e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Move Towards`, alvo `../Player`; conecte a entrada descrita acima e use a saída para mova uma plataforma até a parada.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 654. Local To World
 
 - **ID:** `transform.rotation.local_to_world`
 - **Categoria:** Transform
-- **Finalidade:** Executa `local to world` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Local To World`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: converte para coordenada global. Use para descubra onde fica o cano da arma no mundo.
+- **Entradas/alvo:** `target_path` e coordenada local em `value`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Converte para coordenada global e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Local To World`, alvo `../Player`; conecte a entrada descrita acima e use a saída para descubra onde fica o cano da arma no mundo.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 655. World To Local
 
 - **ID:** `transform.rotation.world_to_local`
 - **Categoria:** Transform
-- **Finalidade:** Executa `world to local` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → World To Local`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: converte para o espaço local. Use para converta o ponto atingido para coordenadas do objeto.
+- **Entradas/alvo:** `target_path` e coordenada global em `value`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Converte para o espaço local e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → World To Local`, alvo `../Player`; conecte a entrada descrita acima e use a saída para converta o ponto atingido para coordenadas do objeto.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 656. Reset
 
 - **ID:** `transform.rotation.reset`
 - **Categoria:** Transform
-- **Finalidade:** Executa `reset` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Reset`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: restaura posição/rotação para zero ou escala para um. Use para reinicie a transformação após respawn.
+- **Entradas/alvo:** Somente `target_path`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Restaura posição/rotação para zero ou escala para um e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Reset`, alvo `../Player`; conecte a entrada descrita acima e use a saída para reinicie a transformação após respawn.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 657. Look At
 
 - **ID:** `transform.rotation.look_at`
 - **Categoria:** Transform
-- **Finalidade:** Executa `look at` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Look At`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: gira para olhar o ponto. Use para faça uma torre mirar no jogador.
+- **Entradas/alvo:** `target_path`, ponto global `target` e eixo superior opcional. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Gira para olhar o ponto e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Look At`, alvo `../Player`; conecte a entrada descrita acima e use a saída para faça uma torre mirar no jogador.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 658. Face Direction
 
 - **ID:** `transform.rotation.face_direction`
 - **Categoria:** Transform
-- **Finalidade:** Executa `face direction` sobre a rotation de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Face Direction`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotation de um `Node2D`/`Node3D`: gira para a direção informada. Use para vire o personagem para o sentido do movimento.
+- **Entradas/alvo:** `target_path` e vetor `direction`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Gira para a direção informada e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Face Direction`, alvo `../Player`; conecte a entrada descrita acima e use a saída para vire o personagem para o sentido do movimento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 659. Get
 
 - **ID:** `transform.scale.get`
 - **Categoria:** Transform
-- **Finalidade:** Executa `get` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Get`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: lê o valor atual. Use para mostre a posição do jogador no HUD.
+- **Entradas/alvo:** Somente `target_path`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Lê o valor atual e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Get`, alvo `../Player`; conecte a entrada descrita acima e use a saída para mostre a posição do jogador no HUD.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 660. Set
 
 - **ID:** `transform.scale.set`
 - **Categoria:** Transform
-- **Finalidade:** Executa `set` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Set`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: substitui o valor atual. Use para teleporte o jogador para um ponto definido.
+- **Entradas/alvo:** `target_path` e `value` com a nova scale. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Substitui o valor atual e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Set`, alvo `../Player`; conecte a entrada descrita acima e use a saída para teleporte o jogador para um ponto definido.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 661. Add
 
 - **ID:** `transform.scale.add`
 - **Categoria:** Transform
-- **Finalidade:** Executa `add` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Add`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: soma o deslocamento. Use para mova uma plataforma 2 metros para cima.
+- **Entradas/alvo:** `target_path` e `value` a somar à scale. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Soma o deslocamento e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Add`, alvo `../Player`; conecte a entrada descrita acima e use a saída para mova uma plataforma 2 metros para cima.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 662. Subtract
 
 - **ID:** `transform.scale.subtract`
 - **Categoria:** Transform
-- **Finalidade:** Executa `subtract` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Subtract`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: subtrai o deslocamento. Use para afaste um objeto do ponto atual.
+- **Entradas/alvo:** `target_path` e `value` a subtrair da scale. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Subtrai o deslocamento e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Subtract`, alvo `../Player`; conecte a entrada descrita acima e use a saída para afaste um objeto do ponto atual.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 663. Multiply
 
 - **ID:** `transform.scale.multiply`
 - **Categoria:** Transform
-- **Finalidade:** Executa `multiply` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Multiply`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: multiplica cada componente. Use para dobre a escala de um item coletado.
+- **Entradas/alvo:** `target_path` e `factor` para multiplicar a scale. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Multiplica cada componente e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Multiply`, alvo `../Player`; conecte a entrada descrita acima e use a saída para dobre a escala de um item coletado.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 664. Lerp
 
 - **ID:** `transform.scale.lerp`
 - **Categoria:** Transform
-- **Finalidade:** Executa `lerp` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Lerp`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: interpola entre valor atual e destino. Use para suavize a câmera até o ponto desejado.
+- **Entradas/alvo:** `target_path`, `target_value` e `weight` entre 0 e 1. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Interpola entre valor atual e destino e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Lerp`, alvo `../Player`; conecte a entrada descrita acima e use a saída para suavize a câmera até o ponto desejado.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 665. Move Towards
 
 - **ID:** `transform.scale.move_towards`
 - **Categoria:** Transform
-- **Finalidade:** Executa `move towards` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Move Towards`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: aproxima sem ultrapassar o destino. Use para mova uma plataforma até a parada.
+- **Entradas/alvo:** `target_path`, `target_value` e `delta` máximo. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Aproxima sem ultrapassar o destino e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Move Towards`, alvo `../Player`; conecte a entrada descrita acima e use a saída para mova uma plataforma até a parada.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 666. Local To World
 
 - **ID:** `transform.scale.local_to_world`
 - **Categoria:** Transform
-- **Finalidade:** Executa `local to world` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Local To World`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: converte para coordenada global. Use para descubra onde fica o cano da arma no mundo.
+- **Entradas/alvo:** `target_path` e coordenada local em `value`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Converte para coordenada global e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Local To World`, alvo `../Player`; conecte a entrada descrita acima e use a saída para descubra onde fica o cano da arma no mundo.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 667. World To Local
 
 - **ID:** `transform.scale.world_to_local`
 - **Categoria:** Transform
-- **Finalidade:** Executa `world to local` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → World To Local`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: converte para o espaço local. Use para converta o ponto atingido para coordenadas do objeto.
+- **Entradas/alvo:** `target_path` e coordenada global em `value`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Converte para o espaço local e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → World To Local`, alvo `../Player`; conecte a entrada descrita acima e use a saída para converta o ponto atingido para coordenadas do objeto.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 668. Reset
 
 - **ID:** `transform.scale.reset`
 - **Categoria:** Transform
-- **Finalidade:** Executa `reset` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Reset`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: restaura posição/rotação para zero ou escala para um. Use para reinicie a transformação após respawn.
+- **Entradas/alvo:** Somente `target_path`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Restaura posição/rotação para zero ou escala para um e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Reset`, alvo `../Player`; conecte a entrada descrita acima e use a saída para reinicie a transformação após respawn.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 669. Look At
 
 - **ID:** `transform.scale.look_at`
 - **Categoria:** Transform
-- **Finalidade:** Executa `look at` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Look At`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: gira para olhar o ponto. Use para faça uma torre mirar no jogador.
+- **Entradas/alvo:** `target_path`, ponto global `target` e eixo superior opcional. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Gira para olhar o ponto e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Look At`, alvo `../Player`; conecte a entrada descrita acima e use a saída para faça uma torre mirar no jogador.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 670. Face Direction
 
 - **ID:** `transform.scale.face_direction`
 - **Categoria:** Transform
-- **Finalidade:** Executa `face direction` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Face Direction`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: gira para a direção informada. Use para vire o personagem para o sentido do movimento.
+- **Entradas/alvo:** `target_path` e vetor `direction`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Gira para a direção informada e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Face Direction`, alvo `../Player`; conecte a entrada descrita acima e use a saída para vire o personagem para o sentido do movimento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 671. Girar no eixo Y
 
 - **ID:** `transform.rotate.y`
 - **Categoria:** Transform
-- **Finalidade:** Executa `y` sobre a rotate de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de rotate, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a rotate e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Girar no eixo Y`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a rotate de um `Node2D`/`Node3D`: gira somente no eixo Y. Use para gire uma moeda ou plataforma horizontalmente.
+- **Entradas/alvo:** `target_path` e ângulo `value` em graus/radianos indicado pelo bloco. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Gira somente no eixo y e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Girar no eixo Y`, alvo `../Player`; conecte a entrada descrita acima e use a saída para gire uma moeda ou plataforma horizontalmente.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 672. Escala uniforme
 
 - **ID:** `transform.scale.uniform`
 - **Categoria:** Transform
-- **Finalidade:** Executa `uniform` sobre a scale de um `Node2D`/`Node3D`.
-- **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
-- **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
-- **Exemplo:** `Update → Escala uniforme`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
+- **Finalidade:** Manipula a scale de um `Node2D`/`Node3D`: aplica o mesmo tamanho em X, Y e Z. Use para aumente um power-up sem deformá-lo.
+- **Entradas/alvo:** `target_path` e número `value`. O caminho é relativo ao `MGSNoCodeRunner`.
+- **Saídas/efeito:** Aplica o mesmo tamanho em x, y e z e fornece a saída `flow`; operações de conversão/leitura também retornam o vetor em `value`.
+- **Exemplo:** Mecânica: `Update → Escala uniforme`, alvo `../Player`; conecte a entrada descrita acima e use a saída para aumente um power-up sem deformá-lo.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 673. Add Force
@@ -6809,9 +6809,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `physics.get_mass`
 - **Categoria:** Fisica
 - **Finalidade:** Consulta `mass` no sistema de física 3D sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna mass em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Mass → Debug Info` mostra o valor atual de mass.
+- **Exemplo:** `Update → Get Mass → UI Set Text` mostra mass no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 682. Set Gravity
@@ -6828,10 +6828,10 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `physics.use_gravity`
 - **Categoria:** Fisica
-- **Finalidade:** Executa a ação `use gravity` no sistema de física 3D usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Use Gravity`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Use gravity no sistema de física 3D. Use este bloco quando a mecânica precisa aplicar `use gravity` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `use gravity` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `use gravity` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Use Gravity`, preencha `target_path` e `value` de `use gravity` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 684. Set Kinematic
@@ -6848,20 +6848,20 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `physics.freeze_position`
 - **Categoria:** Fisica
-- **Finalidade:** Executa a ação `freeze position` no sistema de física 3D usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Freeze Position`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Freeze position no sistema de física 3D. Use este bloco quando a mecânica precisa aplicar `freeze position` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `freeze position` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `freeze position` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Freeze Position`, preencha `target_path` e `value` de `freeze position` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 686. Freeze Rotation
 
 - **ID:** `physics.freeze_rotation`
 - **Categoria:** Fisica
-- **Finalidade:** Executa a ação `freeze rotation` no sistema de física 3D usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Freeze Rotation`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Freeze rotation no sistema de física 3D. Use este bloco quando a mecânica precisa aplicar `freeze rotation` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `freeze rotation` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `freeze rotation` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Freeze Rotation`, preencha `target_path` e `value` de `freeze rotation` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 687. Raycast
@@ -6878,50 +6878,50 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `physics.sphere_cast`
 - **Categoria:** Fisica
-- **Finalidade:** Executa a ação `sphere cast` no sistema de física 3D usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Sphere Cast`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Sphere cast no sistema de física 3D. Use este bloco quando a mecânica precisa aplicar `sphere cast` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `sphere cast` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `sphere cast` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Sphere Cast`, preencha `target_path` e `value` de `sphere cast` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 689. Box Cast
 
 - **ID:** `physics.box_cast`
 - **Categoria:** Fisica
-- **Finalidade:** Executa a ação `box cast` no sistema de física 3D usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Box Cast`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Box cast no sistema de física 3D. Use este bloco quando a mecânica precisa aplicar `box cast` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `box cast` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `box cast` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Box Cast`, preencha `target_path` e `value` de `box cast` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 690. Overlap Sphere
 
 - **ID:** `physics.overlap_sphere`
 - **Categoria:** Fisica
-- **Finalidade:** Executa a ação `overlap sphere` no sistema de física 3D usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Overlap Sphere`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Overlap sphere no sistema de física 3D. Use este bloco quando a mecânica precisa aplicar `overlap sphere` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `overlap sphere` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `overlap sphere` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Overlap Sphere`, preencha `target_path` e `value` de `overlap sphere` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 691. Overlap Box
 
 - **ID:** `physics.overlap_box`
 - **Categoria:** Fisica
-- **Finalidade:** Executa a ação `overlap box` no sistema de física 3D usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Overlap Box`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Overlap box no sistema de física 3D. Use este bloco quando a mecânica precisa aplicar `overlap box` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `overlap box` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `overlap box` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Overlap Box`, preencha `target_path` e `value` de `overlap box` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 692. Ignore Collision
 
 - **ID:** `physics.ignore_collision`
 - **Categoria:** Fisica
-- **Finalidade:** Executa a ação `ignore collision` no sistema de física 3D usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Ignore Collision`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Ignore collision no sistema de física 3D. Use este bloco quando a mecânica precisa aplicar `ignore collision` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `ignore collision` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `ignore collision` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Ignore Collision`, preencha `target_path` e `value` de `ignore collision` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 693. Set Friction
@@ -6948,50 +6948,50 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `physics.wake_up`
 - **Categoria:** Fisica
-- **Finalidade:** Executa a ação `wake up` no sistema de física 3D usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Wake Up`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Acorda o corpo físico no sistema de física 3D. Use este bloco quando a mecânica precisa aplicar `wake up` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `wake up` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `wake up` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Wake Up`, preencha `target_path` e `value` de `wake up` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 696. Sleep
 
 - **ID:** `physics.sleep`
 - **Categoria:** Fisica
-- **Finalidade:** Executa a ação `sleep` no sistema de física 3D usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Sleep`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Coloca o corpo físico em repouso no sistema de física 3D. Use este bloco quando a mecânica precisa aplicar `sleep` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `sleep` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `sleep` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Sleep`, preencha `target_path` e `value` de `sleep` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 697. Enter
 
 - **ID:** `vehicle.enter`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `enter` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Enter`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Enter no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `enter` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `enter` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `enter` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Enter`, preencha `target_path` e `value` de `enter` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 698. Exit
 
 - **ID:** `vehicle.exit`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `exit` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Exit`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Exit no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `exit` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `exit` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `exit` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Exit`, preencha `target_path` e `value` de `exit` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 699. Can Enter
 
 - **ID:** `vehicle.can_enter`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `can enter` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Can Enter`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Can enter no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `can enter` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `can enter` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `can enter` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Can Enter`, preencha `target_path` e `value` de `can enter` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 700. Get Driver
@@ -6999,79 +6999,79 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_driver`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `driver` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna driver em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Driver → Debug Info` mostra o valor atual de driver.
+- **Exemplo:** `Update → Get Driver → UI Set Text` mostra driver no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 701. Open Door
 
 - **ID:** `vehicle.open_door`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `open door` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Open Door`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Abre a porta no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `open door` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` da porta.
+- **Saídas/efeito:** Executa `open door` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Open Door`, preencha `target_path` da porta e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 702. Close Door
 
 - **ID:** `vehicle.close_door`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `close door` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Close Door`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Fecha a porta no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `close door` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` da porta.
+- **Saídas/efeito:** Executa `close door` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Close Door`, preencha `target_path` da porta e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 703. Toggle Door
 
 - **ID:** `vehicle.toggle_door`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `toggle door` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Toggle Door`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Toggle door no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `toggle door` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `toggle door` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `toggle door` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Toggle Door`, preencha `target_path` e `value` de `toggle door` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 704. Open Hood
 
 - **ID:** `vehicle.open_hood`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `open hood` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Open Hood`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Open hood no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `open hood` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `open hood` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `open hood` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Open Hood`, preencha `target_path` e `value` de `open hood` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 705. Close Hood
 
 - **ID:** `vehicle.close_hood`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `close hood` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Close Hood`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Close hood no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `close hood` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `close hood` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `close hood` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Close Hood`, preencha `target_path` e `value` de `close hood` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 706. Open Trunk
 
 - **ID:** `vehicle.open_trunk`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `open trunk` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Open Trunk`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Open trunk no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `open trunk` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `open trunk` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `open trunk` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Open Trunk`, preencha `target_path` e `value` de `open trunk` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 707. Close Trunk
 
 - **ID:** `vehicle.close_trunk`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `close trunk` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Close Trunk`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Close trunk no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `close trunk` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `close trunk` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `close trunk` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Close Trunk`, preencha `target_path` e `value` de `close trunk` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 708. Set Throttle
@@ -7089,9 +7089,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_throttle`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `throttle` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna throttle em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Throttle → Debug Info` mostra o valor atual de throttle.
+- **Exemplo:** `Update → Get Throttle → UI Set Text` mostra throttle no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 710. Set Brake
@@ -7109,9 +7109,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_brake`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `brake` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna brake em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Brake → Debug Info` mostra o valor atual de brake.
+- **Exemplo:** `Update → Get Brake → UI Set Text` mostra brake no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 712. Set Handbrake
@@ -7139,29 +7139,29 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_steering`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `steering` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna steering em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Steering → Debug Info` mostra o valor atual de steering.
+- **Exemplo:** `Update → Get Steering → UI Set Text` mostra steering no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 715. Shift Up
 
 - **ID:** `vehicle.shift_up`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `shift up` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Shift Up`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Aumenta a marcha no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `shift up` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` do veículo.
+- **Saídas/efeito:** Executa `shift up` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Shift Up`, preencha `target_path` do veículo e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 716. Shift Down
 
 - **ID:** `vehicle.shift_down`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `shift down` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Shift Down`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Reduz a marcha no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `shift down` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` do veículo.
+- **Saídas/efeito:** Executa `shift down` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Shift Down`, preencha `target_path` do veículo e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 717. Set Gear
@@ -7179,9 +7179,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_gear`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `gear` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna gear em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Gear → Debug Info` mostra o valor atual de gear.
+- **Exemplo:** `Update → Get Gear → UI Set Text` mostra gear no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 719. Get Speed
@@ -7189,9 +7189,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_speed`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `speed` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna speed em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Speed → Debug Info` mostra o valor atual de speed.
+- **Exemplo:** `Update → Get Speed → UI Set Text` mostra speed no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 720. Get Rpm
@@ -7199,9 +7199,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_rpm`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `rpm` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna rpm em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Rpm → Debug Info` mostra o valor atual de rpm.
+- **Exemplo:** `Update → Get Rpm → UI Set Text` mostra rpm no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 721. Get Wheel Speed
@@ -7209,9 +7209,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_wheel_speed`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `wheel speed` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna wheel speed em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Wheel Speed → Debug Info` mostra o valor atual de wheel speed.
+- **Exemplo:** `Update → Get Wheel Speed → UI Set Text` mostra wheel speed no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 722. Get Slip Ratio
@@ -7219,9 +7219,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_slip_ratio`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `slip ratio` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna slip ratio em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Slip Ratio → Debug Info` mostra o valor atual de slip ratio.
+- **Exemplo:** `Update → Get Slip Ratio → UI Set Text` mostra slip ratio no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 723. Get Lateral Slip
@@ -7229,9 +7229,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_lateral_slip`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `lateral slip` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna lateral slip em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Lateral Slip → Debug Info` mostra o valor atual de lateral slip.
+- **Exemplo:** `Update → Get Lateral Slip → UI Set Text` mostra lateral slip no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 724. Set Mass
@@ -7469,9 +7469,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `vehicle.get_suspension_compression`
 - **Categoria:** Veiculo
 - **Finalidade:** Consulta `suspension compression` no sistema de veículo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna suspension compression em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Suspension Compression → Debug Info` mostra o valor atual de suspension compression.
+- **Exemplo:** `Update → Get Suspension Compression → UI Set Text` mostra suspension compression no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 748. Set Center Of Mass
@@ -7518,170 +7518,170 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `vehicle.reset_upright`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `reset upright` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Reset Upright`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Reset upright no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `reset upright` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `reset upright` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `reset upright` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Reset Upright`, preencha `target_path` e `value` de `reset upright` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 753. Teleport
 
 - **ID:** `vehicle.teleport`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `teleport` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Teleport`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Reposiciona imediatamente no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `teleport` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path`, `position` e rotação opcional.
+- **Saídas/efeito:** Executa `teleport` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Teleport`, preencha `target_path`, `position` e rotação opcional e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 754. Repair
 
 - **ID:** `vehicle.repair`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `repair` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Repair`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Restaura no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `repair` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `repair` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `repair` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Repair`, preencha `target_path` e `value` de `repair` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 755. Enable Collision
 
 - **ID:** `vehicle.enable_collision`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `enable collision` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Enable Collision`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Enable collision no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `enable collision` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `enable collision` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `enable collision` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Enable Collision`, preencha `target_path` e `value` de `enable collision` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 756. Disable Collision
 
 - **ID:** `vehicle.disable_collision`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `disable collision` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Disable Collision`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Disable collision no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `disable collision` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `disable collision` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `disable collision` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Disable Collision`, preencha `target_path` e `value` de `disable collision` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 757. On Collision
 
 - **ID:** `vehicle.on_collision`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `on collision` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → On Collision`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** On collision no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `on collision` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `on collision` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `on collision` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `On Collision`, preencha `target_path` e `value` de `on collision` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 758. On Entered
 
 - **ID:** `vehicle.on_entered`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `on entered` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → On Entered`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** On entered no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `on entered` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `on entered` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `on entered` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `On Entered`, preencha `target_path` e `value` de `on entered` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 759. On Exited
 
 - **ID:** `vehicle.on_exited`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `on exited` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → On Exited`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** On exited no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `on exited` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `on exited` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `on exited` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `On Exited`, preencha `target_path` e `value` de `on exited` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 760. On Door Opened
 
 - **ID:** `vehicle.on_door_opened`
 - **Categoria:** Veiculo
-- **Finalidade:** Executa a ação `on door opened` no sistema de veículo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → On Door Opened`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** On door opened no sistema de veículo. Use este bloco quando a mecânica precisa aplicar `on door opened` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `on door opened` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `on door opened` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `On Door Opened`, preencha `target_path` e `value` de `on door opened` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 761. Play
 
 - **ID:** `audio.play`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `play` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Play`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Inicia a reprodução no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `play` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e recurso/nome a reproduzir.
+- **Saídas/efeito:** Executa `play` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Play`, preencha `target_path` e recurso/nome a reproduzir e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 762. Play 3D
 
 - **ID:** `audio.play_3d`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `play 3d` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Play 3D`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Play 3d no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `play 3d` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `play 3d` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `play 3d` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Play 3D`, preencha `target_path` e `value` de `play 3d` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 763. Play Loop
 
 - **ID:** `audio.play_loop`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `play loop` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Play Loop`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Play loop no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `play loop` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `play loop` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `play loop` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Play Loop`, preencha `target_path` e `value` de `play loop` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 764. Play 3D Loop
 
 - **ID:** `audio.play_3d_loop`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `play 3d loop` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Play 3D Loop`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Play 3d loop no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `play 3d loop` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `play 3d loop` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `play 3d loop` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Play 3D Loop`, preencha `target_path` e `value` de `play 3d loop` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 765. Pause
 
 - **ID:** `audio.pause`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `pause` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Pause`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Pausa no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `pause` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Somente `target_path`.
+- **Saídas/efeito:** Executa `pause` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Pause`, preencha somente `target_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 766. Resume
 
 - **ID:** `audio.resume`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `resume` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Resume`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Retoma no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `resume` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Somente `target_path`.
+- **Saídas/efeito:** Executa `resume` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Resume`, preencha somente `target_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 767. Stop
 
 - **ID:** `audio.stop`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `stop` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Stop`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Interrompe no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `stop` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Somente `target_path`.
+- **Saídas/efeito:** Executa `stop` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Stop`, preencha somente `target_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 768. Stop All
 
 - **ID:** `audio.stop_all`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `stop all` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Stop All`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Stop all no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `stop all` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `stop all` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `stop all` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Stop All`, preencha `target_path` e `value` de `stop all` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 769. Set Volume
@@ -7699,29 +7699,29 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `audio.get_volume`
 - **Categoria:** Audio
 - **Finalidade:** Consulta `volume` no sistema de áudio sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna volume em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Volume → Debug Info` mostra o valor atual de volume.
+- **Exemplo:** `Update → Get Volume → UI Set Text` mostra volume no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 771. Fade In
 
 - **ID:** `audio.fade_in`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `fade in` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Fade In`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Fade in no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `fade in` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path`, `duration` em segundos e volume final.
+- **Saídas/efeito:** Executa `fade in` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Fade In`, preencha `target_path`, `duration` em segundos e volume final e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 772. Fade Out
 
 - **ID:** `audio.fade_out`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `fade out` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Fade Out`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Fade out no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `fade out` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `duration` em segundos.
+- **Saídas/efeito:** Executa `fade out` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Fade Out`, preencha `target_path` e `duration` em segundos e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 773. Set Pitch
@@ -7739,9 +7739,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `audio.get_pitch`
 - **Categoria:** Audio
 - **Finalidade:** Consulta `pitch` no sistema de áudio sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna pitch em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Pitch → Debug Info` mostra o valor atual de pitch.
+- **Exemplo:** `Update → Get Pitch → UI Set Text` mostra pitch no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 775. Set Pan
@@ -7788,10 +7788,10 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `audio.is_playing`
 - **Categoria:** Audio
-- **Finalidade:** Executa a ação `is playing` no sistema de áudio usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Is Playing`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Is playing no sistema de áudio. Use este bloco quando a mecânica precisa aplicar `is playing` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `is playing` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `is playing` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Is Playing`, preencha `target_path` e `value` de `is playing` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 780. Set Bus
@@ -7808,60 +7808,60 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `animation.play`
 - **Categoria:** Animacao
-- **Finalidade:** Executa a ação `play` no sistema de animação usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Play`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Inicia a reprodução no sistema de animação. Use este bloco quando a mecânica precisa aplicar `play` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e recurso/nome a reproduzir.
+- **Saídas/efeito:** Executa `play` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Play`, preencha `target_path` e recurso/nome a reproduzir e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 782. Play Crossfade
 
 - **ID:** `animation.play_crossfade`
 - **Categoria:** Animacao
-- **Finalidade:** Executa a ação `play crossfade` no sistema de animação usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Play Crossfade`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Play crossfade no sistema de animação. Use este bloco quando a mecânica precisa aplicar `play crossfade` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `play crossfade` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `play crossfade` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Play Crossfade`, preencha `target_path` e `value` de `play crossfade` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 783. Pause
 
 - **ID:** `animation.pause`
 - **Categoria:** Animacao
-- **Finalidade:** Executa a ação `pause` no sistema de animação usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Pause`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Pausa no sistema de animação. Use este bloco quando a mecânica precisa aplicar `pause` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Somente `target_path`.
+- **Saídas/efeito:** Executa `pause` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Pause`, preencha somente `target_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 784. Resume
 
 - **ID:** `animation.resume`
 - **Categoria:** Animacao
-- **Finalidade:** Executa a ação `resume` no sistema de animação usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Resume`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Retoma no sistema de animação. Use este bloco quando a mecânica precisa aplicar `resume` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Somente `target_path`.
+- **Saídas/efeito:** Executa `resume` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Resume`, preencha somente `target_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 785. Stop
 
 - **ID:** `animation.stop`
 - **Categoria:** Animacao
-- **Finalidade:** Executa a ação `stop` no sistema de animação usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Stop`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Interrompe no sistema de animação. Use este bloco quando a mecânica precisa aplicar `stop` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Somente `target_path`.
+- **Saídas/efeito:** Executa `stop` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Stop`, preencha somente `target_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 786. Rewind
 
 - **ID:** `animation.rewind`
 - **Categoria:** Animacao
-- **Finalidade:** Executa a ação `rewind` no sistema de animação usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Rewind`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Rewind no sistema de animação. Use este bloco quando a mecânica precisa aplicar `rewind` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `rewind` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `rewind` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Rewind`, preencha `target_path` e `value` de `rewind` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 787. Set Speed
@@ -7879,9 +7879,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `animation.get_speed`
 - **Categoria:** Animacao
 - **Finalidade:** Consulta `speed` no sistema de animação sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna speed em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Speed → Debug Info` mostra o valor atual de speed.
+- **Exemplo:** `Update → Get Speed → UI Set Text` mostra speed no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 789. Set Time
@@ -7899,9 +7899,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `animation.get_time`
 - **Categoria:** Animacao
 - **Finalidade:** Consulta `time` no sistema de animação sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna time em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Time → Debug Info` mostra o valor atual de time.
+- **Exemplo:** `Update → Get Time → UI Set Text` mostra time no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 791. Set Loop
@@ -7918,10 +7918,10 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `animation.is_playing`
 - **Categoria:** Animacao
-- **Finalidade:** Executa a ação `is playing` no sistema de animação usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Is Playing`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Is playing no sistema de animação. Use este bloco quando a mecânica precisa aplicar `is playing` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `is playing` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `is playing` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Is Playing`, preencha `target_path` e `value` de `is playing` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 793. Set Bool
@@ -7958,10 +7958,10 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `animation.reset_trigger`
 - **Categoria:** Animacao
-- **Finalidade:** Executa a ação `reset trigger` no sistema de animação usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Reset Trigger`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Reset trigger no sistema de animação. Use este bloco quando a mecânica precisa aplicar `reset trigger` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `reset trigger` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `reset trigger` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Reset Trigger`, preencha `target_path` e `value` de `reset trigger` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 797. Get State
@@ -7969,9 +7969,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `animation.get_state`
 - **Categoria:** Animacao
 - **Finalidade:** Consulta `state` no sistema de animação sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna state em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get State → Debug Info` mostra o valor atual de state.
+- **Exemplo:** `Update → Get State → UI Set Text` mostra state no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 798. Set Weight
@@ -7988,50 +7988,50 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `animation.blend`
 - **Categoria:** Animacao
-- **Finalidade:** Executa a ação `blend` no sistema de animação usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Blend`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Blend no sistema de animação. Use este bloco quando a mecânica precisa aplicar `blend` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `blend` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `blend` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Blend`, preencha `target_path` e `value` de `blend` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 800. Play Additive
 
 - **ID:** `animation.play_additive`
 - **Categoria:** Animacao
-- **Finalidade:** Executa a ação `play additive` no sistema de animação usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Play Additive`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Play additive no sistema de animação. Use este bloco quando a mecânica precisa aplicar `play additive` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `play additive` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `play additive` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Play Additive`, preencha `target_path` e `value` de `play additive` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 801. Get
 
 - **ID:** `material.get`
 - **Categoria:** Material
-- **Finalidade:** Executa a ação `get` no sistema de material usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Get`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Get no sistema de material. Use este bloco quando a mecânica precisa aplicar `get` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `get` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `get` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Get`, preencha `target_path` e `value` de `get` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 802. Set
 
 - **ID:** `material.set`
 - **Categoria:** Material
-- **Finalidade:** Executa a ação `set` no sistema de material usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Set`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Set no sistema de material. Use este bloco quando a mecânica precisa aplicar `set` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `set` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `set` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Set`, preencha `target_path` e `value` de `set` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 803. Clone
 
 - **ID:** `material.clone`
 - **Categoria:** Material
-- **Finalidade:** Executa a ação `clone` no sistema de material usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Clone`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Duplica no sistema de material. Use este bloco quando a mecânica precisa aplicar `clone` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `parent_path` opcional.
+- **Saídas/efeito:** Executa `clone` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Clone`, preencha `target_path` e `parent_path` opcional e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 804. Set Color
@@ -8049,9 +8049,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `material.get_color`
 - **Categoria:** Material
 - **Finalidade:** Consulta `color` no sistema de material sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna color em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Color → Debug Info` mostra o valor atual de color.
+- **Exemplo:** `Update → Get Color → UI Set Text` mostra color no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 806. Set Number
@@ -8069,9 +8069,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `material.get_number`
 - **Categoria:** Material
 - **Finalidade:** Consulta `number` no sistema de material sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna number em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Number → Debug Info` mostra o valor atual de number.
+- **Exemplo:** `Update → Get Number → UI Set Text` mostra number no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 808. Set Vector
@@ -8089,9 +8089,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `material.get_vector`
 - **Categoria:** Material
 - **Finalidade:** Consulta `vector` no sistema de material sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna vector em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Vector → Debug Info` mostra o valor atual de vector.
+- **Exemplo:** `Update → Get Vector → UI Set Text` mostra vector no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 810. Set Texture
@@ -8109,9 +8109,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `material.get_texture`
 - **Categoria:** Material
 - **Finalidade:** Consulta `texture` no sistema de material sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna texture em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Texture → Debug Info` mostra o valor atual de texture.
+- **Exemplo:** `Update → Get Texture → UI Set Text` mostra texture no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 812. Set Emission
@@ -8178,60 +8178,60 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `material.enable_keyword`
 - **Categoria:** Material
-- **Finalidade:** Executa a ação `enable keyword` no sistema de material usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Enable Keyword`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Enable keyword no sistema de material. Use este bloco quando a mecânica precisa aplicar `enable keyword` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `enable keyword` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `enable keyword` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Enable Keyword`, preencha `target_path` e `value` de `enable keyword` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 819. Disable Keyword
 
 - **ID:** `material.disable_keyword`
 - **Categoria:** Material
-- **Finalidade:** Executa a ação `disable keyword` no sistema de material usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Disable Keyword`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Disable keyword no sistema de material. Use este bloco quando a mecânica precisa aplicar `disable keyword` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `disable keyword` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `disable keyword` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Disable Keyword`, preencha `target_path` e `value` de `disable keyword` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 820. Has Keyword
 
 - **ID:** `material.has_keyword`
 - **Categoria:** Material
-- **Finalidade:** Executa a ação `has keyword` no sistema de material usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Has Keyword`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Has keyword no sistema de material. Use este bloco quando a mecânica precisa aplicar `has keyword` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `has keyword` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `has keyword` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Has Keyword`, preencha `target_path` e `value` de `has keyword` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 821. Show
 
 - **ID:** `ui.show`
 - **Categoria:** Interface
-- **Finalidade:** Executa a ação `show` no sistema de interface usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Show`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Torna visível no sistema de interface. Use este bloco quando a mecânica precisa aplicar `show` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` do control/canvasitem.
+- **Saídas/efeito:** Executa `show` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Show`, preencha `target_path` do Control/CanvasItem e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 822. Hide
 
 - **ID:** `ui.hide`
 - **Categoria:** Interface
-- **Finalidade:** Executa a ação `hide` no sistema de interface usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Hide`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Oculta no sistema de interface. Use este bloco quando a mecânica precisa aplicar `hide` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` do control/canvasitem.
+- **Saídas/efeito:** Executa `hide` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Hide`, preencha `target_path` do Control/CanvasItem e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 823. Toggle
 
 - **ID:** `ui.toggle`
 - **Categoria:** Interface
-- **Finalidade:** Executa a ação `toggle` no sistema de interface usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Toggle`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Toggle no sistema de interface. Use este bloco quando a mecânica precisa aplicar `toggle` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `toggle` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `toggle` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Toggle`, preencha `target_path` e `value` de `toggle` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 824. Set Text
@@ -8249,9 +8249,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `ui.get_text`
 - **Categoria:** Interface
 - **Finalidade:** Consulta `text` no sistema de interface sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna text em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Text → Debug Info` mostra o valor atual de text.
+- **Exemplo:** `Update → Get Text → UI Set Text` mostra text no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 826. Set Image
@@ -8289,9 +8289,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `ui.get_value`
 - **Categoria:** Interface
 - **Finalidade:** Consulta `value` no sistema de interface sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna value em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Value → Debug Info` mostra o valor atual de value.
+- **Exemplo:** `Update → Get Value → UI Set Text` mostra value no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 830. Set Min
@@ -8328,30 +8328,30 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `ui.is_interactable`
 - **Categoria:** Interface
-- **Finalidade:** Executa a ação `is interactable` no sistema de interface usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Is Interactable`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Is interactable no sistema de interface. Use este bloco quando a mecânica precisa aplicar `is interactable` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `is interactable` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `is interactable` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Is Interactable`, preencha `target_path` e `value` de `is interactable` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 834. Focus
 
 - **ID:** `ui.focus`
 - **Categoria:** Interface
-- **Finalidade:** Executa a ação `focus` no sistema de interface usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Focus`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Move o foco no sistema de interface. Use este bloco quando a mecânica precisa aplicar `focus` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `focus` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `focus` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Focus`, preencha `target_path` e `value` de `focus` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 835. Unfocus
 
 - **ID:** `ui.unfocus`
 - **Categoria:** Interface
-- **Finalidade:** Executa a ação `unfocus` no sistema de interface usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Unfocus`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Remove o foco no sistema de interface. Use este bloco quando a mecânica precisa aplicar `unfocus` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `unfocus` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `unfocus` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Unfocus`, preencha `target_path` e `value` de `unfocus` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 836. Set Position
@@ -8398,40 +8398,40 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `ui.animate_value`
 - **Categoria:** Interface
-- **Finalidade:** Executa a ação `animate value` no sistema de interface usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Animate Value`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Animate value no sistema de interface. Use este bloco quando a mecânica precisa aplicar `animate value` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `animate value` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `animate value` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Animate Value`, preencha `target_path` e `value` de `animate value` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 841. Toast
 
 - **ID:** `ui.toast`
 - **Categoria:** Interface
-- **Finalidade:** Executa a ação `toast` no sistema de interface usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Toast`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Toast no sistema de interface. Use este bloco quando a mecânica precisa aplicar `toast` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `toast` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `toast` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Toast`, preencha `target_path` e `value` de `toast` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 842. Open Panel
 
 - **ID:** `ui.open_panel`
 - **Categoria:** Interface
-- **Finalidade:** Executa a ação `open panel` no sistema de interface usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Open Panel`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Open panel no sistema de interface. Use este bloco quando a mecânica precisa aplicar `open panel` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `open panel` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `open panel` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Open Panel`, preencha `target_path` e `value` de `open panel` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 843. Close Panel
 
 - **ID:** `ui.close_panel`
 - **Categoria:** Interface
-- **Finalidade:** Executa a ação `close panel` no sistema de interface usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Close Panel`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Close panel no sistema de interface. Use este bloco quando a mecânica precisa aplicar `close panel` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `close panel` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `close panel` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Close Panel`, preencha `target_path` e `value` de `close panel` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 844. Set Placeholder
@@ -8448,40 +8448,40 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `world.load`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `load` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Load`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Carrega no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `load` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `scene_path` ou recurso a carregar.
+- **Saídas/efeito:** Executa `load` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Load`, preencha `scene_path` ou recurso a carregar e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 846. Load Additive
 
 - **ID:** `world.load_additive`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `load additive` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Load Additive`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Load additive no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `load additive` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `load additive` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `load additive` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Load Additive`, preencha `target_path` e `value` de `load additive` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 847. Unload
 
 - **ID:** `world.unload`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `unload` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Unload`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Descarrega no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `unload` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `scene_path`/identificador carregado.
+- **Saídas/efeito:** Executa `unload` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Unload`, preencha `scene_path`/identificador carregado e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 848. Reload
 
 - **ID:** `world.reload`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `reload` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Reload`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Recarrega no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `reload` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Cena/mundo ativo.
+- **Saídas/efeito:** Executa `reload` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Reload`, preencha cena/mundo ativo e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 849. Set Active
@@ -8499,29 +8499,29 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `world.get_active`
 - **Categoria:** Mundo
 - **Finalidade:** Consulta `active` no sistema de mundo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna active em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Active → Debug Info` mostra o valor atual de active.
+- **Exemplo:** `Update → Get Active → UI Set Text` mostra active no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 851. Pause
 
 - **ID:** `world.pause`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `pause` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Pause`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Pausa no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `pause` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Somente `target_path`.
+- **Saídas/efeito:** Executa `pause` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Pause`, preencha somente `target_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 852. Resume
 
 - **ID:** `world.resume`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `resume` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Resume`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Retoma no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `resume` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Somente `target_path`.
+- **Saídas/efeito:** Executa `resume` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Resume`, preencha somente `target_path` e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 853. Set Time Scale
@@ -8539,9 +8539,9 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **ID:** `world.get_time_scale`
 - **Categoria:** Mundo
 - **Finalidade:** Consulta `time scale` no sistema de mundo sem alterar o alvo.
-- **Entradas/alvo:** `target_path`: nó compatível que será consultado.
+- **Entradas/alvo:** `target_path`: Node que será consultado.
 - **Saídas/efeito:** Retorna time scale em `value` e permite continuar o fluxo.
-- **Exemplo:** `Update → Get Time Scale → Debug Info` mostra o valor atual de time scale.
+- **Exemplo:** `Update → Get Time Scale → UI Set Text` mostra time scale no HUD; use `Number To Text` antes quando o retorno for numérico.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 855. Set Ambient Color
@@ -8588,330 +8588,330 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `world.find_spawn`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `find spawn` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Find Spawn`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Find spawn no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `find spawn` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `find spawn` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `find spawn` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Find Spawn`, preencha `target_path` e `value` de `find spawn` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 860. Spawn At
 
 - **ID:** `world.spawn_at`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `spawn at` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Spawn At`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Spawn at no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `spawn at` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `spawn at` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `spawn at` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Spawn At`, preencha `target_path` e `value` de `spawn at` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 861. Destroy All
 
 - **ID:** `world.destroy_all`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `destroy all` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Destroy All`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Destroy all no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `destroy all` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `destroy all` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `destroy all` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Destroy All`, preencha `target_path` e `value` de `destroy all` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 862. Preload
 
 - **ID:** `world.preload`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `preload` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Preload`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Preload no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `preload` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `preload` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `preload` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Preload`, preencha `target_path` e `value` de `preload` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 863. Release
 
 - **ID:** `world.release`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `release` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Release`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Release no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `release` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `release` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `release` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Release`, preencha `target_path` e `value` de `release` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 864. Quit
 
 - **ID:** `world.quit`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `quit` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Quit`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Encerra o jogo no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `quit` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** Nenhuma entrada.
+- **Saídas/efeito:** Executa `quit` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Quit`, preencha nenhuma entrada e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 865. Terrain Get Height
 
 - **ID:** `world.terrain_get_height`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain get height` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Get Height`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain get height no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain get height` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain get height` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain get height` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Get Height`, preencha `target_path` e `value` de `terrain get height` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 866. Terrain Set Height
 
 - **ID:** `world.terrain_set_height`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain set height` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Set Height`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain set height no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain set height` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain set height` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain set height` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Set Height`, preencha `target_path` e `value` de `terrain set height` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 867. Terrain Raise
 
 - **ID:** `world.terrain_raise`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain raise` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Raise`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain raise no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain raise` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain raise` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain raise` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Raise`, preencha `target_path` e `value` de `terrain raise` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 868. Terrain Lower
 
 - **ID:** `world.terrain_lower`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain lower` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Lower`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain lower no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain lower` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain lower` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain lower` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Lower`, preencha `target_path` e `value` de `terrain lower` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 869. Terrain Smooth
 
 - **ID:** `world.terrain_smooth`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain smooth` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Smooth`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain smooth no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain smooth` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain smooth` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain smooth` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Smooth`, preencha `target_path` e `value` de `terrain smooth` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 870. Terrain Flatten
 
 - **ID:** `world.terrain_flatten`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain flatten` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Flatten`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain flatten no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain flatten` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain flatten` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain flatten` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Flatten`, preencha `target_path` e `value` de `terrain flatten` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 871. Terrain Add Noise
 
 - **ID:** `world.terrain_add_noise`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain add noise` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Add Noise`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain add noise no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain add noise` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain add noise` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain add noise` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Add Noise`, preencha `target_path` e `value` de `terrain add noise` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 872. Terrain Paint Layer
 
 - **ID:** `world.terrain_paint_layer`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain paint layer` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Paint Layer`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain paint layer no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain paint layer` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain paint layer` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain paint layer` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Paint Layer`, preencha `target_path` e `value` de `terrain paint layer` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 873. Terrain Get Layer Weight
 
 - **ID:** `world.terrain_get_layer_weight`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain get layer weight` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Get Layer Weight`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain get layer weight no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain get layer weight` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain get layer weight` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain get layer weight` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Get Layer Weight`, preencha `target_path` e `value` de `terrain get layer weight` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 874. Terrain Apply Auto Tile
 
 - **ID:** `world.terrain_apply_auto_tile`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain apply auto tile` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Apply Auto Tile`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain apply auto tile no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain apply auto tile` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain apply auto tile` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain apply auto tile` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Apply Auto Tile`, preencha `target_path` e `value` de `terrain apply auto tile` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 875. Terrain Add Auto Tile Rule
 
 - **ID:** `world.terrain_add_auto_tile_rule`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain add auto tile rule` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Add Auto Tile Rule`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain add auto tile rule no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain add auto tile rule` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain add auto tile rule` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain add auto tile rule` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Add Auto Tile Rule`, preencha `target_path` e `value` de `terrain add auto tile rule` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 876. Terrain Remove Auto Tile Rule
 
 - **ID:** `world.terrain_remove_auto_tile_rule`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain remove auto tile rule` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Remove Auto Tile Rule`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain remove auto tile rule no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain remove auto tile rule` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain remove auto tile rule` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain remove auto tile rule` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Remove Auto Tile Rule`, preencha `target_path` e `value` de `terrain remove auto tile rule` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 877. Terrain Set Material
 
 - **ID:** `world.terrain_set_material`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain set material` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Set Material`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain set material no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain set material` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain set material` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain set material` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Set Material`, preencha `target_path` e `value` de `terrain set material` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 878. Terrain Set Texture Scale
 
 - **ID:** `world.terrain_set_texture_scale`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain set texture scale` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Set Texture Scale`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain set texture scale no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain set texture scale` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain set texture scale` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain set texture scale` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Set Texture Scale`, preencha `target_path` e `value` de `terrain set texture scale` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 879. Terrain Set Texture Rotation
 
 - **ID:** `world.terrain_set_texture_rotation`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain set texture rotation` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Set Texture Rotation`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain set texture rotation no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain set texture rotation` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain set texture rotation` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain set texture rotation` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Set Texture Rotation`, preencha `target_path` e `value` de `terrain set texture rotation` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 880. Terrain Set Texture Offset
 
 - **ID:** `world.terrain_set_texture_offset`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain set texture offset` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Set Texture Offset`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain set texture offset no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain set texture offset` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain set texture offset` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain set texture offset` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Set Texture Offset`, preencha `target_path` e `value` de `terrain set texture offset` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 881. Terrain Set Roughness
 
 - **ID:** `world.terrain_set_roughness`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain set roughness` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Set Roughness`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain set roughness no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain set roughness` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain set roughness` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain set roughness` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Set Roughness`, preencha `target_path` e `value` de `terrain set roughness` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 882. Terrain Set Metallic
 
 - **ID:** `world.terrain_set_metallic`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain set metallic` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Set Metallic`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain set metallic no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain set metallic` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain set metallic` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain set metallic` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Set Metallic`, preencha `target_path` e `value` de `terrain set metallic` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 883. Terrain Import Heightmap
 
 - **ID:** `world.terrain_import_heightmap`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain import heightmap` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Import Heightmap`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain import heightmap no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain import heightmap` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain import heightmap` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain import heightmap` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Import Heightmap`, preencha `target_path` e `value` de `terrain import heightmap` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 884. Terrain Export Heightmap
 
 - **ID:** `world.terrain_export_heightmap`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain export heightmap` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Export Heightmap`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain export heightmap no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain export heightmap` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain export heightmap` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain export heightmap` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Export Heightmap`, preencha `target_path` e `value` de `terrain export heightmap` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 885. Terrain Generate Semi Arid
 
 - **ID:** `world.terrain_generate_semi_arid`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain generate semi arid` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Generate Semi Arid`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain generate semi arid no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain generate semi arid` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain generate semi arid` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain generate semi arid` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Generate Semi Arid`, preencha `target_path` e `value` de `terrain generate semi arid` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 886. Terrain Scatter Tiles
 
 - **ID:** `world.terrain_scatter_tiles`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain scatter tiles` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Scatter Tiles`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain scatter tiles no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain scatter tiles` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain scatter tiles` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain scatter tiles` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Scatter Tiles`, preencha `target_path` e `value` de `terrain scatter tiles` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 887. Terrain Clear Tiles
 
 - **ID:** `world.terrain_clear_tiles`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `terrain clear tiles` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Terrain Clear Tiles`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Terrain clear tiles no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `terrain clear tiles` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `terrain clear tiles` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `terrain clear tiles` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Terrain Clear Tiles`, preencha `target_path` e `value` de `terrain clear tiles` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 888. Character Set Camera First Person
 
 - **ID:** `world.character_set_camera_first_person`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `character set camera first person` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Character Set Camera First Person`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Character set camera first person no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `character set camera first person` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `character set camera first person` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `character set camera first person` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Character Set Camera First Person`, preencha `target_path` e `value` de `character set camera first person` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 889. Character Set Camera Third Person
 
 - **ID:** `world.character_set_camera_third_person`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `character set camera third person` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Character Set Camera Third Person`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Character set camera third person no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `character set camera third person` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `character set camera third person` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `character set camera third person` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Character Set Camera Third Person`, preencha `target_path` e `value` de `character set camera third person` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 890. Character Set Camera Top Down
 
 - **ID:** `world.character_set_camera_top_down`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `character set camera top down` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Character Set Camera Top Down`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Character set camera top down no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `character set camera top down` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `character set camera top down` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `character set camera top down` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Character Set Camera Top Down`, preencha `target_path` e `value` de `character set camera top down` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 891. Character Set Speed
 
 - **ID:** `world.character_set_speed`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `character set speed` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Character Set Speed`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Character set speed no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `character set speed` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `character set speed` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `character set speed` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Character Set Speed`, preencha `target_path` e `value` de `character set speed` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 892. Character Jump
@@ -8928,30 +8928,30 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `world.character_set_look_sensitivity`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `character set look sensitivity` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Character Set Look Sensitivity`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Character set look sensitivity no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `character set look sensitivity` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `character set look sensitivity` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `character set look sensitivity` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Character Set Look Sensitivity`, preencha `target_path` e `value` de `character set look sensitivity` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 894. Joystick Get Axis
 
 - **ID:** `world.joystick_get_axis`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `joystick get axis` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Joystick Get Axis`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Joystick get axis no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `joystick get axis` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `joystick get axis` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `joystick get axis` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Joystick Get Axis`, preencha `target_path` e `value` de `joystick get axis` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 895. Joystick Set Dead Zone
 
 - **ID:** `world.joystick_set_dead_zone`
 - **Categoria:** Mundo
-- **Finalidade:** Executa a ação `joystick set dead zone` no sistema de mundo usando a API segura registrada pela engine.
-- **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
-- **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
-- **Exemplo:** `Button Pressed → Joystick Set Dead Zone`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
+- **Finalidade:** Joystick set dead zone no sistema de mundo. Use este bloco quando a mecânica precisa aplicar `joystick set dead zone` ao componente selecionado durante o jogo.
+- **Entradas/alvo:** `target_path` e `value` de `joystick set dead zone` com o tipo indicado no conector.
+- **Saídas/efeito:** Executa `joystick set dead zone` no alvo e, após concluir, libera a saída `flow` para a próxima ação.
+- **Exemplo:** Mecânica: conecte o evento que inicia a ação a `Joystick Set Dead Zone`, preencha `target_path` e `value` de `joystick set dead zone` com o tipo indicado no conector e use `flow` para atualizar a interface ou encadear o próximo comportamento.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 896. Mover personagem

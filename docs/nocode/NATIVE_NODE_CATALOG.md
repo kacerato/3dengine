@@ -4398,360 +4398,360 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `text.append`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `append` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Append → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Acrescenta texto ao final. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e `value`. Não usa `target_path`.
+- **Saídas/efeito:** Texto combinado em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `Pontos: ` + `250` resulta em `Pontos: 250`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 441. Prepend
 
 - **ID:** `text.prepend`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `prepend` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Prepend → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Acrescenta texto no início. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e `value`. Não usa `target_path`.
+- **Saídas/efeito:** Texto combinado em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `Lv. ` antes de `12` resulta em `Lv. 12`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 442. Join
 
 - **ID:** `text.join`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `join` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Join → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Une uma lista de textos usando um separador. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `list` e `separator`. Não usa `target_path`.
+- **Saídas/efeito:** Um único texto em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `[madeira, pedra, ferro]` com `, ` resulta em `madeira, pedra, ferro`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 443. Split
 
 - **ID:** `text.split`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `split` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Split → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Divide um texto onde encontrar o separador. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e `separator`. Não usa `target_path`.
+- **Saídas/efeito:** Lista de partes em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `vida:80` separado por `:` resulta em `[vida, 80]`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 444. Replace
 
 - **ID:** `text.replace`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `replace` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Replace → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Troca todas as ocorrências de um trecho. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`, `search` e `replacement`. Não usa `target_path`.
+- **Saídas/efeito:** Texto com todas as trocas em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: trocar `{player}` por `Luna` em uma mensagem de diálogo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 445. Replace First
 
 - **ID:** `text.replace_first`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `replace first` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Replace First → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Troca somente a primeira ocorrência. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`, `search` e `replacement`. Não usa `target_path`.
+- **Saídas/efeito:** Texto com uma troca em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: em `1-1-1`, trocar primeiro `1` por `2` resulta em `2-1-1`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 446. Contains
 
 - **ID:** `text.contains`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `contains` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Contains → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Verifica se um trecho aparece no texto. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e `search`. Não usa `target_path`.
+- **Saídas/efeito:** Booleano em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: testar se `Chave Dourada` contém `Chave` antes de abrir uma porta.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 447. Starts With
 
 - **ID:** `text.starts_with`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `starts with` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Starts With → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Verifica o começo do texto. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e `prefix`. Não usa `target_path`.
+- **Saídas/efeito:** Booleano em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: identificar comandos que começam com `/`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 448. Ends With
 
 - **ID:** `text.ends_with`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `ends with` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Ends With → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Verifica o final do texto. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e `suffix`. Não usa `target_path`.
+- **Saídas/efeito:** Booleano em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: confirmar se um arquivo termina em `.png`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 449. Equals Ignore Case
 
 - **ID:** `text.equals_ignore_case`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `equals ignore case` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Equals Ignore Case → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Compara dois textos ignorando maiúsculas/minúsculas. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `a` e `b`. Não usa `target_path`.
+- **Saídas/efeito:** Booleano em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `PLAY` e `play` retornam `true`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 450. Uppercase
 
 - **ID:** `text.uppercase`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `uppercase` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Uppercase → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Converte letras para maiúsculas. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Texto em caixa alta em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `missão concluída` resulta em `MISSÃO CONCLUÍDA`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 451. Lowercase
 
 - **ID:** `text.lowercase`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `lowercase` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Lowercase → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Converte letras para minúsculas. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Texto em caixa baixa em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `PlayerName` resulta em `playername`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 452. Capitalize
 
 - **ID:** `text.capitalize`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `capitalize` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Capitalize → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Coloca iniciais de palavras em maiúsculas. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Texto capitalizado em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `espada de fogo` resulta em `Espada De Fogo`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 453. Trim
 
 - **ID:** `text.trim`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `trim` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Trim → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Remove espaços do início e do fim. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Texto sem espaços externos em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `  Luna  ` resulta em `Luna`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 454. Trim Start
 
 - **ID:** `text.trim_start`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `trim start` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Trim Start → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Remove espaços somente do início. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Texto sem espaços iniciais em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: limpar indentação acidental de um nome digitado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 455. Trim End
 
 - **ID:** `text.trim_end`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `trim end` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Trim End → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Remove espaços somente do fim. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Texto sem espaços finais em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: limpar espaços depois de um código digitado.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 456. Substring
 
 - **ID:** `text.substring`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `substring` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Substring → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Recorta parte do texto por posição. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`, `start` e `length`. Não usa `target_path`.
+- **Saídas/efeito:** Trecho recortado em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: em `PLAYER_001`, início `7`, tamanho `3` retorna `001`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 457. Character At
 
 - **ID:** `text.character_at`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `character at` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Character At → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Obtém o caractere de uma posição. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e `index` começando em zero. Não usa `target_path`.
+- **Saídas/efeito:** Um caractere em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: índice `0` de `Godot` retorna `G`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 458. Length
 
 - **ID:** `text.length`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `length` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Length → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Conta os caracteres. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Número inteiro em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: limitar o nome do jogador a 16 caracteres.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 459. Is Empty
 
 - **ID:** `text.is_empty`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `is empty` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Is Empty → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Verifica se o texto tem zero caracteres. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Booleano em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: impedir save quando o nome é `""`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 460. Is Blank
 
 - **ID:** `text.is_blank`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `is blank` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Is Blank → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Verifica se há somente espaços/quebras de linha. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Booleano em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: rejeitar um nome digitado como `   `.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 461. Pad Start
 
 - **ID:** `text.pad_start`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `pad start` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Pad Start → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Completa o início até atingir um tamanho. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`, `length` e `fill`. Não usa `target_path`.
+- **Saídas/efeito:** Texto preenchido em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `7` com tamanho `3` e `0` resulta em `007`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 462. Pad End
 
 - **ID:** `text.pad_end`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `pad end` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Pad End → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Completa o final até atingir um tamanho. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`, `length` e `fill`. Não usa `target_path`.
+- **Saídas/efeito:** Texto preenchido em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: alinhar `HP` com espaços até 8 caracteres.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 463. Repeat
 
 - **ID:** `text.repeat`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `repeat` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Repeat → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Repete o texto uma quantidade de vezes. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e `count`. Não usa `target_path`.
+- **Saídas/efeito:** Texto repetido em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `★` repetido 3 vezes resulta em `★★★`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 464. Reverse
 
 - **ID:** `text.reverse`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `reverse` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Reverse → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Inverte a ordem dos caracteres. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** Somente `text`. Não usa `target_path`.
+- **Saídas/efeito:** Novo texto invertido em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `PORTA` resulta em `ATROP`; útil para puzzle de palavra ou efeito visual.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 465. Format
 
 - **ID:** `text.format`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `format` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Format → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Substitui marcadores por valores. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `template` e valores nomeados/posicionais. Não usa `target_path`.
+- **Saídas/efeito:** Texto formatado em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `Vida: {0}/{1}` com `80` e `100` resulta em `Vida: 80/100`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 466. Number To Text
 
 - **ID:** `text.number_to_text`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `number to text` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Number To Text → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Converte número em texto. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `value` e casas decimais opcionais. Não usa `target_path`.
+- **Saídas/efeito:** Representação textual em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `12.5` com uma casa resulta em `12.5` para usar em `UI Set Text`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 467. Bool To Text
 
 - **ID:** `text.bool_to_text`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `bool to text` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Bool To Text → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Converte booleano em texto. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `value`, texto para verdadeiro e texto para falso. Não usa `target_path`.
+- **Saídas/efeito:** Texto escolhido em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `true` com `Ligado/Desligado` resulta em `Ligado`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 468. Vector To Text
 
 - **ID:** `text.vector_to_text`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `vector to text` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Vector To Text → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Converte vetor em texto legível. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `value` e precisão opcional. Não usa `target_path`.
+- **Saídas/efeito:** Componentes formatados em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `Vector3(1,2,3)` resulta em `(1, 2, 3)`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 469. Parse Number
 
 - **ID:** `text.parse_number`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `parse number` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Parse Number → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Interpreta texto como número. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e valor padrão opcional. Não usa `target_path`.
+- **Saídas/efeito:** Número convertido em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `125.5` resulta em `125.5`; use antes de cálculos.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 470. Parse Bool
 
 - **ID:** `text.parse_bool`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `parse bool` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Parse Bool → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Interpreta texto como booleano. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e valor padrão opcional. Não usa `target_path`.
+- **Saídas/efeito:** Booleano convertido em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `true` resulta em `true` para alimentar um `Branch`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 471. Regex Matches
 
 - **ID:** `text.regex_matches`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `regex matches` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Regex Matches → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Verifica se o texto corresponde a uma expressão regular. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e `pattern`. Não usa `target_path`.
+- **Saídas/efeito:** Booleano em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: padrão `^[A-Z0-9_]+$` valida um código de sala.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 472. Regex Find
 
 - **ID:** `text.regex_find`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `regex find` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Regex Find → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Localiza um trecho por expressão regular. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text` e `pattern`. Não usa `target_path`.
+- **Saídas/efeito:** Primeiro trecho encontrado/posição em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: padrão `\d+` encontra `250` em `Pontos: 250`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 473. Regex Replace
 
 - **ID:** `text.regex_replace`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `regex replace` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Regex Replace → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Substitui trechos encontrados por expressão regular. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`, `pattern` e `replacement`. Não usa `target_path`.
+- **Saídas/efeito:** Texto substituído em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: trocar `\s+` por um espaço limpa espaços duplicados.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 474. Lines
 
 - **ID:** `text.lines`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `lines` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Lines → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Divide o texto por quebras de linha. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Lista com uma entrada por linha em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: transformar uma lista de objetivos multilinha em itens de UI.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 475. Words
 
 - **ID:** `text.words`
 - **Categoria:** Texto
-- **Finalidade:** Aplica `words` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
-- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
-- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
-- **Exemplo:** Exemplo: conecte `UI Get Text → Words → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
+- **Finalidade:** Divide o texto em palavras. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.
+- **Entradas/alvo:** `text`. Não usa `target_path`.
+- **Saídas/efeito:** Lista de palavras em `value`; o texto original não é alterado.
+- **Exemplo:** Exemplo concreto: `espada de fogo` resulta em `[espada, de, fogo]`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 476. Find By Name

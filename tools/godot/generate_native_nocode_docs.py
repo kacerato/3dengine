@@ -332,7 +332,46 @@ def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
         }
         return (f"Controla a ordem do grafo: {flow_guides[operation]}.", "Recebe o pulso `flow`. Conecte condição booleana em `condition`, duração em `seconds`, limite em `count` ou coleção em `list`, de acordo com os pinos que este controle oferece.", "Emite as saídas de fluxo nomeadas pelo controle; laços também fornecem `index` e/ou `item` para o corpo da repetição.", f"Mecânica: `Button Pressed → {title}`; use as saídas para separar ações como abrir a interface, tocar áudio ou habilitar um objeto.")
     if prefix == "text":
-        return (f"Aplica `{readable}` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.", "`text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.", "Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.", f"Exemplo: conecte `UI Get Text → {title} → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.")
+        text_guides = {
+            "append": ("acrescenta texto ao final", "`text` e `value`", "texto combinado", "`Pontos: ` + `250` resulta em `Pontos: 250`"),
+            "prepend": ("acrescenta texto no início", "`text` e `value`", "texto combinado", "`Lv. ` antes de `12` resulta em `Lv. 12`"),
+            "join": ("une uma lista de textos usando um separador", "`list` e `separator`", "um único texto", "`[madeira, pedra, ferro]` com `, ` resulta em `madeira, pedra, ferro`"),
+            "split": ("divide um texto onde encontrar o separador", "`text` e `separator`", "lista de partes", "`vida:80` separado por `:` resulta em `[vida, 80]`"),
+            "replace": ("troca todas as ocorrências de um trecho", "`text`, `search` e `replacement`", "texto com todas as trocas", "trocar `{player}` por `Luna` em uma mensagem de diálogo"),
+            "replace_first": ("troca somente a primeira ocorrência", "`text`, `search` e `replacement`", "texto com uma troca", "em `1-1-1`, trocar primeiro `1` por `2` resulta em `2-1-1`"),
+            "contains": ("verifica se um trecho aparece no texto", "`text` e `search`", "booleano", "testar se `Chave Dourada` contém `Chave` antes de abrir uma porta"),
+            "starts_with": ("verifica o começo do texto", "`text` e `prefix`", "booleano", "identificar comandos que começam com `/`"),
+            "ends_with": ("verifica o final do texto", "`text` e `suffix`", "booleano", "confirmar se um arquivo termina em `.png`"),
+            "equals_ignore_case": ("compara dois textos ignorando maiúsculas/minúsculas", "`a` e `b`", "booleano", "`PLAY` e `play` retornam `true`"),
+            "uppercase": ("converte letras para maiúsculas", "`text`", "texto em caixa alta", "`missão concluída` resulta em `MISSÃO CONCLUÍDA`"),
+            "lowercase": ("converte letras para minúsculas", "`text`", "texto em caixa baixa", "`PlayerName` resulta em `playername`"),
+            "capitalize": ("coloca iniciais de palavras em maiúsculas", "`text`", "texto capitalizado", "`espada de fogo` resulta em `Espada De Fogo`"),
+            "trim": ("remove espaços do início e do fim", "`text`", "texto sem espaços externos", "`  Luna  ` resulta em `Luna`"),
+            "trim_start": ("remove espaços somente do início", "`text`", "texto sem espaços iniciais", "limpar indentação acidental de um nome digitado"),
+            "trim_end": ("remove espaços somente do fim", "`text`", "texto sem espaços finais", "limpar espaços depois de um código digitado"),
+            "substring": ("recorta parte do texto por posição", "`text`, `start` e `length`", "trecho recortado", "em `PLAYER_001`, início `7`, tamanho `3` retorna `001`"),
+            "character_at": ("obtém o caractere de uma posição", "`text` e `index` começando em zero", "um caractere", "índice `0` de `Godot` retorna `G`"),
+            "length": ("conta os caracteres", "`text`", "número inteiro", "limitar o nome do jogador a 16 caracteres"),
+            "is_empty": ("verifica se o texto tem zero caracteres", "`text`", "booleano", "impedir save quando o nome é `\"\"`"),
+            "is_blank": ("verifica se há somente espaços/quebras de linha", "`text`", "booleano", "rejeitar um nome digitado como `   `"),
+            "pad_start": ("completa o início até atingir um tamanho", "`text`, `length` e `fill`", "texto preenchido", "`7` com tamanho `3` e `0` resulta em `007`"),
+            "pad_end": ("completa o final até atingir um tamanho", "`text`, `length` e `fill`", "texto preenchido", "alinhar `HP` com espaços até 8 caracteres"),
+            "repeat": ("repete o texto uma quantidade de vezes", "`text` e `count`", "texto repetido", "`★` repetido 3 vezes resulta em `★★★`"),
+            "reverse": ("inverte a ordem dos caracteres", "somente `text`", "novo texto invertido", "`PORTA` resulta em `ATROP`; útil para puzzle de palavra ou efeito visual"),
+            "format": ("substitui marcadores por valores", "`template` e valores nomeados/posicionais", "texto formatado", "`Vida: {0}/{1}` com `80` e `100` resulta em `Vida: 80/100`"),
+            "number_to_text": ("converte número em texto", "`value` e casas decimais opcionais", "representação textual", "`12.5` com uma casa resulta em `12.5` para usar em `UI Set Text`"),
+            "bool_to_text": ("converte booleano em texto", "`value`, texto para verdadeiro e texto para falso", "texto escolhido", "`true` com `Ligado/Desligado` resulta em `Ligado`"),
+            "vector_to_text": ("converte vetor em texto legível", "`value` e precisão opcional", "componentes formatados", "`Vector3(1,2,3)` resulta em `(1, 2, 3)`"),
+            "parse_number": ("interpreta texto como número", "`text` e valor padrão opcional", "número convertido", "`125.5` resulta em `125.5`; use antes de cálculos"),
+            "parse_bool": ("interpreta texto como booleano", "`text` e valor padrão opcional", "booleano convertido", "`true` resulta em `true` para alimentar um `Branch`"),
+            "regex_matches": ("verifica se o texto corresponde a uma expressão regular", "`text` e `pattern`", "booleano", "padrão `^[A-Z0-9_]+$` valida um código de sala"),
+            "regex_find": ("localiza um trecho por expressão regular", "`text` e `pattern`", "primeiro trecho encontrado/posição", "padrão `\\d+` encontra `250` em `Pontos: 250`"),
+            "regex_replace": ("substitui trechos encontrados por expressão regular", "`text`, `pattern` e `replacement`", "texto substituído", "trocar `\\s+` por um espaço limpa espaços duplicados"),
+            "lines": ("divide o texto por quebras de linha", "`text`", "lista com uma entrada por linha", "transformar uma lista de objetivos multilinha em itens de UI"),
+            "words": ("divide o texto em palavras", "`text`", "lista de palavras", "`espada de fogo` resulta em `[espada, de, fogo]`"),
+        }
+        action, inputs, result, example = text_guides[operation]
+        return (f"{action.capitalize()}. Use quando a lógica precisa trabalhar com o conteúdo textual antes de mostrar, comparar ou salvar.", inputs.capitalize() + ". Não usa `target_path`.", result.capitalize() + " em `value`; o texto original não é alterado.", f"Exemplo concreto: {example}.")
     if prefix == "color":
         return (f"Calcula `{readable}` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.", "Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.", "Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.", f"Exemplo: `Color {title} → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.")
     if prefix == "debug":

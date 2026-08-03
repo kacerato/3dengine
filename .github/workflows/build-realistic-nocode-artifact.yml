@@ -1,0 +1,69 @@
+name: Build realistic NoCode artifact
+
+on:
+  push:
+    branches:
+      - artifact/realistic-nocode-build
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout isolated artifact branch
+        uses: actions/checkout@v4
+
+      - name: Download CC0 character, animations and HDRI
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p external/rig
+
+          curl --retry 5 --retry-all-errors --connect-timeout 30 -fL \
+            -A "Mozilla/5.0" \
+            "https://codeberg.org/jamesonBradfield/Quaternius_IK_Rigged_with_animations/archive/5c4dae72e49ad4e5959571e00a25d3d872cacba5.zip" \
+            -o external/quaternius_ik_rigged.zip
+          unzip -q external/quaternius_ik_rigged.zip -d external/rig
+
+          curl --retry 5 --retry-all-errors --connect-timeout 30 -fL \
+            -A "Mozilla/5.0" \
+            "https://dl.polyhaven.org/file/ph-assets/HDRIs/exr/4k/kloofendal_misty_morning_4k.exr" \
+            -o external/kloofendal_misty_morning_4k.exr
+
+          test "$(stat -c%s external/quaternius_ik_rigged.zip)" -gt 1000000
+          test "$(stat -c%s external/kloofendal_misty_morning_4k.exr)" -gt 1000000
+          find external/rig -name Master_Rigged.tscn -print -quit | grep -q Master_Rigged.tscn
+
+      - name: Configure 4K HDRI path
+        shell: bash
+        run: |
+          set -euxo pipefail
+          sed -i 's/kloofendal_misty_morning_2k.hdr/kloofendal_misty_morning_4k.exr/g' tools/artifact/build_realistic_nocode_project.py
+          sed -i 's/HDRI Kloofendal Misty Morning em 2K/HDRI Kloofendal Misty Morning em 4K/g' tools/artifact/build_realistic_nocode_project.py
+
+      - name: Build and validate project package
+        shell: bash
+        env:
+          EXTERNAL_DIR: external/rig
+          HDRI_FILE: external/kloofendal_misty_morning_4k.exr
+        run: |
+          set -euxo pipefail
+          python tools/artifact/build_realistic_nocode_project.py
+          test -s dist/Mundo_Realista_NoCode_Complete.zip
+          unzip -t dist/Mundo_Realista_NoCode_Complete.zip
+          test -f dist/Mundo_Realista_NoCode_Complete/main.graph.json
+          test -f dist/Mundo_Realista_NoCode_Complete/addons/quaternius_ik_rigged/Models_with_rigging/Master_Rigged.tscn
+          test -f dist/Mundo_Realista_NoCode_Complete/assets/environment/kloofendal_misty_morning_4k.exr
+          du -h dist/Mundo_Realista_NoCode_Complete.zip
+
+      - name: Upload complete project ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mundo_Realista_NoCode_Complete
+          path: dist/Mundo_Realista_NoCode_Complete.zip
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 7

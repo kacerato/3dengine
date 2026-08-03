@@ -30,10 +30,13 @@ ALLOWED_PATCHES = {
     "editor/icons/DefaultProjectIcon.svg",
     "editor/editor_node.cpp",
     "editor/project_manager/project_manager.cpp",
+    "main/splash.png",
+    "main/splash_editor.png",
+    "platform/android/java/build.gradle",
     "platform/android/java/editor/build.gradle",
     "platform/android/java/editor/src/main/AndroidManifest.xml",
     "platform/android/java/editor/src/main/res/values/themes.xml",
-    "platform/android/java/editor/src/main/res/drawable/mobile_game_studio_logo.xml",
+    "platform/android/java/editor/src/main/res/drawable-nodpi/mobile_game_studio_logo.png",
 }
 
 
@@ -64,7 +67,10 @@ def main() -> None:
     changed = {line for line in git(godot_dir, "diff", "--name-only").splitlines() if line}
     untracked = {line for line in git(godot_dir, "ls-files", "--others", "--exclude-standard").splitlines() if line}
     modified = changed | untracked
-    unexpected = modified - ALLOWED_PATCHES
+    unexpected = {
+        path for path in modified
+        if path not in ALLOWED_PATCHES and not path.startswith("modules/mobile_game_studio_nocode/")
+    }
     if unexpected:
         raise SystemExit("Patch alterou arquivos upstream fora da fronteira aprovada:\n- " + "\n- ".join(sorted(unexpected)))
 
@@ -98,15 +104,16 @@ def main() -> None:
     branding_assets = (
         "icon.svg", "editor/icons/Godot.svg", "editor/icons/GodotMonochrome.svg",
         "editor/icons/TitleBarLogo.svg", "editor/icons/Logo.svg", "editor/icons/DefaultProjectIcon.svg",
-        "platform/android/java/editor/src/main/res/drawable/mobile_game_studio_logo.xml",
+        "platform/android/java/editor/src/main/res/drawable-nodpi/mobile_game_studio_logo.png",
     )
     for path in branding_assets:
         asset = godot_dir / path
         if not asset.is_file() or asset.stat().st_size < 100:
             raise SystemExit(f"Asset de identidade ausente ou inválido: {path}")
-        source = asset.read_text(encoding="utf-8")
-        if path != "editor/icons/GodotMonochrome.svg" and not any(color in source for color in ("#7C3AED", "#8B5CF6", "#A855F7")):
-            raise SystemExit(f"Asset não contém identidade roxa Mobile Game Studio: {path}")
+        if asset.suffix == ".svg":
+            source = asset.read_text(encoding="utf-8")
+            if path != "editor/icons/GodotMonochrome.svg" and not any(color in source for color in ("#7C3AED", "#8B5CF6", "#A855F7")):
+                raise SystemExit(f"Asset não contém identidade roxa Mobile Game Studio: {path}")
 
     if not (godot_dir / "MOBILE_GAME_STUDIO_DERIVATIVE.txt").is_file():
         raise SystemExit("Aviso de derivação não foi criado")

@@ -215,7 +215,7 @@ class NoCodeContractTests(unittest.TestCase):
             self.assertTrue((MOBILE_DEMO / name).is_file(), f"mobile demo file missing: {name}")
         graph = json.loads((MOBILE_DEMO / "main.graph.json").read_text(encoding="utf-8"))
         definitions = {node.get("definitionId") for node in graph["nodes"]}
-        self.assertTrue({"event.frame.update", "world.character_move", "world.character_look", "world.character_jump"}.issubset(definitions))
+        self.assertTrue({"event.frame.fixed_update", "world.character_move", "world.character_look", "world.character_jump"}.issubset(definitions))
         scene = (MOBILE_DEMO / "main.tscn").read_text(encoding="utf-8")
         for needle in ('type="CharacterBody3D"', 'type="SpringArm3D"', 'type="StaticBody3D"', 'mobile_controls.gd'):
             self.assertIn(needle, scene)

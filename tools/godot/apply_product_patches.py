@@ -30,7 +30,17 @@ def replace_exact(text: str, old: str, new: str, label: str) -> str:
     return text.replace(old, new, 1)
 
 
-def patch_android_distribution(godot_dir: Path, lock: dict[str, str]) -> None:
+def patch_android_distribution(root_dir: Path, godot_dir: Path, lock: dict[str, str]) -> None:
+    root_build_file = godot_dir / "platform/android/java/build.gradle"
+    root_build = root_build_file.read_text(encoding="utf-8")
+    root_build = replace_exact(
+        root_build,
+        "        File targetLibs = new File(libsDir + target)",
+        "        File targetLibs = file(libsDir + target)",
+        "Gradle native library path",
+    )
+    root_build_file.write_text(root_build, encoding="utf-8")
+
     build_file = godot_dir / "platform/android/java/editor/build.gradle"
     source = build_file.read_text(encoding="utf-8")
     source = replace_exact(source, 'applicationId "org.godotengine.editor.v4"', f'applicationId "{lock["PRODUCT_APPLICATION_ID"]}"', "applicationId")
@@ -64,23 +74,15 @@ def patch_android_distribution(godot_dir: Path, lock: dict[str, str]) -> None:
     themes = replace_exact(themes, anchor, branded, "Android splash branding")
     themes_file.write_text(themes, encoding="utf-8")
 
-    drawable = godot_dir / "platform/android/java/editor/src/main/res/drawable/mobile_game_studio_logo.xml"
-    drawable.parent.mkdir(parents=True, exist_ok=True)
-    drawable.write_text(
-        '''<?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp" android:height="108dp"
-    android:viewportWidth="100" android:viewportHeight="100">
-    <path android:fillColor="#0A0710" android:pathData="M2,2 H98 V98 H2 Z"/>
-    <path android:fillColor="#00000000" android:strokeColor="#7C3AED" android:strokeWidth="6" android:pathData="M8,5 H92 Q95,5 95,8 V92 Q95,95 92,95 H8 Q5,95 5,92 V8 Q5,5 8,5 Z"/>
-    <path android:fillColor="#00000000" android:strokeColor="#8B5CF6" android:strokeWidth="5" android:strokeLineCap="round" android:strokeLineJoin="round" android:pathData="M20,40 L11,50 L20,60 M80,40 L89,50 L80,60"/>
-    <path android:fillColor="#A855F7" android:pathData="M50,19 C34,19 26,31 26,47 V62 C26,73 31,82 40,87 L45,76 L52,91 L60,77 L69,88 L74,75 V47 C74,31 66,19 50,19 Z"/>
-    <path android:fillColor="#0A0710" android:pathData="M34,47 C34,35 40,29 50,29 C60,29 66,35 66,47 C66,59 60,65 50,65 C40,65 34,59 34,47 Z"/>
-    <path android:fillColor="#F8F7FF" android:pathData="M39,45 C42,40 46,39 48,41 C48,46 45,49 41,49 C39,48 38,47 39,45 Z M61,45 C58,40 54,39 52,41 C52,46 55,49 59,49 C61,48 62,47 61,45 Z"/>
-</vector>
-''',
-        encoding="utf-8",
-    )
+    drawable_xml = godot_dir / "platform/android/java/editor/src/main/res/drawable/mobile_game_studio_logo.xml"
+    if drawable_xml.exists():
+        drawable_xml.unlink()
+    drawable_webp = godot_dir / "platform/android/java/editor/src/main/res/drawable-nodpi/mobile_game_studio_logo.webp"
+    if drawable_webp.exists():
+        drawable_webp.unlink()
+    drawable_png = godot_dir / "platform/android/java/editor/src/main/res/drawable-nodpi/mobile_game_studio_logo.png"
+    drawable_png.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(root_dir / "app/src/main/res/drawable-nodpi/magic_ghost_logo.png", drawable_png)
 
 
 def patch_editor_branding(root_dir: Path, godot_dir: Path, product_name: str) -> None:
@@ -157,7 +159,7 @@ def main() -> None:
     root_dir = args.root_dir.resolve()
     godot_dir = args.godot_dir.resolve()
     lock = load_lock(root_dir / "godot-upstream/UPSTREAM.lock")
-    patch_android_distribution(godot_dir, lock)
+    patch_android_distribution(root_dir, godot_dir, lock)
     patch_editor_branding(root_dir, godot_dir, lock["PRODUCT_NAME"])
     write_derivative_notice(godot_dir, lock)
     copy_license_bundle(root_dir, godot_dir)

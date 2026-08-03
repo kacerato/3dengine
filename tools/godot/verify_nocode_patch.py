@@ -8,7 +8,7 @@ import hashlib
 import subprocess
 from pathlib import Path
 
-EXPECTED_LOGO_SHA256 = "531c9db5609e283708a11d8f8ee41e1e599d4e4638776eaf6adb95a2580d435b"
+EXPECTED_LOGO_SHA256 = "567bc7257402fddf9846d38496041b2479a25c0684d556d023eee0fab660846d"
 
 PRODUCT_PATCHES = {
     "MOBILE_GAME_STUDIO_DERIVATIVE.txt",
@@ -20,10 +20,13 @@ PRODUCT_PATCHES = {
     "editor/icons/DefaultProjectIcon.svg",
     "editor/editor_node.cpp",
     "editor/project_manager/project_manager.cpp",
+    "main/splash.png",
+    "main/splash_editor.png",
+    "platform/android/java/build.gradle",
     "platform/android/java/editor/build.gradle",
     "platform/android/java/editor/src/main/AndroidManifest.xml",
     "platform/android/java/editor/src/main/res/values/themes.xml",
-    "platform/android/java/editor/src/main/res/drawable-nodpi/mobile_game_studio_logo.webp",
+    "platform/android/java/editor/src/main/res/drawable-nodpi/mobile_game_studio_logo.png",
 }
 
 
@@ -62,7 +65,7 @@ def main() -> None:
     if old_vector.exists():
         raise SystemExit("Logo vetorial substituta ainda existe; a logo legada exata não é exclusiva")
 
-    logo = godot_dir / "platform/android/java/editor/src/main/res/drawable-nodpi/mobile_game_studio_logo.webp"
+    logo = godot_dir / "platform/android/java/editor/src/main/res/drawable-nodpi/mobile_game_studio_logo.png"
     if not logo.is_file():
         raise SystemExit("Logo legada exata não foi instalada")
     digest = hashlib.sha256(logo.read_bytes()).hexdigest()
@@ -79,6 +82,10 @@ def main() -> None:
         "mgs_nocode_graph.cpp",
         "mgs_nocode_runner.h",
         "mgs_nocode_runner.cpp",
+        "mgs_terrain_3d.h",
+        "mgs_terrain_3d.cpp",
+        "mgs_vehicle_3d.h",
+        "mgs_vehicle_3d.cpp",
         "mgs_brand_texture.h",
         "mgs_brand_texture.cpp",
         "mgs_brand_data.gen.h",
@@ -99,7 +106,7 @@ def main() -> None:
         require(runner_source, expected, "Runtime NoCode")
 
     editor_source = (module / "editor/mgs_nocode_editor_plugin.cpp").read_text(encoding="utf-8")
-    for expected in ("GraphEdit", "Adicionar nó", "Importar", "Salvar", "Validar", "add_control_to_bottom_panel"):
+    for expected in ("GraphEdit", "Adicionar bloco NoCode", "Biblioteca", "Importar", "Salvar", "Validar", "add_control_to_bottom_panel"):
         require(editor_source, expected, "Editor adaptativo NoCode")
 
     registration = (module / "register_types.cpp").read_text(encoding="utf-8")

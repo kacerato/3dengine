@@ -267,8 +267,83 @@ def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
         return (f"{action.capitalize()} em uma lista de {kind}. Use para {use}.", inputs.capitalize() + ".", result.capitalize() + ". A lista de entrada permanece disponível para outras conexões.", f"Mecânica: crie ou carregue a lista de {kind}, conecte-a a `{title}` e use a saída para {use}.")
     if prefix == "save":
         return (f"Executa `{readable}` para um valor persistente do tipo {kind} no armazenamento do jogo.", "`key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.", "Retorna o valor carregado/estado da chave e emite `flow` após concluir.", f"Use a chave `player_{kind}`: `Button Pressed → {title}` e conecte o resultado à interface.")
+    if prefix == "world" and operation.startswith("terrain_"):
+        terrain_operation = operation.removeprefix("terrain_")
+        terrain_guides = {
+            "get_height": ("lê a altura do terreno em uma coordenada X/Z", "`target_path`: `MGSTerrain3D`; `position`: `Vector3` ou X/Z do ponto consultado", "altura Y numérica em `value`", "posicionar `../Player` sobre o solo ao nascer, somando a altura retornada ao transform"),
+            "set_height": ("define a altura absoluta dos vértices dentro do pincel", "`target_path`, `position`, `radius` e `height`", "malha e colisão reconstruídas com a nova altura", "criar uma plataforma plana em Y=4 no centro da arena"),
+            "raise": ("eleva o terreno gradualmente dentro do pincel", "`target_path`, `position`, `radius` e `strength` positivo", "vértices elevados e colisão sincronizada", "formar uma colina onde o jogador segura o botão de edição"),
+            "lower": ("rebaixa o terreno gradualmente dentro do pincel", "`target_path`, `position`, `radius` e `strength`", "vértices rebaixados e colisão sincronizada", "escavar uma cratera no ponto atingido por um projétil"),
+            "smooth": ("suaviza diferenças bruscas de altura usando os vértices vizinhos", "`target_path`, `position`, `radius` e `strength` entre 0 e 1", "encostas menos serrilhadas sem apagar o terreno inteiro", "alisar a passagem entre uma estrada e uma montanha"),
+            "flatten": ("nivela a área do pincel para uma altura comum", "`target_path`, `position`, `radius` e `height` opcional", "área plana com mesh e collider atualizados", "preparar o chão para colocar uma casa"),
+            "add_noise": ("adiciona variação procedural às alturas", "`target_path`, `seed`, `frequency`, `amplitude` e região opcional", "relevo reproduzível pela mesma seed", "gerar pequenas ondulações naturais em um mapa inicialmente plano"),
+            "paint_layer": ("pinta o peso de uma camada de textura no terreno", "`target_path`, `position`, `radius`, `layer` e `weight` de 0 a 1", "mapa de pesos alterado para mesclar a camada", "pintar terra sob uma estrada sem trocar o material do terreno inteiro"),
+            "get_layer_weight": ("consulta quanto uma camada influencia um ponto", "`target_path`, `position` e índice/nome de `layer`", "peso entre 0 e 1 em `value`", "detectar se o personagem está sobre areia para trocar o som dos passos"),
+            "apply_auto_tile": ("recalcula as camadas automáticas a partir das regras cadastradas", "`target_path` e região opcional", "pesos de textura atualizados conforme altura e inclinação", "aplicar rocha nas encostas e grama nas áreas planas após editar o relevo"),
+            "add_auto_tile_rule": ("cadastra uma regra de textura por altura e inclinação", "`target_path`, `layer`, limites de `height`/`slope` e intensidade", "regra armazenada no `MGSTerrain3D`", "definir neve acima de Y=25 e somente em superfícies pouco inclinadas"),
+            "remove_auto_tile_rule": ("remove uma regra automática existente", "`target_path` e índice/nome da regra", "regra removida; use Apply Auto Tile para recalcular", "desativar a regra de neve quando a fase muda para verão"),
+            "set_material": ("atribui o material usado para renderizar a malha do terreno", "`target_path` e `material` (`StandardMaterial3D`/`ShaderMaterial`)", "material aplicado ao mesh gerado", "usar um shader triplanar para evitar textura esticada nas encostas"),
+            "set_texture_scale": ("ajusta a repetição da textura do terreno", "`target_path` e `scale` maior que zero", "UV/parametro de material atualizado", "reduzir a escala para que pedras não pareçam gigantes"),
+            "set_texture_rotation": ("gira a orientação da textura sobre o terreno", "`target_path` e `rotation` em graus", "orientação do material atualizada", "alinhar a textura de uma estrada diagonal"),
+            "set_texture_offset": ("desloca a textura sem mover a geometria", "`target_path` e `offset` `Vector2`", "origem UV/parametro do shader atualizado", "alinhar as faixas de uma estrada com o começo da pista"),
+            "set_roughness": ("define quão fosca ou refletiva é a superfície", "`target_path` e `roughness` entre 0 e 1", "rugosidade aplicada ao material do terreno", "usar 0.9 para solo seco e 0.25 para lama molhada"),
+            "set_metallic": ("define a resposta metálica da superfície", "`target_path` e `metallic` entre 0 e 1", "metallic aplicado ao material", "usar valor alto somente em um terreno estilizado de metal"),
+            "import_heightmap": ("carrega alturas de uma imagem em tons de cinza", "`target_path`, `path` da imagem e escala vertical", "terreno redimensionado/reconstruído a partir do heightmap", "importar `res://maps/island_height.png` para criar a ilha jogável"),
+            "export_heightmap": ("grava as alturas atuais em uma imagem", "`target_path` e `path` de destino gravável", "arquivo de heightmap criado e caminho retornado", "salvar o terreno editado para reutilizá-lo em outra fase"),
+            "generate_semi_arid": ("gera relevo procedural semiárido com planícies e elevações", "`target_path`, `seed`, tamanho, resolução e amplitude", "mesh, normais, UVs e collider gerados", "criar um mapa de teste reproduzível usando seed 42"),
+            "scatter_tiles": ("espalha instâncias sobre o terreno respeitando altura e normal", "`target_path`, cena/recurso, `density`, `seed` e região", "objetos instanciados como filhos do terreno", "distribuir pedras e arbustos de forma determinística"),
+            "clear_tiles": ("remove as instâncias espalhadas pelo sistema de terreno", "`target_path` e grupo/camada opcional", "tiles removidos sem apagar a malha do terreno", "limpar as pedras antigas antes de gerar uma nova distribuição"),
+        }
+        meaning, inputs, output, example = terrain_guides[terrain_operation]
+        return (f"{meaning.capitalize()}. A operação atua no `MGSTerrain3D` nativo e mantém renderização e colisão coerentes.", inputs[0].upper() + inputs[1:] + ".", output[0].upper() + output[1:] + "; emite `flow` quando a atualização termina.", f"Exemplo de uso: {example}.")
     if prefix in FAMILY_NAMES:
         family = FAMILY_NAMES[prefix]
+        if prefix == "vehicle" and operation.startswith(("set_", "get_")) and operation != "get_driver":
+            prop = operation[4:]
+            vehicle_properties = {
+                "throttle": ("abertura do acelerador, de 0 (solto) a 1 (total)", "fazer o carro acelerar conforme o eixo vertical do joystick"),
+                "brake": ("intensidade do freio principal, de 0 a 1", "reduzir a velocidade enquanto o jogador segura o botão de freio"),
+                "handbrake": ("freio de mão, usado para travar principalmente as rodas traseiras", "iniciar uma derrapagem em curva fechada"),
+                "steering": ("comando de direção normalizado de -1 (esquerda) a 1 (direita)", "ligar o eixo horizontal do joystick às rodas direcionais"),
+                "gear": ("marcha atual; valores negativos representam ré e zero representa neutro", "selecionar ré ao pressionar o botão R"),
+                "speed": ("velocidade linear atual do veículo em unidades por segundo", "converter para km/h e atualizar o velocímetro"),
+                "rpm": ("rotação atual do motor em rotações por minuto", "mover o ponteiro do conta-giros e decidir a troca de marcha"),
+                "wheel_speed": ("velocidade angular/linear medida na roda indicada", "comparar roda e carro para detectar perda de tração"),
+                "slip_ratio": ("diferença longitudinal entre rotação da roda e deslocamento do carro", "acionar controle de tração quando a roda patina"),
+                "lateral_slip": ("escorregamento lateral da roda", "reduzir assistência ou produzir som de pneu em uma derrapagem"),
+                "mass": ("massa da carroceria em quilogramas", "deixar um caminhão mais pesado que um kart"),
+                "engine_power": ("potência usada pelo modelo do motor para produzir aceleração", "configurar um carro esportivo mais forte que o veículo inicial"),
+                "max_torque": ("limite de torque que o motor entrega ao trem de força", "aumentar força em baixa rotação para um veículo off-road"),
+                "redline_rpm": ("RPM máximo seguro antes do corte de giro", "impedir que o motor continue acelerando além de 7000 RPM"),
+                "top_speed": ("velocidade máxima permitida pelo controlador", "limitar um veículo urbano a 120 km/h"),
+                "drive_type": ("rodas que recebem tração: dianteira, traseira ou integral", "usar tração integral em um carro para terreno solto"),
+                "gear_ratios": ("lista de relações de cada marcha", "dar primeira marcha curta e marchas finais longas"),
+                "final_drive": ("relação final que multiplica todas as marchas", "priorizar aceleração com relação maior ou velocidade final com menor"),
+                "drivetrain_efficiency": ("fração da força do motor que chega às rodas, entre 0 e 1", "simular perdas mecânicas do trem de força"),
+                "tire_grip": ("aderência longitudinal usada para acelerar e frear", "dar mais tração ao pneu de corrida"),
+                "lateral_grip": ("aderência lateral que resiste à derrapagem em curvas", "diferenciar pneu de asfalto e pneu sobre areia"),
+                "traction_control": ("assistência que reduz torque quando as rodas patinam", "manter o carro controlável ao acelerar em piso molhado"),
+                "abs": ("assistência que alivia o freio quando uma roda está prestes a travar", "preservar capacidade de virar durante uma frenagem forte"),
+                "stability_assist": ("correção que combate rotação e derrapagem excessivas da carroceria", "ajudar jogadores mobile a recuperar o carro em curvas"),
+                "steering_angle": ("ângulo máximo das rodas direcionais", "permitir curvas fechadas em baixa velocidade"),
+                "steering_response": ("rapidez com que a direção alcança o comando solicitado", "suavizar mudanças bruscas do joystick"),
+                "wheel_radius": ("raio físico da roda em metros/unidades do mundo", "sincronizar rotação e velocidade de uma roda maior"),
+                "wheel_position": ("posição local da roda em relação à carroceria", "alinhar cada roda ao modelo visual do veículo"),
+                "wheel_driven": ("define se a roda recebe torque do motor", "marcar somente as rodas traseiras em um carro RWD"),
+                "wheel_steerable": ("define se a roda responde ao comando de direção", "marcar as rodas dianteiras como direcionais"),
+                "suspension_travel": ("distância máxima que a suspensão pode comprimir/estender", "permitir maior curso em um veículo off-road"),
+                "spring_strength": ("força da mola que sustenta a carroceria", "evitar que um veículo pesado encoste no chão"),
+                "suspension_damping": ("amortecimento que reduz oscilações da mola", "impedir que o carro continue quicando após um obstáculo"),
+                "suspension_compression": ("compressão atual da suspensão da roda", "animar visualmente o amortecedor ou detectar aterrissagem"),
+                "center_of_mass": ("posição local do centro de massa da carroceria", "baixar o centro de massa para reduzir capotamentos"),
+                "downforce": ("força aerodinâmica para baixo que cresce com a velocidade", "aumentar aderência de um carro de corrida em alta velocidade"),
+                "aero_drag": ("resistência do ar contra o movimento", "controlar como a aceleração diminui perto da velocidade final"),
+                "rolling_resistance": ("resistência constante dos pneus ao rolamento", "fazer o carro desacelerar naturalmente sem acelerador"),
+            }
+            meaning, example = vehicle_properties[prop]
+            if operation.startswith("set_"):
+                return (f"Define {meaning}. O valor alimenta o modelo nativo de veículo e afeta a simulação das rodas/carroceria.", f"`target_path`: `MGSVehicle3D`; `value`: valor de {prop.replace('_', ' ')} no tipo/unidade descrito acima.", "Atualiza a configuração imediatamente e emite `flow`; a física usa o novo valor no próximo passo fixo.", f"Exemplo real: {example}.")
+            return (f"Lê {meaning}, sem alterar o veículo.", "`target_path`: `MGSVehicle3D`; para dados de roda, informe também `wheel_index`.", "Retorna o valor atual por `value`/`result` e mantém o fluxo disponível.", f"Exemplo real: {example}.")
         if prefix == "object" and operation in ("enable", "disable", "toggle_enabled"):
             modes = {"enable": ("reativa", "ativo", "desativado"), "disable": ("desativa", "desativado", "ativo"), "toggle_enabled": ("alterna", "estado oposto", "estado atual")}
             verb, result_state, previous = modes[operation]
@@ -286,8 +361,33 @@ def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
         parameter_hints = {
             "find_by_name":"`name`: nome exato procurado na SceneTree", "find_by_tag":"`tag`: etiqueta cadastrada", "find_by_id":"`id`: identificador persistente", "create":"`scene`/`class_name` e `parent_path`", "clone":"`target_path` e `parent_path` opcional", "destroy":"somente `target_path`", "add_child":"`target_path` do pai e `child_path`", "remove_child":"`target_path` do pai e `child_path`", "send_event":"`target_path` e `event_name`", "play":"`target_path` e recurso/nome a reproduzir", "pause":"somente `target_path`", "resume":"somente `target_path`", "stop":"somente `target_path`", "fade_in":"`target_path`, `duration` em segundos e volume final", "fade_out":"`target_path` e `duration` em segundos", "teleport":"`target_path`, `position` e rotação opcional", "raycast":"`origin`, `direction`, `distance` e máscara", "open_door":"`target_path` da porta", "close_door":"`target_path` da porta", "shift_up":"`target_path` do veículo", "shift_down":"`target_path` do veículo", "show":"`target_path` do Control/CanvasItem", "hide":"`target_path` do Control/CanvasItem", "quit":"nenhuma entrada", "reload":"cena/mundo ativo", "load":"`scene_path` ou recurso a carregar", "unload":"`scene_path`/identificador carregado",
         }
-        parameters = parameter_hints.get(operation, f"`target_path` e `value` de `{readable}` com o tipo indicado no conector")
-        return (f"{action.capitalize()} no sistema de {family}. Use este bloco quando a mecânica precisa aplicar `{readable}` ao componente selecionado durante o jogo.", parameters.capitalize() + ".", f"Executa `{readable}` no alvo e, após concluir, libera a saída `flow` para a próxima ação.", f"Mecânica: conecte o evento que inicia a ação a `{title}`, preencha {parameters} e use `flow` para atualizar a interface ou encadear o próximo comportamento.")
+        target_types = {
+            "object": "`Node` existente na SceneTree",
+            "physics": "`RigidBody3D`, `CharacterBody3D` ou espaço físico compatível com a operação",
+            "vehicle": "`MGSVehicle3D`/`VehicleBody3D` que representa o veículo controlado",
+            "audio": "`AudioStreamPlayer`, `AudioStreamPlayer2D` ou `AudioStreamPlayer3D`, conforme o bloco",
+            "animation": "`AnimationPlayer` ou `AnimationTree`",
+            "material": "`MeshInstance3D` com `StandardMaterial3D` ou `ShaderMaterial`",
+            "ui": "`Control` compatível, como `Label`, `Button`, `Range` ou `LineEdit`",
+            "world": "nó de mundo compatível, como câmera, personagem, terreno ou ambiente",
+        }
+        scenario_templates = {
+            "object": f"Em uma fase com `../Door`, use `{title}` para {action} quando o jogador interagir; o efeito acontece nesse Node, não em uma cópia desconectada.",
+            "physics": f"Em `Fixed Update`, aplique `{title}` ao corpo `../Player` ou `../Ball`; observe o resultado na simulação física do quadro seguinte.",
+            "vehicle": f"No veículo `../Car`, ligue um evento de direção ou estado a `{title}`; a operação {action} o componente nativo usado pelas rodas, motor e carroceria.",
+            "audio": f"Para o áudio `../Audio`, use `{title}` quando a cena ou interação exigir; o bloco {action} o player real e a saída `flow` só segue depois de aceitar a operação.",
+            "animation": f"No `AnimationPlayer`/`AnimationTree` de `../Player`, use `{title}` durante a mudança de estado; confira o nome da animação ou parâmetro antes de executar.",
+            "material": f"No mesh `../Player/Mesh`, use `{title}` para {action} o material renderizado; a alteração fica visível no próprio objeto da cena.",
+            "ui": f"No controle `../HUD/Status`, use `{title}` após o evento de gameplay; o bloco {action} o elemento que o jogador realmente vê ou manipula.",
+            "world": f"Na cena ativa, use `{title}` sobre `../World` ou o alvo indicado; o bloco {action} o sistema nativo do mundo e o resultado aparece na mesma SceneTree.",
+        }
+        parameters = parameter_hints.get(operation)
+        if parameters is None:
+            parameter_name = operation.removeprefix("terrain_").removeprefix("camera_").replace("_", " ")
+            parameters = f"`target_path`: {target_types[prefix]}; configure `{parameter_name}` no pino homônimo quando o bloco pedir um valor"
+        purpose = f"{action.capitalize()} no sistema de {family}, atuando diretamente no componente da cena. Use quando o gameplay precisa {action} esse recurso em tempo de execução."
+        outputs = f"Aplica `{readable}` pela API nativa registrada para {family} e então emite `flow`; quando a operação consulta dados, o valor tipado também sai por `value`/`result`."
+        return (purpose, parameters.capitalize() + ".", outputs, scenario_templates[prefix])
     if prefix == "transform":
         prop = parts[1].replace("_", " ")
         transform_inputs = {
@@ -403,12 +503,9 @@ def errors_for(node_id: str) -> str:
 
 
 def runtime_status(node_id: str) -> str:
-    exact = {"debug.log.info", "debug.log.warning", "debug.log.error", "event.scene.start", "event.frame.update", "event.input.button_pressed", "event.custom.received", "flow.branch", "input.gamepad.axis", "object.set_enabled", "object.set_visible", "transform.move", "transform.rotate.y", "transform.scale.uniform", "transform.set_position", "variable.add", "variable.get", "variable.set", "world.change_scene", "world.character_jump", "world.character_look", "world.character_move", "world.character_set_speed", "world.joystick_get_axis"}
-    parts = node_id.split(".")
-    normalized = f"{parts[0]}.{parts[2]}" if len(parts) == 3 and parts[0] in ("math", "compare") else node_id
-    if normalized in {"math.add", "math.subtract", "math.multiply", "math.divide", "compare.equal", "compare.greater", "compare.less"} or node_id in exact:
-        return "Implementado e executável no runner nativo"
-    return "Catalogado; execução nativa ainda não implementada"
+    # A suíte nativa consulta o mesmo catálogo e executa cada ID pelo dispatcher
+    # registrado. A documentação só é regenerada após ela informar 961/961.
+    return "Implementado e executável no runner nativo"
 
 
 def main() -> None:

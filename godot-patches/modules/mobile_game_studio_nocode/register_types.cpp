@@ -2,6 +2,8 @@
 
 #include "mgs_nocode_graph.h"
 #include "mgs_nocode_runner.h"
+#include "mgs_terrain_3d.h"
+#include "mgs_vehicle_3d.h"
 #include "core/object/class_db.h"
 
 #ifdef TOOLS_ENABLED
@@ -13,6 +15,8 @@ void initialize_mobile_game_studio_nocode_module(ModuleInitializationLevel p_lev
     if (p_level == MODULE_INITIALIZATION_LEVEL_SCENE) {
         GDREGISTER_CLASS(MGSNoCodeGraph);
         GDREGISTER_CLASS(MGSNoCodeRunner);
+        GDREGISTER_CLASS(MGSTerrain3D);
+        GDREGISTER_CLASS(MGSVehicle3D);
     }
 #ifdef TOOLS_ENABLED
     if (p_level == MODULE_INITIALIZATION_LEVEL_EDITOR) {

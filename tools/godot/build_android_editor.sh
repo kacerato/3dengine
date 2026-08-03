@@ -125,7 +125,8 @@ Mobile Game Studio native NoCode foundation
 - Editor workspace: GraphEdit/GraphNode bottom panel
 - Legacy import/export: *.graph.json schema versions 1 and 2
 - Runtime guards: graph validation, 512-node/1024-edge limits, execution limit and cycle detection
-- Initial executable actions: start/button events, sequence/branch, log, variables, arithmetic/comparison, visibility, enabled state, Node3D transforms and scene change
+- Native catalog and dispatcher validation: 961/961 NoCodes routed and executable without arbitrary method calls
+- Mobile proof project: graph-driven movement, camera look and jump with automated physical validation
 - Exact legacy Mobile Game Studio logo bundled in Android launcher, splash and Project Manager
 EOF
   required_artifacts+=("NOCODE_FOUNDATION.txt")

@@ -51,7 +51,7 @@ jobs:
           sed -i 's/kloofendal_misty_morning_2k.hdr/kloofendal_misty_morning_4k.exr/g' tools/artifact/build_realistic_nocode_project.py
           sed -i 's/HDRI Kloofendal Misty Morning em 2K/HDRI Kloofendal Misty Morning em 4K/g' tools/artifact/build_realistic_nocode_project.py
 
-      - name: Build and validate project package
+      - name: Build base project package
         shell: bash
         env:
           EXTERNAL_DIR: external/rig
@@ -59,11 +59,134 @@ jobs:
         run: |
           set -euxo pipefail
           python tools/artifact/build_realistic_nocode_project.py
+
+      - name: Bind real animation names through NoCode and rebuild ZIP
+        shell: bash
+        run: |
+          set -euxo pipefail
+          python - <<'PY'
+          from __future__ import annotations
+          import hashlib
+          import json
+          import struct
+          import zipfile
+          from pathlib import Path
+
+          root = Path("dist/Mundo_Realista_NoCode_Complete")
+          glb = root / "addons/quaternius_ik_rigged/UAL1_Standard.glb"
+          raw = glb.read_bytes()
+          offset = 12
+          animation_names = set()
+          while offset < len(raw):
+              length, chunk_type = struct.unpack_from("<I4s", raw, offset)
+              offset += 8
+              chunk = raw[offset:offset + length]
+              offset += length
+              if chunk_type == b"JSON":
+                  data = json.loads(chunk.rstrip(b"\x00 \t\r\n"))
+                  animation_names = {a.get("name", "") for a in data.get("animations", [])}
+                  break
+
+          required = {"Idle_Loop", "Walk_Loop", "Jump_Start", "Jump_Loop", "Jump_Land"}
+          missing = required - animation_names
+          if missing:
+              raise SystemExit(f"Animações esperadas ausentes: {sorted(missing)}")
+
+          player = "../Player/CharacterModel/AnimationPlayer"
+          nodes = [
+              {"id":"start","type":"CATALOG","definitionId":"event.scene.start","positionX":40,"positionY":50,"values":{}},
+              {"id":"speed","type":"CATALOG","definitionId":"world.character_set_speed","positionX":320,"positionY":50,"values":{"target_path":"../Player","speed":"5.4"}},
+              {"id":"idle_start","type":"CATALOG","definitionId":"animation.play","positionX":620,"positionY":50,"values":{"target_path":player,"animation":"UAL1_Standard/Idle_Loop"}},
+              {"id":"fixed","type":"CATALOG","definitionId":"event.frame.fixed_update","positionX":40,"positionY":250,"values":{}},
+              {"id":"move","type":"CATALOG","definitionId":"world.character_move","positionX":320,"positionY":250,"values":{"target_path":"../Player","speed":"5.4"}},
+              {"id":"look","type":"CATALOG","definitionId":"world.character_look","positionX":620,"positionY":250,"values":{"target_path":"../Player/CameraPivot","sensitivity":"0.040"}},
+              {"id":"jump_event","type":"CATALOG","definitionId":"event.input.button_pressed","positionX":40,"positionY":500,"values":{"action":"jump"}},
+              {"id":"jump","type":"CATALOG","definitionId":"world.character_jump","positionX":300,"positionY":500,"values":{"target_path":"../Player","force":"7.0"}},
+              {"id":"jump_start","type":"CATALOG","definitionId":"animation.play","positionX":560,"positionY":500,"values":{"target_path":player,"animation":"UAL1_Standard/Jump_Start"}},
+              {"id":"jump_start_wait","type":"CATALOG","definitionId":"flow.delay","positionX":820,"positionY":500,"values":{"seconds":"0.18"}},
+              {"id":"jump_loop","type":"CATALOG","definitionId":"animation.play","positionX":1080,"positionY":500,"values":{"target_path":player,"animation":"UAL1_Standard/Jump_Loop"}},
+              {"id":"jump_loop_wait","type":"CATALOG","definitionId":"flow.delay","positionX":1340,"positionY":500,"values":{"seconds":"0.52"}},
+              {"id":"jump_land","type":"CATALOG","definitionId":"animation.play","positionX":1600,"positionY":500,"values":{"target_path":player,"animation":"UAL1_Standard/Jump_Land"}},
+              {"id":"jump_land_wait","type":"CATALOG","definitionId":"flow.delay","positionX":1860,"positionY":500,"values":{"seconds":"0.18"}},
+              {"id":"idle_after_jump","type":"CATALOG","definitionId":"animation.play","positionX":2120,"positionY":500,"values":{"target_path":player,"animation":"UAL1_Standard/Idle_Loop"}},
+          ]
+          connections = [
+              {"fromNodeId":"start","fromPortId":"flow","toNodeId":"speed","toPortId":"flow"},
+              {"fromNodeId":"speed","fromPortId":"flow","toNodeId":"idle_start","toPortId":"flow"},
+              {"fromNodeId":"fixed","fromPortId":"flow","toNodeId":"move","toPortId":"flow"},
+              {"fromNodeId":"move","fromPortId":"flow","toNodeId":"look","toPortId":"flow"},
+              {"fromNodeId":"jump_event","fromPortId":"flow","toNodeId":"jump","toPortId":"flow"},
+              {"fromNodeId":"jump","fromPortId":"flow","toNodeId":"jump_start","toPortId":"flow"},
+              {"fromNodeId":"jump_start","fromPortId":"flow","toNodeId":"jump_start_wait","toPortId":"flow"},
+              {"fromNodeId":"jump_start_wait","fromPortId":"flow","toNodeId":"jump_loop","toPortId":"flow"},
+              {"fromNodeId":"jump_loop","fromPortId":"flow","toNodeId":"jump_loop_wait","toPortId":"flow"},
+              {"fromNodeId":"jump_loop_wait","fromPortId":"flow","toNodeId":"jump_land","toPortId":"flow"},
+              {"fromNodeId":"jump_land","fromPortId":"flow","toNodeId":"jump_land_wait","toPortId":"flow"},
+              {"fromNodeId":"jump_land_wait","fromPortId":"flow","toNodeId":"idle_after_jump","toPortId":"flow"},
+          ]
+
+          actions = ["ui_up", "ui_down", "ui_left", "ui_right"]
+          for index, action in enumerate(actions):
+              y = 760 + index * 180
+              press_id = f"{action}_pressed"
+              walk_id = f"{action}_walk"
+              release_id = f"{action}_released"
+              idle_id = f"{action}_idle"
+              nodes.extend([
+                  {"id":press_id,"type":"CATALOG","definitionId":"event.input.button_pressed","positionX":40,"positionY":y,"values":{"action":action}},
+                  {"id":walk_id,"type":"CATALOG","definitionId":"animation.play","positionX":330,"positionY":y,"values":{"target_path":player,"animation":"UAL1_Standard/Walk_Loop"}},
+                  {"id":release_id,"type":"CATALOG","definitionId":"event.input.button_released","positionX":650,"positionY":y,"values":{"action":action}},
+                  {"id":idle_id,"type":"CATALOG","definitionId":"animation.play","positionX":940,"positionY":y,"values":{"target_path":player,"animation":"UAL1_Standard/Idle_Loop"}},
+              ])
+              connections.extend([
+                  {"fromNodeId":press_id,"fromPortId":"flow","toNodeId":walk_id,"toPortId":"flow"},
+                  {"fromNodeId":release_id,"fromPortId":"flow","toNodeId":idle_id,"toPortId":"flow"},
+              ])
+
+          graph = {
+              "schemaVersion": 2,
+              "graphId": "realistic-quaternius-mobile-controller",
+              "name": "Personagem realista mobile — NoCode completo",
+              "variables": {},
+              "nodes": nodes,
+              "connections": connections,
+          }
+          graph_path = root / "main.graph.json"
+          graph_path.write_text(json.dumps(graph, ensure_ascii=False, indent=2), encoding="utf-8")
+
+          readme = root / "README.md"
+          readme.write_text(readme.read_text(encoding="utf-8") + "\n## Animações ligadas pelo NoCode\n\n- Idle: `UAL1_Standard/Idle_Loop`\n- Caminhada: `UAL1_Standard/Walk_Loop`\n- Pulo: `Jump_Start → Jump_Loop → Jump_Land`\n\nAs ações `ui_up`, `ui_down`, `ui_left` e `ui_right` iniciam caminhada e retornam ao idle ao serem soltas.\n", encoding="utf-8")
+
+          manifest = []
+          for file in sorted(p for p in root.rglob("*") if p.is_file() and p.name != "ASSET_MANIFEST.json"):
+              manifest.append({
+                  "path": str(file.relative_to(root)),
+                  "sha256": hashlib.sha256(file.read_bytes()).hexdigest(),
+                  "size": file.stat().st_size,
+              })
+          (root / "ASSET_MANIFEST.json").write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+
+          zip_path = root.parent / "Mundo_Realista_NoCode_Complete.zip"
+          if zip_path.exists():
+              zip_path.unlink()
+          with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED, allowZip64=True) as archive:
+              for file in sorted(p for p in root.rglob("*") if p.is_file()):
+                  archive.write(file, Path(root.name) / file.relative_to(root))
+          print(f"animations={len(animation_names)} zip={zip_path} size={zip_path.stat().st_size}")
+          PY
+
+      - name: Validate final project package
+        shell: bash
+        run: |
+          set -euxo pipefail
           test -s dist/Mundo_Realista_NoCode_Complete.zip
           unzip -t dist/Mundo_Realista_NoCode_Complete.zip
           test -f dist/Mundo_Realista_NoCode_Complete/main.graph.json
           test -f dist/Mundo_Realista_NoCode_Complete/addons/quaternius_ik_rigged/Models_with_rigging/Master_Rigged.tscn
           test -f dist/Mundo_Realista_NoCode_Complete/assets/environment/kloofendal_misty_morning_4k.exr
+          grep -q 'UAL1_Standard/Walk_Loop' dist/Mundo_Realista_NoCode_Complete/main.graph.json
+          grep -q 'UAL1_Standard/Jump_Start' dist/Mundo_Realista_NoCode_Complete/main.graph.json
+          grep -q 'UAL1_Standard/Jump_Land' dist/Mundo_Realista_NoCode_Complete/main.graph.json
           du -h dist/Mundo_Realista_NoCode_Complete.zip
 
       - name: Upload workflow artifact
@@ -86,7 +209,7 @@ jobs:
             dist/Mundo_Realista_NoCode_Complete.zip \
             --target "$GITHUB_SHA" \
             --title "Mundo Realista NoCode Complete" \
-            --notes "Artefato temporário gerado de uma branch isolada. Inclui assets CC0, joystick mobile e gameplay NoCode. Não destinado a merge."
+            --notes "Artefato temporário gerado de uma branch isolada. Inclui assets CC0, joystick mobile, animações e gameplay NoCode. Não destinado a merge."
 
       - name: Report artifact identifiers on temporary PR
         shell: bash
@@ -104,4 +227,4 @@ jobs:
           done
           test -n "$ARTIFACT_ID"
           gh api "repos/$GITHUB_REPOSITORY/issues/10/comments" \
-            -f body="ARTIFACT_RUN_ID=$GITHUB_RUN_ID ARTIFACT_ID=$ARTIFACT_ID HEAD_SHA=$GITHUB_SHA"
+            -f body="ARTIFACT_RUN_ID=$GITHUB_RUN_ID ARTIFACT_ID=$ARTIFACT_ID HEAD_SHA=$GITHUB_SHA FINAL_ANIMATIONS=1"

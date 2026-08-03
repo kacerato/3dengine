@@ -1,0 +1,98 @@
+name: Diagnose NoCode startup
+
+on:
+  push:
+    branches:
+      - artifact/diagnose-nocode-start
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download asset and Godot 4.6
+        shell: bash
+        run: |
+          set -euxo pipefail
+          mkdir -p diag/addons diag/bin
+          curl --retry 5 --retry-all-errors -fL \
+            'https://codeberg.org/jamesonBradfield/Quaternius_IK_Rigged_with_animations/archive/5c4dae72e49ad4e5959571e00a25d3d872cacba5.zip' \
+            -o diag/asset.zip
+          unzip -q diag/asset.zip -d diag/source
+          MASTER=$(find diag/source -name Master_Rigged.tscn -print -quit)
+          ROOT=$(dirname "$(dirname "$MASTER")")
+          cp -a "$ROOT" diag/addons/quaternius_ik_rigged
+
+          curl --retry 5 --retry-all-errors -fL \
+            'https://github.com/godotengine/godot/releases/download/4.6-stable/Godot_v4.6-stable_linux.x86_64.zip' \
+            -o diag/godot.zip
+          unzip -q diag/godot.zip -d diag/bin
+          chmod +x diag/bin/Godot_v4.6-stable_linux.x86_64
+
+      - name: Create diagnostic project
+        shell: bash
+        run: |
+          cat > diag/project.godot <<'EOF'
+          [application]
+          config/name="NoCode Asset Diagnostic"
+          run/main_scene="res://diag.tscn"
+          [rendering]
+          renderer/rendering_method="gl_compatibility"
+          EOF
+          cat > diag/diag.tscn <<'EOF'
+          [gd_scene load_steps=2 format=3]
+          [ext_resource type="Script" path="res://diag.gd" id="1"]
+          [node name="Diag" type="Node"]
+          script = ExtResource("1")
+          EOF
+          cat > diag/diag.gd <<'EOF'
+          extends Node
+          func _ready() -> void:
+              var packed = load("res://addons/quaternius_ik_rigged/Models_with_rigging/Master_Rigged.tscn")
+              print("PACKED_NULL=", packed == null)
+              if packed == null:
+                  get_tree().quit(2)
+                  return
+              var character = packed.instantiate()
+              character.name = "CharacterModel"
+              add_child(character)
+              print("ROOT=", character.get_class(), " NAME=", character.name)
+              print("CHILDREN=", character.get_children().map(func(n): return str(n.name) + ":" + n.get_class()))
+              var player = character.get_node_or_null("AnimationPlayer") as AnimationPlayer
+              print("PLAYER_NULL=", player == null)
+              if player:
+                  print("ANIMATIONS=", player.get_animation_list())
+                  for candidate in ["UAL1_Standard/Idle_Loop", "UAL1_Standard/Idle", "Idle_Loop", "Idle", "UAL1_Standard/Walk_Loop", "UAL1_Standard/Jump_Start"]:
+                      print("HAS[", candidate, "]=", player.has_animation(candidate))
+                  if player.has_animation("UAL1_Standard/Idle_Loop"):
+                      player.play("UAL1_Standard/Idle_Loop")
+                      print("CURRENT=", player.current_animation)
+              get_tree().quit(0)
+          EOF
+
+      - name: Import project
+        shell: bash
+        run: |
+          set -o pipefail
+          diag/bin/Godot_v4.6-stable_linux.x86_64 --headless --editor --path diag --quit 2>&1 | tee diag/import.log
+
+      - name: Run diagnostic
+        shell: bash
+        run: |
+          set -o pipefail
+          diag/bin/Godot_v4.6-stable_linux.x86_64 --headless --path diag 2>&1 | tee diag/run.log
+
+      - name: Upload diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nocode-start-diagnostic
+          path: diag/*.log
+          if-no-files-found: warn

@@ -104,6 +104,33 @@ OPERATION_HELP = {
     "raycast": ("Dispara um raio entre dois pontos para detectar o primeiro collider atingido.", "`origin`, `direction`, `distance` e máscara de colisão opcional.", "Retorna acerto, objeto, posição e normal; não altera a cena.", "Tiro: `Button Pressed → Raycast`; se `hit`, conecte a `Object Send Event` no objeto atingido."),
 }
 
+EVENT_HELP = {
+    "event.input.key_down": (
+        "Dispara uma vez no instante em que uma tecla física é pressionada. Use para ações pontuais, como abrir uma porta, pausar, recarregar ou começar a correr; para movimento contínuo enquanto a tecla permanece pressionada, use `Input Keyboard Held`.",
+        "`key` ou `physical_keycode`: tecla que deve ativar o fluxo, por exemplo `E`, `Escape` ou `Shift`; opcionalmente use `action` para uma ação configurada no Input Map, como `interact`. O evento não precisa de `target_path`.",
+        "Emite `flow` uma vez por pressionamento. O payload informa a tecla recebida, código físico, modificadores (Shift/Ctrl/Alt) e repetição do teclado quando disponíveis.",
+        "Abrir uma porta com E: adicione `Key Down`, defina `key = E`, conecte `flow → Object Send Event`, selecione `../Door` como alvo e envie o evento `open`. Ao pressionar E, a porta recebe `open` uma única vez; manter E segurado não repete a ação, salvo se a repetição estiver habilitada.",
+    ),
+    "event.input.key_up": (
+        "Dispara uma vez quando uma tecla física é solta. Use para encerrar uma ação iniciada no pressionamento, como parar corrida, soltar um objeto ou finalizar carregamento de ataque.",
+        "`key`/`physical_keycode` ou uma `action` do Input Map. Não usa alvo de cena.",
+        "Emite `flow` e entrega a tecla e os modificadores no payload.",
+        "Corrida com Shift: `Key Down (Shift) → Character Set Speed (9)` e `Key Up (Shift) → Character Set Speed (5)`. O personagem corre somente enquanto Shift estiver apertado.",
+    ),
+    "event.input.button_pressed": (
+        "Dispara quando uma ação do Input Map ou botão mobile é pressionado. É o evento recomendado para pulo, interação, ataque e botões da interface porque funciona com teclado, controle e toque quando todos estão mapeados para a mesma ação.",
+        "`action`: nome configurado no Input Map, por exemplo `jump`; opcionalmente `device` e `button_index`.",
+        "Emite `flow` uma vez e disponibiliza ação, dispositivo e intensidade no payload.",
+        "Pulo multiplataforma: configure a ação `jump`, conecte `Button Pressed (jump) → Character Jump`, alvo `../Player`, força `6.5`. O mesmo grafo responde à barra de espaço, botão do gamepad e botão touch.",
+    ),
+    "event.pointer.drag": (
+        "Dispara enquanto o usuário arrasta o dedo ou mouse. Use para girar câmera, mover peças, controlar uma mira ou deslizar painéis.",
+        "Filtro opcional de dedo/botão e região da tela. O payload fornece posição inicial, posição atual e `delta` desde a última atualização.",
+        "Emite `flow`, `position` e `delta` como `Vector2`.",
+        "Câmera mobile: `Pointer Drag → Character Look`; conecte `delta` em `look_delta`, selecione `../Player/CameraPivot` e use sensibilidade `0.003`.",
+    ),
+}
+
 
 def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
     if node_id == "world.character_move":
@@ -113,8 +140,11 @@ def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
     if node_id == "world.character_jump":
         return ("Faz um `CharacterBody3D` pular somente quando `is_on_floor()` confirma contato com o chão.", "`target_path`: personagem; `force`: velocidade vertical positiva; evento recomendado `Button Pressed` com ação `jump`.", "Define a velocidade Y do personagem e emite `flow`; no ar, não aplica um segundo pulo.", "Pulo mobile: `Button Pressed (jump) → Character Jump`, alvo `../Player`, força `6.5`.")
     if node_id.startswith("event."):
+        if node_id in EVENT_HELP:
+            return EVENT_HELP[node_id]
         event = node_id.removeprefix("event.").replace("_", " ")
-        return (f"Inicia o grafo quando a engine emite o evento `{event}`.", "Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.", "Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.", f"Conecte `{title} → Debug Info` para confirmar no log quando `{event}` acontecer.")
+        subject, action = event.rsplit(".", 1) if "." in event else ("engine", event)
+        return (f"Dispara o fluxo quando `{subject}` informa `{action}`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.", f"Filtros exibidos no bloco limitam qual `{subject}` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.", "Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.", f"Exemplo de gameplay: conecte `{title}` a uma ação relacionada a `{subject}`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.")
     if node_id.startswith("flow.sequence."):
         count = node_id.rsplit(".", 1)[-1]
         return (f"Executa {count} ramificações de fluxo em ordem, da saída 1 até a {count}.", "Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.", f"Emite {count} saídas sequenciais no mesmo quadro.", f"`Button Pressed → Sequência {count}` para tocar som, atualizar UI e executar outras ações em ordem.")
@@ -155,6 +185,22 @@ def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
     return (f"Executa a operação registrada `{node_id}` ({readable}) no runtime NoCode.", "Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.", "Retorna `value`/`result` para dados e `flow` para encadear ações.", f"Adicione `{title}` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.")
 
 
+def errors_for(node_id: str) -> str:
+    if node_id == "event.input.key_down":
+        return "Se não disparar, confira se a janela do jogo está em foco, se a tecla física escolhida corresponde ao layout do aparelho e se `action` existe no Input Map. Não use este evento para teclado virtual Android; nesse caso, prefira uma ação ligada a botão touch."
+    if node_id.startswith("event.input."):
+        return "Se não disparar, verifique foco da janela, nome exato da ação no Input Map, dispositivo selecionado e se outro Control está consumindo o evento."
+    if node_id.startswith(("object.", "transform.", "physics.", "vehicle.", "audio.", "animation.", "material.", "ui.")):
+        return "Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada."
+    if node_id.startswith(("math.", "vector.", "compare.")):
+        return "Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch."
+    if node_id.startswith("list."):
+        return "Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável."
+    if node_id.startswith("save."):
+        return "Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos."
+    return "Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários."
+
+
 def main() -> None:
     definitions = catalog(SOURCE.read_text(encoding="utf-8"))
     lines = [
@@ -169,7 +215,7 @@ def main() -> None:
             f"- **ID:** `{node_id}`", f"- **Categoria:** {category}",
             f"- **Finalidade:** {purpose}", f"- **Entradas/alvo:** {inputs}", f"- **Saídas/efeito:** {outputs}",
             f"- **Exemplo:** {example}",
-            "- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.", "",
+            f"- **Erros:** {errors_for(node_id)}", "",
         ]
     OUTPUT.write_text("\n".join(lines), encoding="utf-8")
     print(f"{OUTPUT}: {len(definitions)} operações documentadas")

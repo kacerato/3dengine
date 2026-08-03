@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0a0710" />
+  <meta name="description" content="Referência prática completa dos 961 blocos NoCode do Mobile Game Studio." />
+  <title>NoCode — Mobile Game Studio Docs</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="nocode-page">
+  <header class="topbar">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="Mobile Game Studio" /><span><strong>MOBILE GAME</strong><small>STUDIO / NOCODE</small></span></a>
+    <nav class="topnav" aria-label="Navegação"><a href="index.html">Documentação</a><a href="#como-ler">Como usar</a><a href="#referencia">961 blocos</a></nav>
+    <div class="top-actions"><a class="button button-outline" href="https://github.com/kacerato/3dengine" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+  </header>
+
+  <main>
+    <section class="nocode-hero section-dark">
+      <p class="eyebrow">GUIA PRÁTICO DE LÓGICA VISUAL</p>
+      <h1>NOCODE NÃO É<br /><span>UMA LISTA DE NOMES.</span></h1>
+      <p>Aqui cada bloco explica o problema que resolve, os dados que recebe, o que entrega e como ligá-lo em uma mecânica real.</p>
+      <div class="nocode-stats"><article><strong id="nocodeTotal">961</strong><span>BLOCOS DOCUMENTADOS</span></article><article><strong id="nocodeCategories">—</strong><span>CATEGORIAS</span></article><article><strong>100%</strong><span>COM EXEMPLO DE USO</span></article></div>
+    </section>
+
+    <section class="doc-section section-light nocode-reading" id="como-ler">
+      <div class="section-heading"><p class="eyebrow dark">ANTES DE MONTAR O GRAFO</p><h2>COMO LER<br /><span>CADA BLOCO.</span></h2></div>
+      <div class="nocode-contract">
+        <div><span>01</span><b>QUANDO USAR</b><p>A finalidade descreve a mecânica adequada e diferencia eventos parecidos, como pressionar, segurar e soltar.</p></div>
+        <div><span>02</span><b>CONFIGURAR</b><p>Entradas mostram nomes, tipos, unidades e qual Node Godot pode ser escolhido como alvo.</p></div>
+        <div><span>03</span><b>CONECTAR</b><p>O resultado informa quais pinos continuam o fluxo e quais dados podem alimentar outros blocos.</p></div>
+        <div><span>04</span><b>APLICAR</b><p>O exemplo monta uma pequena mecânica, com valores e NodePaths que você pode adaptar ao projeto.</p></div>
+      </div>
+    </section>
+
+    <section class="doc-section section-dark nocode-reference" id="referencia">
+      <div class="section-heading"><p class="eyebrow">REFERÊNCIA COMPLETA</p><h2>PROCURE PELO QUE<br /><span>VOCÊ QUER CRIAR.</span></h2><p>Ex.: “abrir porta”, “pular”, “velocidade angular”, “salvar posição”.</p></div>
+      <div class="catalog-browser">
+        <div class="catalog-toolbar"><label><span>⌕</span><input id="nocodeSearch" type="search" placeholder="O que você quer fazer?" /></label><select id="nocodeCategory" aria-label="Categoria"><option value="">Todas as categorias</option></select><span id="nocodeCount">Carregando…</span></div>
+        <div class="catalog-grid" id="nocodeGrid"></div>
+        <button class="button button-outline catalog-more" id="nocodeMore" type="button">CARREGAR MAIS</button>
+      </div>
+    </section>
+  </main>
+  <footer><div class="footer-logo"><img src="assets/logo.png" alt="" /><span><b>MOBILE GAME STUDIO</b><small>NOCODE REFERENCE</small></span></div><p>Catálogo gerado da mesma fonte auditada usada pela engine.</p><div><a href="#referencia">VOLTAR À BUSCA ↑</a></div></footer>
+  <script src="nocode-catalog.js"></script>
+  <script src="nocodes.js"></script>
+</body>
+</html>

@@ -8,401 +8,401 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `event.scene.start`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `scene.start`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Start → Debug Info` para confirmar no log quando `scene.start` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `scene` informa `start`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `scene` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Start` a uma ação relacionada a `scene`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 2. Ready
 
 - **ID:** `event.scene.ready`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `scene.ready`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Ready → Debug Info` para confirmar no log quando `scene.ready` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `scene` informa `ready`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `scene` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Ready` a uma ação relacionada a `scene`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 3. Exit
 
 - **ID:** `event.scene.exit`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `scene.exit`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Exit → Debug Info` para confirmar no log quando `scene.exit` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `scene` informa `exit`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `scene` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Exit` a uma ação relacionada a `scene`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 4. Update
 
 - **ID:** `event.frame.update`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `frame.update`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Update → Debug Info` para confirmar no log quando `frame.update` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `frame` informa `update`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `frame` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Update` a uma ação relacionada a `frame`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 5. Fixed Update
 
 - **ID:** `event.frame.fixed_update`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `frame.fixed update`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Fixed Update → Debug Info` para confirmar no log quando `frame.fixed update` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `frame` informa `fixed update`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `frame` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Fixed Update` a uma ação relacionada a `frame`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 6. Touch
 
 - **ID:** `event.object.touch`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `object.touch`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Touch → Debug Info` para confirmar no log quando `object.touch` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `object` informa `touch`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Touch` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 7. Click
 
 - **ID:** `event.object.click`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `object.click`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Click → Debug Info` para confirmar no log quando `object.click` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `object` informa `click`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Click` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 8. Enabled
 
 - **ID:** `event.object.enabled`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `object.enabled`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Enabled → Debug Info` para confirmar no log quando `object.enabled` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `object` informa `enabled`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Enabled` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 9. Disabled
 
 - **ID:** `event.object.disabled`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `object.disabled`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Disabled → Debug Info` para confirmar no log quando `object.disabled` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `object` informa `disabled`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Disabled` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 10. Created
 
 - **ID:** `event.object.created`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `object.created`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Created → Debug Info` para confirmar no log quando `object.created` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `object` informa `created`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Created` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 11. Destroyed
 
 - **ID:** `event.object.destroyed`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `object.destroyed`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Destroyed → Debug Info` para confirmar no log quando `object.destroyed` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `object` informa `destroyed`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `object` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Destroyed` a uma ação relacionada a `object`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 12. Button Pressed
 
 - **ID:** `event.input.button_pressed`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `input.button pressed`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Button Pressed → Debug Info` para confirmar no log quando `input.button pressed` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara quando uma ação do Input Map ou botão mobile é pressionado. É o evento recomendado para pulo, interação, ataque e botões da interface porque funciona com teclado, controle e toque quando todos estão mapeados para a mesma ação.
+- **Entradas/alvo:** `action`: nome configurado no Input Map, por exemplo `jump`; opcionalmente `device` e `button_index`.
+- **Saídas/efeito:** Emite `flow` uma vez e disponibiliza ação, dispositivo e intensidade no payload.
+- **Exemplo:** Pulo multiplataforma: configure a ação `jump`, conecte `Button Pressed (jump) → Character Jump`, alvo `../Player`, força `6.5`. O mesmo grafo responde à barra de espaço, botão do gamepad e botão touch.
+- **Erros:** Se não disparar, verifique foco da janela, nome exato da ação no Input Map, dispositivo selecionado e se outro Control está consumindo o evento.
 
 ## 13. Button Released
 
 - **ID:** `event.input.button_released`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `input.button released`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Button Released → Debug Info` para confirmar no log quando `input.button released` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `input` informa `button released`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `input` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Button Released` a uma ação relacionada a `input`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Se não disparar, verifique foco da janela, nome exato da ação no Input Map, dispositivo selecionado e se outro Control está consumindo o evento.
 
 ## 14. Key Down
 
 - **ID:** `event.input.key_down`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `input.key down`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Key Down → Debug Info` para confirmar no log quando `input.key down` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara uma vez no instante em que uma tecla física é pressionada. Use para ações pontuais, como abrir uma porta, pausar, recarregar ou começar a correr; para movimento contínuo enquanto a tecla permanece pressionada, use `Input Keyboard Held`.
+- **Entradas/alvo:** `key` ou `physical_keycode`: tecla que deve ativar o fluxo, por exemplo `E`, `Escape` ou `Shift`; opcionalmente use `action` para uma ação configurada no Input Map, como `interact`. O evento não precisa de `target_path`.
+- **Saídas/efeito:** Emite `flow` uma vez por pressionamento. O payload informa a tecla recebida, código físico, modificadores (Shift/Ctrl/Alt) e repetição do teclado quando disponíveis.
+- **Exemplo:** Abrir uma porta com E: adicione `Key Down`, defina `key = E`, conecte `flow → Object Send Event`, selecione `../Door` como alvo e envie o evento `open`. Ao pressionar E, a porta recebe `open` uma única vez; manter E segurado não repete a ação, salvo se a repetição estiver habilitada.
+- **Erros:** Se não disparar, confira se a janela do jogo está em foco, se a tecla física escolhida corresponde ao layout do aparelho e se `action` existe no Input Map. Não use este evento para teclado virtual Android; nesse caso, prefira uma ação ligada a botão touch.
 
 ## 15. Key Up
 
 - **ID:** `event.input.key_up`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `input.key up`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Key Up → Debug Info` para confirmar no log quando `input.key up` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara uma vez quando uma tecla física é solta. Use para encerrar uma ação iniciada no pressionamento, como parar corrida, soltar um objeto ou finalizar carregamento de ataque.
+- **Entradas/alvo:** `key`/`physical_keycode` ou uma `action` do Input Map. Não usa alvo de cena.
+- **Saídas/efeito:** Emite `flow` e entrega a tecla e os modificadores no payload.
+- **Exemplo:** Corrida com Shift: `Key Down (Shift) → Character Set Speed (9)` e `Key Up (Shift) → Character Set Speed (5)`. O personagem corre somente enquanto Shift estiver apertado.
+- **Erros:** Se não disparar, verifique foco da janela, nome exato da ação no Input Map, dispositivo selecionado e se outro Control está consumindo o evento.
 
 ## 16. Axis
 
 - **ID:** `event.input.axis`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `input.axis`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Axis → Debug Info` para confirmar no log quando `input.axis` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `input` informa `axis`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `input` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Axis` a uma ação relacionada a `input`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Se não disparar, verifique foco da janela, nome exato da ação no Input Map, dispositivo selecionado e se outro Control está consumindo o evento.
 
 ## 17. Down
 
 - **ID:** `event.pointer.down`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `pointer.down`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Down → Debug Info` para confirmar no log quando `pointer.down` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `pointer` informa `down`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `pointer` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Down` a uma ação relacionada a `pointer`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 18. Up
 
 - **ID:** `event.pointer.up`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `pointer.up`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Up → Debug Info` para confirmar no log quando `pointer.up` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `pointer` informa `up`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `pointer` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Up` a uma ação relacionada a `pointer`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 19. Move
 
 - **ID:** `event.pointer.move`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `pointer.move`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Move → Debug Info` para confirmar no log quando `pointer.move` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `pointer` informa `move`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `pointer` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Move` a uma ação relacionada a `pointer`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 20. Drag
 
 - **ID:** `event.pointer.drag`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `pointer.drag`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Drag → Debug Info` para confirmar no log quando `pointer.drag` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara enquanto o usuário arrasta o dedo ou mouse. Use para girar câmera, mover peças, controlar uma mira ou deslizar painéis.
+- **Entradas/alvo:** Filtro opcional de dedo/botão e região da tela. O payload fornece posição inicial, posição atual e `delta` desde a última atualização.
+- **Saídas/efeito:** Emite `flow`, `position` e `delta` como `Vector2`.
+- **Exemplo:** Câmera mobile: `Pointer Drag → Character Look`; conecte `delta` em `look_delta`, selecione `../Player/CameraPivot` e use sensibilidade `0.003`.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 21. Enter
 
 - **ID:** `event.collision.enter`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `collision.enter`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Enter → Debug Info` para confirmar no log quando `collision.enter` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `collision` informa `enter`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `collision` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Enter` a uma ação relacionada a `collision`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 22. Stay
 
 - **ID:** `event.collision.stay`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `collision.stay`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Stay → Debug Info` para confirmar no log quando `collision.stay` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `collision` informa `stay`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `collision` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Stay` a uma ação relacionada a `collision`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 23. Exit
 
 - **ID:** `event.collision.exit`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `collision.exit`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Exit → Debug Info` para confirmar no log quando `collision.exit` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `collision` informa `exit`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `collision` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Exit` a uma ação relacionada a `collision`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 24. Enter
 
 - **ID:** `event.trigger.enter`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `trigger.enter`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Enter → Debug Info` para confirmar no log quando `trigger.enter` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `trigger` informa `enter`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `trigger` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Enter` a uma ação relacionada a `trigger`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 25. Stay
 
 - **ID:** `event.trigger.stay`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `trigger.stay`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Stay → Debug Info` para confirmar no log quando `trigger.stay` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `trigger` informa `stay`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `trigger` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Stay` a uma ação relacionada a `trigger`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 26. Exit
 
 - **ID:** `event.trigger.exit`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `trigger.exit`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Exit → Debug Info` para confirmar no log quando `trigger.exit` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `trigger` informa `exit`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `trigger` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Exit` a uma ação relacionada a `trigger`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 27. Started
 
 - **ID:** `event.animation.started`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `animation.started`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Started → Debug Info` para confirmar no log quando `animation.started` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `animation` informa `started`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `animation` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Started` a uma ação relacionada a `animation`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 28. Finished
 
 - **ID:** `event.animation.finished`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `animation.finished`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Finished → Debug Info` para confirmar no log quando `animation.finished` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `animation` informa `finished`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `animation` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Finished` a uma ação relacionada a `animation`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 29. Finished
 
 - **ID:** `event.audio.finished`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `audio.finished`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Finished → Debug Info` para confirmar no log quando `audio.finished` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `audio` informa `finished`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `audio` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Finished` a uma ação relacionada a `audio`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 30. Focused
 
 - **ID:** `event.ui.focused`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `ui.focused`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Focused → Debug Info` para confirmar no log quando `ui.focused` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `ui` informa `focused`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `ui` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Focused` a uma ação relacionada a `ui`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 31. Value Changed
 
 - **ID:** `event.ui.value_changed`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `ui.value changed`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Value Changed → Debug Info` para confirmar no log quando `ui.value changed` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `ui` informa `value changed`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `ui` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Value Changed` a uma ação relacionada a `ui`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 32. Elapsed
 
 - **ID:** `event.timer.elapsed`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `timer.elapsed`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Elapsed → Debug Info` para confirmar no log quando `timer.elapsed` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `timer` informa `elapsed`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `timer` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Elapsed` a uma ação relacionada a `timer`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 33. Connected
 
 - **ID:** `event.network.connected`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `network.connected`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Connected → Debug Info` para confirmar no log quando `network.connected` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `network` informa `connected`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `network` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Connected` a uma ação relacionada a `network`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 34. Disconnected
 
 - **ID:** `event.network.disconnected`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `network.disconnected`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Disconnected → Debug Info` para confirmar no log quando `network.disconnected` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `network` informa `disconnected`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `network` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Disconnected` a uma ação relacionada a `network`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 35. Loaded
 
 - **ID:** `event.save.loaded`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `save.loaded`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Loaded → Debug Info` para confirmar no log quando `save.loaded` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `save` informa `loaded`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `save` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Loaded` a uma ação relacionada a `save`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 36. Completed
 
 - **ID:** `event.save.completed`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `save.completed`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Completed → Debug Info` para confirmar no log quando `save.completed` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `save` informa `completed`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `save` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Completed` a uma ação relacionada a `save`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 37. Loaded
 
 - **ID:** `event.world.loaded`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `world.loaded`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Loaded → Debug Info` para confirmar no log quando `world.loaded` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `world` informa `loaded`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `world` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Loaded` a uma ação relacionada a `world`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 38. Unloaded
 
 - **ID:** `event.world.unloaded`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `world.unloaded`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Unloaded → Debug Info` para confirmar no log quando `world.unloaded` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `world` informa `unloaded`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `world` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Unloaded` a uma ação relacionada a `world`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 39. Received
 
 - **ID:** `event.custom.received`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `custom.received`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Received → Debug Info` para confirmar no log quando `custom.received` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `custom` informa `received`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `custom` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Received` a uma ação relacionada a `custom`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 40. Changed
 
 - **ID:** `event.component.changed`
 - **Categoria:** Eventos
-- **Finalidade:** Inicia o grafo quando a engine emite o evento `component.changed`.
-- **Entradas/alvo:** Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.
-- **Saídas/efeito:** Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.
-- **Exemplo:** Conecte `Changed → Debug Info` para confirmar no log quando `component.changed` acontecer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Finalidade:** Dispara o fluxo quando `component` informa `changed`. Use este evento para iniciar ações que devem ocorrer exatamente nesse momento, sem consultar o estado a cada quadro.
+- **Entradas/alvo:** Filtros exibidos no bloco limitam qual `component` deve ativá-lo. Quando existir objeto envolvido, o payload inclui sua referência; eventos nomeados aceitam o nome esperado.
+- **Saídas/efeito:** Emite `flow` uma vez por ocorrência e fornece nos pinos de dados o payload específico do evento, que pode ser conectado diretamente aos blocos seguintes.
+- **Exemplo:** Exemplo de gameplay: conecte `Changed` a uma ação relacionada a `component`, como atualizar a interface, tocar um som ou alterar o objeto recebido pelo payload. Configure o filtro no próprio evento para impedir que outras ocorrências ativem o mesmo fluxo.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 41. Sequência 2
 
@@ -412,7 +412,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.
 - **Saídas/efeito:** Emite 2 saídas sequenciais no mesmo quadro.
 - **Exemplo:** `Button Pressed → Sequência 2` para tocar som, atualizar UI e executar outras ações em ordem.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 42. Sequência 3
 
@@ -422,7 +422,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.
 - **Saídas/efeito:** Emite 3 saídas sequenciais no mesmo quadro.
 - **Exemplo:** `Button Pressed → Sequência 3` para tocar som, atualizar UI e executar outras ações em ordem.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 43. Sequência 4
 
@@ -432,7 +432,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.
 - **Saídas/efeito:** Emite 4 saídas sequenciais no mesmo quadro.
 - **Exemplo:** `Button Pressed → Sequência 4` para tocar som, atualizar UI e executar outras ações em ordem.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 44. Sequência 5
 
@@ -442,7 +442,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.
 - **Saídas/efeito:** Emite 5 saídas sequenciais no mesmo quadro.
 - **Exemplo:** `Button Pressed → Sequência 5` para tocar som, atualizar UI e executar outras ações em ordem.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 45. Sequência 6
 
@@ -452,7 +452,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.
 - **Saídas/efeito:** Emite 6 saídas sequenciais no mesmo quadro.
 - **Exemplo:** `Button Pressed → Sequência 6` para tocar som, atualizar UI e executar outras ações em ordem.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 46. Sequência 8
 
@@ -462,7 +462,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.
 - **Saídas/efeito:** Emite 8 saídas sequenciais no mesmo quadro.
 - **Exemplo:** `Button Pressed → Sequência 8` para tocar som, atualizar UI e executar outras ações em ordem.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 47. Sequência 10
 
@@ -472,7 +472,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.
 - **Saídas/efeito:** Emite 10 saídas sequenciais no mesmo quadro.
 - **Exemplo:** `Button Pressed → Sequência 10` para tocar som, atualizar UI e executar outras ações em ordem.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 48. Sequência 12
 
@@ -482,7 +482,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.
 - **Saídas/efeito:** Emite 12 saídas sequenciais no mesmo quadro.
 - **Exemplo:** `Button Pressed → Sequência 12` para tocar som, atualizar UI e executar outras ações em ordem.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 49. Branch
 
@@ -492,7 +492,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Branch` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 50. Gate
 
@@ -502,7 +502,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Gate` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 51. Once
 
@@ -512,7 +512,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Once` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 52. Do N
 
@@ -522,7 +522,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Do N` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 53. While
 
@@ -532,7 +532,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `While` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 54. For
 
@@ -542,7 +542,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `For` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 55. Foreach
 
@@ -552,7 +552,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Foreach` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 56. Delay
 
@@ -562,7 +562,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Delay` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 57. Debounce
 
@@ -572,7 +572,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Debounce` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 58. Throttle
 
@@ -582,7 +582,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Throttle` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 59. Race
 
@@ -592,7 +592,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Race` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 60. Parallel
 
@@ -602,7 +602,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Parallel` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 61. Cancel
 
@@ -612,7 +612,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Cancel` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 62. Break
 
@@ -622,7 +622,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Break` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 63. Continue
 
@@ -632,7 +632,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Continue` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 64. Switch Bool
 
@@ -642,7 +642,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Switch Bool` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 65. Switch Number
 
@@ -652,7 +652,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Switch Number` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 66. Switch Text
 
@@ -662,7 +662,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Switch Text` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 67. Switch Object
 
@@ -672,7 +672,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Switch Object` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 68. Flip Flop
 
@@ -682,7 +682,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Flip Flop` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 69. Pressed
 
@@ -692,7 +692,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressed` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Pressed → Debug Info` para visualizar o valor recebido do keyboard.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 70. Released
 
@@ -702,7 +702,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `released` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Released → Debug Info` para visualizar o valor recebido do keyboard.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 71. Held
 
@@ -712,7 +712,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `held` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Held → Debug Info` para visualizar o valor recebido do keyboard.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 72. Axis
 
@@ -722,7 +722,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `axis` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Axis → Debug Info` para visualizar o valor recebido do keyboard.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 73. Position
 
@@ -732,7 +732,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `position` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Position → Debug Info` para visualizar o valor recebido do keyboard.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 74. Delta
 
@@ -742,7 +742,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `delta` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Delta → Debug Info` para visualizar o valor recebido do keyboard.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 75. Pressure
 
@@ -752,7 +752,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressure` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Pressure → Debug Info` para visualizar o valor recebido do keyboard.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 76. Count
 
@@ -762,7 +762,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `count` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Count → Debug Info` para visualizar o valor recebido do keyboard.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 77. Available
 
@@ -772,7 +772,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `available` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Available → Debug Info` para visualizar o valor recebido do keyboard.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 78. Name
 
@@ -782,7 +782,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `name` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Name → Debug Info` para visualizar o valor recebido do keyboard.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 79. Pressed
 
@@ -792,7 +792,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressed` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Pressed → Debug Info` para visualizar o valor recebido do mouse.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 80. Released
 
@@ -802,7 +802,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `released` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Released → Debug Info` para visualizar o valor recebido do mouse.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 81. Held
 
@@ -812,7 +812,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `held` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Held → Debug Info` para visualizar o valor recebido do mouse.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 82. Axis
 
@@ -822,7 +822,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `axis` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Axis → Debug Info` para visualizar o valor recebido do mouse.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 83. Position
 
@@ -832,7 +832,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `position` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Position → Debug Info` para visualizar o valor recebido do mouse.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 84. Delta
 
@@ -842,7 +842,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `delta` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Delta → Debug Info` para visualizar o valor recebido do mouse.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 85. Pressure
 
@@ -852,7 +852,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressure` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Pressure → Debug Info` para visualizar o valor recebido do mouse.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 86. Count
 
@@ -862,7 +862,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `count` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Count → Debug Info` para visualizar o valor recebido do mouse.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 87. Available
 
@@ -872,7 +872,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `available` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Available → Debug Info` para visualizar o valor recebido do mouse.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 88. Name
 
@@ -882,7 +882,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `name` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Name → Debug Info` para visualizar o valor recebido do mouse.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 89. Pressed
 
@@ -892,7 +892,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressed` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Pressed → Debug Info` para visualizar o valor recebido do touch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 90. Released
 
@@ -902,7 +902,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `released` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Released → Debug Info` para visualizar o valor recebido do touch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 91. Held
 
@@ -912,7 +912,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `held` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Held → Debug Info` para visualizar o valor recebido do touch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 92. Axis
 
@@ -922,7 +922,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `axis` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Axis → Debug Info` para visualizar o valor recebido do touch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 93. Position
 
@@ -932,7 +932,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `position` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Position → Debug Info` para visualizar o valor recebido do touch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 94. Delta
 
@@ -942,7 +942,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `delta` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Delta → Debug Info` para visualizar o valor recebido do touch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 95. Pressure
 
@@ -952,7 +952,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressure` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Pressure → Debug Info` para visualizar o valor recebido do touch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 96. Count
 
@@ -962,7 +962,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `count` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Count → Debug Info` para visualizar o valor recebido do touch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 97. Available
 
@@ -972,7 +972,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `available` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Available → Debug Info` para visualizar o valor recebido do touch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 98. Name
 
@@ -982,7 +982,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `name` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Name → Debug Info` para visualizar o valor recebido do touch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 99. Pressed
 
@@ -992,7 +992,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressed` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Pressed → Debug Info` para visualizar o valor recebido do gamepad.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 100. Released
 
@@ -1002,7 +1002,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `released` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Released → Debug Info` para visualizar o valor recebido do gamepad.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 101. Held
 
@@ -1012,7 +1012,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `held` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Held → Debug Info` para visualizar o valor recebido do gamepad.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 102. Axis
 
@@ -1022,7 +1022,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `axis` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Axis → Debug Info` para visualizar o valor recebido do gamepad.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 103. Position
 
@@ -1032,7 +1032,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `position` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Position → Debug Info` para visualizar o valor recebido do gamepad.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 104. Delta
 
@@ -1042,7 +1042,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `delta` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Delta → Debug Info` para visualizar o valor recebido do gamepad.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 105. Pressure
 
@@ -1052,7 +1052,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressure` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Pressure → Debug Info` para visualizar o valor recebido do gamepad.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 106. Count
 
@@ -1062,7 +1062,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `count` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Count → Debug Info` para visualizar o valor recebido do gamepad.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 107. Available
 
@@ -1072,7 +1072,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `available` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Available → Debug Info` para visualizar o valor recebido do gamepad.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 108. Name
 
@@ -1082,7 +1082,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `name` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Name → Debug Info` para visualizar o valor recebido do gamepad.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 109. Pressed
 
@@ -1092,7 +1092,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressed` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Pressed → Debug Info` para visualizar o valor recebido do sensor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 110. Released
 
@@ -1102,7 +1102,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `released` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Released → Debug Info` para visualizar o valor recebido do sensor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 111. Held
 
@@ -1112,7 +1112,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `held` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Held → Debug Info` para visualizar o valor recebido do sensor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 112. Axis
 
@@ -1122,7 +1122,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `axis` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Axis → Debug Info` para visualizar o valor recebido do sensor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 113. Position
 
@@ -1132,7 +1132,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `position` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Position → Debug Info` para visualizar o valor recebido do sensor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 114. Delta
 
@@ -1142,7 +1142,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `delta` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Delta → Debug Info` para visualizar o valor recebido do sensor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 115. Pressure
 
@@ -1152,7 +1152,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `pressure` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Pressure → Debug Info` para visualizar o valor recebido do sensor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 116. Count
 
@@ -1162,7 +1162,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `count` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Count → Debug Info` para visualizar o valor recebido do sensor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 117. Available
 
@@ -1172,7 +1172,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `available` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Available → Debug Info` para visualizar o valor recebido do sensor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 118. Name
 
@@ -1182,7 +1182,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Nome da ação/controle e índice do dispositivo quando aplicável; `name` pode exigir eixo ou botão.
 - **Saídas/efeito:** Retorna o estado, valor, posição ou disponibilidade em `value`.
 - **Exemplo:** `Update → Name → Debug Info` para visualizar o valor recebido do sensor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 119. Add
 
@@ -1192,7 +1192,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 120. Subtract
 
@@ -1202,7 +1202,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 121. Multiply
 
@@ -1212,7 +1212,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 122. Divide
 
@@ -1222,7 +1222,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 123. Modulo
 
@@ -1232,7 +1232,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Modulo` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 124. Power
 
@@ -1242,7 +1242,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Power` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 125. Minimum
 
@@ -1252,7 +1252,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 126. Maximum
 
@@ -1262,7 +1262,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 127. Average
 
@@ -1272,7 +1272,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Average` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 128. Atan2
 
@@ -1282,7 +1282,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Atan2` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 129. Log Base
 
@@ -1292,7 +1292,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Log Base` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 130. Copy Sign
 
@@ -1302,7 +1302,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Copy Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 131. Absolute
 
@@ -1312,7 +1312,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor number de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 132. Negative
 
@@ -1322,7 +1322,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor number de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Negative` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 133. Sqrt
 
@@ -1332,7 +1332,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor number de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Sqrt` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 134. Cube Root
 
@@ -1342,7 +1342,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Cube Root` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 135. Exp
 
@@ -1352,7 +1352,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Exp` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 136. Log
 
@@ -1362,7 +1362,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Log` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 137. Log10
 
@@ -1372,7 +1372,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Log10` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 138. Floor
 
@@ -1382,7 +1382,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor number de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 139. Ceil
 
@@ -1392,7 +1392,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor number de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 140. Round
 
@@ -1402,7 +1402,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor number de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 141. Truncate
 
@@ -1412,7 +1412,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Truncate` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 142. Fraction
 
@@ -1422,7 +1422,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Fraction` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 143. Sign
 
@@ -1432,7 +1432,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 144. Sin
 
@@ -1442,7 +1442,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Sin` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 145. Cos
 
@@ -1452,7 +1452,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Cos` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 146. Tan
 
@@ -1462,7 +1462,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Tan` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 147. Asin
 
@@ -1472,7 +1472,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Asin` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 148. Acos
 
@@ -1482,7 +1482,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Acos` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 149. Atan
 
@@ -1492,7 +1492,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Atan` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 150. Degrees
 
@@ -1502,7 +1502,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Degrees` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 151. Radians
 
@@ -1512,7 +1512,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Radians` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 152. Saturate
 
@@ -1522,7 +1522,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Saturate` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 153. Is Finite
 
@@ -1532,7 +1532,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor number que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 154. Is Nan
 
@@ -1542,7 +1542,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor number que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Nan` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 155. Add
 
@@ -1552,7 +1552,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 156. Subtract
 
@@ -1562,7 +1562,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 157. Multiply
 
@@ -1572,7 +1572,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 158. Divide
 
@@ -1582,7 +1582,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 159. Modulo
 
@@ -1592,7 +1592,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Modulo` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 160. Power
 
@@ -1602,7 +1602,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Power` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 161. Minimum
 
@@ -1612,7 +1612,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 162. Maximum
 
@@ -1622,7 +1622,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 163. Average
 
@@ -1632,7 +1632,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Average` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 164. Atan2
 
@@ -1642,7 +1642,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Atan2` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 165. Log Base
 
@@ -1652,7 +1652,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Log Base` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 166. Copy Sign
 
@@ -1662,7 +1662,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Copy Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 167. Absolute
 
@@ -1672,7 +1672,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor integer de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 168. Negative
 
@@ -1682,7 +1682,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor integer de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Negative` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 169. Sqrt
 
@@ -1692,7 +1692,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor integer de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Sqrt` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 170. Cube Root
 
@@ -1702,7 +1702,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Cube Root` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 171. Exp
 
@@ -1712,7 +1712,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Exp` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 172. Log
 
@@ -1722,7 +1722,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Log` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 173. Log10
 
@@ -1732,7 +1732,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Log10` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 174. Floor
 
@@ -1742,7 +1742,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor integer de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 175. Ceil
 
@@ -1752,7 +1752,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor integer de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 176. Round
 
@@ -1762,7 +1762,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor integer de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 177. Truncate
 
@@ -1772,7 +1772,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Truncate` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 178. Fraction
 
@@ -1782,7 +1782,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Fraction` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 179. Sign
 
@@ -1792,7 +1792,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 180. Sin
 
@@ -1802,7 +1802,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Sin` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 181. Cos
 
@@ -1812,7 +1812,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Cos` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 182. Tan
 
@@ -1822,7 +1822,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Tan` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 183. Asin
 
@@ -1832,7 +1832,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Asin` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 184. Acos
 
@@ -1842,7 +1842,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Acos` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 185. Atan
 
@@ -1852,7 +1852,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Atan` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 186. Degrees
 
@@ -1862,7 +1862,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Degrees` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 187. Radians
 
@@ -1872,7 +1872,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Radians` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 188. Saturate
 
@@ -1882,7 +1882,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores integer; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Saturate` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 189. Is Finite
 
@@ -1892,7 +1892,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor integer que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 190. Is Nan
 
@@ -1902,7 +1902,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor integer que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Nan` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 191. Add
 
@@ -1912,7 +1912,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 192. Subtract
 
@@ -1922,7 +1922,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 193. Multiply
 
@@ -1932,7 +1932,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 194. Divide
 
@@ -1942,7 +1942,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 195. Modulo
 
@@ -1952,7 +1952,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Modulo` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 196. Power
 
@@ -1962,7 +1962,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Power` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 197. Minimum
 
@@ -1972,7 +1972,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 198. Maximum
 
@@ -1982,7 +1982,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 199. Average
 
@@ -1992,7 +1992,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Average` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 200. Atan2
 
@@ -2002,7 +2002,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Atan2` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 201. Log Base
 
@@ -2012,7 +2012,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Log Base` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 202. Copy Sign
 
@@ -2022,7 +2022,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Copy Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 203. Absolute
 
@@ -2032,7 +2032,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor angle de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 204. Negative
 
@@ -2042,7 +2042,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor angle de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Negative` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 205. Sqrt
 
@@ -2052,7 +2052,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor angle de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Sqrt` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 206. Cube Root
 
@@ -2062,7 +2062,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Cube Root` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 207. Exp
 
@@ -2072,7 +2072,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Exp` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 208. Log
 
@@ -2082,7 +2082,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Log` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 209. Log10
 
@@ -2092,7 +2092,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Log10` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 210. Floor
 
@@ -2102,7 +2102,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor angle de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 211. Ceil
 
@@ -2112,7 +2112,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor angle de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 212. Round
 
@@ -2122,7 +2122,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor angle de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 213. Truncate
 
@@ -2132,7 +2132,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Truncate` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 214. Fraction
 
@@ -2142,7 +2142,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Fraction` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 215. Sign
 
@@ -2152,7 +2152,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Sign` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 216. Sin
 
@@ -2162,7 +2162,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Sin` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 217. Cos
 
@@ -2172,7 +2172,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Cos` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 218. Tan
 
@@ -2182,7 +2182,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Tan` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 219. Asin
 
@@ -2192,7 +2192,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Asin` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 220. Acos
 
@@ -2202,7 +2202,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Acos` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 221. Atan
 
@@ -2212,7 +2212,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Atan` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 222. Degrees
 
@@ -2222,7 +2222,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Degrees` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 223. Radians
 
@@ -2232,7 +2232,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Radians` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 224. Saturate
 
@@ -2242,7 +2242,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores angle; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Saturate` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 225. Is Finite
 
@@ -2252,7 +2252,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor angle que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 226. Is Nan
 
@@ -2262,7 +2262,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor angle que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Nan` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 227. Clamp
 
@@ -2272,7 +2272,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Clamp` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 228. Lerp
 
@@ -2282,7 +2282,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Lerp` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 229. Inverse Lerp
 
@@ -2292,7 +2292,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Inverse Lerp` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 230. Remap
 
@@ -2302,7 +2302,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Remap` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 231. Smoothstep
 
@@ -2312,7 +2312,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Smoothstep` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 232. Move Towards
 
@@ -2322,7 +2322,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Move Towards` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 233. Random Range
 
@@ -2332,7 +2332,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores range; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Random Range` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 234. Equal
 
@@ -2342,7 +2342,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 235. Not Equal
 
@@ -2352,7 +2352,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 236. Greater
 
@@ -2362,7 +2362,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 237. Greater Equal
 
@@ -2372,7 +2372,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 238. Less
 
@@ -2382,7 +2382,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 239. Less Equal
 
@@ -2392,7 +2392,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 240. Between
 
@@ -2402,7 +2402,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 241. Outside
 
@@ -2412,7 +2412,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 242. Approximately
 
@@ -2422,7 +2422,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores boolean; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 243. Is Null
 
@@ -2432,7 +2432,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor boolean que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 244. Equal
 
@@ -2442,7 +2442,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 245. Not Equal
 
@@ -2452,7 +2452,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 246. Greater
 
@@ -2462,7 +2462,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 247. Greater Equal
 
@@ -2472,7 +2472,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 248. Less
 
@@ -2482,7 +2482,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 249. Less Equal
 
@@ -2492,7 +2492,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 250. Between
 
@@ -2502,7 +2502,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 251. Outside
 
@@ -2512,7 +2512,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 252. Approximately
 
@@ -2522,7 +2522,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores number; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 253. Is Null
 
@@ -2532,7 +2532,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor number que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 254. Equal
 
@@ -2542,7 +2542,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 255. Not Equal
 
@@ -2552,7 +2552,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 256. Greater
 
@@ -2562,7 +2562,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 257. Greater Equal
 
@@ -2572,7 +2572,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 258. Less
 
@@ -2582,7 +2582,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 259. Less Equal
 
@@ -2592,7 +2592,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 260. Between
 
@@ -2602,7 +2602,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 261. Outside
 
@@ -2612,7 +2612,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 262. Approximately
 
@@ -2622,7 +2622,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores text; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 263. Is Null
 
@@ -2632,7 +2632,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor text que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 264. Equal
 
@@ -2642,7 +2642,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 265. Not Equal
 
@@ -2652,7 +2652,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 266. Greater
 
@@ -2662,7 +2662,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 267. Greater Equal
 
@@ -2672,7 +2672,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 268. Less
 
@@ -2682,7 +2682,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 269. Less Equal
 
@@ -2692,7 +2692,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 270. Between
 
@@ -2702,7 +2702,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 271. Outside
 
@@ -2712,7 +2712,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 272. Approximately
 
@@ -2722,7 +2722,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 273. Is Null
 
@@ -2732,7 +2732,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector2 que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 274. Equal
 
@@ -2742,7 +2742,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 275. Not Equal
 
@@ -2752,7 +2752,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 276. Greater
 
@@ -2762,7 +2762,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 277. Greater Equal
 
@@ -2772,7 +2772,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 278. Less
 
@@ -2782,7 +2782,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 279. Less Equal
 
@@ -2792,7 +2792,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 280. Between
 
@@ -2802,7 +2802,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 281. Outside
 
@@ -2812,7 +2812,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 282. Approximately
 
@@ -2822,7 +2822,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 283. Is Null
 
@@ -2832,7 +2832,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector3 que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 284. Equal
 
@@ -2842,7 +2842,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 285. Not Equal
 
@@ -2852,7 +2852,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 286. Greater
 
@@ -2862,7 +2862,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 287. Greater Equal
 
@@ -2872,7 +2872,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 288. Less
 
@@ -2882,7 +2882,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 289. Less Equal
 
@@ -2892,7 +2892,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 290. Between
 
@@ -2902,7 +2902,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 291. Outside
 
@@ -2912,7 +2912,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 292. Approximately
 
@@ -2922,7 +2922,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores color; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 293. Is Null
 
@@ -2932,7 +2932,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor color que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 294. Equal
 
@@ -2942,7 +2942,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 295. Not Equal
 
@@ -2952,7 +2952,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 296. Greater
 
@@ -2962,7 +2962,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 297. Greater Equal
 
@@ -2972,7 +2972,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 298. Less
 
@@ -2982,7 +2982,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 299. Less Equal
 
@@ -2992,7 +2992,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 300. Between
 
@@ -3002,7 +3002,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 301. Outside
 
@@ -3012,7 +3012,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 302. Approximately
 
@@ -3022,7 +3022,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores object; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 303. Is Null
 
@@ -3032,7 +3032,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor object que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 304. Equal
 
@@ -3042,7 +3042,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 305. Not Equal
 
@@ -3052,7 +3052,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Not Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 306. Greater
 
@@ -3062,7 +3062,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 307. Greater Equal
 
@@ -3072,7 +3072,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Greater Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 308. Less
 
@@ -3082,7 +3082,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 309. Less Equal
 
@@ -3092,7 +3092,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Less Equal` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 310. Between
 
@@ -3102,7 +3102,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Between` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 311. Outside
 
@@ -3112,7 +3112,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Outside` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 312. Approximately
 
@@ -3122,7 +3122,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores asset; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Approximately` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 313. Is Null
 
@@ -3132,7 +3132,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor asset que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Null` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 314. Add
 
@@ -3142,7 +3142,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 315. Subtract
 
@@ -3152,7 +3152,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 316. Multiply
 
@@ -3162,7 +3162,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 317. Divide
 
@@ -3172,7 +3172,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 318. Scale
 
@@ -3182,7 +3182,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Scale` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 319. Normalize
 
@@ -3192,7 +3192,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Normalize` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 320. Length
 
@@ -3202,7 +3202,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 321. Length Squared
 
@@ -3212,7 +3212,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Length Squared` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 322. Distance
 
@@ -3222,7 +3222,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Distance` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 323. Dot
 
@@ -3232,7 +3232,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Dot` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 324. Cross
 
@@ -3242,7 +3242,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Cross` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 325. Lerp
 
@@ -3252,7 +3252,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Lerp` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 326. Move Towards
 
@@ -3262,7 +3262,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Move Towards` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 327. Reflect
 
@@ -3272,7 +3272,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Reflect` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 328. Project
 
@@ -3282,7 +3282,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Project` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 329. Angle
 
@@ -3292,7 +3292,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Angle` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 330. Clamp Length
 
@@ -3302,7 +3302,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Clamp Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 331. Minimum
 
@@ -3312,7 +3312,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 332. Maximum
 
@@ -3322,7 +3322,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 333. Absolute
 
@@ -3332,7 +3332,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 334. Floor
 
@@ -3342,7 +3342,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 335. Ceil
 
@@ -3352,7 +3352,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 336. Round
 
@@ -3362,7 +3362,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector2 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 337. Snap
 
@@ -3372,7 +3372,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Snap` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 338. Rotate
 
@@ -3382,7 +3382,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Rotate` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 339. Inverse
 
@@ -3392,7 +3392,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Inverse` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 340. Is Zero
 
@@ -3402,7 +3402,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector2 que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Zero` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 341. Is Finite
 
@@ -3412,7 +3412,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector2 que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 342. Make
 
@@ -3422,7 +3422,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Make` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 343. Split
 
@@ -3432,7 +3432,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Split` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 344. With X
 
@@ -3442,7 +3442,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With X` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 345. With Y
 
@@ -3452,7 +3452,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With Y` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 346. With Z
 
@@ -3462,7 +3462,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With Z` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 347. With W
 
@@ -3472,7 +3472,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector2; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With W` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 348. Add
 
@@ -3482,7 +3482,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 349. Subtract
 
@@ -3492,7 +3492,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 350. Multiply
 
@@ -3502,7 +3502,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 351. Divide
 
@@ -3512,7 +3512,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 352. Scale
 
@@ -3522,7 +3522,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Scale` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 353. Normalize
 
@@ -3532,7 +3532,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Normalize` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 354. Length
 
@@ -3542,7 +3542,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 355. Length Squared
 
@@ -3552,7 +3552,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Length Squared` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 356. Distance
 
@@ -3562,7 +3562,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Distance` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 357. Dot
 
@@ -3572,7 +3572,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Dot` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 358. Cross
 
@@ -3582,7 +3582,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Cross` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 359. Lerp
 
@@ -3592,7 +3592,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Lerp` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 360. Move Towards
 
@@ -3602,7 +3602,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Move Towards` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 361. Reflect
 
@@ -3612,7 +3612,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Reflect` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 362. Project
 
@@ -3622,7 +3622,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Project` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 363. Angle
 
@@ -3632,7 +3632,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Angle` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 364. Clamp Length
 
@@ -3642,7 +3642,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Clamp Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 365. Minimum
 
@@ -3652,7 +3652,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 366. Maximum
 
@@ -3662,7 +3662,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 367. Absolute
 
@@ -3672,7 +3672,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 368. Floor
 
@@ -3682,7 +3682,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 369. Ceil
 
@@ -3692,7 +3692,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 370. Round
 
@@ -3702,7 +3702,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector3 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 371. Snap
 
@@ -3712,7 +3712,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Snap` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 372. Rotate
 
@@ -3722,7 +3722,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Rotate` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 373. Inverse
 
@@ -3732,7 +3732,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Inverse` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 374. Is Zero
 
@@ -3742,7 +3742,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector3 que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Zero` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 375. Is Finite
 
@@ -3752,7 +3752,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector3 que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 376. Make
 
@@ -3762,7 +3762,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Make` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 377. Split
 
@@ -3772,7 +3772,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Split` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 378. With X
 
@@ -3782,7 +3782,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With X` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 379. With Y
 
@@ -3792,7 +3792,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With Y` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 380. With Z
 
@@ -3802,7 +3802,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With Z` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 381. With W
 
@@ -3812,7 +3812,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector3; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With W` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 382. Add
 
@@ -3822,7 +3822,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Add` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 383. Subtract
 
@@ -3832,7 +3832,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Subtract` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 384. Multiply
 
@@ -3842,7 +3842,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Multiply` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 385. Divide
 
@@ -3852,7 +3852,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Divide` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 386. Scale
 
@@ -3862,7 +3862,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Scale` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 387. Normalize
 
@@ -3872,7 +3872,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Normalize` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 388. Length
 
@@ -3882,7 +3882,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 389. Length Squared
 
@@ -3892,7 +3892,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Length Squared` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 390. Distance
 
@@ -3902,7 +3902,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Distance` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 391. Dot
 
@@ -3912,7 +3912,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Dot` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 392. Cross
 
@@ -3922,7 +3922,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Cross` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 393. Lerp
 
@@ -3932,7 +3932,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Lerp` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 394. Move Towards
 
@@ -3942,7 +3942,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Move Towards` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 395. Reflect
 
@@ -3952,7 +3952,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Reflect` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 396. Project
 
@@ -3962,7 +3962,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Project` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 397. Angle
 
@@ -3972,7 +3972,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Angle` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 398. Clamp Length
 
@@ -3982,7 +3982,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Clamp Length` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 399. Minimum
 
@@ -3992,7 +3992,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Minimum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 400. Maximum
 
@@ -4002,7 +4002,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Maximum` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 401. Absolute
 
@@ -4012,7 +4012,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Absolute` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 402. Floor
 
@@ -4022,7 +4022,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Floor` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 403. Ceil
 
@@ -4032,7 +4032,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Ceil` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 404. Round
 
@@ -4042,7 +4042,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector4 de entrada.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Round` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 405. Snap
 
@@ -4052,7 +4052,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Snap` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 406. Rotate
 
@@ -4062,7 +4062,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Rotate` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 407. Inverse
 
@@ -4072,7 +4072,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Inverse` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 408. Is Zero
 
@@ -4082,7 +4082,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector4 que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Zero` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 409. Is Finite
 
@@ -4092,7 +4092,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `value`: valor vector4 que será testado.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Is Finite` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 410. Make
 
@@ -4102,7 +4102,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Make` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 411. Split
 
@@ -4112,7 +4112,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `Split` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 412. With X
 
@@ -4122,7 +4122,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With X` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 413. With Y
 
@@ -4132,7 +4132,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With Y` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 414. With Z
 
@@ -4142,7 +4142,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With Z` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 415. With W
 
@@ -4152,7 +4152,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `a` e `b`: valores vector4; parâmetros adicionais aparecem quando a operação exige limite ou fator.
 - **Saídas/efeito:** Retorna o cálculo tipado em `value`/`result`.
 - **Exemplo:** Conecte constantes ou saídas anteriores a `With W` e use o resultado em `Debug Info` ou em outro bloco compatível.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` para tipos incompatíveis ou entradas ausentes. Divisão por zero, valores não finitos e operações inválidas devem ser tratados antes com nós de comparação/branch.
 
 ## 416. Make Rgb
 
@@ -4162,7 +4162,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Make Rgb` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 417. Make Rgba
 
@@ -4172,7 +4172,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Make Rgba` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 418. Split Rgb
 
@@ -4182,7 +4182,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Split Rgb` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 419. Split Rgba
 
@@ -4192,7 +4192,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Split Rgba` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 420. From Hex
 
@@ -4202,7 +4202,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `From Hex` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 421. To Hex
 
@@ -4212,7 +4212,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `To Hex` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 422. From Hsv
 
@@ -4222,7 +4222,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `From Hsv` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 423. To Hsv
 
@@ -4232,7 +4232,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `To Hsv` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 424. Lerp
 
@@ -4242,7 +4242,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Lerp` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 425. Blend Add
 
@@ -4252,7 +4252,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Blend Add` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 426. Blend Multiply
 
@@ -4262,7 +4262,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Blend Multiply` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 427. Blend Screen
 
@@ -4272,7 +4272,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Blend Screen` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 428. Blend Overlay
 
@@ -4282,7 +4282,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Blend Overlay` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 429. Lighten
 
@@ -4292,7 +4292,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Lighten` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 430. Darken
 
@@ -4302,7 +4302,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Darken` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 431. Saturate
 
@@ -4312,7 +4312,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Saturate` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 432. Desaturate
 
@@ -4322,7 +4322,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Desaturate` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 433. Invert
 
@@ -4332,7 +4332,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Invert` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 434. Grayscale
 
@@ -4342,7 +4342,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Grayscale` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 435. Alpha
 
@@ -4352,7 +4352,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Alpha` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 436. With Alpha
 
@@ -4362,7 +4362,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `With Alpha` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 437. Luminance
 
@@ -4372,7 +4372,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Luminance` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 438. Contrast
 
@@ -4382,7 +4382,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Contrast` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 439. Temperature
 
@@ -4392,7 +4392,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Temperature` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 440. Append
 
@@ -4402,7 +4402,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Append` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 441. Prepend
 
@@ -4412,7 +4412,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Prepend` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 442. Join
 
@@ -4422,7 +4422,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Join` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 443. Split
 
@@ -4432,7 +4432,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Split` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 444. Replace
 
@@ -4442,7 +4442,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Replace` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 445. Replace First
 
@@ -4452,7 +4452,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Replace First` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 446. Contains
 
@@ -4462,7 +4462,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Contains` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 447. Starts With
 
@@ -4472,7 +4472,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Starts With` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 448. Ends With
 
@@ -4482,7 +4482,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Ends With` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 449. Equals Ignore Case
 
@@ -4492,7 +4492,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Equals Ignore Case` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 450. Uppercase
 
@@ -4502,7 +4502,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Uppercase` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 451. Lowercase
 
@@ -4512,7 +4512,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Lowercase` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 452. Capitalize
 
@@ -4522,7 +4522,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Capitalize` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 453. Trim
 
@@ -4532,7 +4532,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Trim` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 454. Trim Start
 
@@ -4542,7 +4542,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Trim Start` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 455. Trim End
 
@@ -4552,7 +4552,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Trim End` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 456. Substring
 
@@ -4562,7 +4562,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Substring` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 457. Character At
 
@@ -4572,7 +4572,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Character At` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 458. Length
 
@@ -4582,7 +4582,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Length` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 459. Is Empty
 
@@ -4592,7 +4592,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Is Empty` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 460. Is Blank
 
@@ -4602,7 +4602,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Is Blank` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 461. Pad Start
 
@@ -4612,7 +4612,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Pad Start` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 462. Pad End
 
@@ -4622,7 +4622,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Pad End` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 463. Repeat
 
@@ -4632,7 +4632,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Repeat` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 464. Reverse
 
@@ -4642,7 +4642,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Reverse` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 465. Format
 
@@ -4652,7 +4652,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Format` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 466. Number To Text
 
@@ -4662,7 +4662,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Number To Text` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 467. Bool To Text
 
@@ -4672,7 +4672,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Bool To Text` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 468. Vector To Text
 
@@ -4682,7 +4682,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Vector To Text` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 469. Parse Number
 
@@ -4692,7 +4692,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Parse Number` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 470. Parse Bool
 
@@ -4702,7 +4702,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Parse Bool` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 471. Regex Matches
 
@@ -4712,7 +4712,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Regex Matches` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 472. Regex Find
 
@@ -4722,7 +4722,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Regex Find` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 473. Regex Replace
 
@@ -4732,7 +4732,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Regex Replace` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 474. Lines
 
@@ -4742,7 +4742,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Lines` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 475. Words
 
@@ -4752,7 +4752,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Words` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 476. Find By Name
 
@@ -4762,7 +4762,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Find By Name`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 477. Find By Tag
 
@@ -4772,7 +4772,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Find By Tag`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 478. Find By Id
 
@@ -4782,7 +4782,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Find By Id`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 479. Create
 
@@ -4792,7 +4792,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Create`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 480. Clone
 
@@ -4802,7 +4802,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Clone`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 481. Destroy
 
@@ -4812,7 +4812,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Destroy`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 482. Enable
 
@@ -4822,7 +4822,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Enable`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 483. Disable
 
@@ -4832,7 +4832,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Disable`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 484. Toggle Enabled
 
@@ -4842,7 +4842,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Toggle Enabled`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 485. Set Name
 
@@ -4852,7 +4852,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de name, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza name no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Name`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 486. Get Name
 
@@ -4862,7 +4862,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna name em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Name → Debug Info` mostra o valor atual de name.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 487. Set Parent
 
@@ -4872,7 +4872,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de parent, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza parent no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Parent`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 488. Get Parent
 
@@ -4882,7 +4882,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna parent em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Parent → Debug Info` mostra o valor atual de parent.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 489. Add Child
 
@@ -4892,7 +4892,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Add Child`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 490. Remove Child
 
@@ -4902,7 +4902,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Remove Child`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 491. Get Child
 
@@ -4912,7 +4912,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna child em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Child → Debug Info` mostra o valor atual de child.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 492. Child Count
 
@@ -4922,7 +4922,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Child Count`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 493. Add Tag
 
@@ -4932,7 +4932,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Add Tag`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 494. Remove Tag
 
@@ -4942,7 +4942,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Remove Tag`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 495. Has Tag
 
@@ -4952,7 +4952,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Has Tag`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 496. Send Event
 
@@ -4962,7 +4962,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Send Event`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 497. Send Event Bool
 
@@ -4972,7 +4972,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Send Event Bool`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 498. Send Event Number
 
@@ -4982,7 +4982,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Send Event Number`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 499. Send Event Text
 
@@ -4992,7 +4992,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Send Event Text`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 500. Get Component
 
@@ -5002,7 +5002,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna component em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Component → Debug Info` mostra o valor atual de component.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 501. Has Component
 
@@ -5012,7 +5012,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Has Component`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 502. Add Component
 
@@ -5022,7 +5022,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Add Component`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 503. Remove Component
 
@@ -5032,7 +5032,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Remove Component`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 504. Set Layer
 
@@ -5042,7 +5042,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de layer, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza layer no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Layer`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 505. Get Layer
 
@@ -5052,7 +5052,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna layer em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Layer → Debug Info` mostra o valor atual de layer.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 506. Set Visible
 
@@ -5062,7 +5062,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de visible, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza visible no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Visible`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 507. Is Visible
 
@@ -5072,7 +5072,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Is Visible`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 508. Set Static
 
@@ -5082,7 +5082,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de static, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza static no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Static`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 509. Is Static
 
@@ -5092,7 +5092,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Is Static`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 510. Create
 
@@ -5102,7 +5102,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Create → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 511. Add
 
@@ -5112,7 +5112,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Add → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 512. Insert
 
@@ -5122,7 +5122,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Insert → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 513. Set
 
@@ -5132,7 +5132,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Set → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 514. Get
 
@@ -5142,7 +5142,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Get → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 515. First
 
@@ -5152,7 +5152,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → First → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 516. Last
 
@@ -5162,7 +5162,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Last → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 517. Remove
 
@@ -5172,7 +5172,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Remove → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 518. Remove At
 
@@ -5182,7 +5182,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Remove At → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 519. Clear
 
@@ -5192,7 +5192,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Clear → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 520. Contains
 
@@ -5202,7 +5202,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Contains → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 521. Index Of
 
@@ -5212,7 +5212,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Index Of → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 522. Last Index Of
 
@@ -5222,7 +5222,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Last Index Of → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 523. Count
 
@@ -5232,7 +5232,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Count → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 524. Is Empty
 
@@ -5242,7 +5242,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Is Empty → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 525. Reverse
 
@@ -5252,7 +5252,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Reverse → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 526. Shuffle
 
@@ -5262,7 +5262,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Shuffle → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 527. Sort
 
@@ -5272,7 +5272,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Sort → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 528. Distinct
 
@@ -5282,7 +5282,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Distinct → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 529. Slice
 
@@ -5292,7 +5292,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Slice → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 530. Concat
 
@@ -5302,7 +5302,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Concat → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 531. Filter
 
@@ -5312,7 +5312,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Filter → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 532. Map
 
@@ -5322,7 +5322,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Map → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 533. Reduce
 
@@ -5332,7 +5332,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Reduce → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 534. Random
 
@@ -5342,7 +5342,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Number Create → Random → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 535. Create
 
@@ -5352,7 +5352,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Create → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 536. Add
 
@@ -5362,7 +5362,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Add → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 537. Insert
 
@@ -5372,7 +5372,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Insert → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 538. Set
 
@@ -5382,7 +5382,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Set → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 539. Get
 
@@ -5392,7 +5392,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Get → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 540. First
 
@@ -5402,7 +5402,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → First → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 541. Last
 
@@ -5412,7 +5412,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Last → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 542. Remove
 
@@ -5422,7 +5422,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Remove → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 543. Remove At
 
@@ -5432,7 +5432,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Remove At → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 544. Clear
 
@@ -5442,7 +5442,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Clear → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 545. Contains
 
@@ -5452,7 +5452,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Contains → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 546. Index Of
 
@@ -5462,7 +5462,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Index Of → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 547. Last Index Of
 
@@ -5472,7 +5472,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Last Index Of → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 548. Count
 
@@ -5482,7 +5482,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Count → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 549. Is Empty
 
@@ -5492,7 +5492,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Is Empty → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 550. Reverse
 
@@ -5502,7 +5502,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Reverse → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 551. Shuffle
 
@@ -5512,7 +5512,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Shuffle → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 552. Sort
 
@@ -5522,7 +5522,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Sort → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 553. Distinct
 
@@ -5532,7 +5532,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Distinct → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 554. Slice
 
@@ -5542,7 +5542,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Slice → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 555. Concat
 
@@ -5552,7 +5552,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Concat → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 556. Filter
 
@@ -5562,7 +5562,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Filter → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 557. Map
 
@@ -5572,7 +5572,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Map → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 558. Reduce
 
@@ -5582,7 +5582,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Reduce → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 559. Random
 
@@ -5592,7 +5592,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Text Create → Random → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 560. Create
 
@@ -5602,7 +5602,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Create → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 561. Add
 
@@ -5612,7 +5612,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Add → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 562. Insert
 
@@ -5622,7 +5622,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Insert → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 563. Set
 
@@ -5632,7 +5632,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Set → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 564. Get
 
@@ -5642,7 +5642,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Get → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 565. First
 
@@ -5652,7 +5652,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → First → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 566. Last
 
@@ -5662,7 +5662,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Last → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 567. Remove
 
@@ -5672,7 +5672,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Remove → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 568. Remove At
 
@@ -5682,7 +5682,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Remove At → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 569. Clear
 
@@ -5692,7 +5692,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Clear → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 570. Contains
 
@@ -5702,7 +5702,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Contains → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 571. Index Of
 
@@ -5712,7 +5712,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Index Of → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 572. Last Index Of
 
@@ -5722,7 +5722,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Last Index Of → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 573. Count
 
@@ -5732,7 +5732,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Count → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 574. Is Empty
 
@@ -5742,7 +5742,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Is Empty → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 575. Reverse
 
@@ -5752,7 +5752,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Reverse → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 576. Shuffle
 
@@ -5762,7 +5762,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Shuffle → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 577. Sort
 
@@ -5772,7 +5772,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Sort → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 578. Distinct
 
@@ -5782,7 +5782,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Distinct → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 579. Slice
 
@@ -5792,7 +5792,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Slice → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 580. Concat
 
@@ -5802,7 +5802,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Concat → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 581. Filter
 
@@ -5812,7 +5812,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Filter → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 582. Map
 
@@ -5822,7 +5822,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Map → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 583. Reduce
 
@@ -5832,7 +5832,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Reduce → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 584. Random
 
@@ -5842,7 +5842,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Bool Create → Random → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 585. Create
 
@@ -5852,7 +5852,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Create → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 586. Add
 
@@ -5862,7 +5862,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Add → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 587. Insert
 
@@ -5872,7 +5872,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Insert → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 588. Set
 
@@ -5882,7 +5882,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Set → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 589. Get
 
@@ -5892,7 +5892,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Get → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 590. First
 
@@ -5902,7 +5902,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → First → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 591. Last
 
@@ -5912,7 +5912,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Last → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 592. Remove
 
@@ -5922,7 +5922,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Remove → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 593. Remove At
 
@@ -5932,7 +5932,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Remove At → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 594. Clear
 
@@ -5942,7 +5942,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Clear → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 595. Contains
 
@@ -5952,7 +5952,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Contains → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 596. Index Of
 
@@ -5962,7 +5962,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Index Of → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 597. Last Index Of
 
@@ -5972,7 +5972,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Last Index Of → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 598. Count
 
@@ -5982,7 +5982,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Count → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 599. Is Empty
 
@@ -5992,7 +5992,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Is Empty → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 600. Reverse
 
@@ -6002,7 +6002,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Reverse → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 601. Shuffle
 
@@ -6012,7 +6012,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Shuffle → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 602. Sort
 
@@ -6022,7 +6022,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Sort → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 603. Distinct
 
@@ -6032,7 +6032,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Distinct → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 604. Slice
 
@@ -6042,7 +6042,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Slice → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 605. Concat
 
@@ -6052,7 +6052,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Concat → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 606. Filter
 
@@ -6062,7 +6062,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Filter → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 607. Map
 
@@ -6072,7 +6072,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Map → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 608. Reduce
 
@@ -6082,7 +6082,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Reduce → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 609. Random
 
@@ -6092,7 +6092,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Vector3 Create → Random → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 610. Create
 
@@ -6102,7 +6102,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Create → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 611. Add
 
@@ -6112,7 +6112,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Add → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 612. Insert
 
@@ -6122,7 +6122,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Insert → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 613. Set
 
@@ -6132,7 +6132,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Set → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 614. Get
 
@@ -6142,7 +6142,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Get → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 615. First
 
@@ -6152,7 +6152,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → First → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 616. Last
 
@@ -6162,7 +6162,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Last → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 617. Remove
 
@@ -6172,7 +6172,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Remove → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 618. Remove At
 
@@ -6182,7 +6182,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Remove At → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 619. Clear
 
@@ -6192,7 +6192,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Clear → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 620. Contains
 
@@ -6202,7 +6202,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Contains → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 621. Index Of
 
@@ -6212,7 +6212,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Index Of → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 622. Last Index Of
 
@@ -6222,7 +6222,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Last Index Of → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 623. Count
 
@@ -6232,7 +6232,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Count → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 624. Is Empty
 
@@ -6242,7 +6242,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Is Empty → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 625. Reverse
 
@@ -6252,7 +6252,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Reverse → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 626. Shuffle
 
@@ -6262,7 +6262,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Shuffle → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 627. Sort
 
@@ -6272,7 +6272,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Sort → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 628. Distinct
 
@@ -6282,7 +6282,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Distinct → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 629. Slice
 
@@ -6292,7 +6292,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Slice → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 630. Concat
 
@@ -6302,7 +6302,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Concat → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 631. Filter
 
@@ -6312,7 +6312,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Filter → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 632. Map
 
@@ -6322,7 +6322,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Map → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 633. Reduce
 
@@ -6332,7 +6332,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Reduce → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 634. Random
 
@@ -6342,7 +6342,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.
 - **Saídas/efeito:** Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.
 - **Exemplo:** `List Object Create → Random → Debug Info` demonstra o resultado da operação.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando a lista tem outro tipo, o índice está fora do intervalo ou falta um item obrigatório. Consulte `Count` antes de acessar uma posição variável.
 
 ## 635. Get
 
@@ -6352,7 +6352,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Get`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 636. Set
 
@@ -6362,7 +6362,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Set`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 637. Add
 
@@ -6372,7 +6372,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Add`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 638. Subtract
 
@@ -6382,7 +6382,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Subtract`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 639. Multiply
 
@@ -6392,7 +6392,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Multiply`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 640. Lerp
 
@@ -6402,7 +6402,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Lerp`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 641. Move Towards
 
@@ -6412,7 +6412,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Move Towards`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 642. Local To World
 
@@ -6422,7 +6422,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Local To World`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 643. World To Local
 
@@ -6432,7 +6432,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → World To Local`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 644. Reset
 
@@ -6442,7 +6442,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Reset`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 645. Look At
 
@@ -6452,7 +6452,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Look At`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 646. Face Direction
 
@@ -6462,7 +6462,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de position, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a position e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Face Direction`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 647. Get
 
@@ -6472,7 +6472,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Get`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 648. Set
 
@@ -6482,7 +6482,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Set`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 649. Add
 
@@ -6492,7 +6492,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Add`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 650. Subtract
 
@@ -6502,7 +6502,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Subtract`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 651. Multiply
 
@@ -6512,7 +6512,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Multiply`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 652. Lerp
 
@@ -6522,7 +6522,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Lerp`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 653. Move Towards
 
@@ -6532,7 +6532,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Move Towards`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 654. Local To World
 
@@ -6542,7 +6542,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Local To World`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 655. World To Local
 
@@ -6552,7 +6552,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → World To Local`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 656. Reset
 
@@ -6562,7 +6562,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Reset`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 657. Look At
 
@@ -6572,7 +6572,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Look At`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 658. Face Direction
 
@@ -6582,7 +6582,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotation, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotation e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Face Direction`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 659. Get
 
@@ -6592,7 +6592,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Get`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 660. Set
 
@@ -6602,7 +6602,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Set`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 661. Add
 
@@ -6612,7 +6612,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Add`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 662. Subtract
 
@@ -6622,7 +6622,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Subtract`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 663. Multiply
 
@@ -6632,7 +6632,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Multiply`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 664. Lerp
 
@@ -6642,7 +6642,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Lerp`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 665. Move Towards
 
@@ -6652,7 +6652,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Move Towards`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 666. Local To World
 
@@ -6662,7 +6662,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Local To World`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 667. World To Local
 
@@ -6672,7 +6672,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → World To Local`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 668. Reset
 
@@ -6682,7 +6682,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Reset`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 669. Look At
 
@@ -6692,7 +6692,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Look At`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 670. Face Direction
 
@@ -6702,7 +6702,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Face Direction`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 671. Girar no eixo Y
 
@@ -6712,7 +6712,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de rotate, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a rotate e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Girar no eixo Y`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 672. Escala uniforme
 
@@ -6722,7 +6722,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó da cena; valor de scale, destino ou fator conforme a operação.
 - **Saídas/efeito:** Retorna ou modifica a scale e emite `flow` quando houver efeito na cena.
 - **Exemplo:** `Update → Escala uniforme`, alvo `../Player`; conecte um Vector compatível ao pino de valor.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 673. Add Force
 
@@ -6732,7 +6732,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: `RigidBody3D`; `force`: `Vector3`; `position` local é opcional.
 - **Saídas/efeito:** Altera a velocidade física ao longo do tempo e emite `flow`.
 - **Exemplo:** Empurre uma caixa: `Button Pressed → Add Force`, força `Vector3(0, 0, -40)`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 674. Add Impulse
 
@@ -6742,7 +6742,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: `RigidBody3D`; `impulse`: `Vector3`; `position` é opcional.
 - **Saídas/efeito:** Muda imediatamente a velocidade linear e emite `flow`.
 - **Exemplo:** Explosão: `Collision Enter → Add Impulse`, impulso calculado por `Direction × 12`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 675. Add Torque
 
@@ -6752,7 +6752,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: `RigidBody3D`; `torque`: `Vector3` por eixo.
 - **Saídas/efeito:** Acelera a rotação do corpo e emite `flow`.
 - **Exemplo:** Gire uma hélice: `Fixed Update → Add Torque`, torque `Vector3(0, 8, 0)`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 676. Set Velocity
 
@@ -6762,7 +6762,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: corpo físico compatível; `value`: `Vector3(x, y, z)`.
 - **Saídas/efeito:** Substitui a velocidade atual e emite `flow`.
 - **Exemplo:** Lance um projétil: `Created → Set Velocity`, valor `Forward × 25`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 677. Get Velocity
 
@@ -6772,7 +6772,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: corpo físico compatível.
 - **Saídas/efeito:** Retorna a velocidade como `Vector3` em `value`.
 - **Exemplo:** Velocímetro: `Update → Get Velocity → Vector Length → UI Set Text`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 678. Set Angular Velocity
 
@@ -6782,7 +6782,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: `RigidBody3D`; `value`: `Vector3` com a rotação por eixo.
 - **Saídas/efeito:** Atualiza `angular_velocity` e continua pelo pino `flow`.
 - **Exemplo:** Faça uma plataforma girar: `Start → Set Angular Velocity`, alvo `../Plataforma`, valor `Vector3(0, 1.5, 0)` para girar no eixo Y.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 679. Get Angular Velocity
 
@@ -6792,7 +6792,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: `RigidBody3D` que será consultado.
 - **Saídas/efeito:** Retorna um `Vector3` em `value`; não altera o corpo.
 - **Exemplo:** Exiba a rotação de uma roda: `Update → Get Angular Velocity → Vector Length → UI Set Text`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 680. Set Mass
 
@@ -6802,7 +6802,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de mass, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza mass no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Mass`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 681. Get Mass
 
@@ -6812,7 +6812,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna mass em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Mass → Debug Info` mostra o valor atual de mass.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 682. Set Gravity
 
@@ -6822,7 +6822,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de gravity, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza gravity no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Gravity`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 683. Use Gravity
 
@@ -6832,7 +6832,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Use Gravity`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 684. Set Kinematic
 
@@ -6842,7 +6842,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de kinematic, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza kinematic no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Kinematic`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 685. Freeze Position
 
@@ -6852,7 +6852,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Freeze Position`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 686. Freeze Rotation
 
@@ -6862,7 +6862,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Freeze Rotation`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 687. Raycast
 
@@ -6872,7 +6872,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `origin`, `direction`, `distance` e máscara de colisão opcional.
 - **Saídas/efeito:** Retorna acerto, objeto, posição e normal; não altera a cena.
 - **Exemplo:** Tiro: `Button Pressed → Raycast`; se `hit`, conecte a `Object Send Event` no objeto atingido.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 688. Sphere Cast
 
@@ -6882,7 +6882,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Sphere Cast`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 689. Box Cast
 
@@ -6892,7 +6892,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Box Cast`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 690. Overlap Sphere
 
@@ -6902,7 +6902,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Overlap Sphere`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 691. Overlap Box
 
@@ -6912,7 +6912,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Overlap Box`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 692. Ignore Collision
 
@@ -6922,7 +6922,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Ignore Collision`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 693. Set Friction
 
@@ -6932,7 +6932,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de friction, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza friction no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Friction`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 694. Set Bounciness
 
@@ -6942,7 +6942,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de bounciness, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza bounciness no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Bounciness`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 695. Wake Up
 
@@ -6952,7 +6952,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Wake Up`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 696. Sleep
 
@@ -6962,7 +6962,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Sleep`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 697. Enter
 
@@ -6972,7 +6972,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Enter`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 698. Exit
 
@@ -6982,7 +6982,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Exit`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 699. Can Enter
 
@@ -6992,7 +6992,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Can Enter`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 700. Get Driver
 
@@ -7002,7 +7002,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna driver em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Driver → Debug Info` mostra o valor atual de driver.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 701. Open Door
 
@@ -7012,7 +7012,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Open Door`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 702. Close Door
 
@@ -7022,7 +7022,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Close Door`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 703. Toggle Door
 
@@ -7032,7 +7032,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Toggle Door`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 704. Open Hood
 
@@ -7042,7 +7042,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Open Hood`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 705. Close Hood
 
@@ -7052,7 +7052,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Close Hood`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 706. Open Trunk
 
@@ -7062,7 +7062,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Open Trunk`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 707. Close Trunk
 
@@ -7072,7 +7072,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Close Trunk`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 708. Set Throttle
 
@@ -7082,7 +7082,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de throttle, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza throttle no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Throttle`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 709. Get Throttle
 
@@ -7092,7 +7092,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna throttle em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Throttle → Debug Info` mostra o valor atual de throttle.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 710. Set Brake
 
@@ -7102,7 +7102,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de brake, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza brake no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Brake`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 711. Get Brake
 
@@ -7112,7 +7112,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna brake em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Brake → Debug Info` mostra o valor atual de brake.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 712. Set Handbrake
 
@@ -7122,7 +7122,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de handbrake, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza handbrake no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Handbrake`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 713. Set Steering
 
@@ -7132,7 +7132,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de steering, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza steering no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Steering`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 714. Get Steering
 
@@ -7142,7 +7142,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna steering em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Steering → Debug Info` mostra o valor atual de steering.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 715. Shift Up
 
@@ -7152,7 +7152,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Shift Up`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 716. Shift Down
 
@@ -7162,7 +7162,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Shift Down`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 717. Set Gear
 
@@ -7172,7 +7172,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de gear, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza gear no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Gear`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 718. Get Gear
 
@@ -7182,7 +7182,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna gear em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Gear → Debug Info` mostra o valor atual de gear.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 719. Get Speed
 
@@ -7192,7 +7192,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna speed em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Speed → Debug Info` mostra o valor atual de speed.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 720. Get Rpm
 
@@ -7202,7 +7202,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna rpm em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Rpm → Debug Info` mostra o valor atual de rpm.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 721. Get Wheel Speed
 
@@ -7212,7 +7212,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna wheel speed em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Wheel Speed → Debug Info` mostra o valor atual de wheel speed.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 722. Get Slip Ratio
 
@@ -7222,7 +7222,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna slip ratio em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Slip Ratio → Debug Info` mostra o valor atual de slip ratio.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 723. Get Lateral Slip
 
@@ -7232,7 +7232,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna lateral slip em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Lateral Slip → Debug Info` mostra o valor atual de lateral slip.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 724. Set Mass
 
@@ -7242,7 +7242,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de mass, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza mass no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Mass`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 725. Set Engine Power
 
@@ -7252,7 +7252,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de engine power, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza engine power no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Engine Power`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 726. Set Max Torque
 
@@ -7262,7 +7262,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de max torque, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza max torque no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Max Torque`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 727. Set Redline Rpm
 
@@ -7272,7 +7272,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de redline rpm, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza redline rpm no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Redline Rpm`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 728. Set Top Speed
 
@@ -7282,7 +7282,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de top speed, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza top speed no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Top Speed`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 729. Set Drive Type
 
@@ -7292,7 +7292,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de drive type, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza drive type no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Drive Type`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 730. Set Gear Ratios
 
@@ -7302,7 +7302,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de gear ratios, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza gear ratios no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Gear Ratios`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 731. Set Final Drive
 
@@ -7312,7 +7312,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de final drive, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza final drive no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Final Drive`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 732. Set Drivetrain Efficiency
 
@@ -7322,7 +7322,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de drivetrain efficiency, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza drivetrain efficiency no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Drivetrain Efficiency`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 733. Set Tire Grip
 
@@ -7332,7 +7332,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de tire grip, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza tire grip no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Tire Grip`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 734. Set Lateral Grip
 
@@ -7342,7 +7342,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de lateral grip, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza lateral grip no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Lateral Grip`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 735. Set Traction Control
 
@@ -7352,7 +7352,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de traction control, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza traction control no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Traction Control`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 736. Set Abs
 
@@ -7362,7 +7362,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de abs, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza abs no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Abs`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 737. Set Stability Assist
 
@@ -7372,7 +7372,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de stability assist, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza stability assist no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Stability Assist`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 738. Set Steering Angle
 
@@ -7382,7 +7382,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de steering angle, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza steering angle no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Steering Angle`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 739. Set Steering Response
 
@@ -7392,7 +7392,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de steering response, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza steering response no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Steering Response`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 740. Set Wheel Radius
 
@@ -7402,7 +7402,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de wheel radius, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza wheel radius no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Wheel Radius`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 741. Set Wheel Position
 
@@ -7412,7 +7412,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de wheel position, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza wheel position no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Wheel Position`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 742. Set Wheel Driven
 
@@ -7422,7 +7422,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de wheel driven, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza wheel driven no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Wheel Driven`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 743. Set Wheel Steerable
 
@@ -7432,7 +7432,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de wheel steerable, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza wheel steerable no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Wheel Steerable`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 744. Set Suspension Travel
 
@@ -7442,7 +7442,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de suspension travel, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza suspension travel no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Suspension Travel`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 745. Set Spring Strength
 
@@ -7452,7 +7452,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de spring strength, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza spring strength no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Spring Strength`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 746. Set Suspension Damping
 
@@ -7462,7 +7462,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de suspension damping, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza suspension damping no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Suspension Damping`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 747. Get Suspension Compression
 
@@ -7472,7 +7472,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna suspension compression em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Suspension Compression → Debug Info` mostra o valor atual de suspension compression.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 748. Set Center Of Mass
 
@@ -7482,7 +7482,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de center of mass, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza center of mass no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Center Of Mass`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 749. Set Downforce
 
@@ -7492,7 +7492,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de downforce, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza downforce no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Downforce`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 750. Set Aero Drag
 
@@ -7502,7 +7502,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de aero drag, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza aero drag no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Aero Drag`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 751. Set Rolling Resistance
 
@@ -7512,7 +7512,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de rolling resistance, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza rolling resistance no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Rolling Resistance`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 752. Reset Upright
 
@@ -7522,7 +7522,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Reset Upright`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 753. Teleport
 
@@ -7532,7 +7532,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Teleport`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 754. Repair
 
@@ -7542,7 +7542,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Repair`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 755. Enable Collision
 
@@ -7552,7 +7552,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Enable Collision`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 756. Disable Collision
 
@@ -7562,7 +7562,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Disable Collision`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 757. On Collision
 
@@ -7572,7 +7572,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → On Collision`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 758. On Entered
 
@@ -7582,7 +7582,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → On Entered`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 759. On Exited
 
@@ -7592,7 +7592,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → On Exited`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 760. On Door Opened
 
@@ -7602,7 +7602,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → On Door Opened`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 761. Play
 
@@ -7612,7 +7612,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Play`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 762. Play 3D
 
@@ -7622,7 +7622,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Play 3D`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 763. Play Loop
 
@@ -7632,7 +7632,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Play Loop`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 764. Play 3D Loop
 
@@ -7642,7 +7642,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Play 3D Loop`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 765. Pause
 
@@ -7652,7 +7652,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Pause`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 766. Resume
 
@@ -7662,7 +7662,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Resume`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 767. Stop
 
@@ -7672,7 +7672,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Stop`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 768. Stop All
 
@@ -7682,7 +7682,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Stop All`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 769. Set Volume
 
@@ -7692,7 +7692,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de volume, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza volume no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Volume`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 770. Get Volume
 
@@ -7702,7 +7702,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna volume em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Volume → Debug Info` mostra o valor atual de volume.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 771. Fade In
 
@@ -7712,7 +7712,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Fade In`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 772. Fade Out
 
@@ -7722,7 +7722,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Fade Out`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 773. Set Pitch
 
@@ -7732,7 +7732,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de pitch, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza pitch no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Pitch`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 774. Get Pitch
 
@@ -7742,7 +7742,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna pitch em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Pitch → Debug Info` mostra o valor atual de pitch.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 775. Set Pan
 
@@ -7752,7 +7752,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de pan, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza pan no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Pan`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 776. Set Spatial Blend
 
@@ -7762,7 +7762,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de spatial blend, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza spatial blend no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Spatial Blend`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 777. Set Min Distance
 
@@ -7772,7 +7772,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de min distance, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza min distance no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Min Distance`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 778. Set Max Distance
 
@@ -7782,7 +7782,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de max distance, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza max distance no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Max Distance`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 779. Is Playing
 
@@ -7792,7 +7792,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Is Playing`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 780. Set Bus
 
@@ -7802,7 +7802,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de bus, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza bus no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Bus`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 781. Play
 
@@ -7812,7 +7812,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Play`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 782. Play Crossfade
 
@@ -7822,7 +7822,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Play Crossfade`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 783. Pause
 
@@ -7832,7 +7832,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Pause`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 784. Resume
 
@@ -7842,7 +7842,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Resume`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 785. Stop
 
@@ -7852,7 +7852,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Stop`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 786. Rewind
 
@@ -7862,7 +7862,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Rewind`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 787. Set Speed
 
@@ -7872,7 +7872,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de speed, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza speed no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Speed`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 788. Get Speed
 
@@ -7882,7 +7882,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna speed em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Speed → Debug Info` mostra o valor atual de speed.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 789. Set Time
 
@@ -7892,7 +7892,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de time, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza time no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Time`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 790. Get Time
 
@@ -7902,7 +7902,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna time em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Time → Debug Info` mostra o valor atual de time.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 791. Set Loop
 
@@ -7912,7 +7912,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de loop, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza loop no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Loop`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 792. Is Playing
 
@@ -7922,7 +7922,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Is Playing`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 793. Set Bool
 
@@ -7932,7 +7932,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de bool, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza bool no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Bool`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 794. Set Number
 
@@ -7942,7 +7942,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de number, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza number no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Number`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 795. Set Trigger
 
@@ -7952,7 +7952,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de trigger, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza trigger no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Trigger`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 796. Reset Trigger
 
@@ -7962,7 +7962,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Reset Trigger`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 797. Get State
 
@@ -7972,7 +7972,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna state em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get State → Debug Info` mostra o valor atual de state.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 798. Set Weight
 
@@ -7982,7 +7982,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de weight, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza weight no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Weight`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 799. Blend
 
@@ -7992,7 +7992,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Blend`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 800. Play Additive
 
@@ -8002,7 +8002,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Play Additive`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 801. Get
 
@@ -8012,7 +8012,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Get`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 802. Set
 
@@ -8022,7 +8022,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Set`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 803. Clone
 
@@ -8032,7 +8032,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Clone`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 804. Set Color
 
@@ -8042,7 +8042,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de color, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza color no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Color`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 805. Get Color
 
@@ -8052,7 +8052,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna color em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Color → Debug Info` mostra o valor atual de color.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 806. Set Number
 
@@ -8062,7 +8062,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de number, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza number no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Number`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 807. Get Number
 
@@ -8072,7 +8072,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna number em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Number → Debug Info` mostra o valor atual de number.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 808. Set Vector
 
@@ -8082,7 +8082,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de vector, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza vector no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Vector`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 809. Get Vector
 
@@ -8092,7 +8092,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna vector em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Vector → Debug Info` mostra o valor atual de vector.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 810. Set Texture
 
@@ -8102,7 +8102,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de texture, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza texture no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Texture`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 811. Get Texture
 
@@ -8112,7 +8112,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna texture em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Texture → Debug Info` mostra o valor atual de texture.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 812. Set Emission
 
@@ -8122,7 +8122,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de emission, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza emission no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Emission`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 813. Set Metallic
 
@@ -8132,7 +8132,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de metallic, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza metallic no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Metallic`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 814. Set Roughness
 
@@ -8142,7 +8142,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de roughness, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza roughness no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Roughness`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 815. Set Opacity
 
@@ -8152,7 +8152,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de opacity, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza opacity no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Opacity`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 816. Set Uv Offset
 
@@ -8162,7 +8162,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de uv offset, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza uv offset no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Uv Offset`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 817. Set Uv Scale
 
@@ -8172,7 +8172,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de uv scale, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza uv scale no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Uv Scale`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 818. Enable Keyword
 
@@ -8182,7 +8182,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Enable Keyword`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 819. Disable Keyword
 
@@ -8192,7 +8192,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Disable Keyword`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 820. Has Keyword
 
@@ -8202,7 +8202,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Has Keyword`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 821. Show
 
@@ -8212,7 +8212,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Show`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 822. Hide
 
@@ -8222,7 +8222,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Hide`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 823. Toggle
 
@@ -8232,7 +8232,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Toggle`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 824. Set Text
 
@@ -8242,7 +8242,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de text, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza text no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Text`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 825. Get Text
 
@@ -8252,7 +8252,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna text em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Text → Debug Info` mostra o valor atual de text.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 826. Set Image
 
@@ -8262,7 +8262,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de image, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza image no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Image`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 827. Set Color
 
@@ -8272,7 +8272,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de color, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza color no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Color`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 828. Set Value
 
@@ -8282,7 +8282,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de value, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza value no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Value`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 829. Get Value
 
@@ -8292,7 +8292,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna value em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Value → Debug Info` mostra o valor atual de value.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 830. Set Min
 
@@ -8302,7 +8302,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de min, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza min no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Min`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 831. Set Max
 
@@ -8312,7 +8312,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de max, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza max no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Max`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 832. Set Interactable
 
@@ -8322,7 +8322,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de interactable, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza interactable no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Interactable`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 833. Is Interactable
 
@@ -8332,7 +8332,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Is Interactable`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 834. Focus
 
@@ -8342,7 +8342,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Focus`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 835. Unfocus
 
@@ -8352,7 +8352,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Unfocus`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 836. Set Position
 
@@ -8362,7 +8362,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de position, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza position no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Position`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 837. Set Size
 
@@ -8372,7 +8372,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de size, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza size no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Size`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 838. Set Anchor
 
@@ -8382,7 +8382,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de anchor, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza anchor no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Anchor`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 839. Set Progress
 
@@ -8392,7 +8392,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de progress, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza progress no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Progress`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 840. Animate Value
 
@@ -8402,7 +8402,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Animate Value`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 841. Toast
 
@@ -8412,7 +8412,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Toast`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 842. Open Panel
 
@@ -8422,7 +8422,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Open Panel`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 843. Close Panel
 
@@ -8432,7 +8432,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Close Panel`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 844. Set Placeholder
 
@@ -8442,7 +8442,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de placeholder, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza placeholder no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Placeholder`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Emite `graph_error` quando `target_path` não existe, aponta para um tipo incompatível ou algum pino obrigatório está vazio. Confirme o NodePath a partir do nó que contém o runner e o tipo exigido nesta entrada.
 
 ## 845. Load
 
@@ -8452,7 +8452,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Load`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 846. Load Additive
 
@@ -8462,7 +8462,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Load Additive`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 847. Unload
 
@@ -8472,7 +8472,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Unload`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 848. Reload
 
@@ -8482,7 +8482,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Reload`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 849. Set Active
 
@@ -8492,7 +8492,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de active, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza active no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Active`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 850. Get Active
 
@@ -8502,7 +8502,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna active em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Active → Debug Info` mostra o valor atual de active.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 851. Pause
 
@@ -8512,7 +8512,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Pause`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 852. Resume
 
@@ -8522,7 +8522,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Resume`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 853. Set Time Scale
 
@@ -8532,7 +8532,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de time scale, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza time scale no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Time Scale`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 854. Get Time Scale
 
@@ -8542,7 +8542,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível que será consultado.
 - **Saídas/efeito:** Retorna time scale em `value` e permite continuar o fluxo.
 - **Exemplo:** `Update → Get Time Scale → Debug Info` mostra o valor atual de time scale.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 855. Set Ambient Color
 
@@ -8552,7 +8552,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de ambient color, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza ambient color no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Ambient Color`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 856. Set Skybox
 
@@ -8562,7 +8562,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de skybox, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza skybox no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Skybox`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 857. Set Fog
 
@@ -8572,7 +8572,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de fog, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza fog no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Fog`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 858. Set Gravity
 
@@ -8582,7 +8582,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: nó compatível; `value`: novo valor de gravity, pelo inspetor ou por conexão tipada.
 - **Saídas/efeito:** Atualiza gravity no alvo e emite `flow`.
 - **Exemplo:** `Button Pressed → Set Gravity`, selecione o alvo da cena e conecte uma constante ao pino `value`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 859. Find Spawn
 
@@ -8592,7 +8592,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Find Spawn`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 860. Spawn At
 
@@ -8602,7 +8602,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Spawn At`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 861. Destroy All
 
@@ -8612,7 +8612,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Destroy All`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 862. Preload
 
@@ -8622,7 +8622,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Preload`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 863. Release
 
@@ -8632,7 +8632,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Release`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 864. Quit
 
@@ -8642,7 +8642,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Quit`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 865. Terrain Get Height
 
@@ -8652,7 +8652,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Get Height`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 866. Terrain Set Height
 
@@ -8662,7 +8662,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Set Height`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 867. Terrain Raise
 
@@ -8672,7 +8672,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Raise`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 868. Terrain Lower
 
@@ -8682,7 +8682,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Lower`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 869. Terrain Smooth
 
@@ -8692,7 +8692,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Smooth`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 870. Terrain Flatten
 
@@ -8702,7 +8702,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Flatten`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 871. Terrain Add Noise
 
@@ -8712,7 +8712,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Add Noise`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 872. Terrain Paint Layer
 
@@ -8722,7 +8722,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Paint Layer`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 873. Terrain Get Layer Weight
 
@@ -8732,7 +8732,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Get Layer Weight`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 874. Terrain Apply Auto Tile
 
@@ -8742,7 +8742,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Apply Auto Tile`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 875. Terrain Add Auto Tile Rule
 
@@ -8752,7 +8752,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Add Auto Tile Rule`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 876. Terrain Remove Auto Tile Rule
 
@@ -8762,7 +8762,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Remove Auto Tile Rule`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 877. Terrain Set Material
 
@@ -8772,7 +8772,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Set Material`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 878. Terrain Set Texture Scale
 
@@ -8782,7 +8782,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Set Texture Scale`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 879. Terrain Set Texture Rotation
 
@@ -8792,7 +8792,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Set Texture Rotation`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 880. Terrain Set Texture Offset
 
@@ -8802,7 +8802,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Set Texture Offset`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 881. Terrain Set Roughness
 
@@ -8812,7 +8812,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Set Roughness`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 882. Terrain Set Metallic
 
@@ -8822,7 +8822,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Set Metallic`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 883. Terrain Import Heightmap
 
@@ -8832,7 +8832,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Import Heightmap`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 884. Terrain Export Heightmap
 
@@ -8842,7 +8842,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Export Heightmap`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 885. Terrain Generate Semi Arid
 
@@ -8852,7 +8852,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Generate Semi Arid`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 886. Terrain Scatter Tiles
 
@@ -8862,7 +8862,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Scatter Tiles`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 887. Terrain Clear Tiles
 
@@ -8872,7 +8872,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Terrain Clear Tiles`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 888. Character Set Camera First Person
 
@@ -8882,7 +8882,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Character Set Camera First Person`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 889. Character Set Camera Third Person
 
@@ -8892,7 +8892,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Character Set Camera Third Person`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 890. Character Set Camera Top Down
 
@@ -8902,7 +8902,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Character Set Camera Top Down`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 891. Character Set Speed
 
@@ -8912,7 +8912,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Character Set Speed`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 892. Character Jump
 
@@ -8922,7 +8922,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: personagem; `force`: velocidade vertical positiva; evento recomendado `Button Pressed` com ação `jump`.
 - **Saídas/efeito:** Define a velocidade Y do personagem e emite `flow`; no ar, não aplica um segundo pulo.
 - **Exemplo:** Pulo mobile: `Button Pressed (jump) → Character Jump`, alvo `../Player`, força `6.5`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 893. Character Set Look Sensitivity
 
@@ -8932,7 +8932,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Character Set Look Sensitivity`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 894. Joystick Get Axis
 
@@ -8942,7 +8942,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Joystick Get Axis`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 895. Joystick Set Dead Zone
 
@@ -8952,7 +8952,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.
 - **Saídas/efeito:** Aplica a ação e emite `flow`; operações de consulta também retornam `value`.
 - **Exemplo:** `Button Pressed → Joystick Set Dead Zone`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 896. Mover personagem
 
@@ -8962,7 +8962,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: personagem; `speed`: unidades por segundo; eixo vindo de `Joystick Get Axis` ou das ações `ui_left/right/up/down`.
 - **Saídas/efeito:** Atualiza a velocidade horizontal, preserva a gravidade e emite `flow`.
 - **Exemplo:** Controle mobile: `Update → Joystick Get Axis → Character Move`, alvo `../Player` e velocidade `5.0`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 897. Girar câmera do personagem
 
@@ -8972,7 +8972,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `target_path`: personagem/pivô; `look_delta`: movimento do toque; `sensitivity`: multiplicador da rotação.
 - **Saídas/efeito:** Altera yaw e pitch e emite `flow`.
 - **Exemplo:** Câmera mobile: `Pointer Drag → Character Look`, usando o delta do arrasto e sensibilidade `0.003`.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 898. Save
 
@@ -8982,7 +8982,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_bool`: `Button Pressed → Save` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 899. Load
 
@@ -8992,7 +8992,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_bool`: `Button Pressed → Load` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 900. Has
 
@@ -9002,7 +9002,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_bool`: `Button Pressed → Has` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 901. Delete
 
@@ -9012,7 +9012,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_bool`: `Button Pressed → Delete` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 902. Save
 
@@ -9022,7 +9022,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_number`: `Button Pressed → Save` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 903. Load
 
@@ -9032,7 +9032,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_number`: `Button Pressed → Load` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 904. Has
 
@@ -9042,7 +9042,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_number`: `Button Pressed → Has` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 905. Delete
 
@@ -9052,7 +9052,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_number`: `Button Pressed → Delete` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 906. Save
 
@@ -9062,7 +9062,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_integer`: `Button Pressed → Save` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 907. Load
 
@@ -9072,7 +9072,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_integer`: `Button Pressed → Load` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 908. Has
 
@@ -9082,7 +9082,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_integer`: `Button Pressed → Has` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 909. Delete
 
@@ -9092,7 +9092,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_integer`: `Button Pressed → Delete` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 910. Save
 
@@ -9102,7 +9102,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_text`: `Button Pressed → Save` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 911. Load
 
@@ -9112,7 +9112,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_text`: `Button Pressed → Load` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 912. Has
 
@@ -9122,7 +9122,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_text`: `Button Pressed → Has` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 913. Delete
 
@@ -9132,7 +9132,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_text`: `Button Pressed → Delete` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 914. Save
 
@@ -9142,7 +9142,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_vector2`: `Button Pressed → Save` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 915. Load
 
@@ -9152,7 +9152,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_vector2`: `Button Pressed → Load` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 916. Has
 
@@ -9162,7 +9162,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_vector2`: `Button Pressed → Has` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 917. Delete
 
@@ -9172,7 +9172,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_vector2`: `Button Pressed → Delete` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 918. Save
 
@@ -9182,7 +9182,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_vector3`: `Button Pressed → Save` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 919. Load
 
@@ -9192,7 +9192,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_vector3`: `Button Pressed → Load` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 920. Has
 
@@ -9202,7 +9202,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_vector3`: `Button Pressed → Has` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 921. Delete
 
@@ -9212,7 +9212,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_vector3`: `Button Pressed → Delete` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 922. Save
 
@@ -9222,7 +9222,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_color`: `Button Pressed → Save` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 923. Load
 
@@ -9232,7 +9232,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_color`: `Button Pressed → Load` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 924. Has
 
@@ -9242,7 +9242,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_color`: `Button Pressed → Has` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 925. Delete
 
@@ -9252,7 +9252,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_color`: `Button Pressed → Delete` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 926. Save
 
@@ -9262,7 +9262,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_object id`: `Button Pressed → Save` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 927. Load
 
@@ -9272,7 +9272,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_object id`: `Button Pressed → Load` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 928. Has
 
@@ -9282,7 +9282,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_object id`: `Button Pressed → Has` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 929. Delete
 
@@ -9292,7 +9292,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_object id`: `Button Pressed → Delete` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 930. Save
 
@@ -9302,7 +9302,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_list`: `Button Pressed → Save` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 931. Load
 
@@ -9312,7 +9312,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_list`: `Button Pressed → Load` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 932. Has
 
@@ -9322,7 +9322,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_list`: `Button Pressed → Has` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 933. Delete
 
@@ -9332,7 +9332,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** `key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.
 - **Saídas/efeito:** Retorna o valor carregado/estado da chave e emite `flow` após concluir.
 - **Exemplo:** Use a chave `player_list`: `Button Pressed → Delete` e conecte o resultado à interface.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Falha quando a chave está vazia, o valor salvo tem outro tipo ou o armazenamento não pode ser acessado. Use `Has` e um valor padrão antes de depender de dados antigos.
 
 ## 934. Delta
 
@@ -9342,7 +9342,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Delta` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 935. Fixed Delta
 
@@ -9352,7 +9352,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Fixed Delta` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 936. Elapsed
 
@@ -9362,7 +9362,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Elapsed` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 937. Unscaled Elapsed
 
@@ -9372,7 +9372,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Unscaled Elapsed` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 938. Frame
 
@@ -9382,7 +9382,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Frame` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 939. Fps
 
@@ -9392,7 +9392,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Fps` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 940. Timestamp
 
@@ -9402,7 +9402,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Timestamp` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 941. Date
 
@@ -9412,7 +9412,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Date` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 942. Time
 
@@ -9422,7 +9422,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Time` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 943. Timezone
 
@@ -9432,7 +9432,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Timezone` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 944. Timer Start
 
@@ -9442,7 +9442,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Timer Start` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 945. Timer Pause
 
@@ -9452,7 +9452,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Timer Pause` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 946. Timer Resume
 
@@ -9462,7 +9462,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Timer Resume` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 947. Timer Stop
 
@@ -9472,7 +9472,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Timer Stop` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 948. Timer Remaining
 
@@ -9482,7 +9482,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Timer Remaining` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 949. Timer Elapsed
 
@@ -9492,7 +9492,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Timer Elapsed` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 950. Format Duration
 
@@ -9502,7 +9502,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Format Duration` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 951. Wait Seconds
 
@@ -9512,7 +9512,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Wait Seconds` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 952. Trace
 
@@ -9522,7 +9522,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Trace` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 953. Info
 
@@ -9532,7 +9532,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Info` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 954. Warning
 
@@ -9542,7 +9542,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Warning` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 955. Error
 
@@ -9552,7 +9552,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Error` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 956. Assert
 
@@ -9562,7 +9562,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Assert` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 957. Draw Line
 
@@ -9572,7 +9572,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Draw Line` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 958. Draw Ray
 
@@ -9582,7 +9582,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Draw Ray` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 959. Draw Sphere
 
@@ -9592,7 +9592,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Draw Sphere` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 960. Breakpoint
 
@@ -9602,7 +9602,7 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Breakpoint` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 961. Watch
 
@@ -9612,4 +9612,4 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 - **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
 - **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
 - **Exemplo:** Adicione `Watch` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
-- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.
+- **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.

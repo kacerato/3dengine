@@ -26,6 +26,8 @@ Depois visite `http://localhost:8080`.
 ## Estrutura
 
 - `index.html`: conteúdo e componentes visuais;
+- `nocodes.html`: guia prático e referência dedicada dos 961 blocos;
+- `nocodes.js`: busca, filtros e renderização da referência NoCode;
 - `styles.css`: identidade visual, responsividade e animações;
 - `app.js`: busca, navegação, demos interativas e canvas pseudo-3D;
 - `assets/logo.png`: identidade visual usada no site.

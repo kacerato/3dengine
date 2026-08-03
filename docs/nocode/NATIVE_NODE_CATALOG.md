@@ -488,200 +488,200 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `flow.branch`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.branch` (branch) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Branch` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: escolhe entre as saídas True e False usando uma condição booleana.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Branch`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 50. Gate
 
 - **ID:** `flow.gate`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.gate` (gate) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Gate` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: abre ou fecha a passagem de pulsos sem desconectar o grafo.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Gate`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 51. Once
 
 - **ID:** `flow.once`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.once` (once) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Once` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: deixa o fluxo passar somente na primeira chamada até ser reiniciado.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Once`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 52. Do N
 
 - **ID:** `flow.do_n`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.do_n` (do n) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Do N` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: limita a passagem do fluxo a uma quantidade configurada.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Do N`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 53. While
 
 - **ID:** `flow.while`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.while` (while) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `While` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: repete o corpo enquanto a condição permanecer verdadeira, respeitando o limite de segurança.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → While`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 54. For
 
 - **ID:** `flow.for`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.for` (for) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `For` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: repete usando índice inicial, final e passo.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → For`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 55. Foreach
 
 - **ID:** `flow.foreach`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.foreach` (foreach) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Foreach` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: executa o corpo uma vez para cada item de uma lista.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Foreach`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 56. Delay
 
 - **ID:** `flow.delay`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.delay` (delay) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Delay` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: continua o fluxo após uma duração.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Delay`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 57. Debounce
 
 - **ID:** `flow.debounce`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.debounce` (debounce) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Debounce` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: executa somente depois que chamadas rápidas pararem.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Debounce`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 58. Throttle
 
 - **ID:** `flow.throttle`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.throttle` (throttle) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Throttle` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: limita quantas vezes um fluxo pode executar por intervalo.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Throttle`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 59. Race
 
 - **ID:** `flow.race`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.race` (race) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Race` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: executa caminhos concorrentes e continua com o primeiro que terminar.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Race`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 60. Parallel
 
 - **ID:** `flow.parallel`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.parallel` (parallel) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Parallel` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: inicia vários caminhos no mesmo disparo.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Parallel`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 61. Cancel
 
 - **ID:** `flow.cancel`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.cancel` (cancel) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Cancel` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: cancela uma execução atrasada ou concorrente identificada.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Cancel`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 62. Break
 
 - **ID:** `flow.break`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.break` (break) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Break` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: encerra o laço atual.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Break`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 63. Continue
 
 - **ID:** `flow.continue`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.continue` (continue) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Continue` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: pula o restante da iteração e inicia a próxima.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Continue`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 64. Switch Bool
 
 - **ID:** `flow.switch_bool`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.switch_bool` (switch bool) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Switch Bool` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: encaminha um booleano para uma saída nomeada.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Switch Bool`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 65. Switch Number
 
 - **ID:** `flow.switch_number`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.switch_number` (switch number) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Switch Number` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: encaminha um número para o caso correspondente.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Switch Number`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 66. Switch Text
 
 - **ID:** `flow.switch_text`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.switch_text` (switch text) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Switch Text` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: encaminha um texto para o caso correspondente.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Switch Text`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 67. Switch Object
 
 - **ID:** `flow.switch_object`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.switch_object` (switch object) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Switch Object` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: encaminha um objeto para o caso correspondente.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Switch Object`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 68. Flip Flop
 
 - **ID:** `flow.flip_flop`
 - **Categoria:** Fluxo
-- **Finalidade:** Executa a operação registrada `flow.flip_flop` (flip flop) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Flip Flop` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Controla a ordem do grafo: alterna entre as saídas A e B a cada disparo.
+- **Entradas/alvo:** Recebe `flow` e os parâmetros exibidos no bloco, como condição, duração, limite ou casos. Não atua diretamente em um Node da cena.
+- **Saídas/efeito:** Emite uma ou mais saídas de fluxo; blocos de repetição também fornecem índice/item.
+- **Exemplo:** Exemplo: `Button Pressed → Flip Flop`; conecte cada saída a uma ação diferente, como `UI Show`, `Audio Play` ou `Object Enable`, conforme a decisão desejada.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 69. Pressed
@@ -4158,600 +4158,600 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `color.make_rgb`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.make_rgb` (make rgb) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Make Rgb` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `make rgb` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Make Rgb → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 417. Make Rgba
 
 - **ID:** `color.make_rgba`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.make_rgba` (make rgba) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Make Rgba` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `make rgba` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Make Rgba → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 418. Split Rgb
 
 - **ID:** `color.split_rgb`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.split_rgb` (split rgb) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Split Rgb` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `split rgb` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Split Rgb → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 419. Split Rgba
 
 - **ID:** `color.split_rgba`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.split_rgba` (split rgba) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Split Rgba` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `split rgba` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Split Rgba → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 420. From Hex
 
 - **ID:** `color.from_hex`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.from_hex` (from hex) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `From Hex` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `from hex` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color From Hex → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 421. To Hex
 
 - **ID:** `color.to_hex`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.to_hex` (to hex) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `To Hex` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `to hex` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color To Hex → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 422. From Hsv
 
 - **ID:** `color.from_hsv`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.from_hsv` (from hsv) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `From Hsv` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `from hsv` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color From Hsv → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 423. To Hsv
 
 - **ID:** `color.to_hsv`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.to_hsv` (to hsv) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `To Hsv` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `to hsv` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color To Hsv → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 424. Lerp
 
 - **ID:** `color.lerp`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.lerp` (lerp) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Lerp` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `lerp` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Lerp → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 425. Blend Add
 
 - **ID:** `color.blend_add`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.blend_add` (blend add) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Blend Add` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `blend add` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Blend Add → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 426. Blend Multiply
 
 - **ID:** `color.blend_multiply`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.blend_multiply` (blend multiply) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Blend Multiply` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `blend multiply` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Blend Multiply → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 427. Blend Screen
 
 - **ID:** `color.blend_screen`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.blend_screen` (blend screen) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Blend Screen` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `blend screen` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Blend Screen → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 428. Blend Overlay
 
 - **ID:** `color.blend_overlay`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.blend_overlay` (blend overlay) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Blend Overlay` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `blend overlay` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Blend Overlay → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 429. Lighten
 
 - **ID:** `color.lighten`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.lighten` (lighten) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Lighten` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `lighten` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Lighten → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 430. Darken
 
 - **ID:** `color.darken`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.darken` (darken) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Darken` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `darken` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Darken → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 431. Saturate
 
 - **ID:** `color.saturate`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.saturate` (saturate) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Saturate` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `saturate` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Saturate → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 432. Desaturate
 
 - **ID:** `color.desaturate`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.desaturate` (desaturate) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Desaturate` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `desaturate` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Desaturate → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 433. Invert
 
 - **ID:** `color.invert`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.invert` (invert) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Invert` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `invert` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Invert → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 434. Grayscale
 
 - **ID:** `color.grayscale`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.grayscale` (grayscale) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Grayscale` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `grayscale` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Grayscale → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 435. Alpha
 
 - **ID:** `color.alpha`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.alpha` (alpha) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Alpha` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `alpha` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Alpha → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 436. With Alpha
 
 - **ID:** `color.with_alpha`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.with_alpha` (with alpha) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `With Alpha` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `with alpha` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color With Alpha → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 437. Luminance
 
 - **ID:** `color.luminance`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.luminance` (luminance) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Luminance` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `luminance` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Luminance → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 438. Contrast
 
 - **ID:** `color.contrast`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.contrast` (contrast) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Contrast` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `contrast` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Contrast → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 439. Temperature
 
 - **ID:** `color.temperature`
 - **Categoria:** Cor
-- **Finalidade:** Executa a operação registrada `color.temperature` (temperature) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Temperature` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Calcula `temperature` usando valores `Color` com canais vermelho, verde, azul e alfa entre 0 e 1.
+- **Entradas/alvo:** Recebe uma ou duas cores; operações de criação usam canais/hex/HSV e misturas recebem um fator entre `0.0` e `1.0`.
+- **Saídas/efeito:** Retorna uma nova `Color`; o bloco não altera material ou interface até a saída ser conectada a `Material Set Color` ou `UI Set Color`.
+- **Exemplo:** Exemplo: `Color Temperature → Material Set Color`, alvo `../Player/Mesh`, para aplicar o resultado visualmente.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 440. Append
 
 - **ID:** `text.append`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.append` (append) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Append` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `append` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Append → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 441. Prepend
 
 - **ID:** `text.prepend`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.prepend` (prepend) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Prepend` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `prepend` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Prepend → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 442. Join
 
 - **ID:** `text.join`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.join` (join) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Join` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `join` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Join → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 443. Split
 
 - **ID:** `text.split`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.split` (split) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Split` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `split` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Split → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 444. Replace
 
 - **ID:** `text.replace`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.replace` (replace) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Replace` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `replace` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Replace → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 445. Replace First
 
 - **ID:** `text.replace_first`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.replace_first` (replace first) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Replace First` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `replace first` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Replace First → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 446. Contains
 
 - **ID:** `text.contains`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.contains` (contains) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Contains` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `contains` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Contains → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 447. Starts With
 
 - **ID:** `text.starts_with`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.starts_with` (starts with) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Starts With` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `starts with` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Starts With → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 448. Ends With
 
 - **ID:** `text.ends_with`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.ends_with` (ends with) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Ends With` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `ends with` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Ends With → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 449. Equals Ignore Case
 
 - **ID:** `text.equals_ignore_case`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.equals_ignore_case` (equals ignore case) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Equals Ignore Case` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `equals ignore case` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Equals Ignore Case → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 450. Uppercase
 
 - **ID:** `text.uppercase`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.uppercase` (uppercase) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Uppercase` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `uppercase` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Uppercase → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 451. Lowercase
 
 - **ID:** `text.lowercase`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.lowercase` (lowercase) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Lowercase` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `lowercase` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Lowercase → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 452. Capitalize
 
 - **ID:** `text.capitalize`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.capitalize` (capitalize) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Capitalize` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `capitalize` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Capitalize → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 453. Trim
 
 - **ID:** `text.trim`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.trim` (trim) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Trim` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `trim` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Trim → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 454. Trim Start
 
 - **ID:** `text.trim_start`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.trim_start` (trim start) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Trim Start` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `trim start` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Trim Start → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 455. Trim End
 
 - **ID:** `text.trim_end`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.trim_end` (trim end) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Trim End` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `trim end` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Trim End → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 456. Substring
 
 - **ID:** `text.substring`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.substring` (substring) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Substring` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `substring` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Substring → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 457. Character At
 
 - **ID:** `text.character_at`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.character_at` (character at) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Character At` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `character at` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Character At → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 458. Length
 
 - **ID:** `text.length`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.length` (length) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Length` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `length` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Length → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 459. Is Empty
 
 - **ID:** `text.is_empty`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.is_empty` (is empty) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Is Empty` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `is empty` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Is Empty → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 460. Is Blank
 
 - **ID:** `text.is_blank`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.is_blank` (is blank) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Is Blank` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `is blank` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Is Blank → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 461. Pad Start
 
 - **ID:** `text.pad_start`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.pad_start` (pad start) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Pad Start` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `pad start` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Pad Start → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 462. Pad End
 
 - **ID:** `text.pad_end`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.pad_end` (pad end) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Pad End` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `pad end` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Pad End → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 463. Repeat
 
 - **ID:** `text.repeat`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.repeat` (repeat) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Repeat` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `repeat` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Repeat → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 464. Reverse
 
 - **ID:** `text.reverse`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.reverse` (reverse) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Reverse` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `reverse` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Reverse → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 465. Format
 
 - **ID:** `text.format`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.format` (format) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Format` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `format` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Format → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 466. Number To Text
 
 - **ID:** `text.number_to_text`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.number_to_text` (number to text) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Number To Text` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `number to text` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Number To Text → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 467. Bool To Text
 
 - **ID:** `text.bool_to_text`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.bool_to_text` (bool to text) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Bool To Text` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `bool to text` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Bool To Text → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 468. Vector To Text
 
 - **ID:** `text.vector_to_text`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.vector_to_text` (vector to text) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Vector To Text` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `vector to text` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Vector To Text → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 469. Parse Number
 
 - **ID:** `text.parse_number`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.parse_number` (parse number) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Parse Number` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `parse number` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Parse Number → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 470. Parse Bool
 
 - **ID:** `text.parse_bool`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.parse_bool` (parse bool) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Parse Bool` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `parse bool` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Parse Bool → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 471. Regex Matches
 
 - **ID:** `text.regex_matches`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.regex_matches` (regex matches) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Regex Matches` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `regex matches` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Regex Matches → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 472. Regex Find
 
 - **ID:** `text.regex_find`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.regex_find` (regex find) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Regex Find` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `regex find` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Regex Find → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 473. Regex Replace
 
 - **ID:** `text.regex_replace`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.regex_replace` (regex replace) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Regex Replace` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `regex replace` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Regex Replace → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 474. Lines
 
 - **ID:** `text.lines`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.lines` (lines) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Lines` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `lines` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Lines → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 475. Words
 
 - **ID:** `text.words`
 - **Categoria:** Texto
-- **Finalidade:** Executa a operação registrada `text.words` (words) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Words` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Aplica `words` a texto. Use este bloco para preparar nomes, mensagens, placares, comandos ou dados antes de exibi-los ou salvá-los.
+- **Entradas/alvo:** `text`: texto principal; operações de combinação recebem `value`/`separator`, buscas recebem trecho/padrão e operações por posição recebem `index`/`length`.
+- **Saídas/efeito:** Retorna o novo texto, número, booleano, lista de trechos ou posição encontrada, sem alterar o texto original.
+- **Exemplo:** Exemplo: conecte `UI Get Text → Words → UI Set Text`; configure os parâmetros do bloco para transformar a mensagem antes de devolvê-la ao rótulo.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 476. Find By Name
@@ -9338,278 +9338,278 @@ Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presenç
 
 - **ID:** `time.delta`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.delta` (delta) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Delta` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna tempo em segundos desde o quadro anterior. Use para multiplicar movimento por Delta para manter a mesma velocidade em aparelhos rápidos e lentos.
+- **Entradas/alvo:** Não possui entrada nem alvo; lê o relógio interno da engine.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Update → Delta → Multiply (speed) → Transform Position Add`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 935. Fixed Delta
 
 - **ID:** `time.fixed_delta`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.fixed_delta` (fixed delta) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Fixed Delta` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna intervalo fixo, em segundos, usado pela atualização de física. Use para calcular forças e física sem depender da taxa de quadros.
+- **Entradas/alvo:** Não possui entrada nem alvo; lê o relógio interno da engine.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Fixed Update → Fixed Delta → Multiply (acceleration) → Add Force`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 936. Elapsed
 
 - **ID:** `time.elapsed`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.elapsed` (elapsed) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Elapsed` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna segundos transcorridos desde o início da execução. Use para criar animações, cronômetros ou dificuldade progressiva.
+- **Entradas/alvo:** Não possui entrada nem alvo; lê o relógio interno da engine.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Update → Elapsed → Math Sin → Material Set Emission`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 937. Unscaled Elapsed
 
 - **ID:** `time.unscaled_elapsed`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.unscaled_elapsed` (unscaled elapsed) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Unscaled Elapsed` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna tempo transcorrido ignorando pausa e escala de tempo. Use para animar menus e telas de pausa enquanto o jogo está congelado.
+- **Entradas/alvo:** Não possui entrada nem alvo; lê o relógio interno da engine.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Update → Unscaled Elapsed → UI Animate Value`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 938. Frame
 
 - **ID:** `time.frame`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.frame` (frame) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Frame` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna número do quadro atualmente processado. Use para executar amostragem ou tarefas a cada quantidade de quadros.
+- **Entradas/alvo:** Não possui entrada nem alvo; lê o relógio interno da engine.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Update → Frame → Modulo (30) → Equal (0) → Branch`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 939. Fps
 
 - **ID:** `time.fps`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.fps` (fps) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Fps` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna quantidade aproximada de quadros renderizados por segundo. Use para mostrar um contador de desempenho ou adaptar efeitos em aparelhos lentos.
+- **Entradas/alvo:** Não possui entrada nem alvo; lê o relógio interno da engine.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Update → Fps → Number To Text → UI Set Text`, alvo `../HUD/FpsLabel`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 940. Timestamp
 
 - **ID:** `time.timestamp`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.timestamp` (timestamp) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Timestamp` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna instante atual como timestamp Unix. Use para registrar quando um save, partida ou recompensa ocorreu.
+- **Entradas/alvo:** Não possui entrada nem alvo; lê o relógio interno da engine.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Button Pressed → Timestamp → Save Integer`, chave `last_save_time`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 941. Date
 
 - **ID:** `time.date`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.date` (date) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Date` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna data atual do sistema já formatada. Use para mostrar a data local em saves ou telas de perfil.
+- **Entradas/alvo:** Não possui entrada nem alvo; lê o relógio interno da engine.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Ready → Date → UI Set Text`, alvo `../HUD/DateLabel`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 942. Time
 
 - **ID:** `time.time`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.time` (time) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Time` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna horário local atual do sistema. Use para exibir relógio ou criar eventos dependentes do horário.
+- **Entradas/alvo:** Não possui entrada nem alvo; lê o relógio interno da engine.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Timer Elapsed → Time → UI Set Text`, alvo `../HUD/ClockLabel`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 943. Timezone
 
 - **ID:** `time.timezone`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.timezone` (timezone) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Timezone` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna fuso horário informado pelo sistema. Use para normalizar datas de placar ou explicar o horário mostrado.
+- **Entradas/alvo:** Não possui entrada nem alvo; lê o relógio interno da engine.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Ready → Timezone → Text Append → UI Set Text`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 944. Timer Start
 
 - **ID:** `time.timer_start`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.timer_start` (timer start) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Timer Start` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna inicia um temporizador identificado por nome. Use para criar cooldowns, contagens regressivas e eventos atrasados reutilizáveis.
+- **Entradas/alvo:** Recebe `seconds`/`duration` ou o `timer_name` indicado no bloco; não usa `target_path`.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Button Pressed → Timer Start`, nome `dash_cooldown`, duração `2.0`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 945. Timer Pause
 
 - **ID:** `time.timer_pause`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.timer_pause` (timer pause) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Timer Pause` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna pausa um temporizador ativo preservando o tempo restante. Use para congelar uma missão ou contagem sem reiniciá-la.
+- **Entradas/alvo:** Recebe `seconds`/`duration` ou o `timer_name` indicado no bloco; não usa `target_path`.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Button Pressed (pause) → Timer Pause`, nome `mission`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 946. Timer Resume
 
 - **ID:** `time.timer_resume`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.timer_resume` (timer resume) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Timer Resume` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna continua um temporizador anteriormente pausado. Use para retomar cooldowns e contagens.
+- **Entradas/alvo:** Recebe `seconds`/`duration` ou o `timer_name` indicado no bloco; não usa `target_path`.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Button Pressed (resume) → Timer Resume`, nome `mission`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 947. Timer Stop
 
 - **ID:** `time.timer_stop`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.timer_stop` (timer stop) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Timer Stop` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna cancela e remove um temporizador ativo. Use para cancelar uma ação carregada ou prazo de missão.
+- **Entradas/alvo:** Recebe `seconds`/`duration` ou o `timer_name` indicado no bloco; não usa `target_path`.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Collision Exit → Timer Stop`, nome `capture_zone`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 948. Timer Remaining
 
 - **ID:** `time.timer_remaining`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.timer_remaining` (timer remaining) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Timer Remaining` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna consulta quantos segundos faltam em um temporizador. Use para atualizar uma barra ou texto de cooldown.
+- **Entradas/alvo:** Recebe `seconds`/`duration` ou o `timer_name` indicado no bloco; não usa `target_path`.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Update → Timer Remaining (dash_cooldown) → UI Set Text`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 949. Timer Elapsed
 
 - **ID:** `time.timer_elapsed`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.timer_elapsed` (timer elapsed) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Timer Elapsed` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna informa se um temporizador chegou ao fim. Use para liberar novamente uma habilidade ou concluir contagem.
+- **Entradas/alvo:** Recebe `seconds`/`duration` ou o `timer_name` indicado no bloco; não usa `target_path`.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Update → Timer Elapsed (dash_cooldown) → Branch → UI Set Interactable`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 950. Format Duration
 
 - **ID:** `time.format_duration`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.format_duration` (format duration) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Format Duration` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna converte segundos para texto legível de duração. Use para mostrar `01:35` no lugar de `95.0` segundos.
+- **Entradas/alvo:** Recebe `seconds`/`duration` ou o `timer_name` indicado no bloco; não usa `target_path`.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Timer Remaining → Format Duration → UI Set Text`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 951. Wait Seconds
 
 - **ID:** `time.wait_seconds`
 - **Categoria:** Tempo
-- **Finalidade:** Executa a operação registrada `time.wait_seconds` (wait seconds) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Wait Seconds` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Retorna aguarda a duração indicada antes de continuar o fluxo. Use para atrasar uma ação simples sem criar um Timer nomeado.
+- **Entradas/alvo:** Recebe `seconds`/`duration` ou o `timer_name` indicado no bloco; não usa `target_path`.
+- **Saídas/efeito:** Fornece o valor temporal em `value`; ações de timer e espera também continuam por `flow`.
+- **Exemplo:** `Button Pressed → UI Hide → Wait Seconds (2) → UI Show`.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 952. Trace
 
 - **ID:** `debug.log.trace`
 - **Categoria:** Debug
-- **Finalidade:** Executa a operação registrada `debug.log.trace` (trace) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Trace` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Registra ou desenha informação de depuração no nível `trace` para investigar o grafo durante a execução.
+- **Entradas/alvo:** Recebe mensagem/valor; operações de desenho também recebem origem, destino, cor e duração. Não deve controlar regras de gameplay.
+- **Saídas/efeito:** Escreve no painel de saída ou desenha uma forma temporária; `assert` e `breakpoint` podem interromper a depuração.
+- **Exemplo:** Exemplo: conecte a saída de um cálculo a `Trace` e inclua um rótulo como `Velocidade do jogador` para identificar o valor no painel Saída.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 953. Info
 
 - **ID:** `debug.log.info`
 - **Categoria:** Debug
-- **Finalidade:** Executa a operação registrada `debug.log.info` (info) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Info` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Registra ou desenha informação de depuração no nível `info` para investigar o grafo durante a execução.
+- **Entradas/alvo:** Recebe mensagem/valor; operações de desenho também recebem origem, destino, cor e duração. Não deve controlar regras de gameplay.
+- **Saídas/efeito:** Escreve no painel de saída ou desenha uma forma temporária; `assert` e `breakpoint` podem interromper a depuração.
+- **Exemplo:** Exemplo: conecte a saída de um cálculo a `Info` e inclua um rótulo como `Velocidade do jogador` para identificar o valor no painel Saída.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 954. Warning
 
 - **ID:** `debug.log.warning`
 - **Categoria:** Debug
-- **Finalidade:** Executa a operação registrada `debug.log.warning` (warning) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Warning` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Registra ou desenha informação de depuração no nível `warning` para investigar o grafo durante a execução.
+- **Entradas/alvo:** Recebe mensagem/valor; operações de desenho também recebem origem, destino, cor e duração. Não deve controlar regras de gameplay.
+- **Saídas/efeito:** Escreve no painel de saída ou desenha uma forma temporária; `assert` e `breakpoint` podem interromper a depuração.
+- **Exemplo:** Exemplo: conecte a saída de um cálculo a `Warning` e inclua um rótulo como `Velocidade do jogador` para identificar o valor no painel Saída.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 955. Error
 
 - **ID:** `debug.log.error`
 - **Categoria:** Debug
-- **Finalidade:** Executa a operação registrada `debug.log.error` (error) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Error` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Registra ou desenha informação de depuração no nível `error` para investigar o grafo durante a execução.
+- **Entradas/alvo:** Recebe mensagem/valor; operações de desenho também recebem origem, destino, cor e duração. Não deve controlar regras de gameplay.
+- **Saídas/efeito:** Escreve no painel de saída ou desenha uma forma temporária; `assert` e `breakpoint` podem interromper a depuração.
+- **Exemplo:** Exemplo: conecte a saída de um cálculo a `Error` e inclua um rótulo como `Velocidade do jogador` para identificar o valor no painel Saída.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 956. Assert
 
 - **ID:** `debug.log.assert`
 - **Categoria:** Debug
-- **Finalidade:** Executa a operação registrada `debug.log.assert` (assert) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Assert` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Registra ou desenha informação de depuração no nível `assert` para investigar o grafo durante a execução.
+- **Entradas/alvo:** Recebe mensagem/valor; operações de desenho também recebem origem, destino, cor e duração. Não deve controlar regras de gameplay.
+- **Saídas/efeito:** Escreve no painel de saída ou desenha uma forma temporária; `assert` e `breakpoint` podem interromper a depuração.
+- **Exemplo:** Exemplo: conecte a saída de um cálculo a `Assert` e inclua um rótulo como `Velocidade do jogador` para identificar o valor no painel Saída.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 957. Draw Line
 
 - **ID:** `debug.log.draw_line`
 - **Categoria:** Debug
-- **Finalidade:** Executa a operação registrada `debug.log.draw_line` (draw line) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Draw Line` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Registra ou desenha informação de depuração no nível `draw line` para investigar o grafo durante a execução.
+- **Entradas/alvo:** Recebe mensagem/valor; operações de desenho também recebem origem, destino, cor e duração. Não deve controlar regras de gameplay.
+- **Saídas/efeito:** Escreve no painel de saída ou desenha uma forma temporária; `assert` e `breakpoint` podem interromper a depuração.
+- **Exemplo:** Exemplo: conecte a saída de um cálculo a `Draw Line` e inclua um rótulo como `Velocidade do jogador` para identificar o valor no painel Saída.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 958. Draw Ray
 
 - **ID:** `debug.log.draw_ray`
 - **Categoria:** Debug
-- **Finalidade:** Executa a operação registrada `debug.log.draw_ray` (draw ray) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Draw Ray` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Registra ou desenha informação de depuração no nível `draw ray` para investigar o grafo durante a execução.
+- **Entradas/alvo:** Recebe mensagem/valor; operações de desenho também recebem origem, destino, cor e duração. Não deve controlar regras de gameplay.
+- **Saídas/efeito:** Escreve no painel de saída ou desenha uma forma temporária; `assert` e `breakpoint` podem interromper a depuração.
+- **Exemplo:** Exemplo: conecte a saída de um cálculo a `Draw Ray` e inclua um rótulo como `Velocidade do jogador` para identificar o valor no painel Saída.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 959. Draw Sphere
 
 - **ID:** `debug.log.draw_sphere`
 - **Categoria:** Debug
-- **Finalidade:** Executa a operação registrada `debug.log.draw_sphere` (draw sphere) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Draw Sphere` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Registra ou desenha informação de depuração no nível `draw sphere` para investigar o grafo durante a execução.
+- **Entradas/alvo:** Recebe mensagem/valor; operações de desenho também recebem origem, destino, cor e duração. Não deve controlar regras de gameplay.
+- **Saídas/efeito:** Escreve no painel de saída ou desenha uma forma temporária; `assert` e `breakpoint` podem interromper a depuração.
+- **Exemplo:** Exemplo: conecte a saída de um cálculo a `Draw Sphere` e inclua um rótulo como `Velocidade do jogador` para identificar o valor no painel Saída.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 960. Breakpoint
 
 - **ID:** `debug.log.breakpoint`
 - **Categoria:** Debug
-- **Finalidade:** Executa a operação registrada `debug.log.breakpoint` (breakpoint) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Breakpoint` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Registra ou desenha informação de depuração no nível `breakpoint` para investigar o grafo durante a execução.
+- **Entradas/alvo:** Recebe mensagem/valor; operações de desenho também recebem origem, destino, cor e duração. Não deve controlar regras de gameplay.
+- **Saídas/efeito:** Escreve no painel de saída ou desenha uma forma temporária; `assert` e `breakpoint` podem interromper a depuração.
+- **Exemplo:** Exemplo: conecte a saída de um cálculo a `Breakpoint` e inclua um rótulo como `Velocidade do jogador` para identificar o valor no painel Saída.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.
 
 ## 961. Watch
 
 - **ID:** `debug.log.watch`
 - **Categoria:** Debug
-- **Finalidade:** Executa a operação registrada `debug.log.watch` (watch) no runtime NoCode.
-- **Entradas/alvo:** Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.
-- **Saídas/efeito:** Retorna `value`/`result` para dados e `flow` para encadear ações.
-- **Exemplo:** Adicione `Watch` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.
+- **Finalidade:** Registra ou desenha informação de depuração no nível `watch` para investigar o grafo durante a execução.
+- **Entradas/alvo:** Recebe mensagem/valor; operações de desenho também recebem origem, destino, cor e duração. Não deve controlar regras de gameplay.
+- **Saídas/efeito:** Escreve no painel de saída ou desenha uma forma temporária; `assert` e `breakpoint` podem interromper a depuração.
+- **Exemplo:** Exemplo: conecte a saída de um cálculo a `Watch` e inclua um rótulo como `Velocidade do jogador` para identificar o valor no painel Saída.
 - **Erros:** Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários.

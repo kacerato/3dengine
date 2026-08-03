@@ -4,12 +4,13 @@ on:
   push:
     branches:
       - artifact/realistic-nocode-build
-  pull_request:
-    branches:
-      - master
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: realistic-nocode-artifact
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -62,7 +63,7 @@ jobs:
           test -f dist/Mundo_Realista_NoCode_Complete/assets/environment/kloofendal_misty_morning_4k.exr
           du -h dist/Mundo_Realista_NoCode_Complete.zip
 
-      - name: Upload complete project ZIP
+      - name: Upload workflow artifact
         uses: actions/upload-artifact@v4
         with:
           name: Mundo_Realista_NoCode_Complete
@@ -70,3 +71,16 @@ jobs:
           if-no-files-found: error
           compression-level: 0
           retention-days: 7
+
+      - name: Publish temporary release asset
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euxo pipefail
+          gh release delete realistic-nocode-artifact --yes --cleanup-tag || true
+          gh release create realistic-nocode-artifact \
+            dist/Mundo_Realista_NoCode_Complete.zip \
+            --target "$GITHUB_SHA" \
+            --title "Mundo Realista NoCode Complete" \
+            --notes "Artefato temporário gerado de uma branch isolada. Inclui assets CC0, joystick mobile e gameplay NoCode. Não destinado a merge."

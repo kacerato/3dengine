@@ -276,7 +276,7 @@
     const renderCatalog = () => {
       const matches = filtered();
       catalogGrid.innerHTML = matches.slice(0, limit).map(item => `<details class="nocode-card">
-        <summary><span>${escapeHtml(item.category)}</span><b>${escapeHtml(item.title)}</b><code>${escapeHtml(item.id)}</code></summary>
+        <summary><span>${escapeHtml(item.category)}</span><b>${escapeHtml(item.title)}</b><code>${escapeHtml(item.id)}</code><em class="runtime-status">${escapeHtml(item.status)}</em></summary>
         <div><h4>O QUE FAZ</h4><p>${escapeHtml(item.purpose)}</p><h4>ENTRADAS / ALVO</h4><p>${escapeHtml(item.inputs)}</p><h4>RESULTADO</h4><p>${escapeHtml(item.outputs)}</p><h4>EXEMPLO PRÁTICO</h4><p class="nocode-example">${escapeHtml(item.example)}</p><h4>FALHAS ESPERADAS</h4><p>${escapeHtml(item.errors)}</p></div>
       </details>`).join('');
       $('#nocodeCount').textContent = `${Math.min(limit,matches.length)} de ${matches.length} blocos`;

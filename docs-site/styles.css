@@ -338,6 +338,7 @@ footer { min-height: 180px; display: grid; grid-template-columns: 1fr 1fr auto; 
 .reveal { opacity: 0; transform: translateY(25px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.visible { opacity: 1; transform: none; }
 .nocode-card .nocode-example { padding: 11px; border-left: 3px solid var(--purple); border-radius: 0 9px 9px 0; background: #211532; color: #e5d5f2; }
+.runtime-status { font-style: normal; font-size: 8px; line-height: 1.4; color: #ffcc7a; border-top: 1px solid var(--line); padding-top: 8px; }
 .docs-layout #catalogo-nocode { display: none; }
 .nocode-hero { min-height: 720px; padding: 170px clamp(24px,8vw,130px) 90px; position: relative; overflow: hidden; }
 .nocode-hero::after { content:""; position:absolute; width:580px; height:580px; right:-120px; top:80px; border-radius:50%; background:radial-gradient(circle,rgba(143,61,255,.35),transparent 68%); pointer-events:none; }

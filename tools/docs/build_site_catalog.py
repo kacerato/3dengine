@@ -16,6 +16,7 @@ ENTRY = re.compile(
     r"^## (?P<number>\d+)\. (?P<title>.+?)\n\n"
     r"- \*\*ID:\*\* `(?P<id>[^`]+)`\n"
     r"- \*\*Categoria:\*\* (?P<category>.+?)\n"
+    r"- \*\*Status:\*\* (?P<status>.+?)\n"
     r"- \*\*Finalidade:\*\* (?P<purpose>.+?)\n"
     r"- \*\*Entradas/alvo:\*\* (?P<inputs>.+?)\n"
     r"- \*\*Saídas/efeito:\*\* (?P<outputs>.+?)\n"

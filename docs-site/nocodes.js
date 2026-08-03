@@ -16,7 +16,7 @@
   const render = () => {
     const found = matches();
     $('#nocodeGrid').innerHTML = found.slice(0,limit).map(item => `<details class="nocode-card">
-      <summary><span>${escapeHtml(item.category)}</span><b>${escapeHtml(item.title)}</b><code>${escapeHtml(item.id)}</code></summary>
+      <summary><span>${escapeHtml(item.category)}</span><b>${escapeHtml(item.title)}</b><code>${escapeHtml(item.id)}</code><em class="runtime-status">${escapeHtml(item.status)}</em></summary>
       <div><h4>QUANDO E POR QUE USAR</h4><p>${escapeHtml(item.purpose)}</p><h4>COMO CONFIGURAR</h4><p>${escapeHtml(item.inputs)}</p><h4>O QUE O BLOCO ENTREGA</h4><p>${escapeHtml(item.outputs)}</p><h4>EXEMPLO DE MECÂNICA</h4><p class="nocode-example">${escapeHtml(item.example)}</p><h4>SE NÃO FUNCIONAR</h4><p>${escapeHtml(item.errors)}</p></div>
     </details>`).join('');
     $('#nocodeCount').textContent = `${Math.min(limit,found.length)} de ${found.length} blocos`;

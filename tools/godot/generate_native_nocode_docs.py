@@ -133,6 +133,13 @@ EVENT_HELP = {
 
 
 def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
+    if node_id == "audio.play_3d_loop":
+        return (
+            "Inicia um som espacial repetido em um `AudioStreamPlayer3D`. O áudio acompanha a posição do Node e perde volume conforme o ouvinte se afasta; use para motor, cachoeira, máquina ou ambiente contínuo no mundo.",
+            "`target_path`: `AudioStreamPlayer3D`; `stream`: áudio; `volume_db`; `min_distance` em metros com volume cheio; `max_distance` em metros para deixar de ouvir. O stream precisa repetir ou o bloco deve habilitar loop.",
+            "Inicia a reprodução em loop e libera `flow`. O som continua até `Stop`, remoção do player ou troca de cena.",
+            "Motor de carro: crie `Car/EngineAudio` como `AudioStreamPlayer3D`; ligue `Vehicle Enter → Play 3D Loop`, alvo `../Car/EngineAudio`, mínimo `2 m`, máximo `40 m`; ligue `Vehicle Exit → Stop` no mesmo alvo.",
+        )
     if node_id == "world.character_move":
         return ("Move um `CharacterBody3D` usando o joystick relativo à direção da câmera, aplica gravidade e chama `move_and_slide()`.", "`target_path`: personagem; `speed`: unidades por segundo; eixo vindo de `Joystick Get Axis` ou das ações `ui_left/right/up/down`.", "Atualiza a velocidade horizontal, preserva a gravidade e emite `flow`.", "Controle mobile: `Update → Joystick Get Axis → Character Move`, alvo `../Player` e velocidade `5.0`.")
     if node_id == "world.character_look":
@@ -395,6 +402,15 @@ def errors_for(node_id: str) -> str:
     return "Entradas ausentes, tipos incompatíveis ou operação indisponível emitem `graph_error`. O runner interrompe somente esse caminho do grafo e não chama métodos arbitrários."
 
 
+def runtime_status(node_id: str) -> str:
+    exact = {"debug.log.info", "debug.log.warning", "debug.log.error", "event.scene.start", "event.frame.update", "event.input.button_pressed", "event.custom.received", "flow.branch", "input.gamepad.axis", "object.set_enabled", "object.set_visible", "transform.move", "transform.rotate.y", "transform.scale.uniform", "transform.set_position", "variable.add", "variable.get", "variable.set", "world.change_scene", "world.character_jump", "world.character_look", "world.character_move", "world.character_set_speed", "world.joystick_get_axis"}
+    parts = node_id.split(".")
+    normalized = f"{parts[0]}.{parts[2]}" if len(parts) == 3 and parts[0] in ("math", "compare") else node_id
+    if normalized in {"math.add", "math.subtract", "math.multiply", "math.divide", "compare.equal", "compare.greater", "compare.less"} or node_id in exact:
+        return "Implementado e executável no runner nativo"
+    return "Catalogado; execução nativa ainda não implementada"
+
+
 def main() -> None:
     definitions = catalog(SOURCE.read_text(encoding="utf-8"))
     lines = [
@@ -404,12 +420,15 @@ def main() -> None:
     ]
     for index, (node_id, category, title) in enumerate(definitions, 1):
         purpose, inputs, outputs, example = contract(node_id, title)
+        status = runtime_status(node_id)
+        error_text = errors_for(node_id) if status.startswith("Implementado") else "Este ID ainda não possui despacho no `MGSNoCodeRunner`; se usado agora, o grafo retorna operação NoCode não implementada. A descrição acima é o contrato planejado, não uma garantia de execução."
         lines += [
             f"## {index}. {title}", "",
             f"- **ID:** `{node_id}`", f"- **Categoria:** {category}",
+            f"- **Status:** {status}",
             f"- **Finalidade:** {purpose}", f"- **Entradas/alvo:** {inputs}", f"- **Saídas/efeito:** {outputs}",
             f"- **Exemplo:** {example}",
-            f"- **Erros:** {errors_for(node_id)}", "",
+            f"- **Erros:** {error_text}", "",
         ]
     OUTPUT.write_text("\n".join(lines), encoding="utf-8")
     print(f"{OUTPUT}: {len(definitions)} operações documentadas")

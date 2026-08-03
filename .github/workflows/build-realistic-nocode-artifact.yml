@@ -7,6 +7,9 @@ on:
 
 permissions:
   contents: write
+  actions: read
+  issues: write
+  pull-requests: write
 
 concurrency:
   group: realistic-nocode-artifact
@@ -84,3 +87,21 @@ jobs:
             --target "$GITHUB_SHA" \
             --title "Mundo Realista NoCode Complete" \
             --notes "Artefato temporário gerado de uma branch isolada. Inclui assets CC0, joystick mobile e gameplay NoCode. Não destinado a merge."
+
+      - name: Report artifact identifiers on temporary PR
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euxo pipefail
+          ARTIFACT_ID=""
+          for attempt in $(seq 1 20); do
+            ARTIFACT_ID="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts" --jq '.artifacts[] | select(.name == "Mundo_Realista_NoCode_Complete") | .id' | head -n 1)"
+            if [ -n "$ARTIFACT_ID" ]; then
+              break
+            fi
+            sleep 3
+          done
+          test -n "$ARTIFACT_ID"
+          gh api "repos/$GITHUB_REPOSITORY/issues/10/comments" \
+            -f body="ARTIFACT_RUN_ID=$GITHUB_RUN_ID ARTIFACT_ID=$ARTIFACT_ID HEAD_SHA=$GITHUB_SHA"

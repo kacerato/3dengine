@@ -337,6 +337,7 @@ footer { min-height: 180px; display: grid; grid-template-columns: 1fr 1fr auto; 
 
 .reveal { opacity: 0; transform: translateY(25px); transition: opacity .7s ease, transform .7s ease; }
 .reveal.visible { opacity: 1; transform: none; }
+.nocode-card .nocode-example { padding: 11px; border-left: 3px solid var(--purple); border-radius: 0 9px 9px 0; background: #211532; color: #e5d5f2; }
 
 @media (max-width: 1180px) {
   .topnav { display:none; }

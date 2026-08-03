@@ -19,6 +19,7 @@ ENTRY = re.compile(
     r"- \*\*Finalidade:\*\* (?P<purpose>.+?)\n"
     r"- \*\*Entradas/alvo:\*\* (?P<inputs>.+?)\n"
     r"- \*\*Saídas/efeito:\*\* (?P<outputs>.+?)\n"
+    r"- \*\*Exemplo:\*\* (?P<example>.+?)\n"
     r"- \*\*Erros:\*\* (?P<errors>.+?)(?=\n\n## |\Z)",
     re.MULTILINE | re.DOTALL,
 )

@@ -88,21 +88,71 @@ def catalog(source: str) -> list[tuple[str, str, str]]:
     return result
 
 
-def contract(node_id: str) -> tuple[str, str, str]:
-    target = "Não usa alvo; opera somente sobre valores ou estado global."
-    inputs = "Entradas são definidas pelo sufixo da operação; valores também podem vir de conexões tipadas."
-    outputs = "Produz `value`/`result` quando a operação retorna dados e `flow` quando participa do fluxo."
-    if node_id.startswith(("object.", "transform.", "physics.", "vehicle.", "audio.", "animation.", "material.", "ui.")):
-        target = "Requer `values.target_path` apontando para um nó Godot compatível na cena."
+FAMILY_NAMES = {
+    "physics": "física 3D", "vehicle": "veículo", "audio": "áudio", "animation": "animação",
+    "material": "material", "ui": "interface", "world": "mundo", "object": "objeto da cena",
+}
+
+OPERATION_HELP = {
+    "set_angular_velocity": ("Define diretamente a velocidade de rotação de um corpo físico nos eixos X, Y e Z, em radianos por segundo.", "`target_path`: `RigidBody3D`; `value`: `Vector3` com a rotação por eixo.", "Atualiza `angular_velocity` e continua pelo pino `flow`.", "Faça uma plataforma girar: `Start → Set Angular Velocity`, alvo `../Plataforma`, valor `Vector3(0, 1.5, 0)` para girar no eixo Y."),
+    "get_angular_velocity": ("Lê a velocidade de rotação atual de um corpo físico nos eixos X, Y e Z.", "`target_path`: `RigidBody3D` que será consultado.", "Retorna um `Vector3` em `value`; não altera o corpo.", "Exiba a rotação de uma roda: `Update → Get Angular Velocity → Vector Length → UI Set Text`."),
+    "add_force": ("Aplica uma força contínua ao corpo; use em atualizações de física para aceleração sustentada.", "`target_path`: `RigidBody3D`; `force`: `Vector3`; `position` local é opcional.", "Altera a velocidade física ao longo do tempo e emite `flow`.", "Empurre uma caixa: `Button Pressed → Add Force`, força `Vector3(0, 0, -40)`."),
+    "add_impulse": ("Aplica um impulso instantâneo ao corpo, ideal para impactos, explosões ou saltos físicos.", "`target_path`: `RigidBody3D`; `impulse`: `Vector3`; `position` é opcional.", "Muda imediatamente a velocidade linear e emite `flow`.", "Explosão: `Collision Enter → Add Impulse`, impulso calculado por `Direction × 12`."),
+    "add_torque": ("Aplica força de rotação contínua a um corpo físico.", "`target_path`: `RigidBody3D`; `torque`: `Vector3` por eixo.", "Acelera a rotação do corpo e emite `flow`.", "Gire uma hélice: `Fixed Update → Add Torque`, torque `Vector3(0, 8, 0)`."),
+    "set_velocity": ("Define a velocidade linear do corpo em unidades por segundo.", "`target_path`: corpo físico compatível; `value`: `Vector3(x, y, z)`.", "Substitui a velocidade atual e emite `flow`.", "Lance um projétil: `Created → Set Velocity`, valor `Forward × 25`."),
+    "get_velocity": ("Lê a velocidade linear atual do corpo.", "`target_path`: corpo físico compatível.", "Retorna a velocidade como `Vector3` em `value`.", "Velocímetro: `Update → Get Velocity → Vector Length → UI Set Text`."),
+    "raycast": ("Dispara um raio entre dois pontos para detectar o primeiro collider atingido.", "`origin`, `direction`, `distance` e máscara de colisão opcional.", "Retorna acerto, objeto, posição e normal; não altera a cena.", "Tiro: `Button Pressed → Raycast`; se `hit`, conecte a `Object Send Event` no objeto atingido."),
+}
+
+
+def contract(node_id: str, title: str) -> tuple[str, str, str, str]:
     if node_id == "world.character_move":
-        return ("Move um `CharacterBody3D` a cada frame, aplica gravidade e chama `move_and_slide()`.", "`target_path`, `speed`; lê `ui_left/right/up/down`.", "Fluxo; altera posição e velocidade do personagem.")
+        return ("Move um `CharacterBody3D` usando o joystick relativo à direção da câmera, aplica gravidade e chama `move_and_slide()`.", "`target_path`: personagem; `speed`: unidades por segundo; eixo vindo de `Joystick Get Axis` ou das ações `ui_left/right/up/down`.", "Atualiza a velocidade horizontal, preserva a gravidade e emite `flow`.", "Controle mobile: `Update → Joystick Get Axis → Character Move`, alvo `../Player` e velocidade `5.0`.")
     if node_id == "world.character_look":
-        return ("Gira um pivô `Node3D`, com limite vertical para a câmera mobile.", "`target_path`, `sensitivity`; lê `look_left/right/up/down`.", "Fluxo; altera a rotação do pivô da câmera.")
+        return ("Gira o personagem no eixo horizontal e o pivô da câmera no vertical, limitando o pitch para evitar que a visão vire ao contrário.", "`target_path`: personagem/pivô; `look_delta`: movimento do toque; `sensitivity`: multiplicador da rotação.", "Altera yaw e pitch e emite `flow`.", "Câmera mobile: `Pointer Drag → Character Look`, usando o delta do arrasto e sensibilidade `0.003`.")
     if node_id == "world.character_jump":
-        return ("Aplica impulso vertical somente quando o `CharacterBody3D` está no chão.", "`target_path`, `force`; normalmente ligado ao evento de botão `jump`.", "Fluxo; altera a velocidade vertical.")
+        return ("Faz um `CharacterBody3D` pular somente quando `is_on_floor()` confirma contato com o chão.", "`target_path`: personagem; `force`: velocidade vertical positiva; evento recomendado `Button Pressed` com ação `jump`.", "Define a velocidade Y do personagem e emite `flow`; no ar, não aplica um segundo pulo.", "Pulo mobile: `Button Pressed (jump) → Character Jump`, alvo `../Player`, força `6.5`.")
     if node_id.startswith("event."):
-        return ("Inicia execução quando o evento correspondente é emitido pela engine.", "Filtros opcionais em `values`, conforme o evento.", "`flow` e, quando aplicável, `value` com o payload.")
-    return (target, inputs, outputs)
+        event = node_id.removeprefix("event.").replace("_", " ")
+        return (f"Inicia o grafo quando a engine emite o evento `{event}`.", "Filtros opcionais como ação, botão, alvo ou nome do evento; o payload chega pelos pinos de dados.", "Dispara `flow` e disponibiliza o payload em `value` quando o evento carrega dados.", f"Conecte `{title} → Debug Info` para confirmar no log quando `{event}` acontecer.")
+    if node_id.startswith("flow.sequence."):
+        count = node_id.rsplit(".", 1)[-1]
+        return (f"Executa {count} ramificações de fluxo em ordem, da saída 1 até a {count}.", "Um pulso no pino `flow`; cada saída pode iniciar uma cadeia diferente.", f"Emite {count} saídas sequenciais no mesmo quadro.", f"`Button Pressed → Sequência {count}` para tocar som, atualizar UI e executar outras ações em ordem.")
+
+    parts = node_id.split(".")
+    prefix, operation = parts[0], parts[-1]
+    if operation in OPERATION_HELP:
+        return OPERATION_HELP[operation]
+    readable = operation.replace("_", " ")
+    kind = parts[-2].replace("_", " ") if len(parts) > 2 else prefix
+    if prefix == "input":
+        device = parts[1]
+        return (f"Lê `{readable}` do dispositivo `{device}` sem precisar escrever código de plataforma.", f"Nome da ação/controle e índice do dispositivo quando aplicável; `{operation}` pode exigir eixo ou botão.", "Retorna o estado, valor, posição ou disponibilidade em `value`.", f"`Update → {title} → Debug Info` para visualizar o valor recebido do {device}.")
+    if prefix in ("math", "vector", "compare"):
+        if operation.startswith("is_"):
+            inputs = f"`value`: valor {kind} que será testado."
+        elif operation in ("length", "normalize", "absolute", "negative", "floor", "ceil", "round", "sqrt"):
+            inputs = f"`value`: valor {kind} de entrada."
+        else:
+            inputs = f"`a` e `b`: valores {kind}; parâmetros adicionais aparecem quando a operação exige limite ou fator."
+        return (f"Calcula `{readable}` para valores do tipo {kind}; não modifica objetos da cena.", inputs, "Retorna o cálculo tipado em `value`/`result`.", f"Conecte constantes ou saídas anteriores a `{title}` e use o resultado em `Debug Info` ou em outro bloco compatível.")
+    if prefix == "list":
+        return (f"Executa `{readable}` em uma lista de {kind}.", "`list`: coleção de entrada; `value` e/ou `index` quando a operação precisar de um item ou posição.", "Retorna a lista modificada, o item encontrado, índice, contagem ou booleano, conforme a operação.", f"`List {kind.title()} Create → {title} → Debug Info` demonstra o resultado da operação.")
+    if prefix == "save":
+        return (f"Executa `{readable}` para um valor persistente do tipo {kind} no armazenamento do jogo.", "`key`: chave estável; `value` é obrigatório ao salvar e opcional como padrão ao carregar.", "Retorna o valor carregado/estado da chave e emite `flow` após concluir.", f"Use a chave `player_{kind}`: `Button Pressed → {title}` e conecte o resultado à interface.")
+    if prefix in FAMILY_NAMES:
+        family = FAMILY_NAMES[prefix]
+        if operation.startswith("set_"):
+            prop = operation.removeprefix("set_").replace("_", " ")
+            return (f"Define `{prop}` no sistema de {family} do alvo indicado.", f"`target_path`: nó compatível; `value`: novo valor de {prop}, pelo inspetor ou por conexão tipada.", f"Atualiza {prop} no alvo e emite `flow`.", f"`Button Pressed → {title}`, selecione o alvo da cena e conecte uma constante ao pino `value`.")
+        if operation.startswith("get_"):
+            prop = operation.removeprefix("get_").replace("_", " ")
+            return (f"Consulta `{prop}` no sistema de {family} sem alterar o alvo.", "`target_path`: nó compatível que será consultado.", f"Retorna {prop} em `value` e permite continuar o fluxo.", f"`Update → {title} → Debug Info` mostra o valor atual de {prop}.")
+        return (f"Executa a ação `{readable}` no sistema de {family} usando a API segura registrada pela engine.", "`target_path` quando a ação atua em um nó; demais pinos recebem os valores exibidos no bloco ou conexões do mesmo tipo.", "Aplica a ação e emite `flow`; operações de consulta também retornam `value`.", f"`Button Pressed → {title}`; escolha um alvo compatível no seletor de cena e ajuste os parâmetros no próprio bloco.")
+    if prefix == "transform":
+        prop = parts[1].replace("_", " ")
+        return (f"Executa `{readable}` sobre a {prop} de um `Node2D`/`Node3D`.", f"`target_path`: nó da cena; valor de {prop}, destino ou fator conforme a operação.", f"Retorna ou modifica a {prop} e emite `flow` quando houver efeito na cena.", f"`Update → {title}`, alvo `../Player`; conecte um Vector compatível ao pino de valor.")
+    return (f"Executa a operação registrada `{node_id}` ({readable}) no runtime NoCode.", "Use os pinos mostrados no bloco; cada conexão aceita somente o tipo indicado e constantes podem ser definidas no inspetor do nó.", "Retorna `value`/`result` para dados e `flow` para encadear ações.", f"Adicione `{title}` ao grafo, conecte `Start` ou `Update` ao fluxo e envie a saída para `Debug Info` para validar o resultado.")
 
 
 def main() -> None:
@@ -113,11 +163,12 @@ def main() -> None:
         "Cada entrada abaixo documenta o contrato persistido no `.graph.json`. A presença no catálogo não substitui a validação do tipo do alvo: operações de cena falham explicitamente quando o NodePath ou componente é incompatível.", "",
     ]
     for index, (node_id, category, title) in enumerate(definitions, 1):
-        purpose, inputs, outputs = contract(node_id)
+        purpose, inputs, outputs, example = contract(node_id, title)
         lines += [
             f"## {index}. {title}", "",
             f"- **ID:** `{node_id}`", f"- **Categoria:** {category}",
             f"- **Finalidade:** {purpose}", f"- **Entradas/alvo:** {inputs}", f"- **Saídas/efeito:** {outputs}",
+            f"- **Exemplo:** {example}",
             "- **Erros:** dados ausentes, alvo incompatível ou operação indisponível geram `graph_error`; o runner não executa método arbitrário.", "",
         ]
     OUTPUT.write_text("\n".join(lines), encoding="utf-8")

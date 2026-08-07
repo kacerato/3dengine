@@ -92,6 +92,89 @@ class GameplayLogicTest {
     }
 
     @Test
+    fun `sequence completes first subtree before starting second output`() {
+        val host = FakeHost()
+        val graph = VisualGraphDocument(
+            graphId = "ordered-sequence",
+            name = "Ordered sequence",
+            nodes = listOf(
+                VisualNode("event", VisualNodeType.ON_BUTTON_PRESSED, textValue = "go"),
+                VisualNode("sequence", VisualNodeType.SEQUENCE),
+                VisualNode("a", VisualNodeType.PRINT_LOG, textValue = "A"),
+                VisualNode("a-child", VisualNodeType.PRINT_LOG, textValue = "A2"),
+                VisualNode("b", VisualNodeType.PRINT_LOG, textValue = "B"),
+            ),
+            connections = listOf(
+                VisualConnection("event", "sequence", "flow", "flowIn"),
+                VisualConnection("sequence", "a", "then1", "flow"),
+                VisualConnection("a", "a-child", "flow", "flow"),
+                VisualConnection("sequence", "b", "then2", "flow"),
+            ),
+        )
+
+        val result = VisualGraphExecutor(host).emitButton(graph, "go")
+
+        assertTrue(result is LogicExecutionResult.Success)
+        assertEquals(listOf("A", "A2", "B"), host.logs)
+    }
+
+    @Test
+    fun `do once persists across repeated events when executor owns one play session`() {
+        val host = FakeHost()
+        val flowRuntime = NoCodeFlowRuntime()
+        val executor = VisualGraphExecutor(host = host, flowRuntime = flowRuntime)
+        val graph = VisualGraphDocument(
+            graphId = "once-graph",
+            name = "Once graph",
+            nodes = listOf(
+                VisualNode("event", VisualNodeType.ON_BUTTON_PRESSED, textValue = "interact"),
+                VisualNode("once", VisualNodeType.CATALOG, definitionId = "flow.once"),
+                VisualNode("action", VisualNodeType.PRINT_LOG, textValue = "picked"),
+            ),
+            connections = listOf(
+                VisualConnection("event", "once", "flow", "flowIn"),
+                VisualConnection("once", "action", "flow", "flow"),
+            ),
+        )
+
+        assertTrue(executor.emitButton(graph, "interact") is LogicExecutionResult.Success)
+        assertTrue(executor.emitButton(graph, "interact") is LogicExecutionResult.Success)
+        assertEquals(listOf("picked"), host.logs)
+
+        assertEquals(1, executor.resetFlowState(graph.graphId))
+        assertTrue(executor.emitButton(graph, "interact") is LogicExecutionResult.Success)
+        assertEquals(listOf("picked", "picked"), host.logs)
+    }
+
+    @Test
+    fun `single-output branch consumes false path instead of executing action`() {
+        val host = FakeHost()
+        val graph = VisualGraphDocument(
+            graphId = "branch-graph",
+            name = "Branch graph",
+            nodes = listOf(
+                VisualNode("event", VisualNodeType.ON_BUTTON_PRESSED, textValue = "go"),
+                VisualNode(
+                    id = "branch",
+                    type = VisualNodeType.CATALOG,
+                    definitionId = "flow.branch",
+                    values = mapOf("condition" to "false"),
+                ),
+                VisualNode("must-not-run", VisualNodeType.PRINT_LOG, textValue = "wrong"),
+            ),
+            connections = listOf(
+                VisualConnection("event", "branch", "flow", "flowIn"),
+                VisualConnection("branch", "must-not-run", "flow", "flow"),
+            ),
+        )
+
+        val result = VisualGraphExecutor(host).emitButton(graph, "go")
+
+        assertTrue(result is LogicExecutionResult.Success)
+        assertTrue(host.logs.isEmpty())
+    }
+
+    @Test
     fun `failed lua load rolls back callbacks registered before the error`() {
         val host = FakeHost()
         val session = LuaSceneSession(host)

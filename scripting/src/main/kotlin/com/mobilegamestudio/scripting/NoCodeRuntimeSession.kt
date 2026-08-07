@@ -32,6 +32,8 @@ class NoCodeRuntimeSession(
     val attributeStore: RuntimeAttributeStore = RuntimeAttributeStore(),
     interactionConfig: InteractionResolverConfig = InteractionResolverConfig(),
 ) : AutoCloseable {
+    val events: NoCodeEventRuntime = NoCodeEventRuntime(eventBus)
+
     val attributes: EngineAttributeService = EngineAttributeService(
         store = attributeStore,
         eventBus = eventBus,

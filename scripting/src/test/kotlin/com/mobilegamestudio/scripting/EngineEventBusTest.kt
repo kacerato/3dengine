@@ -85,11 +85,11 @@ class EngineEventBusTest {
     fun `nested events keep execution id and cannot recurse forever`() {
         val bus = EngineEventBus(maxDispatchDepth = 4)
         val executionIds = mutableListOf<Long>()
-        var terminalResult: EventDispatchResult? = null
+        val nestedResults = mutableListOf<EventDispatchResult>()
 
         bus.subscribeGlobal(EventOwner("recursive"), "loop") { event, context ->
             executionIds += context.executionId
-            terminalResult = bus.dispatch(event, context)
+            nestedResults += bus.dispatch(event, context)
         }
 
         val result = bus.dispatch(
@@ -99,7 +99,7 @@ class EngineEventBusTest {
 
         assertTrue(result.succeeded)
         assertEquals(listOf(42L, 42L, 42L, 42L), executionIds)
-        assertFalse(requireNotNull(terminalResult).succeeded)
-        assertTrue(requireNotNull(terminalResult).failures.first().message.contains("Limite"))
+        val depthFailure = nestedResults.firstOrNull { !it.succeeded }
+        assertTrue(requireNotNull(depthFailure).failures.first().message.contains("Limite"))
     }
 }

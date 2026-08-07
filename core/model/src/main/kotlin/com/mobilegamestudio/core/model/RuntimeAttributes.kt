@@ -50,7 +50,11 @@ data class AttributeAddress(
     }
 
     companion object {
-        const val MAX_ATTRIBUTE_NAME_LENGTH = 128
+        /**
+         * Leaves room for the longest internal attribute event prefix while
+         * guaranteeing the generated EngineEvent stays under its 128-char limit.
+         */
+        const val MAX_ATTRIBUTE_NAME_LENGTH = 96
 
         fun objectValue(name: String, objectRef: ObjectRef) =
             AttributeAddress(name, AttributeScope.OBJECT, objectRef = objectRef)
@@ -116,7 +120,7 @@ sealed interface AttributeValue {
         is Vector3Value -> EventPayload.Vector3Value(value)
         is ObjectValue -> EventPayload.ObjectValue(value)
         is ComponentValue -> EventPayload.ComponentValue(value)
-        is ListValue -> EventPayload.ListValue(values.map(AttributeValue::toEventPayload))
+        is ListValue -> EventPayload.ListValue(values.map { it.toEventPayload() })
     }
 
     companion object {
@@ -170,7 +174,7 @@ data class AttributeSnapshot(
     val entries: List<AttributeEntry>,
 ) {
     init {
-        require(entries.map(AttributeEntry::address).distinct().size == entries.size) {
+        require(entries.map { it.address }.distinct().size == entries.size) {
             "AttributeSnapshot cannot contain duplicate addresses."
         }
     }

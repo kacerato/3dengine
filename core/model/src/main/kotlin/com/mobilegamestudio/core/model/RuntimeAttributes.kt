@@ -157,11 +157,24 @@ data class AttributeChange(
     val wasRemoved: Boolean get() = previousValue != null && newValue == null
 }
 
+/** Structured snapshot entry; avoids non-primitive JSON map keys. */
+@Serializable
+data class AttributeEntry(
+    val address: AttributeAddress,
+    val value: AttributeValue,
+)
+
 /** Serializable snapshot used by save/recovery layers. */
 @Serializable
 data class AttributeSnapshot(
-    val entries: Map<AttributeAddress, AttributeValue>,
-)
+    val entries: List<AttributeEntry>,
+) {
+    init {
+        require(entries.map(AttributeEntry::address).distinct().size == entries.size) {
+            "AttributeSnapshot cannot contain duplicate addresses."
+        }
+    }
+}
 
 /**
  * Thread-safe shared state store for Object/Scene/Session/Global/SaveGame data.
@@ -174,10 +187,12 @@ data class AttributeSnapshot(
  * - restoring a snapshot replaces state atomically.
  */
 class RuntimeAttributeStore(
-    initial: AttributeSnapshot = AttributeSnapshot(emptyMap()),
+    initial: AttributeSnapshot = AttributeSnapshot(emptyList()),
 ) {
     private val lock = Any()
-    private val values = LinkedHashMap<AttributeAddress, AttributeValue>(initial.entries)
+    private val values = LinkedHashMap<AttributeAddress, AttributeValue>().apply {
+        initial.entries.forEach { entry -> put(entry.address, entry.value) }
+    }
 
     fun get(address: AttributeAddress): AttributeValue? = synchronized(lock) {
         values[address]
@@ -224,16 +239,20 @@ class RuntimeAttributeStore(
     }
 
     fun snapshot(): AttributeSnapshot = synchronized(lock) {
-        AttributeSnapshot(values.toMap())
+        AttributeSnapshot(values.map { (address, value) -> AttributeEntry(address, value) })
     }
 
     fun snapshot(scope: AttributeScope): AttributeSnapshot = synchronized(lock) {
-        AttributeSnapshot(values.filterKeys { it.scope == scope })
+        AttributeSnapshot(
+            values
+                .filterKeys { it.scope == scope }
+                .map { (address, value) -> AttributeEntry(address, value) },
+        )
     }
 
     fun restore(snapshot: AttributeSnapshot) = synchronized(lock) {
         values.clear()
-        values.putAll(snapshot.entries)
+        snapshot.entries.forEach { entry -> values[entry.address] = entry.value }
     }
 
     fun size(): Int = synchronized(lock) { values.size }

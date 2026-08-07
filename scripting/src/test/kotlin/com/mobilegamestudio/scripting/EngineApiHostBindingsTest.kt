@@ -2,7 +2,6 @@ package com.mobilegamestudio.scripting
 
 import com.mobilegamestudio.core.model.AttributeAddress
 import com.mobilegamestudio.core.model.AttributeValue
-import com.mobilegamestudio.core.model.EngineApiCallResult
 import com.mobilegamestudio.core.model.EngineApiSurface
 import com.mobilegamestudio.core.model.ExecutionContext
 import com.mobilegamestudio.core.model.ObjectRef

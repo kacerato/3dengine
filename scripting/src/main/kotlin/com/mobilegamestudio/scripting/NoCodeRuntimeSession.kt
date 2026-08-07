@@ -40,6 +40,11 @@ class NoCodeRuntimeSession(
         store = attributeStore,
         eventBus = eventBus,
     )
+    val attributeRuntime: NoCodeAttributeRuntime = NoCodeAttributeRuntime(attributes)
+    val graphAttributes: NoCodeGraphAttributeBinder = NoCodeGraphAttributeBinder(
+        eventBus = eventBus,
+        attributeRuntime = attributeRuntime,
+    )
 
     private val lock = Any()
     private val nextExecutionId = AtomicLong(1L)
@@ -50,7 +55,7 @@ class NoCodeRuntimeSession(
 
     /**
      * Creates an executor facade that shares this Play session's flow state,
-     * EventBus and monotonically increasing execution IDs.
+     * EventBus, Attributes and monotonically increasing execution IDs.
      */
     fun graphExecutor(
         host: LogicSceneHost,
@@ -72,6 +77,7 @@ class NoCodeRuntimeSession(
             onEmitEvent = onLegacyEmitEvent,
             flowRuntime = flowRuntime,
             eventRuntime = events,
+            attributeRuntime = attributeRuntime,
             executionContextFactory = { graph ->
                 ExecutionContext(
                     executionId = nextExecutionId.getAndIncrement(),

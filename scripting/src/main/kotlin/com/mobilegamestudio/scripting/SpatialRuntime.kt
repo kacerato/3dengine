@@ -30,13 +30,19 @@ class ObjectDistanceRuntime(
     fun position(objectRef: ObjectRef): Vector3? = host.position(objectRef)
 
     fun distance(a: ObjectRef, b: ObjectRef): Double? {
-        val pa = host.position(a) ?: return null
-        val pb = host.position(b) ?: return null
-        val dx = (pa.x - pb.x).toDouble()
-        val dy = (pa.y - pb.y).toDouble()
-        val dz = (pa.z - pb.z).toDouble()
+        val positionA = host.position(a) ?: return null
+        val positionB = host.position(b) ?: return null
+        return distance(positionA, positionB)
+    }
+
+    fun distance(positionA: Vector3, positionB: Vector3): Double {
+        require(positionA.isFinite() && positionB.isFinite()) { "Spatial positions must be finite." }
+        val dx = (positionA.x - positionB.x).toDouble()
+        val dy = (positionA.y - positionB.y).toDouble()
+        val dz = (positionA.z - positionB.z).toDouble()
         val result = sqrt(dx * dx + dy * dy + dz * dz)
-        return result.takeIf(Double::isFinite)
+        require(result.isFinite()) { "Computed object distance must be finite." }
+        return result
     }
 }
 
@@ -167,6 +173,8 @@ class ProximityWatcherRuntime(
         spec: ProximityWatcherSpec,
         previous: ProximityState,
     ): ProximityEvaluation {
+        // One position snapshot per object per evaluation. Moving objects cannot
+        // produce two different samples inside the same threshold decision.
         val positionA = spatial.position(spec.objectA)
         val positionB = spatial.position(spec.objectB)
         if (positionA == null || positionB == null) {
@@ -178,8 +186,7 @@ class ProximityWatcherRuntime(
                 },
             )
         }
-        val distance = spatial.distance(spec.objectA, spec.objectB)
-            ?: return ProximityEvaluation.Unavailable(spec, setOf(spec.objectA, spec.objectB))
+        val distance = spatial.distance(positionA, positionB)
 
         val next = when (previous) {
             ProximityState.OUTSIDE -> if (distance <= spec.enterDistance) ProximityState.INSIDE else ProximityState.OUTSIDE

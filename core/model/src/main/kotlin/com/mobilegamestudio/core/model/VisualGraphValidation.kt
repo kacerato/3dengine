@@ -49,12 +49,17 @@ object VisualGraphValidator {
             errors += "O grafo contém conexões duplicadas."
         }
 
+        val connectedInputPorts = graph.connections.mapNotNull { connection ->
+            val check = connectionChecks[connection] ?: return@mapNotNull null
+            if (!check.valid) return@mapNotNull null
+            connection.toNodeId to requireNotNull(check.to).port.id
+        }.toSet()
+
         val incomingDataPorts = graph.connections
             .mapNotNull { connection ->
                 val check = connectionChecks[connection] ?: return@mapNotNull null
                 if (!check.valid || check.to?.port?.type == VisualPortType.FLOW) return@mapNotNull null
-                val canonicalPort = check.to.port.id
-                Triple(connection.toNodeId, canonicalPort, connection)
+                Triple(connection.toNodeId, check.to.port.id, connection)
             }
             .groupBy { (nodeId, portId, _) -> nodeId to portId }
         incomingDataPorts.forEach { (target, connections) ->
@@ -101,7 +106,7 @@ object VisualGraphValidator {
                 ) {
                     errors += "Objeto do evento de toque inválido no nó ${node.id}."
                 }
-                VisualNodeType.CATALOG -> validateCatalogNode(node, errors)
+                VisualNodeType.CATALOG -> validateCatalogNode(node, connectedInputPorts, errors)
                 else -> Unit
             }
         }
@@ -125,6 +130,7 @@ object VisualGraphValidator {
 
     private fun validateCatalogNode(
         node: VisualNode,
+        connectedInputPorts: Set<Pair<String, String>>,
         errors: MutableList<String>,
     ) {
         val definition = NoCodeNodeRegistry.definitionFor(node) ?: return
@@ -139,7 +145,7 @@ object VisualGraphValidator {
             definition.id == "event.send" || definition.id.startsWith("event.send_") ||
                 definition.id == "object.send_event" || definition.id.startsWith("object.send_event_") -> {
                 val eventName = (node.values["event"] ?: node.textValue).orEmpty().trim()
-                val hasEventConnection = nodeHasIncomingValuePort(node.id, "event")
+                val hasEventConnection = node.id to "event" in connectedInputPorts
                 if (eventName.isBlank() && !hasEventConnection) {
                     errors += "Send Event ${node.id} precisa de um nome ou conexão na entrada Event."
                 }
@@ -149,13 +155,6 @@ object VisualGraphValidator {
             }
         }
     }
-
-    /**
-     * Semantic catalog checks that depend on connections are completed in the
-     * main connection pass. This placeholder deliberately returns false here;
-     * required dynamic-input checks are handled below by validateRequiredInputs.
-     */
-    private fun nodeHasIncomingValuePort(nodeId: String, portId: String): Boolean = false
 
     private fun hasCycle(
         connections: List<VisualConnection>,

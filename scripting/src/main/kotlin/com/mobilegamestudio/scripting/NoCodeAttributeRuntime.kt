@@ -4,6 +4,8 @@ import com.mobilegamestudio.core.model.AttributeAddress
 import com.mobilegamestudio.core.model.AttributeScope
 import com.mobilegamestudio.core.model.AttributeValue
 import com.mobilegamestudio.core.model.ComponentRef
+import com.mobilegamestudio.core.model.EngineEvent
+import com.mobilegamestudio.core.model.EventAddress
 import com.mobilegamestudio.core.model.EventPayload
 import com.mobilegamestudio.core.model.ExecutionContext
 import com.mobilegamestudio.core.model.ObjectRef
@@ -20,6 +22,7 @@ enum class NoCodeAttributeScope {
     companion object {
         fun parse(value: Any?): NoCodeAttributeScope? {
             val normalized = value?.toString()?.trim()?.lowercase()?.replace('-', '_')?.replace(' ', '_')
+                ?.takeIf(String::isNotEmpty)
                 ?: return null
             return when (normalized) {
                 "object", "target", "local" -> OBJECT
@@ -137,6 +140,53 @@ class NoCodeAttributeRuntime(
 
     fun eventName(address: AttributeAddress): String = attributes.eventName(address)
 
+    fun eventAddress(address: AttributeAddress): EventAddress = when (address.scope) {
+        AttributeScope.OBJECT -> EventAddress.objectTarget(requireNotNull(address.objectRef))
+        AttributeScope.SCENE -> EventAddress.scene(requireNotNull(address.sceneId))
+        AttributeScope.SESSION,
+        AttributeScope.GLOBAL,
+        AttributeScope.SAVE_GAME,
+        -> EventAddress.global()
+    }
+
+    fun matchesChangedEvent(
+        definitionId: String,
+        values: Map<String, String>,
+        graphId: String,
+        sceneId: String?,
+        ownerObject: ObjectRef?,
+        event: EngineEvent,
+    ): Boolean {
+        if (!isChangedNode(definitionId)) return false
+        val address = try {
+            addressForWatcher(
+                values = values,
+                graphId = graphId,
+                sceneId = sceneId,
+                ownerObject = ownerObject,
+            )
+        } catch (_: IllegalArgumentException) {
+            return false
+        }
+        return event.name == eventName(address) &&
+            event.address == eventAddress(address) &&
+            acceptsPayload(definitionId, event.payload)
+    }
+
+    fun acceptsPayload(definitionId: String, payload: EventPayload): Boolean {
+        if (payload == EventPayload.None) return true
+        return when (valueKind(definitionId)) {
+            NoCodeAttributeValueKind.ANY -> true
+            NoCodeAttributeValueKind.BOOL -> payload is EventPayload.Bool
+            NoCodeAttributeValueKind.NUMBER -> payload is EventPayload.Number
+            NoCodeAttributeValueKind.TEXT -> payload is EventPayload.Text
+            NoCodeAttributeValueKind.VECTOR3 -> payload is EventPayload.Vector3Value
+            NoCodeAttributeValueKind.OBJECT -> payload is EventPayload.ObjectValue
+            NoCodeAttributeValueKind.COMPONENT -> payload is EventPayload.ComponentValue
+            NoCodeAttributeValueKind.LIST -> payload is EventPayload.ListValue
+        }
+    }
+
     fun runtimeValue(value: AttributeValue?): Any? = when (value) {
         null -> null
         is AttributeValue.Bool -> value.value
@@ -146,6 +196,17 @@ class NoCodeAttributeRuntime(
         is AttributeValue.ObjectValue -> value.value
         is AttributeValue.ComponentValue -> value.value
         is AttributeValue.ListValue -> value.values.map(::runtimeValue)
+    }
+
+    fun runtimeValue(payload: EventPayload): Any? = when (payload) {
+        EventPayload.None -> null
+        is EventPayload.Bool -> payload.value
+        is EventPayload.Number -> payload.value
+        is EventPayload.Text -> payload.value
+        is EventPayload.Vector3Value -> payload.value
+        is EventPayload.ObjectValue -> payload.value
+        is EventPayload.ComponentValue -> payload.value
+        is EventPayload.ListValue -> payload.values.map(::runtimeValue)
     }
 
     fun acceptsValue(definitionId: String, value: AttributeValue): Boolean = when (valueKind(definitionId)) {

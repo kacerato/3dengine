@@ -25,6 +25,7 @@ data class NoCodeAttributeBindingResult(
  *
  * A graph listening to door-a.locked is subscribed to door-a's OBJECT address;
  * door-b can use the same attribute name without triggering the first graph.
+ * runtimeGraphId identifies the concrete graph instance, not only the graph asset.
  */
 class NoCodeGraphAttributeBinder(
     private val eventBus: EngineEventBus,
@@ -35,8 +36,10 @@ class NoCodeGraphAttributeBinder(
         executor: VisualGraphExecutor,
         sceneId: String? = null,
         ownerObject: ObjectRef? = null,
-        instanceKey: String = defaultInstanceKey(graph, sceneId, ownerObject),
+        runtimeGraphId: String = graph.graphId,
+        instanceKey: String = defaultInstanceKey(runtimeGraphId, sceneId, ownerObject),
     ): NoCodeAttributeBindingResult {
+        require(runtimeGraphId.isNotBlank()) { "runtimeGraphId do graph não pode ser vazio." }
         require(instanceKey.isNotBlank()) { "instanceKey do graph não pode ser vazio." }
         val owner = EventOwner("nocode-attribute:$instanceKey")
         eventBus.unsubscribeOwner(owner)
@@ -51,7 +54,7 @@ class NoCodeGraphAttributeBinder(
             val address = try {
                 attributeRuntime.addressForWatcher(
                     values = node.values,
-                    graphId = graph.graphId,
+                    graphId = runtimeGraphId,
                     sceneId = sceneId,
                     ownerObject = ownerObject,
                 )
@@ -132,13 +135,13 @@ class NoCodeGraphAttributeBinder(
 
     companion object {
         private fun defaultInstanceKey(
-            graph: VisualGraphDocument,
+            runtimeGraphId: String,
             sceneId: String?,
             ownerObject: ObjectRef?,
         ): String = listOfNotNull(
             sceneId?.let { "scene=$it" },
             ownerObject?.objectId?.let { "object=$it" },
-            "graph=${graph.graphId}",
+            "graph=$runtimeGraphId",
         ).joinToString("|")
     }
 }

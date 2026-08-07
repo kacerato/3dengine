@@ -54,8 +54,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import com.mobilegamestudio.core.model.NoCodeNodeRegistry
 import com.mobilegamestudio.core.model.VisualNode
-import com.mobilegamestudio.core.model.VisualNodeCatalog
 import com.mobilegamestudio.core.model.VisualNodeCategory
 import com.mobilegamestudio.core.model.VisualNodeDefinition
 import com.mobilegamestudio.core.model.VisualPortDefinition
@@ -141,7 +141,7 @@ private fun NoCodeToolbar(
         Column(Modifier.width(138.dp)) {
             Text("NOCODE GRAPH", color = PrimaryText, fontSize = 10.sp, fontWeight = FontWeight.Bold)
             Text(
-                "${VisualNodeCatalog.definitions.size} nós · ${state.visualGraph?.nodes?.size ?: 0} na cena",
+                "${NoCodeNodeRegistry.definitions.size} nós · ${state.visualGraph?.nodes?.size ?: 0} na cena",
                 color = SecondaryText,
                 fontSize = 8.sp,
             )
@@ -152,7 +152,7 @@ private fun NoCodeToolbar(
         ) {
             PanelAction("BIBLIOTECA", enabled = state.visualGraph != null, onClick = onOpenPalette)
             PanelAction("NOVO EVENTO", enabled = !state.isLoadingGraph, onClick = onCreateGraph)
-            PanelAction("REMOVER", enabled = (state.visualGraph?.nodes?.size ?: 0) > 1, onClick = onRemoveLast)
+            PanelAction("REMOVER", enabled = (state.visualGraph?.nodes?.size ?: 0) > 1, onClick = onRemoveLastNode)
             PanelAction(if (state.isSavingGraph) "SALVANDO" else "SALVAR", enabled = state.visualGraph != null, onClick = onSave)
             PanelAction("−", onClick = onZoomOut)
             PanelAction("${(zoom * 100).roundToInt()}%", onClick = onZoomReset)
@@ -371,7 +371,7 @@ private fun FlowNodeCard(
     onCableCancel: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val definition = VisualNodeCatalog.definitionFor(node)
+    val definition = NoCodeNodeRegistry.definitionFor(node)
     val category = definition?.category ?: VisualNodeCategory.DEBUG
     val categoryColor = categoryColor(category)
     Column(
@@ -544,7 +544,7 @@ private fun NodeLibraryPopup(onDismiss: () -> Unit, onAdd: (String) -> Unit) {
     var category by remember { mutableStateOf<VisualNodeCategory?>(null) }
     var selectedDefinition by remember { mutableStateOf<VisualNodeDefinition?>(null) }
     val filtered = remember(search, category) {
-        VisualNodeCatalog.definitions.filter { definition ->
+        NoCodeNodeRegistry.definitions.filter { definition ->
             (category == null || definition.category == category) &&
                 (
                     search.isBlank() ||
@@ -570,7 +570,7 @@ private fun NodeLibraryPopup(onDismiss: () -> Unit, onAdd: (String) -> Unit) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text("BIBLIOTECA DE NÓS", color = PrimaryText, fontSize = 13.sp, fontWeight = FontWeight.Bold)
-                        Text("${filtered.size} de ${VisualNodeCatalog.definitions.size} operações", color = SecondaryText, fontSize = 9.sp)
+                        Text("${filtered.size} de ${NoCodeNodeRegistry.definitions.size} operações", color = SecondaryText, fontSize = 9.sp)
                     }
                     PanelAction("FECHAR", onClick = onDismiss)
                 }

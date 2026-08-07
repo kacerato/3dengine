@@ -120,10 +120,19 @@ class NoCodeFlowRuntime(
         inputs: Map<String, Any?>,
     ): NoCodeFlowDecision {
         val condition = inputs.boolean("condition") ?: inputs.boolean("value") ?: false
+        if (outputs.isEmpty()) return NoCodeFlowDecision(emptyList())
+
         val preferred = if (condition) listOf("true", "then", "flow") else listOf("false", "else")
-        val output = preferred.firstOrNull(outputs::contains)
-            ?: if (outputs.size >= 2) outputs[if (condition) 0 else 1] else outputs.firstOrNull()
-        return NoCodeFlowDecision(output?.let(::listOf).orEmpty())
+        val explicitlyNamed = preferred.firstOrNull(outputs::contains)
+        if (explicitlyNamed != null) return NoCodeFlowDecision(listOf(explicitlyNamed))
+
+        if (outputs.size >= 2) {
+            return NoCodeFlowDecision(listOf(outputs[if (condition) 0 else 1]))
+        }
+
+        // Older graph schemas exposed only one Branch flow output. Preserve a
+        // useful conditional-gate behavior: true follows it; false consumes it.
+        return NoCodeFlowDecision(if (condition) listOf(outputs.first()) else emptyList())
     }
 
     private fun routeGate(

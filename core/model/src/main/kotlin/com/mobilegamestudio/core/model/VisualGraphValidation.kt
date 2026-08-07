@@ -30,7 +30,7 @@ object VisualGraphValidator {
             if (!node.positionX.isFinite() || !node.positionY.isFinite()) {
                 errors += "Posição inválida no nó ${node.id}."
             }
-            if (node.type == VisualNodeType.CATALOG && VisualNodeCatalog.definitionFor(node) == null) {
+            if (node.type == VisualNodeType.CATALOG && NoCodeNodeRegistry.definitionFor(node) == null) {
                 errors += "Definição desconhecida no nó ${node.id}."
             }
             when (node.type) {

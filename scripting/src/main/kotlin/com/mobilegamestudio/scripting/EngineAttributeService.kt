@@ -87,8 +87,9 @@ class EngineAttributeService(
         dispatchIfChanged(change, sender, context)
     }
 
+    /** Reserved internal namespace; user Custom Events cannot claim `__*`. */
     fun eventName(address: AttributeAddress): String =
-        "attribute.changed.${address.scope.name.lowercase()}.${address.name}"
+        "__attr.${address.scope.name.lowercase()}.${address.name}"
 
     /** Canonical EventBus address for an Attribute change watcher. */
     fun eventAddress(address: AttributeAddress): EventAddress = when (address.scope) {

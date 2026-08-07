@@ -29,13 +29,26 @@ class VisualGraphExecutor(
     private val flowRuntime: NoCodeFlowRuntime = NoCodeFlowRuntime(),
     private val eventRuntime: NoCodeEventRuntime? = null,
     private val executionContextFactory: ((VisualGraphDocument) -> ExecutionContext)? = null,
+    /**
+     * Runtime identity of this graph instance. Two objects may use the same graph
+     * document but must never share Gate/DoOnce/MultiGate state or LOCAL_GRAPH events.
+     */
+    private val graphInstanceId: String? = null,
 ) {
     private val scheduler = NoCodeFlowScheduler(maxExecutedNodes)
     private val localExecutionIds = AtomicLong(1L)
 
+    init {
+        require(graphInstanceId == null || graphInstanceId.isNotBlank()) {
+            "graphInstanceId cannot be blank."
+        }
+    }
+
     fun validate(graph: VisualGraphDocument): List<String> = VisualGraphValidator.validate(graph)
 
-    fun resetFlowState(graphId: String): Int = flowRuntime.resetGraph(graphId)
+    fun resetFlowState(runtimeGraphId: String): Int = flowRuntime.resetGraph(runtimeGraphId)
+
+    fun resetFlowState(graph: VisualGraphDocument): Int = flowRuntime.resetGraph(runtimeGraphId(graph))
 
     fun emitButton(graph: VisualGraphDocument, eventName: String): LogicExecutionResult {
         val errors = validate(graph)
@@ -119,7 +132,9 @@ class VisualGraphExecutor(
                 put(node.id to "target", event.address.objectRef)
             }
         }
-        val context = (baseContext ?: newContext(graph)).withEvent(event).copy(graphId = graph.graphId)
+        val context = (baseContext ?: newContext(graph))
+            .withEvent(event)
+            .copy(graphId = runtimeGraphId(graph))
         return execute(
             graph = graph,
             starts = starts,
@@ -205,7 +220,7 @@ class VisualGraphExecutor(
         if (definition != null && flowRuntime.supports(definition.id)) {
             val decision = try {
                 flowRuntime.route(
-                    graphId = graph.graphId,
+                    graphId = runtimeGraphId(graph),
                     node = node,
                     definition = definition,
                     inputs = inputs,
@@ -224,7 +239,7 @@ class VisualGraphExecutor(
             definition = definition,
             inputs = inputs,
             outputValues = outputValues,
-            context = context.copy(graphId = graph.graphId),
+            context = context.copy(graphId = runtimeGraphId(graph)),
         )
         if (actionResult is LogicExecutionResult.Failure) {
             return NoCodeNodeExecution.Failed(actionResult)
@@ -513,11 +528,15 @@ class VisualGraphExecutor(
         }
     }
 
-    private fun newContext(graph: VisualGraphDocument): ExecutionContext =
-        executionContextFactory?.invoke(graph) ?: ExecutionContext(
+    private fun newContext(graph: VisualGraphDocument): ExecutionContext {
+        val base = executionContextFactory?.invoke(graph) ?: ExecutionContext(
             executionId = localExecutionIds.getAndIncrement(),
-            graphId = graph.graphId,
+            graphId = runtimeGraphId(graph),
         )
+        return base.copy(graphId = runtimeGraphId(graph))
+    }
+
+    private fun runtimeGraphId(graph: VisualGraphDocument): String = graphInstanceId ?: graph.graphId
 
     private fun resolveObjectId(node: VisualNode): String? =
         node.objectId ?: node.objectName?.let(host::findObjectIdByName)

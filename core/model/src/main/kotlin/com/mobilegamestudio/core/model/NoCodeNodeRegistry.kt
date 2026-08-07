@@ -9,14 +9,21 @@ package com.mobilegamestudio.core.model
  * future EngineApiRegistry-generated nodes as well.
  */
 object NoCodeNodeRegistry {
+    private val specializedDefinitions: List<VisualNodeDefinition> =
+        NoCodeFlowDefinitions.definitions + NoCodeEventDefinitions.definitions
+
     private val specializedById: Map<String, VisualNodeDefinition> =
-        NoCodeFlowDefinitions.definitions.associateBy(VisualNodeDefinition::id)
+        specializedDefinitions.associateBy(VisualNodeDefinition::id).also { byId ->
+            check(byId.size == specializedDefinitions.size) {
+                "Definições NoCode especializadas não podem repetir IDs."
+            }
+        }
 
     val definitions: List<VisualNodeDefinition> = buildList {
         VisualNodeCatalog.definitions.forEach { definition ->
             add(specializedById[definition.id] ?: definition)
         }
-        NoCodeFlowDefinitions.definitions.forEach { definition ->
+        specializedDefinitions.forEach { definition ->
             if (VisualNodeCatalog.byId[definition.id] == null) add(definition)
         }
     }.also { definitions ->

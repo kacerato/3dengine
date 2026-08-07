@@ -41,8 +41,8 @@ enum class EventScope {
 /**
  * Typed payload shared by NoCode and script runtimes.
  *
- * Keeping payloads explicit prevents the event bridge from silently turning
- * values into unrelated types as more languages are connected to the engine.
+ * Unsupported values fail explicitly. Silent toString()/numeric coercion here
+ * would make Java, Lua, Python and NoCode observe different contracts.
  */
 @Serializable
 sealed interface EventPayload {
@@ -56,7 +56,11 @@ sealed interface EventPayload {
 
     @Serializable
     @SerialName("number")
-    data class Number(val value: Double) : EventPayload
+    data class Number(val value: Double) : EventPayload {
+        init {
+            require(value.isFinite()) { "Event numeric payload must be finite." }
+        }
+    }
 
     @Serializable
     @SerialName("text")
@@ -64,7 +68,11 @@ sealed interface EventPayload {
 
     @Serializable
     @SerialName("vector3")
-    data class Vector3Value(val value: Vector3) : EventPayload
+    data class Vector3Value(val value: Vector3) : EventPayload {
+        init {
+            require(value.isFinite()) { "Event Vector3 payload must be finite." }
+        }
+    }
 
     @Serializable
     @SerialName("object")
@@ -94,7 +102,9 @@ sealed interface EventPayload {
             is ObjectRef -> ObjectValue(value)
             is ComponentRef -> ComponentValue(value)
             is List<*> -> ListValue(value.map(::fromRuntimeValue))
-            else -> Text(value.toString())
+            else -> throw IllegalArgumentException(
+                "Unsupported event payload type: ${value::class.qualifiedName ?: value::class.java.name}",
+            )
         }
     }
 }

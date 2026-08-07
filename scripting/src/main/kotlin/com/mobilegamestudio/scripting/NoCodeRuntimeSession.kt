@@ -56,6 +56,11 @@ class NoCodeRuntimeSession(
     /**
      * Creates an executor facade that shares this Play session's flow state,
      * EventBus, Attributes and monotonically increasing execution IDs.
+     *
+     * When sourceObject is an interactor/player, every new execution also carries
+     * that interactor's currently resolved target. A button press therefore uses
+     * the exact same target chosen by the ray/interaction resolver instead of
+     * performing another nearest-object search in the middle of the graph.
      */
     fun graphExecutor(
         host: LogicSceneHost,
@@ -84,29 +89,61 @@ class NoCodeRuntimeSession(
                     graphId = graphInstanceId ?: graph.graphId,
                     sceneId = sceneId,
                     sourceObject = sourceObject,
+                    targetObject = sourceObject?.let(::currentInteractionObject),
                 )
             },
             graphInstanceId = graphInstanceId,
         )
     }
 
+    /** Builds the same context used by script/Engine API bridges for one interactor. */
+    fun executionContextFor(
+        interactor: ObjectRef,
+        graphId: String? = null,
+        sceneId: String? = null,
+    ): ExecutionContext {
+        checkOpen()
+        return ExecutionContext(
+            executionId = nextExecutionId.getAndIncrement(),
+            graphId = graphId,
+            sceneId = sceneId,
+            sourceObject = interactor,
+            targetObject = currentInteractionObject(interactor),
+        )
+    }
+
     /**
      * Resolves one stable interaction target per interactor/player.
      * Two players (or two editor preview cursors) never overwrite each other.
+     * Target acquired/lost notifications use object-scoped EngineEvents.
      */
     fun resolveInteraction(
         interactor: ObjectRef,
         candidates: List<InteractionCandidate>,
-    ): InteractionResolution = synchronized(lock) {
-        checkOpenLocked()
-        val previous = interactionTargets[interactor]?.objectRef
-        val resolution = targetResolver.resolve(candidates, previous)
-        if (resolution.target == null) {
-            interactionTargets.remove(interactor)
-        } else {
-            interactionTargets[interactor] = resolution.target
+        sceneId: String? = null,
+    ): InteractionResolution {
+        val previous: ObjectRef?
+        val resolution: InteractionResolution
+        synchronized(lock) {
+            checkOpenLocked()
+            previous = interactionTargets[interactor]?.objectRef
+            resolution = targetResolver.resolve(candidates, previous)
+            if (resolution.target == null) {
+                interactionTargets.remove(interactor)
+            } else {
+                interactionTargets[interactor] = resolution.target
+            }
         }
-        resolution
+
+        if (resolution.changed) {
+            publishInteractionChange(
+                interactor = interactor,
+                previous = previous,
+                current = resolution.target?.objectRef,
+                sceneId = sceneId,
+            )
+        }
+        return resolution
     }
 
     fun interactionTarget(interactor: ObjectRef): InteractionTarget? = synchronized(lock) {
@@ -114,9 +151,13 @@ class NoCodeRuntimeSession(
         interactionTargets[interactor]
     }
 
-    fun clearInteractionTarget(interactor: ObjectRef): InteractionTarget? = synchronized(lock) {
-        checkOpenLocked()
-        interactionTargets.remove(interactor)
+    fun clearInteractionTarget(
+        interactor: ObjectRef,
+        sceneId: String? = null,
+    ): InteractionTarget? {
+        val previous = interactionTarget(interactor)
+        if (previous != null) resolveInteraction(interactor, emptyList(), sceneId)
+        return previous
     }
 
     fun clearAllInteractionTargets(): Int = synchronized(lock) {
@@ -191,9 +232,52 @@ class NoCodeRuntimeSession(
         shutdown()
     }
 
+    private fun currentInteractionObject(interactor: ObjectRef): ObjectRef? = synchronized(lock) {
+        checkOpenLocked()
+        interactionTargets[interactor]?.objectRef
+    }
+
+    private fun publishInteractionChange(
+        interactor: ObjectRef,
+        previous: ObjectRef?,
+        current: ObjectRef?,
+        sceneId: String?,
+    ) {
+        previous?.let { objectRef ->
+            dispatchEvent(
+                name = EVENT_TARGET_LOST,
+                address = EventAddress.objectTarget(objectRef),
+                payload = EventPayload.ObjectValue(interactor),
+                sender = interactor,
+            )
+        }
+        current?.let { objectRef ->
+            dispatchEvent(
+                name = EVENT_TARGET_ACQUIRED,
+                address = EventAddress.objectTarget(objectRef),
+                payload = EventPayload.ObjectValue(interactor),
+                sender = interactor,
+            )
+        }
+        sceneId?.let { id ->
+            dispatchEvent(
+                name = EVENT_TARGET_CHANGED,
+                address = EventAddress.scene(id),
+                payload = current?.let(EventPayload::ObjectValue) ?: EventPayload.None,
+                sender = interactor,
+            )
+        }
+    }
+
     private fun checkOpen() = synchronized(lock) { checkOpenLocked() }
 
     private fun checkOpenLocked() {
         check(!closed) { "NoCodeRuntimeSession is already closed." }
+    }
+
+    companion object {
+        const val EVENT_TARGET_ACQUIRED = "interaction.target.acquired"
+        const val EVENT_TARGET_LOST = "interaction.target.lost"
+        const val EVENT_TARGET_CHANGED = "interaction.target.changed"
     }
 }

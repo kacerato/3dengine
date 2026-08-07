@@ -15,10 +15,62 @@ interface MergeableSceneCommand : SceneCommand {
     fun mergeWith(next: SceneCommand): SceneCommand?
 }
 
+/**
+ * Groups related edits into one atomic history entry.
+ *
+ * All commands work over immutable SceneDocument values. Intermediate documents
+ * stay local to this command, so a failure never leaks a partially applied
+ * transaction to the editor. Undo follows the inverse order, matching the
+ * transaction model used by mature authoring tools.
+ */
+data class CompositeSceneCommand(
+    override val label: String,
+    val commands: List<SceneCommand>,
+) : SceneCommand {
+    init {
+        require(label.isNotBlank()) { "Transaction label cannot be blank." }
+        require(commands.isNotEmpty()) { "A scene transaction requires at least one command." }
+    }
+
+    override fun apply(document: SceneDocument): SceneEditResult {
+        var working = document
+        commands.forEachIndexed { index, command ->
+            when (val result = command.apply(working)) {
+                is SceneEditResult.Success -> working = result.document
+                is SceneEditResult.Failure -> return SceneEditResult.Failure(
+                    "Falha na transação '$label' na etapa ${index + 1} (${command.label}): ${result.message}",
+                )
+            }
+        }
+        return SceneEditResult.Success(working)
+    }
+
+    override fun revert(document: SceneDocument): SceneEditResult {
+        var working = document
+        commands.asReversed().forEachIndexed { reverseIndex, command ->
+            when (val result = command.revert(working)) {
+                is SceneEditResult.Success -> working = result.document
+                is SceneEditResult.Failure -> {
+                    val originalIndex = commands.lastIndex - reverseIndex
+                    return SceneEditResult.Failure(
+                        "Falha ao desfazer a transação '$label' na etapa ${originalIndex + 1} " +
+                            "(${command.label}): ${result.message}",
+                    )
+                }
+            }
+        }
+        return SceneEditResult.Success(working)
+    }
+}
+
 class SceneCommandHistory(
     initial: SceneDocument,
     private val maxEntries: Int = 80,
 ) {
+    init {
+        require(maxEntries > 0) { "maxEntries must be positive." }
+    }
+
     var document: SceneDocument = initial
         private set
     private val undoStack = ArrayDeque<SceneCommand>()
@@ -26,6 +78,10 @@ class SceneCommandHistory(
 
     val canUndo: Boolean get() = undoStack.isNotEmpty()
     val canRedo: Boolean get() = redoStack.isNotEmpty()
+    val undoLabel: String? get() = undoStack.lastOrNull()?.label
+    val redoLabel: String? get() = redoStack.lastOrNull()?.label
+    val undoDepth: Int get() = undoStack.size
+    val redoDepth: Int get() = redoStack.size
 
     fun execute(command: SceneCommand): SceneEditResult =
         command.apply(document).also { result ->
@@ -38,10 +94,18 @@ class SceneCommandHistory(
                 } else {
                     undoStack.addLast(command)
                 }
-                while (undoStack.size > maxEntries) undoStack.removeFirst()
+                trimUndoStack()
                 redoStack.clear()
             }
         }
+
+    fun executeTransaction(
+        label: String,
+        commands: List<SceneCommand>,
+    ): SceneEditResult {
+        if (commands.isEmpty()) return SceneEditResult.Success(document)
+        return execute(CompositeSceneCommand(label, commands))
+    }
 
     fun undo(): SceneEditResult {
         val command = undoStack.removeLastOrNull()
@@ -63,16 +127,21 @@ class SceneCommandHistory(
             if (result is SceneEditResult.Success) {
                 document = result.document
                 undoStack.addLast(command)
+                trimUndoStack()
             } else {
                 redoStack.addLast(command)
             }
         }
     }
 
-    fun replaceFromStorage(value: SceneDocument) {
-        document = value
+    fun clearHistory() {
         undoStack.clear()
         redoStack.clear()
+    }
+
+    fun replaceFromStorage(value: SceneDocument) {
+        document = value
+        clearHistory()
     }
 
     fun updateMetadataFromStorage(value: SceneDocument): Boolean {
@@ -84,6 +153,10 @@ class SceneCommandHistory(
         }
         document = document.copy(metadata = value.metadata)
         return true
+    }
+
+    private fun trimUndoStack() {
+        while (undoStack.size > maxEntries) undoStack.removeFirst()
     }
 }
 

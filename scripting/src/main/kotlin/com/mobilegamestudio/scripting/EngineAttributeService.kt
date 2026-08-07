@@ -5,6 +5,7 @@ import com.mobilegamestudio.core.model.AttributeChange
 import com.mobilegamestudio.core.model.AttributeScope
 import com.mobilegamestudio.core.model.AttributeValue
 import com.mobilegamestudio.core.model.EngineEvent
+import com.mobilegamestudio.core.model.EventAddress
 import com.mobilegamestudio.core.model.EventPayload
 import com.mobilegamestudio.core.model.ObjectRef
 import com.mobilegamestudio.core.model.RuntimeAttributeStore
@@ -74,36 +75,34 @@ class EngineAttributeService(
     fun eventName(address: AttributeAddress): String =
         "attribute.changed.${address.scope.name.lowercase()}.${address.name}"
 
+    /** Canonical EventBus address for an Attribute change watcher. */
+    fun eventAddress(address: AttributeAddress): EventAddress = when (address.scope) {
+        AttributeScope.OBJECT -> EventAddress.objectTarget(requireNotNull(address.objectRef))
+        AttributeScope.SCENE -> EventAddress.scene(requireNotNull(address.sceneId))
+        AttributeScope.SESSION,
+        AttributeScope.GLOBAL,
+        AttributeScope.SAVE_GAME,
+        -> EventAddress.global()
+    }
+
+    fun changeEvent(
+        change: AttributeChange,
+        sender: ObjectRef? = null,
+    ): EngineEvent = EngineEvent(
+        name = eventName(change.address),
+        address = eventAddress(change.address),
+        payload = change.newValue?.toEventPayload() ?: EventPayload.None,
+        sender = sender,
+    )
+
     private fun dispatchIfChanged(
         change: AttributeChange,
         sender: ObjectRef?,
     ): AttributeDispatchResult {
         if (!change.changed) return AttributeDispatchResult(change)
-
-        val payload = change.newValue?.toEventPayload() ?: EventPayload.None
-        val name = eventName(change.address)
-        val event = when (change.address.scope) {
-            AttributeScope.OBJECT -> EngineEvent.objectTarget(
-                name = name,
-                target = requireNotNull(change.address.objectRef),
-                payload = payload,
-                sender = sender,
-            )
-            AttributeScope.SCENE -> EngineEvent.scene(
-                name = name,
-                sceneId = requireNotNull(change.address.sceneId),
-                payload = payload,
-                sender = sender,
-            )
-            AttributeScope.SESSION,
-            AttributeScope.GLOBAL,
-            AttributeScope.SAVE_GAME,
-            -> EngineEvent.global(
-                name = name,
-                payload = payload,
-                sender = sender,
-            )
-        }
-        return AttributeDispatchResult(change, eventBus.dispatch(event))
+        return AttributeDispatchResult(
+            change = change,
+            eventResult = eventBus.dispatch(changeEvent(change, sender)),
+        )
     }
 }

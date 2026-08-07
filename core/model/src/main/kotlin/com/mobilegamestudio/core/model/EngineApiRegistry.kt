@@ -34,13 +34,8 @@ enum class EngineApiStability {
 }
 
 enum class EngineApiAvailability {
-    /** A runtime handler is expected to exist. */
     RUNTIME,
-
-    /** Contract exists for editor/docs/autocomplete, implementation comes later. */
     CONTRACT_ONLY,
-
-    /** Available only while authoring inside the editor. */
     EDITOR_ONLY,
 }
 
@@ -101,14 +96,10 @@ data class EngineApiFunction(
 }
 
 /**
- * Immutable lookup registry shared by NoCode, Lua, Java and future Python.
- *
- * One ID means one contract. A language bridge may change syntax, but it must
- * not silently change parameter types, permissions or threading semantics.
+ * Immutable canonical API registry shared by NoCode, Lua, Java and Python.
+ * Syntax may differ per language; semantics, permissions and types may not.
  */
-class EngineApiRegistry(
-    definitions: List<EngineApiFunction>,
-) {
+class EngineApiRegistry(definitions: List<EngineApiFunction>) {
     val definitions: List<EngineApiFunction> = definitions.toList()
     val byId: Map<String, EngineApiFunction>
     private val aliases: Map<String, EngineApiFunction>
@@ -118,7 +109,6 @@ class EngineApiRegistry(
             "Engine API registry cannot contain duplicate IDs."
         }
         byId = this.definitions.associateBy(EngineApiFunction::id)
-
         val aliasPairs = buildList {
             this@EngineApiRegistry.definitions.forEach { definition ->
                 definition.aliases.forEach { alias ->
@@ -143,11 +133,6 @@ class EngineApiRegistry(
         definitions.filter { it.namespace == namespace }
 }
 
-/**
- * First shared contract set. More APIs should be added here only when their
- * ownership/threading/security model is understood; CONTRACT_ONLY entries are
- * intentionally honest instead of pretending the runtime is already wired.
- */
 object EngineApiCatalog {
     private fun parameter(
         name: String,
@@ -175,9 +160,9 @@ object EngineApiCatalog {
                 name = "getPosition",
                 parameters = listOf(parameter("object", EngineApiValueType.OBJECT)),
                 returnType = EngineApiValueType.VECTOR3,
+                returnNullable = true,
                 capabilities = setOf(EngineApiCapability.SCENE_READ),
-                availability = EngineApiAvailability.CONTRACT_ONLY,
-                summary = "Reads world/local position after the runtime host exposes an explicit position contract.",
+                summary = "Reads world position through the session spatial-query boundary.",
             ),
             EngineApiFunction(
                 id = "transform.set_position",
@@ -190,7 +175,48 @@ object EngineApiCatalog {
                 capabilities = setOf(EngineApiCapability.SCENE_WRITE),
                 availability = EngineApiAvailability.CONTRACT_ONLY,
                 mutatesState = true,
-                summary = "Sets object position after the runtime host exposes an explicit position mutation contract.",
+                summary = "Requires the scene mutation boundary before runtime exposure.",
+            ),
+            EngineApiFunction(
+                id = "object.distance",
+                namespace = "object",
+                name = "distance",
+                parameters = listOf(
+                    parameter("a", EngineApiValueType.OBJECT, required = false),
+                    parameter("b", EngineApiValueType.OBJECT, required = false),
+                ),
+                returnType = EngineApiValueType.NUMBER,
+                capabilities = setOf(EngineApiCapability.SCENE_READ),
+                summary = "Returns world-space distance between two ObjectRefs; source/target context can fill omitted objects.",
+            ),
+            EngineApiFunction(
+                id = "component.get",
+                namespace = "component",
+                name = "get",
+                parameters = listOf(
+                    parameter("object", EngineApiValueType.OBJECT, required = false),
+                    parameter("componentType", EngineApiValueType.TEXT, required = false),
+                    parameter("componentId", EngineApiValueType.TEXT, required = false),
+                    parameter("includeDisabled", EngineApiValueType.BOOLEAN, required = false),
+                ),
+                returnType = EngineApiValueType.COMPONENT,
+                returnNullable = true,
+                capabilities = setOf(EngineApiCapability.SCENE_READ),
+                summary = "Resolves one component on one exact ObjectRef without reflection or global selection state.",
+            ),
+            EngineApiFunction(
+                id = "component.call",
+                namespace = "component",
+                name = "call",
+                parameters = listOf(
+                    parameter("component", EngineApiValueType.COMPONENT),
+                    parameter("method", EngineApiValueType.TEXT),
+                    parameter("arguments", EngineApiValueType.LIST, required = false),
+                ),
+                returnType = EngineApiValueType.ANY,
+                returnNullable = true,
+                capabilities = setOf(EngineApiCapability.SCENE_READ),
+                summary = "Invokes only methods explicitly registered in ComponentMethodRegistry; Java reflection is not exposed.",
             ),
             EngineApiFunction(
                 id = "event.send",
@@ -239,14 +265,13 @@ object EngineApiCatalog {
                 parameters = listOf(
                     parameter("origin", EngineApiValueType.VECTOR3),
                     parameter("direction", EngineApiValueType.VECTOR3),
-                    parameter("distance", EngineApiValueType.NUMBER),
+                    parameter("distance", EngineApiValueType.NUMBER, required = false),
                 ),
                 returnType = EngineApiValueType.ANY,
                 returnNullable = true,
                 capabilities = setOf(EngineApiCapability.PHYSICS_QUERY),
                 thread = EngineApiThread.PHYSICS,
-                availability = EngineApiAvailability.CONTRACT_ONLY,
-                summary = "Physics ray query returning a typed RayHit when the backend is connected.",
+                summary = "Runs the same typed ray query used by the NoCode Trace Ray node and returns RayHit or null.",
             ),
             EngineApiFunction(
                 id = "debug.log",

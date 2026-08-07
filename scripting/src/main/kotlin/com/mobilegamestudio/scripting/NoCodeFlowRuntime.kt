@@ -58,6 +58,8 @@ class NoCodeFlowRuntime(
 
     fun supports(definitionId: String): Boolean =
         definitionId.startsWith("flow.sequence.") ||
+            definitionId == FLOW_PARALLEL || definitionId.startsWith("$FLOW_PARALLEL.") ||
+            definitionId == FLOW_MULTI_GATE || definitionId.startsWith("$FLOW_MULTI_GATE.") ||
             definitionId in SUPPORTED_IDS
 
     fun route(
@@ -80,7 +82,7 @@ class NoCodeFlowRuntime(
                     outputPortIds = flowOutputs,
                     dispatchMode = FlowDispatchMode.ORDERED,
                 )
-                definition.id == FLOW_PARALLEL -> NoCodeFlowDecision(
+                definition.id == FLOW_PARALLEL || definition.id.startsWith("$FLOW_PARALLEL.") -> NoCodeFlowDecision(
                     outputPortIds = flowOutputs,
                     dispatchMode = FlowDispatchMode.INDEPENDENT,
                 )
@@ -88,7 +90,7 @@ class NoCodeFlowRuntime(
                 definition.id == FLOW_GATE -> routeGate(state, flowOutputs, inputs, incomingFlowPortId)
                 definition.id == FLOW_ONCE -> routeOnce(state, flowOutputs, incomingFlowPortId)
                 definition.id == FLOW_DO_N -> routeDoN(state, flowOutputs, inputs, incomingFlowPortId)
-                definition.id == FLOW_MULTI_GATE -> routeMultiGate(
+                definition.id == FLOW_MULTI_GATE || definition.id.startsWith("$FLOW_MULTI_GATE.") -> routeMultiGate(
                     state = state,
                     outputs = flowOutputs,
                     inputs = inputs,
@@ -274,8 +276,6 @@ class NoCodeFlowRuntime(
             FLOW_GATE,
             FLOW_ONCE,
             FLOW_DO_N,
-            FLOW_PARALLEL,
-            FLOW_MULTI_GATE,
         )
     }
 }

@@ -2,9 +2,14 @@ package com.mobilegamestudio.scripting
 
 import com.mobilegamestudio.core.model.AttributeAddress
 import com.mobilegamestudio.core.model.AttributeValue
+import com.mobilegamestudio.core.model.ColliderComponent
+import com.mobilegamestudio.core.model.ComponentRef
 import com.mobilegamestudio.core.model.EngineApiSurface
 import com.mobilegamestudio.core.model.ExecutionContext
+import com.mobilegamestudio.core.model.GameObject
 import com.mobilegamestudio.core.model.ObjectRef
+import com.mobilegamestudio.core.model.SceneDocument
+import com.mobilegamestudio.core.model.TransformComponent
 import com.mobilegamestudio.core.model.Vector3
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -14,8 +19,7 @@ class EngineApiHostBindingsTest {
     @Test
     fun `scene lookup returns stable object ref through shared api`() {
         val host = ApiHost()
-        val session = NoCodeRuntimeSession()
-        val dispatcher = EngineApiHostBindings.createDispatcher(host, session)
+        val dispatcher = EngineApiHostBindings.createDispatcher(host, NoCodeRuntimeSession())
 
         val result = dispatcher.invoke(
             idOrAlias = "Scene.GetObject",
@@ -71,6 +75,79 @@ class EngineApiHostBindingsTest {
     }
 
     @Test
+    fun `spatial api is identical for java lua and future python surfaces`() {
+        val a = ObjectRef("a")
+        val b = ObjectRef("b")
+        val positions = mapOf(a to Vector3.ZERO, b to Vector3(3f, 4f, 0f))
+        val session = NoCodeRuntimeSession(
+            spatialQueryHost = ObjectSpatialQueryHost(positions::get),
+        )
+        val dispatcher = EngineApiHostBindings.createDispatcher(ApiHost(), session)
+        val context = ExecutionContext(executionId = 1, sourceObject = a, targetObject = b)
+
+        val javaResult = dispatcher.invoke("object.distance", emptyMap(), context, EngineApiSurface.JAVA)
+        val luaResult = dispatcher.invoke("object.distance", emptyMap(), context, EngineApiSurface.LUA)
+        val pythonResult = dispatcher.invoke("object.distance", emptyMap(), context, EngineApiSurface.PYTHON)
+
+        assertEquals(EngineApiCallResult.Success(5.0), javaResult)
+        assertEquals(javaResult, luaResult)
+        assertEquals(javaResult, pythonResult)
+        assertEquals(
+            EngineApiCallResult.Success(Vector3.ZERO),
+            dispatcher.invoke(
+                "transform.get_position",
+                mapOf("object" to a),
+                context,
+                EngineApiSurface.PYTHON,
+            ),
+        )
+    }
+
+    @Test
+    fun `component api returns stable component ref and only calls registered methods`() {
+        val door = ObjectRef("door")
+        val scene = SceneDocument(
+            sceneId = "world",
+            name = "World",
+            rootObjects = listOf(door.objectId),
+            objects = listOf(
+                GameObject(
+                    id = door.objectId,
+                    name = "Door",
+                    components = listOf(
+                        TransformComponent(componentId = "transform"),
+                        ColliderComponent(componentId = "collider", isTrigger = true),
+                    ),
+                ),
+            ),
+        )
+        val session = NoCodeRuntimeSession(
+            componentQueryHost = SceneDocumentComponentQueryHost { scene },
+        )
+        val dispatcher = EngineApiHostBindings.createDispatcher(ApiHost(), session)
+        val context = ExecutionContext(executionId = 1, targetObject = door)
+
+        val component = dispatcher.invoke(
+            "component.get",
+            mapOf("componentType" to "collider"),
+            context,
+            EngineApiSurface.PYTHON,
+        )
+        assertEquals(EngineApiCallResult.Success(ComponentRef(door, "collider")), component)
+
+        val call = dispatcher.invoke(
+            "component.call",
+            mapOf(
+                "component" to ComponentRef(door, "collider"),
+                "method" to "collider.is_trigger",
+            ),
+            context,
+            EngineApiSurface.LUA,
+        )
+        assertEquals(EngineApiCallResult.Success(true), call)
+    }
+
+    @Test
     fun `event api dispatches through same scene bus`() {
         val host = ApiHost()
         val session = NoCodeRuntimeSession()
@@ -108,7 +185,7 @@ class EngineApiHostBindingsTest {
     }
 
     @Test
-    fun `unwired transform contract is rejected before handler lookup`() {
+    fun `optional runtime api reports missing handler when backend is absent`() {
         val dispatcher = EngineApiHostBindings.createDispatcher(ApiHost(), NoCodeRuntimeSession())
 
         val result = dispatcher.invoke(
@@ -120,7 +197,7 @@ class EngineApiHostBindingsTest {
 
         assertTrue(result is EngineApiCallResult.Failure)
         assertEquals(
-            EngineApiFailureCode.CONTRACT_ONLY,
+            EngineApiFailureCode.HANDLER_MISSING,
             (result as EngineApiCallResult.Failure).code,
         )
     }

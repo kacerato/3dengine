@@ -1,0 +1,102 @@
+.class public final Lcf/A$a$a;
+.super Ljava/util/concurrent/atomic/AtomicReference;
+.source "SourceFile"
+
+# interfaces
+.implements LTe/f;
+.implements LVe/c;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Lcf/A$a;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x11
+    name = "a"
+.end annotation
+
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "Ljava/util/concurrent/atomic/AtomicReference<",
+        "LVe/c;",
+        ">;",
+        "LTe/f;",
+        "LVe/c;"
+    }
+.end annotation
+
+
+# static fields
+.field public static final c:J = 0x37ce7cbca0ace5dL
+
+
+# instance fields
+.field public final synthetic b:Lcf/A$a;
+
+
+# direct methods
+.method public constructor <init>(Lcf/A$a;)V
+    .locals 0
+
+    iput-object p1, p0, Lcf/A$a$a;->b:Lcf/A$a;
+
+    invoke-direct {p0}, Ljava/util/concurrent/atomic/AtomicReference;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public a()V
+    .locals 1
+
+    iget-object v0, p0, Lcf/A$a$a;->b:Lcf/A$a;
+
+    invoke-virtual {v0, p0}, Lcf/A$a;->b(Lcf/A$a$a;)V
+
+    return-void
+.end method
+
+.method public d()Z
+    .locals 1
+
+    invoke-virtual {p0}, Ljava/util/concurrent/atomic/AtomicReference;->get()Ljava/lang/Object;
+
+    move-result-object v0
+
+    check-cast v0, LVe/c;
+
+    invoke-static {v0}, LYe/d;->b(LVe/c;)Z
+
+    move-result v0
+
+    return v0
+.end method
+
+.method public dispose()V
+    .locals 0
+
+    invoke-static {p0}, LYe/d;->a(Ljava/util/concurrent/atomic/AtomicReference;)Z
+
+    return-void
+.end method
+
+.method public e(LVe/c;)V
+    .locals 0
+
+    invoke-static {p0, p1}, LYe/d;->h(Ljava/util/concurrent/atomic/AtomicReference;LVe/c;)Z
+
+    return-void
+.end method
+
+.method public onError(Ljava/lang/Throwable;)V
+    .locals 1
+
+    iget-object v0, p0, Lcf/A$a$a;->b:Lcf/A$a;
+
+    invoke-virtual {v0, p0, p1}, Lcf/A$a;->c(Lcf/A$a$a;Ljava/lang/Throwable;)V
+
+    return-void
+.end method

@@ -1,0 +1,44 @@
+.class public final LR0/a$d;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = LR0/a;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "d"
+.end annotation
+
+
+# static fields
+.field public static final a:I = 0x7f09008e
+
+.field public static final b:I = 0x7f09008f
+
+.field public static final c:I = 0x7f0900be
+
+.field public static final d:I = 0x7f090179
+
+.field public static final e:I = 0x7f09024b
+
+.field public static final f:I = 0x7f0902b5
+
+.field public static final g:I = 0x7f090346
+
+.field public static final h:I = 0x7f0904a4
+
+.field public static final i:I = 0x7f0905ae
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method

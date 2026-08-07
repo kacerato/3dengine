@@ -1,0 +1,275 @@
+.class public LBa/d;
+.super Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;
+.source "SourceFile"
+
+# interfaces
+.implements Lya/F;
+
+
+# static fields
+.field public static final i:Ljava/lang/String; = "IsGamePadButtonUpBranch"
+
+.field public static final j:I = 0x0
+
+.field public static final k:I = 0x0
+
+.field public static final l:I = 0x1
+
+
+# instance fields
+.field public final g:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+.field public final h:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    new-instance v0, LBa/d$a;
+
+    invoke-direct {v0}, LBa/d$a;-><init>()V
+
+    invoke-static {v0}, Lya/o;->a(Lya/p;)V
+
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .locals 4
+
+    invoke-direct {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;-><init>()V
+
+    new-instance v0, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    const-string v1, "Button Name"
+
+    sget-object v2, Lya/H;->TEXT:Lya/H;
+
+    invoke-direct {v0, v1, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;-><init>(Ljava/lang/String;Lya/H;)V
+
+    sget-object v1, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang$T;->NOCODE_SLOT_BUTTON_NAME:LUc/b;
+
+    invoke-static {v1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang;->l(LUc/b;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;->c(Ljava/lang/String;)Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    move-result-object v0
+
+    filled-new-array {v0}, [Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    move-result-object v0
+
+    iput-object v0, p0, LBa/d;->g:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    new-instance v0, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    sget-object v1, Lya/H;->BRANCH:Lya/H;
+
+    const-string v2, "True"
+
+    invoke-direct {v0, v2, v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;-><init>(Ljava/lang/String;Lya/H;)V
+
+    sget-object v2, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang$T;->NOCODE_SLOT_TRUE:LUc/b;
+
+    invoke-static {v2}, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang;->l(LUc/b;)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;->c(Ljava/lang/String;)Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    move-result-object v0
+
+    new-instance v2, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    const-string v3, "False"
+
+    invoke-direct {v2, v3, v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;-><init>(Ljava/lang/String;Lya/H;)V
+
+    sget-object v1, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang$T;->NOCODE_SLOT_FALSE:LUc/b;
+
+    invoke-static {v1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang;->l(LUc/b;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v2, v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;->c(Ljava/lang/String;)Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    move-result-object v1
+
+    filled-new-array {v0, v1}, [Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    move-result-object v0
+
+    iput-object v0, p0, LBa/d;->h:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    const-string v0, "IsGamePadButtonUpBranch"
+
+    iput-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;->serializedNodeType:Ljava/lang/String;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public F()[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+    .locals 1
+
+    iget-object v0, p0, LBa/d;->g:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    return-object v0
+.end method
+
+.method public J()[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+    .locals 1
+
+    iget-object v0, p0, LBa/d;->h:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    return-object v0
+.end method
+
+.method public M()Lya/B;
+    .locals 1
+
+    sget-object v0, Lya/B;->BOTH:Lya/B;
+
+    return-object v0
+.end method
+
+.method public N(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Ljava/lang/String;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "graphData"
+        }
+    .end annotation
+
+    const-string p1, "Is GamePad Button Up"
+
+    return-object p1
+.end method
+
+.method public a(ILya/H;)Ljava/lang/String;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0
+        }
+        names = {
+            "inputIndex",
+            "desiredType"
+        }
+    .end annotation
+
+    if-nez p1, :cond_0
+
+    const-string p1, "buttonname"
+
+    goto :goto_0
+
+    :cond_0
+    const-string p1, ""
+
+    :goto_0
+    return-object p1
+.end method
+
+.method public m0()V
+    .locals 4
+
+    iget-object v0, p0, LBa/d;->g:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    const/4 v1, 0x0
+
+    aget-object v0, v0, v1
+
+    invoke-virtual {p0, v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;->Q(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_0
+
+    invoke-static {v0}, Ljava/lang/String;->valueOf(Ljava/lang/Object;)Ljava/lang/String;
+
+    move-result-object v0
+
+    goto :goto_0
+
+    :cond_0
+    const-string v0, ""
+
+    :goto_0
+    invoke-virtual {v0}, Ljava/lang/String;->trim()Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v2}, Ljava/lang/String;->isEmpty()Z
+
+    move-result v2
+
+    const/4 v3, 0x1
+
+    if-eqz v2, :cond_1
+
+    iget-object v0, p0, LBa/d;->h:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    aget-object v0, v0, v3
+
+    invoke-virtual {p0, v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;->u(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;)V
+
+    return-void
+
+    :cond_1
+    sget-object v2, LKc/a;->s:LKc/a$e;
+
+    invoke-virtual {v2, v0}, LKc/a$e;->d(Ljava/lang/String;)LMc/c;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_2
+
+    iget-boolean v0, v0, LMc/c;->f:Z
+
+    if-eqz v0, :cond_2
+
+    iget-object v0, p0, LBa/d;->h:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    aget-object v0, v0, v1
+
+    goto :goto_1
+
+    :cond_2
+    iget-object v0, p0, LBa/d;->h:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    aget-object v0, v0, v3
+
+    :goto_1
+    invoke-virtual {p0, v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;->u(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;)V
+
+    return-void
+.end method
+
+.method public x(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Ljava/lang/String;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "graphData"
+        }
+    .end annotation
+
+    sget-object p1, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang$T;->NOCODE_IS_GAME_PAD_BUTTON_UP_BRANCH:LUc/b;
+
+    invoke-static {p1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang;->l(LUc/b;)Ljava/lang/String;
+
+    move-result-object p1
+
+    return-object p1
+.end method

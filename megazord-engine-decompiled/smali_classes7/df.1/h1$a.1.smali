@@ -1,0 +1,76 @@
+.class public final Ldf/h1$a;
+.super Ldf/d1$c;
+.source "SourceFile"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = Ldf/h1;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x19
+    name = "a"
+.end annotation
+
+.annotation system Ldalvik/annotation/Signature;
+    value = {
+        "<T:",
+        "Ljava/lang/Object;",
+        ">",
+        "Ldf/d1$c<",
+        "TT;",
+        "Ljava/lang/Throwable;",
+        ">;"
+    }
+.end annotation
+
+
+# static fields
+.field public static final p:J = -0x2531bbef65964705L
+
+
+# direct methods
+.method public constructor <init>(LCi/c;Lrf/c;LCi/d;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "LCi/c<",
+            "-TT;>;",
+            "Lrf/c<",
+            "Ljava/lang/Throwable;",
+            ">;",
+            "LCi/d;",
+            ")V"
+        }
+    .end annotation
+
+    invoke-direct {p0, p1, p2, p3}, Ldf/d1$c;-><init>(LCi/c;Lrf/c;LCi/d;)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public a()V
+    .locals 1
+
+    iget-object v0, p0, Ldf/d1$c;->m:LCi/d;
+
+    invoke-interface {v0}, LCi/d;->cancel()V
+
+    iget-object v0, p0, Ldf/d1$c;->k:LCi/c;
+
+    invoke-interface {v0}, LCi/c;->a()V
+
+    return-void
+.end method
+
+.method public onError(Ljava/lang/Throwable;)V
+    .locals 0
+
+    invoke-virtual {p0, p1}, Ldf/d1$c;->m(Ljava/lang/Object;)V
+
+    return-void
+.end method

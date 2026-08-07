@@ -1,0 +1,199 @@
+.class public LCa/k;
+.super LCa/b;
+.source "SourceFile"
+
+# interfaces
+.implements Lya/k;
+
+
+# static fields
+.field public static final l:Ljava/lang/String; = "GetCollisionContactList"
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    new-instance v0, LCa/k$a;
+
+    invoke-direct {v0}, LCa/k$a;-><init>()V
+
+    invoke-static {v0}, Lya/o;->a(Lya/p;)V
+
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .locals 7
+
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang$T;->NOCODE_SLOT_CONTACT_LIST:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang;->l(LUc/b;)Ljava/lang/String;
+
+    move-result-object v5
+
+    sget-object v6, Lya/H;->LIST:Lya/H;
+
+    const-string v2, "GetCollisionContactList"
+
+    const-string v3, "Get Contact List"
+
+    const-string v4, "Contacts"
+
+    move-object v1, p0
+
+    invoke-direct/range {v1 .. v6}, LCa/b;-><init>(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lya/H;)V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public bridge synthetic F()[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+    .locals 1
+
+    invoke-super {p0}, LCa/b;->F()[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public G0(LB9/a;)Ljava/lang/Object;
+    .locals 1
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "collision"
+        }
+    .end annotation
+
+    if-nez p1, :cond_0
+
+    sget-object p1, Lya/H;->CONTACT:Lya/H;
+
+    const/4 v0, 0x0
+
+    invoke-static {p1, v0}, Lya/m;->m(Lya/H;Ljava/util/List;)Lya/l;
+
+    move-result-object p1
+
+    return-object p1
+
+    :cond_0
+    sget-object v0, Lya/H;->CONTACT:Lya/H;
+
+    iget-object p1, p1, LB9/a;->d:Ljava/util/List;
+
+    invoke-static {v0, p1}, Lya/m;->m(Lya/H;Ljava/util/List;)Lya/l;
+
+    move-result-object p1
+
+    return-object p1
+.end method
+
+.method public bridge synthetic J()[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+    .locals 1
+
+    invoke-super {p0}, LCa/b;->J()[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public bridge synthetic M()Lya/B;
+    .locals 1
+
+    invoke-super {p0}, LCa/b;->M()Lya/B;
+
+    move-result-object v0
+
+    return-object v0
+.end method
+
+.method public bridge synthetic N(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Ljava/lang/String;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x1000
+        }
+        names = {
+            "graphData"
+        }
+    .end annotation
+
+    invoke-super {p0, p1}, LCa/b;->N(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Ljava/lang/String;
+
+    move-result-object p1
+
+    return-object p1
+.end method
+
+.method public bridge synthetic a(ILya/H;)Ljava/lang/String;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x1000,
+            0x1000
+        }
+        names = {
+            "inputIndex",
+            "desiredType"
+        }
+    .end annotation
+
+    invoke-super {p0, p1, p2}, LCa/b;->a(ILya/H;)Ljava/lang/String;
+
+    move-result-object p1
+
+    return-object p1
+.end method
+
+.method public b(ILya/D;)Lya/H;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0
+        }
+        names = {
+            "outputIndex",
+            "resolver"
+        }
+    .end annotation
+
+    sget-object p1, Lya/H;->CONTACT:Lya/H;
+
+    return-object p1
+.end method
+
+.method public bridge synthetic m0()V
+    .locals 0
+
+    invoke-super {p0}, LCa/b;->m0()V
+
+    return-void
+.end method
+
+.method public x(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Ljava/lang/String;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "graphData"
+        }
+    .end annotation
+
+    sget-object p1, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang$T;->NOCODE_GET_COLLISION_CONTACT_LIST:LUc/b;
+
+    invoke-static {p1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang;->l(LUc/b;)Ljava/lang/String;
+
+    move-result-object p1
+
+    return-object p1
+.end method

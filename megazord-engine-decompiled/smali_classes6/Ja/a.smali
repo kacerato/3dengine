@@ -1,0 +1,206 @@
+.class public LJa/a;
+.super Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;
+.source "SourceFile"
+
+# interfaces
+.implements Lya/F;
+
+
+# static fields
+.field public static final h:Ljava/lang/String; = "AddListElement"
+
+.field public static final i:I = 0x0
+
+.field public static final j:I = 0x1
+
+
+# instance fields
+.field public final g:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    new-instance v0, LJa/a$a;
+
+    invoke-direct {v0}, LJa/a$a;-><init>()V
+
+    invoke-static {v0}, Lya/o;->a(Lya/p;)V
+
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .locals 4
+
+    invoke-direct {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;-><init>()V
+
+    new-instance v0, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    const-string v1, "List"
+
+    sget-object v2, Lya/H;->LIST:Lya/H;
+
+    invoke-direct {v0, v1, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;-><init>(Ljava/lang/String;Lya/H;)V
+
+    sget-object v1, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang$T;->NOCODE_SLOT_LIST:LUc/b;
+
+    invoke-static {v1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang;->l(LUc/b;)Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;->c(Ljava/lang/String;)Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    move-result-object v0
+
+    new-instance v1, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    const-string v2, "Element"
+
+    sget-object v3, Lya/H;->DYNAMIC:Lya/H;
+
+    invoke-direct {v1, v2, v3}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;-><init>(Ljava/lang/String;Lya/H;)V
+
+    sget-object v2, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang$T;->NOCODE_SLOT_ELEMENT:LUc/b;
+
+    invoke-static {v2}, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang;->l(LUc/b;)Ljava/lang/String;
+
+    move-result-object v2
+
+    invoke-virtual {v1, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;->c(Ljava/lang/String;)Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    move-result-object v1
+
+    filled-new-array {v0, v1}, [Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    move-result-object v0
+
+    iput-object v0, p0, LJa/a;->g:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    const-string v0, "AddListElement"
+
+    iput-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;->serializedNodeType:Ljava/lang/String;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public F()[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+    .locals 1
+
+    iget-object v0, p0, LJa/a;->g:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    return-object v0
+.end method
+
+.method public M()Lya/B;
+    .locals 1
+
+    sget-object v0, Lya/B;->BOTH:Lya/B;
+
+    return-object v0
+.end method
+
+.method public N(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Ljava/lang/String;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "graphData"
+        }
+    .end annotation
+
+    const-string p1, "Add Element"
+
+    return-object p1
+.end method
+
+.method public a(ILya/H;)Ljava/lang/String;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0
+        }
+        names = {
+            "inputIndex",
+            "desiredType"
+        }
+    .end annotation
+
+    const-string p1, ""
+
+    return-object p1
+.end method
+
+.method public m0()V
+    .locals 3
+
+    iget-object v0, p0, LJa/a;->g:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    const/4 v1, 0x0
+
+    aget-object v0, v0, v1
+
+    invoke-virtual {p0, v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;->Q(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;)Ljava/lang/Object;
+
+    move-result-object v0
+
+    invoke-static {v0}, Lya/m;->a0(Ljava/lang/Object;)Lya/l;
+
+    move-result-object v0
+
+    iget-object v1, p0, LJa/a;->g:[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;
+
+    const/4 v2, 0x1
+
+    aget-object v1, v1, v2
+
+    invoke-virtual {p0, v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;->Q(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    invoke-static {v0, v1}, LJa/i;->f(Lya/l;Ljava/lang/Object;)Lya/H;
+
+    move-result-object v2
+
+    invoke-virtual {v0, v2}, Lya/l;->h(Lya/H;)V
+
+    invoke-static {v0}, LJa/i;->c(Lya/l;)Ljava/util/List;
+
+    move-result-object v0
+
+    invoke-static {v1, v2}, LJa/i;->a(Ljava/lang/Object;Lya/H;)Ljava/lang/Object;
+
+    move-result-object v1
+
+    invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    invoke-virtual {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;->t()V
+
+    return-void
+.end method
+
+.method public x(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Ljava/lang/String;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "graphData"
+        }
+    .end annotation
+
+    sget-object p1, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang$T;->NOCODE_ADD_LIST_ELEMENT:LUc/b;
+
+    invoke-static {p1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang;->l(LUc/b;)Ljava/lang/String;
+
+    move-result-object p1
+
+    return-object p1
+.end method

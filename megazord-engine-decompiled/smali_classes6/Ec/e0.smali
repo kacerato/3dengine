@@ -1,0 +1,37 @@
+.class public LEc/e0;
+.super LCc/a;
+.source "SourceFile"
+
+
+# static fields
+.field public static final i:Ljava/lang/String; = "VectorZXZ"
+
+
+# direct methods
+.method static constructor <clinit>()V
+    .locals 1
+
+    new-instance v0, LEc/e0$a;
+
+    invoke-direct {v0}, LEc/e0$a;-><init>()V
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Engines/Graphics/ShaderGraph/p;->a(Lcom/itsmagic/engine/Engines/Graphics/ShaderGraph/q;)V
+
+    return-void
+.end method
+
+.method public constructor <init>()V
+    .locals 4
+
+    sget-object v0, Lcom/itsmagic/engine/Engines/Graphics/ShaderGraph/C;->FLOAT3:Lcom/itsmagic/engine/Engines/Graphics/ShaderGraph/C;
+
+    const-string v1, "zxz"
+
+    const-string v2, "VectorZXZ"
+
+    const-string v3, "Vector ZXZ"
+
+    invoke-direct {p0, v2, v3, v0, v1}, LCc/a;-><init>(Ljava/lang/String;Ljava/lang/String;Lcom/itsmagic/engine/Engines/Graphics/ShaderGraph/C;Ljava/lang/String;)V
+
+    return-void
+.end method

@@ -1,0 +1,45 @@
+.class public final Lq1/y;
+.super LA1/Q;
+.source "SourceFile"
+
+
+# instance fields
+.field public final synthetic e:LQ1/l;
+
+
+# direct methods
+.method public constructor <init>(Lq1/c;LQ1/l;)V
+    .locals 0
+
+    iput-object p2, p0, Lq1/y;->e:LQ1/l;
+
+    invoke-direct {p0}, LA1/Q;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final e0(Ljava/util/List;)V
+    .locals 1
+
+    iget-object v0, p0, Lq1/y;->e:LQ1/l;
+
+    invoke-virtual {v0, p1}, LQ1/l;->c(Ljava/lang/Object;)V
+
+    return-void
+.end method
+
+.method public final f(Lcom/google/android/gms/common/api/Status;)V
+    .locals 2
+
+    iget-object v0, p0, Lq1/y;->e:LQ1/l;
+
+    new-instance v1, Lcom/google/android/gms/common/api/ApiException;
+
+    invoke-direct {v1, p1}, Lcom/google/android/gms/common/api/ApiException;-><init>(Lcom/google/android/gms/common/api/Status;)V
+
+    invoke-virtual {v0, v1}, LQ1/l;->d(Ljava/lang/Exception;)Z
+
+    return-void
+.end method

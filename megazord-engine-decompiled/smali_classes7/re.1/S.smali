@@ -1,0 +1,17 @@
+.class public interface abstract Lre/S;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements Lre/a;
+
+
+# virtual methods
+.method public abstract d(J)J
+.end method
+
+.method public abstract key()I
+.end method
+
+.method public abstract value()J
+.end method

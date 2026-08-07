@@ -1,0 +1,34 @@
+.class public final synthetic Lqc/A;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements LTb/h;
+
+
+# instance fields
+.field public final synthetic a:Lcom/itsmagic/engine/Engines/Graphics/MaterialShader/DefaultShaders/Lit/LitLightMapBinder;
+
+
+# direct methods
+.method public synthetic constructor <init>(Lcom/itsmagic/engine/Engines/Graphics/MaterialShader/DefaultShaders/Lit/LitLightMapBinder;)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Lqc/A;->a:Lcom/itsmagic/engine/Engines/Graphics/MaterialShader/DefaultShaders/Lit/LitLightMapBinder;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final b()V
+    .locals 1
+
+    iget-object v0, p0, Lqc/A;->a:Lcom/itsmagic/engine/Engines/Graphics/MaterialShader/DefaultShaders/Lit/LitLightMapBinder;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Engines/Graphics/MaterialShader/DefaultShaders/Lit/LitLightMapBinder;->d1(Lcom/itsmagic/engine/Engines/Graphics/MaterialShader/DefaultShaders/Lit/LitLightMapBinder;)V
+
+    return-void
+.end method

@@ -152,7 +152,7 @@ private fun NoCodeToolbar(
         ) {
             PanelAction("BIBLIOTECA", enabled = state.visualGraph != null, onClick = onOpenPalette)
             PanelAction("NOVO EVENTO", enabled = !state.isLoadingGraph, onClick = onCreateGraph)
-            PanelAction("REMOVER", enabled = (state.visualGraph?.nodes?.size ?: 0) > 1, onClick = onRemoveLastNode)
+            PanelAction("REMOVER", enabled = (state.visualGraph?.nodes?.size ?: 0) > 1, onClick = onRemoveLast)
             PanelAction(if (state.isSavingGraph) "SALVANDO" else "SALVAR", enabled = state.visualGraph != null, onClick = onSave)
             PanelAction("−", onClick = onZoomOut)
             PanelAction("${(zoom * 100).roundToInt()}%", onClick = onZoomReset)

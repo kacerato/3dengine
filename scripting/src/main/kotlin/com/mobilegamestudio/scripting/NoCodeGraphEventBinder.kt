@@ -50,10 +50,12 @@ class NoCodeGraphEventBinder(
             if (!eventRuntime.isReceiverNode(definition.id)) return@forEach
 
             val eventName = (node.values["event"] ?: node.textValue).orEmpty().trim()
-            if (eventName.isBlank()) {
+            try {
+                eventRuntime.validateUserEventName(eventName)
+            } catch (error: IllegalArgumentException) {
                 issues += NoCodeGraphBindingIssue(
                     nodeId = node.id,
-                    message = "Custom Event precisa de um nome explícito para registrar listener.",
+                    message = error.message ?: "Nome inválido de Custom Event.",
                 )
                 return@forEach
             }

@@ -3,130 +3,84 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0a0710" />
-  <meta name="description" content="Documentação oficial do Megazord Engine — editor 3D mobile baseado em Godot 4.6.3 com runtime visual NoCode nativo." />
-  <title>Megazord Engine — Documentação</title>
+  <meta name="theme-color" content="#090b0e" />
+  <meta name="description" content="Documentação técnica do Megazord Engine baseada no megazord-engine-decompiled: editor, NoCode, runtime Java, shaders, temas e referência do dump." />
+  <title>Megazord Engine — Documentação do Dump</title>
   <link rel="icon" type="image/png" href="assets/logo.png" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="megazord-docs.css" />
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <header class="topbar">
     <a class="brand" href="#inicio" aria-label="Ir para o início">
-      <img src="assets/logo.png" alt="Logo fantasma roxo do Megazord Engine" />
-      <span>
-        <strong>MEGAZORD</strong>
-        <small>ENGINE / DOCS</small>
-      </span>
+      <img src="assets/logo.png" alt="Megazord Engine" />
+      <span><strong>MEGAZORD</strong><small>ENGINE / DOCS</small></span>
     </a>
-
     <nav class="topnav" aria-label="Navegação principal">
-      <a href="#comecar">Começar</a>
-      <a href="#editor">Editor</a>
       <a href="#arquitetura">Arquitetura</a>
-      <a href="#scripting">Lógica</a>
-      <a href="nocodes.html">NoCodes</a>
+      <a href="#nocode">NoCode</a>
+      <a href="#runtime">Runtime</a>
+      <a href="#graficos">Gráficos</a>
+      <a href="reference.html">Dump</a>
     </nav>
-
     <div class="top-actions">
-      <button class="icon-button" id="searchButton" type="button" aria-label="Abrir busca" title="Buscar (Ctrl + K)">
-        <span>⌕</span>
-      </button>
-      <a class="button button-outline" href="https://github.com/kacerato/3dengine" target="_blank" rel="noreferrer">GitHub ↗</a>
+      <button class="icon-button" id="searchButton" type="button" aria-label="Abrir busca" title="Buscar (Ctrl + K)"><span>⌕</span></button>
+      <a class="button button-outline" href="https://github.com/kacerato/3dengine/tree/master/megazord-engine-decompiled" target="_blank" rel="noreferrer">FONTE ↗</a>
     </div>
   </header>
 
   <div class="search-layer" id="searchLayer" aria-hidden="true">
     <div class="search-dialog" role="dialog" aria-modal="true" aria-labelledby="searchTitle">
       <div class="search-head">
-        <div>
-          <span class="eyebrow">LOCALIZAR NAS DOCS</span>
-          <h2 id="searchTitle">Encontre um assunto</h2>
-        </div>
+        <div><span class="eyebrow">LOCALIZAR NAS DOCS</span><h2 id="searchTitle">Encontre uma área</h2></div>
         <button id="closeSearch" class="icon-button" type="button" aria-label="Fechar busca">×</button>
       </div>
-      <label class="search-input-wrap">
-        <span>⌕</span>
-        <input id="globalSearch" type="search" placeholder="Ex.: GLB, Lua, SceneDocument, build..." autocomplete="off" />
-        <kbd>ESC</kbd>
-      </label>
+      <label class="search-input-wrap"><span>⌕</span><input id="globalSearch" type="search" placeholder="Ex.: NoCodeExecutor, shader, tema, AButton..." autocomplete="off" /><kbd>ESC</kbd></label>
       <div id="searchResults" class="search-results"></div>
     </div>
   </div>
 
   <main>
-    <section class="hero section-dark" id="inicio" data-search-title="Introdução ao Megazord Engine">
+    <section class="hero section-dark" id="inicio" data-search-title="Introdução ao megazord-engine-decompiled">
       <div class="hero-grid"></div>
-      <div class="hero-copy reveal">
+      <div class="hero-copy">
         <div class="hero-badges">
-          <span class="sticker sticker-purple">ENGINE MOBILE</span>
-          <span class="sticker sticker-outline">GODOT 4.6.3 + NOCODE NATIVO</span>
+          <span class="sticker sticker-purple">DECOMPILED SOURCE</span>
+          <span class="sticker sticker-outline">ANDROID · NOCODE · JAVA RUNTIME</span>
         </div>
-        <p class="eyebrow">DOCUMENTAÇÃO VISUAL · VERTICAL SLICE 0.2.0</p>
-        <h1>
-          CRIE CENAS 3D<br />
-          <span>NO PRÓPRIO CELULAR.</span>
-        </h1>
+        <p class="eyebrow">DOCUMENTAÇÃO AUDITÁVEL · FONTE: MEGAZORD-ENGINE-DECOMPILED</p>
+        <h1>ENTENDA A ENGINE<br /><span>PELO CÓDIGO REAL.</span></h1>
         <p class="hero-description">
-          Uma leitura visual da arquitetura, do editor, do runtime e do fluxo de criação do
-          <strong>Megazord Engine</strong>. Menos parede de texto; mais mapas, demonstrações e passos executáveis.
+          Esta documentação descreve o <strong>Megazord Engine decompilado</strong> a partir dos arquivos que existem no repositório.
+          O foco é explicar a arquitetura do editor, o sistema NoCode, o runtime acionado em Play, os recursos gráficos e os pontos de extensão sem misturar APIs do Godot ou de protótipos antigos.
         </p>
         <div class="hero-actions">
-          <a class="button button-primary" href="#comecar">COMEÇAR AGORA ↓</a>
-          <button class="button button-ghost" id="toggleAllCode" type="button">MOSTRAR CÓDIGO</button>
+          <a class="button button-primary" href="nocodes.html">EXPLORAR NOCODES →</a>
+          <a class="button button-ghost" href="reference.html">ABRIR REFERÊNCIA DO DUMP</a>
         </div>
         <div class="hero-meta">
-          <span><b>Android</b> 8.0+</span>
-          <span><b>JDK</b> 17</span>
-          <span><b>Render</b> Godot 4.6.3</span>
-          <span><b>Lógica</b> Lua + NoCode</span>
+          <span><b>Editor</b> Android</span>
+          <span><b>NoCode</b> NoCodePanel + NoCodeExecutor</span>
+          <span><b>Runtime</b> JAVARuntime</span>
+          <span><b>Tema</b> Default.json</span>
         </div>
       </div>
 
-      <div class="hero-visual reveal" aria-label="Demonstração visual do editor">
-        <div class="engine-window">
-          <div class="window-top">
-            <div class="window-brand"><span class="status-dot"></span> OPEN WORLD STARTER</div>
-            <div class="window-controls"><i></i><i></i><i></i></div>
+      <div class="docs-hero-visual" aria-label="Mapa das fontes auditadas">
+        <div class="source-terminal">
+          <div class="source-terminal-head"><span>MEGAZORD / SOURCE MAP</span><span>● AUDITADO</span></div>
+          <div class="source-terminal-body">
+            <div class="source-line"><b>01</b><code>Activities/Editor/Panels/NoCode/NoCodePanel.smali</code></div>
+            <div class="source-line"><b>02</b><code>smali/JAVARuntime/</code></div>
+            <div class="source-line"><b>03</b><code>assets/Editor/Themes/Default.json</code></div>
+            <div class="source-line"><b>04</b><code>assets/Engine/Graphics/Nodes/*.glsl</code></div>
+            <div class="source-line"><b>05</b><code>engine/Engines/Engine/*</code></div>
+            <div class="source-line"><b>06</b><code>engine/Exporter/</code></div>
           </div>
-          <div class="editor-demo">
-            <aside class="scene-tree">
-              <small>CENA</small>
-              <button class="tree-item active" data-object="Player"><span>◉</span> Player</button>
-              <button class="tree-item" data-object="Terrain"><span>▱</span> Terrain</button>
-              <button class="tree-item" data-object="Toy Car"><span>◆</span> Toy Car</button>
-              <button class="tree-item" data-object="Sun"><span>✦</span> Sun</button>
-              <button class="tree-item" data-object="Camera"><span>◫</span> Camera</button>
-            </aside>
-            <div class="viewport-wrap">
-              <canvas id="sceneCanvas" aria-label="Viewport 3D demonstrativo"></canvas>
-              <div class="viewport-toolbar">
-                <button class="tool active" data-tool="move" title="Mover">↔</button>
-                <button class="tool" data-tool="rotate" title="Rotacionar">⟳</button>
-                <button class="tool" data-tool="scale" title="Escalar">⌗</button>
-              </div>
-              <div class="viewport-hint">ARRASTE PARA ORBITAR · TOQUE NO CUBO</div>
-              <div class="axis"><b>Z</b><span>X</span><i>Y</i></div>
-            </div>
-            <aside class="inspector">
-              <small>INSPECTOR</small>
-              <h3 id="selectedObject">Player</h3>
-              <div class="property"><span>Position X</span><input id="propX" type="number" value="0" step="0.1" /></div>
-              <div class="property"><span>Position Y</span><input id="propY" type="number" value="1" step="0.1" /></div>
-              <div class="property"><span>Position Z</span><input id="propZ" type="number" value="0" step="0.1" /></div>
-              <div class="component-chip">Transform</div>
-              <div class="component-chip">MeshRenderer</div>
-              <div class="component-chip">Collider</div>
-            </aside>
-          </div>
-          <div class="window-bottom">
-            <span>● AUTOSAVE</span>
-            <button id="playDemo" type="button">▶ PLAY</button>
-          </div>
+          <div class="source-terminal-foot"><span>SEM API INVENTADA</span><span>MASTER / LIVE TREE</span></div>
         </div>
-        <div class="orbit-label label-a">01 / VIEWPORT</div>
-        <div class="orbit-label label-b">TOUCH FIRST</div>
       </div>
     </section>
 
@@ -135,475 +89,159 @@
         <div class="sidebar-inner">
           <div class="sidebar-title">NAVEGAÇÃO</div>
           <a href="#visao-geral" class="side-link active">01. Visão geral</a>
-          <a href="#comecar" class="side-link">02. Começar</a>
-          <a href="#editor" class="side-link">03. Editor</a>
-          <a href="#cena" class="side-link">04. Cena e componentes</a>
-          <a href="#arquitetura" class="side-link">05. Arquitetura</a>
-          <a href="#scripting" class="side-link">06. Lua + NoCode</a>
-          <a href="nocodes.html" class="side-link">07. Catálogo NoCode ↗</a>
-          <a href="#assets" class="side-link">07. Assets GLB</a>
-          <a href="#build" class="side-link">08. Compilar</a>
-          <a href="#seguranca" class="side-link">09. Limites e segurança</a>
-          <a href="#roadmap" class="side-link">10. Roadmap</a>
-
-          <div class="sidebar-card">
-            <span>ATALHO</span>
-            <p>Use <kbd>Ctrl</kbd> + <kbd>K</kbd> para pesquisar qualquer conceito.</p>
-          </div>
+          <a href="#arquitetura" class="side-link">02. Arquitetura</a>
+          <a href="#nocode" class="side-link">03. Sistema NoCode</a>
+          <a href="#runtime" class="side-link">04. Runtime Java</a>
+          <a href="#tema" class="side-link">05. Tema e tipos</a>
+          <a href="#graficos" class="side-link">06. Gráficos e shaders</a>
+          <a href="#engine" class="side-link">07. Núcleo da engine</a>
+          <a href="#play" class="side-link">08. Fluxo de Play</a>
+          <a href="#limites" class="side-link">09. Limites da auditoria</a>
+          <a href="nocodes.html" class="side-link">10. Catálogo NoCode ↗</a>
+          <a href="reference.html" class="side-link">11. Referência do dump ↗</a>
+          <div class="sidebar-card"><span>ATALHO</span><p>Use <kbd>Ctrl</kbd> + <kbd>K</kbd> para localizar um assunto nesta página.</p></div>
         </div>
       </aside>
 
       <div class="docs-content">
-        <section class="doc-section section-light" id="visao-geral" data-search-title="Visão geral e recursos atuais">
+        <section class="doc-section section-light" id="visao-geral" data-search-title="Visão geral do dump decompilado">
           <div class="section-number">01</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow dark">O QUE JÁ EXISTE</p>
-            <h2>UMA ENGINE PEQUENA,<br /><span>MAS EXECUTÁVEL.</span></h2>
-            <p>
-              O projeto já fecha um ciclo real: abrir um projeto, editar uma cena, importar modelo,
-              escrever lógica, executar em Play e retornar ao editor sem alterar o documento original.
-            </p>
+          <div class="section-heading">
+            <p class="eyebrow dark">O QUE ESTA DOCUMENTAÇÃO COBRE</p>
+            <h2>UM MAPA DO PRODUTO,<br /><span>NÃO UMA API IMAGINÁRIA.</span></h2>
+            <p>O site passa a tratar o dump decompilado como fonte primária. Quando uma informação vem de documentação oficial correlacionada, isso é indicado separadamente.</p>
           </div>
-
-          <div class="feature-grid">
-            <article class="feature-card purple reveal">
-              <span class="card-index">A</span>
-              <div class="feature-icon">◫</div>
-              <h3>EDITOR LANDSCAPE</h3>
-              <p>Viewport dominante, hierarquia, inspector, assets e painéis que se reorganizam para telefone ou tablet.</p>
-              <span class="mini-tag">COMPOSE</span>
-            </article>
-            <article class="feature-card black reveal">
-              <span class="card-index">B</span>
-              <div class="feature-icon">◇</div>
-              <h3>VIEWPORT 3D</h3>
-              <p>Viewport nativo Godot, seleção por toque, câmera orbital e atualização de transformações em cena.</p>
-              <span class="mini-tag">PBR</span>
-            </article>
-            <article class="feature-card lavender reveal">
-              <span class="card-index">C</span>
-              <div class="feature-icon">⌁</div>
-              <h3>LÓGICA DUPLA</h3>
-              <p>Scripts Lua sandboxados e grafos NoCode compartilham a mesma interface de gameplay.</p>
-              <span class="mini-tag">LUAJ</span>
-            </article>
-            <article class="feature-card white reveal">
-              <span class="card-index">D</span>
-              <div class="feature-icon">⬡</div>
-              <h3>PROJETO PERSISTENTE</h3>
-              <p>Cenas JSON versionadas, autosave, arquivos atômicos, biblioteca de assets e índice Room.</p>
-              <span class="mini-tag">OFFLINE</span>
-            </article>
+          <div class="audit-strip">
+            <article><strong>NoCode</strong><span>PAINEL + EXECUTOR + CATÁLOGO</span></article>
+            <article><strong>Java</strong><span>RUNTIME EXPOSTO AO JOGO</span></article>
+            <article><strong>GLSL</strong><span>NÓS E EFEITOS GRÁFICOS</span></article>
+            <article><strong>Dump</strong><span>REFERÊNCIA PESQUISÁVEL</span></article>
+          </div>
+          <div class="source-grid">
+            <article class="source-card"><span class="audit-badge">Fonte direta</span><h3>EDITOR</h3><p>Activities, painéis, tema, ferramentas e a interface visual de criação ficam documentados a partir dos pacotes do editor decompilado.</p><code class="code-path">megazord-engine-decompiled/smali_classes5/com/itsmagic/engine/Activities/Editor/</code></article>
+            <article class="source-card"><span class="audit-badge">Fonte direta</span><h3>ENGINE</h3><p>O núcleo expõe módulos como Animation, Batching, Color, ComponentUtils, ComponentsV2, Curve, GC e Gradient, além das demais classes acessíveis pela referência completa.</p><code class="code-path">megazord-engine-decompiled/smali_classes5/com/itsmagic/engine/Engines/Engine/</code></article>
+            <article class="source-card"><span class="audit-badge">Fonte direta</span><h3>RUNTIME</h3><p>O pacote JAVARuntime concentra tipos e wrappers usados para executar ações e interagir com objetos e UI durante o jogo.</p><code class="code-path">megazord-engine-decompiled/smali/JAVARuntime/</code></article>
+            <article class="source-card"><span class="audit-badge">Fonte direta</span><h3>ASSETS INTERNOS</h3><p>Temas, shaders, brushes, fontes e recursos do editor revelam capacidades que não aparecem apenas olhando a UI do aplicativo.</p><code class="code-path">megazord-engine-decompiled/assets/</code></article>
           </div>
         </section>
 
-        <section class="doc-section section-dark compact-section" id="comecar" data-search-title="Guia de início rápido">
+        <section class="doc-section section-dark" id="arquitetura" data-search-title="Arquitetura do editor e runtime">
           <div class="section-number invert">02</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow">PRIMEIRO CONTATO</p>
-            <h2>DO APK AO PRIMEIRO <span>PLAY.</span></h2>
-            <p>Um fluxo simples para entender a engine antes de mexer na arquitetura.</p>
+          <div class="section-heading"><p class="eyebrow">ARQUITETURA OBSERVADA</p><h2>DO PAINEL VISUAL<br /><span>ATÉ A EXECUÇÃO.</span></h2><p>O NoCode não é apenas uma tela. O painel abre um canvas, liga um executor ou um arquivo de grafo e o runtime entra em ação quando o projeto é executado.</p></div>
+          <div class="architecture-flow">
+            <article><b>EDITOR</b><small>Activities / Panels / NoCode</small></article>
+            <article><b>CANVAS</b><small>grafo visual, nós e conexões</small></article>
+            <article><b>EXECUTOR</b><small>NoCodeExecutor ou graphFile</small></article>
+            <article><b>RUNTIME</b><small>JAVARuntime + APIs internas</small></article>
+            <article><b>PLAY</b><small>objetos, input, física e render</small></article>
           </div>
-
-          <div class="timeline reveal">
-            <button class="timeline-step active" data-step="0">
-              <b>01</b><span>Instalar APK</span><small>app-debug.apk</small>
-            </button>
-            <button class="timeline-step" data-step="1">
-              <b>02</b><span>Abrir starter</span><small>Open World</small>
-            </button>
-            <button class="timeline-step" data-step="2">
-              <b>03</b><span>Editar cena</span><small>Inspector XYZ</small>
-            </button>
-            <button class="timeline-step" data-step="3">
-              <b>04</b><span>Adicionar lógica</span><small>Lua ou NoCode</small>
-            </button>
-            <button class="timeline-step" data-step="4">
-              <b>05</b><span>Executar</span><small>Play / Stop</small>
-            </button>
-          </div>
-
-          <div class="step-stage reveal">
-            <div class="step-visual" id="stepVisual">
-              <div class="phone-shell">
-                <div class="phone-camera"></div>
-                <div class="phone-content">
-                  <img src="assets/logo.png" alt="" />
-                  <span>Megazord Engine</span>
-                  <button>INSTALL</button>
-                </div>
-              </div>
-            </div>
-            <div class="step-copy">
-              <span class="sticker sticker-purple" id="stepSticker">PASSO 01</span>
-              <h3 id="stepTitle">Instale o APK de debug</h3>
-              <p id="stepDescription">Use o APK gerado em <code>app/build/outputs/apk/debug/app-debug.apk</code> para validar o fluxo completo no aparelho ou emulador.</p>
-              <details class="code-drawer">
-                <summary><span>VER CAMINHO E COMANDO</span><i>+</i></summary>
-                <div class="code-panel">
-                  <div class="code-head"><span>PowerShell</span><button class="copy-code" type="button">COPIAR</button></div>
-                  <pre><code>./gradlew.bat :app:assembleDebug
-adb install -r app/build/outputs/apk/debug/app-debug.apk</code></pre>
-                </div>
-              </details>
-            </div>
-          </div>
+          <div class="callout"><strong>Detalhe importante:</strong> o painel suporta dois contextos: um <code>NoCodeExecutor</code> ligado a um componente do GameObject e um <code>graphFile</code> carregado como “NoCode Graph”. A documentação diferencia os dois fluxos.</div>
         </section>
 
-        <section class="doc-section section-light" id="editor" data-search-title="Editor responsivo e fluxo de edição">
+        <section class="doc-section section-light" id="nocode" data-search-title="Sistema NoCode e NoCodePanel">
           <div class="section-number">03</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow dark">INTERFACE DA ENGINE</p>
-            <h2>O EDITOR SE ADAPTA.<br /><span>O VIEWPORT NÃO SOME.</span></h2>
-            <p>O shell mantém o viewport montado e troca apenas a organização dos painéis conforme o espaço útil.</p>
+          <div class="section-heading"><p class="eyebrow dark">PRIORIDADE DA DOCUMENTAÇÃO</p><h2>O NOCODE É TRATADO<br /><span>COMO SISTEMA.</span></h2><p>Além do catálogo de blocos, documentamos como o painel encontra executores, como um grafo é aberto e como o editor decide qual título mostrar ao usuário.</p></div>
+          <div class="source-grid">
+            <article class="source-card"><span class="audit-badge">NoCodePanel</span><h3>CANVAS E GRAFO</h3><p><code>B0()</code> cria a interface, instancia o canvas e carrega um <code>graphFile</code> ou um <code>NoCodeExecutor</code> conforme o contexto.</p><code class="code-path">.../Panels/NoCode/NoCodePanel.smali</code></article>
+            <article class="source-card"><span class="audit-badge">NoCodePanel</span><h3>EXECUTORES DO OBJETO</h3><p><code>s1()</code> percorre os componentes do GameObject ativo e lista os que são instâncias de <code>NoCodeExecutor</code>, usando o título normal ou traduzido.</p><code class="code-path">NoCodeExecutor.getTitle() / getDisplayableTitle()</code></article>
+            <article class="source-card"><span class="audit-badge">NoCodePanel</span><h3>MODO COMPONENTE</h3><p><code>t1()</code> define o executor atual, limpa o caminho de grafo e conecta o canvas ao componente NoCode selecionado.</p><code class="code-path">NoCodePanel.t1(NoCodeExecutor)</code></article>
+            <article class="source-card"><span class="audit-badge">NoCodePanel</span><h3>MODO GRAPH FILE</h3><p><code>u1()</code> faz o inverso: define o arquivo do grafo, remove o executor atual e abre o documento como “NoCode Graph”.</p><code class="code-path">NoCodePanel.u1(String graphFile)</code></article>
           </div>
+          <div class="hero-actions"><a class="button button-dark" href="nocodes.html">VER TODOS OS NÓS NOCODE →</a></div>
+        </section>
 
-          <div class="layout-switcher reveal">
-            <div class="switcher-controls">
-              <button class="layout-button active" data-layout="phone">TELEFONE</button>
-              <button class="layout-button" data-layout="tablet">TABLET</button>
-            </div>
-            <div class="responsive-demo phone" id="responsiveDemo">
-              <div class="rd-hierarchy">HIERARQUIA<br /><span>Player</span><span>Terrain</span><span>Camera</span></div>
-              <div class="rd-viewport"><div class="demo-cube"></div><small>VIEWPORT SEMPRE MONTADO</small></div>
-              <div class="rd-inspector">INSPECTOR<br /><span>X 0.0</span><span>Y 1.0</span><span>Z 0.0</span></div>
-              <div class="rd-bottom">ASSETS · LÓGICA · LOGS</div>
-            </div>
-            <div class="layout-notes">
-              <article><b>COMPACTO</b><p>Viewport dominante e no máximo um painel inferior por vez.</p></article>
-              <article><b>EXPANDIDO</b><p>Hierarquia à esquerda, viewport central, inspector à direita.</p></article>
-              <article><b>MODO PLAY</b><p>Remove ferramentas mutáveis, mantém Stop e isola a cena editável.</p></article>
-            </div>
+        <section class="doc-section section-dark" id="runtime" data-search-title="JAVARuntime e execução de ações">
+          <div class="section-number invert">04</div>
+          <div class="section-heading"><p class="eyebrow">CAMADA DE EXECUÇÃO</p><h2>O PLAY CHEGA AO<br /><span>JAVA RUNTIME.</span></h2><p>O diretório <code>smali/JAVARuntime</code> contém tipos expostos ao runtime. A referência completa lista todos os arquivos; abaixo ficam famílias já confirmadas no dump.</p></div>
+          <div class="runtime-list">
+            <div class="runtime-row"><strong>AButton</strong><code>smali/JAVARuntime/AButton.smali + classes internas</code><em>UI / input</em></div>
+            <div class="runtime-row"><strong>ACheckBox</strong><code>smali/JAVARuntime/ACheckBox.smali + classes internas</code><em>UI / estado</em></div>
+            <div class="runtime-row"><strong>AConstraintLayout</strong><code>smali/JAVARuntime/AConstraintLayout.smali</code><em>UI / layout</em></div>
+            <div class="runtime-row"><strong>AEditText</strong><code>smali/JAVARuntime/AEditText.smali</code><em>UI / texto</em></div>
+            <div class="runtime-row"><strong>AABB</strong><code>smali/JAVARuntime/AABB.smali</code><em>geometria</em></div>
+          </div>
+          <div class="callout">A página <a href="reference.html"><strong>Referência do Dump</strong></a> carrega a árvore atual do GitHub e mostra as demais classes sem manter uma lista manual que fique desatualizada.</div>
+        </section>
+
+        <section class="doc-section section-light" id="tema" data-search-title="Default.json, cores e tipos do NodeGraph">
+          <div class="section-number">05</div>
+          <div class="section-heading"><p class="eyebrow dark">VISUAL REAL DO NODE GRAPH</p><h2>CORES EXTRAÍDAS<br /><span>DO DEFAULT.JSON.</span></h2><p>Os pinos e estados abaixo usam os valores do tema decompilado, em vez de uma paleta genérica criada só para a documentação.</p></div>
+          <div class="node-type-legend">
+            <span class="number">NUMBER · #4C86B6</span><span class="string">STRING · #e3d464</span><span class="type">TYPE · #ace364</span><span class="vector">VECTOR · #5AA66A</span><span class="list">LIST · #f08080</span><span class="dynamic">DYNAMIC · #539690</span><span class="texture">TEXTURE · #C05B5B</span><span class="cubemap">CUBEMAP · #C9854A</span><span class="branch">BRANCH · #7c3ff2</span>
+          </div>
+          <div class="source-grid">
+            <article class="source-card"><h3>EVENT TOPBAR</h3><p>A barra superior de eventos usa <code>#b33939</code>, deixando nós de entrada visualmente distintos.</p></article>
+            <article class="source-card"><h3>SEMAPHORE</h3><p>Nós de semáforo usam <code>#2c6e49</code>, enquanto blocos de interrupção usam <code>#d36135</code>.</p></article>
+            <article class="source-card"><h3>SELECTED BORDER</h3><p>O contorno de seleção usa <code>#b184ff</code>, coerente com o primário roxo <code>#7c3ff2</code>.</p></article>
+            <article class="source-card"><h3>GRID</h3><p>O NodeGraph herda o grid de <code>base_151515</code>, que resolve para <code>#20242b</code>.</p></article>
+          </div>
+          <code class="code-path">megazord-engine-decompiled/assets/Editor/Themes/Default.json</code>
+        </section>
+
+        <section class="doc-section section-dark" id="graficos" data-search-title="Shaders e nós gráficos GLSL">
+          <div class="section-number invert">06</div>
+          <div class="section-heading"><p class="eyebrow">PIPELINE GRÁFICO</p><h2>O DUMP INCLUI<br /><span>NÓS GLSL PRONTOS.</span></h2><p>Em <code>assets/Engine/Graphics/Nodes</code> existem operações matemáticas, amostragem, ruído e pós-processamento. Isso ajuda a mapear o que a engine consegue compor graficamente.</p></div>
+          <div class="runtime-grid">
+            <article class="runtime-card"><h3>PÓS-PROCESSO</h3><p><code>bloom.glsl</code>, <code>chromatic_aberration.glsl</code>, <code>gaussian_blur.glsl</code>, <code>lens_distortion.glsl</code>, <code>motion_blur.glsl</code> e <code>film_grain_scratch.glsl</code>.</p></article>
+            <article class="runtime-card"><h3>MATERIAL / COR</h3><p><code>brightness.glsl</code>, <code>contrast.glsl</code>, <code>gamma.glsl</code>, <code>hue.glsl</code>, <code>fresnel.glsl</code> e conversão de espaço de cor.</p></article>
+            <article class="runtime-card"><h3>GEOMETRIA</h3><p><code>displacement.glsl</code>, distância, dot, cross, length, clamp e operações binárias usadas na montagem de grafos.</p></article>
+            <article class="runtime-card"><h3>PROCEDURAL</h3><p><code>eroded_terrain_noise.glsl</code>, fractal, gold noise, hash e funções de ruído para materiais e terreno.</p></article>
+          </div>
+          <code class="code-path">megazord-engine-decompiled/assets/Engine/Graphics/Nodes/</code>
+        </section>
+
+        <section class="doc-section section-light" id="engine" data-search-title="Núcleo Engine, componentes e exportador">
+          <div class="section-number">07</div>
+          <div class="section-heading"><p class="eyebrow dark">MÓDULOS CONFIRMADOS</p><h2>O NÚCLEO ESTÁ<br /><span>DIVIDIDO POR DOMÍNIO.</span></h2><p>A árvore de <code>Engines/Engine</code> revela subsistemas separados. A referência ao vivo continua a lista para qualquer diretório que seja adicionado depois.</p></div>
+          <div class="feature-grid">
+            <article class="feature-card purple"><span class="card-index">A</span><div class="feature-icon">▶</div><h3>ANIMATION</h3><p>Classes relacionadas à reprodução e manipulação de animações.</p><span class="mini-tag">ENGINE</span></article>
+            <article class="feature-card black"><span class="card-index">B</span><div class="feature-icon">▦</div><h3>BATCHING</h3><p>Estruturas associadas ao agrupamento de trabalho gráfico.</p><span class="mini-tag">PERF</span></article>
+            <article class="feature-card lavender"><span class="card-index">C</span><div class="feature-icon">◇</div><h3>COMPONENTS V2</h3><p>Camada de componentes e utilitários de componentes observada no dump.</p><span class="mini-tag">ECS-LIKE</span></article>
+            <article class="feature-card white"><span class="card-index">D</span><div class="feature-icon">↗</div><h3>EXPORTER</h3><p>Módulo separado para o fluxo de exportação do projeto.</p><span class="mini-tag">OUTPUT</span></article>
+          </div>
+          <div class="runtime-list">
+            <div class="runtime-row"><strong>Color</strong><code>Engines/Engine/Color/</code><em>dados</em></div>
+            <div class="runtime-row"><strong>ComponentUtils</strong><code>Engines/Engine/ComponentUtils/</code><em>componentes</em></div>
+            <div class="runtime-row"><strong>Curve</strong><code>Engines/Engine/Curve/</code><em>curvas</em></div>
+            <div class="runtime-row"><strong>GC</strong><code>Engines/Engine/GC/</code><em>ciclo de vida</em></div>
+            <div class="runtime-row"><strong>Gradient</strong><code>Engines/Engine/Gradient/</code><em>cor</em></div>
           </div>
         </section>
 
-        <section class="doc-section section-mix" id="cena" data-search-title="SceneDocument, GameObjects e componentes">
-          <div class="section-number">04</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow dark">MODELO DE DADOS</p>
-            <h2>UMA CENA É UM <span>DOCUMENTO.</span></h2>
-            <p>Editor, renderer e gameplay se encontram no mesmo contrato: <code>SceneDocument</code>.</p>
-          </div>
-
-          <div class="scene-explainer reveal">
-            <div class="scene-tree-large">
-              <div class="tree-title">SCENE DOCUMENT <span>v1</span></div>
-              <button class="scene-node active" data-component="transform"><i>▾</i> Player <small>GameObject</small></button>
-              <button class="scene-node nested active" data-component="transform"><i>↳</i> Transform</button>
-              <button class="scene-node nested" data-component="mesh"><i>↳</i> MeshRenderer</button>
-              <button class="scene-node nested" data-component="collider"><i>↳</i> Collider</button>
-              <button class="scene-node nested" data-component="lua"><i>↳</i> LuaScript</button>
-              <button class="scene-node" data-component="camera"><i>▸</i> Camera <small>GameObject</small></button>
-              <button class="scene-node" data-component="light"><i>▸</i> Sun <small>GameObject</small></button>
-            </div>
-            <div class="component-detail" id="componentDetail">
-              <span class="detail-tag">COMPONENTE</span>
-              <h3>Transform</h3>
-              <p>Define posição, rotação e escala local do objeto. É serializável e validado antes de chegar ao runtime.</p>
-              <div class="metric-row"><span>POSITION</span><b>[0, 1, 0]</b></div>
-              <div class="metric-row"><span>ROTATION</span><b>[0, 0, 0]</b></div>
-              <div class="metric-row"><span>SCALE</span><b>[1, 1, 1]</b></div>
-              <details class="code-drawer">
-                <summary><span>VER EXEMPLO JSON</span><i>+</i></summary>
-                <div class="code-panel">
-                  <div class="code-head"><span>main.scene.json</span><button class="copy-code" type="button">COPIAR</button></div>
-                  <pre><code>{
-  "type": "Transform",
-  "enabled": true,
-  "position": [0.0, 1.0, 0.0],
-  "rotation": [0.0, 0.0, 0.0],
-  "scale": [1.0, 1.0, 1.0]
-}</code></pre>
-                </div>
-              </details>
-            </div>
-          </div>
-
-          <div class="validation-strip reveal">
-            <b>VALIDAÇÃO AUTOMÁTICA</b>
-            <span>IDs duplicados</span><span>Referências ausentes</span><span>Ciclos</span><span>Paths inseguros</span><span>Escala inválida</span>
-          </div>
-        </section>
-
-        <section class="doc-section section-dark" id="arquitetura" data-search-title="Arquitetura modular e dependências">
-          <div class="section-number invert">05</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow">POR BAIXO DA INTERFACE</p>
-            <h2>MÓDULOS COM <span>FRONTEIRAS CLARAS.</span></h2>
-            <p>Clique em um módulo para entender sua responsabilidade e seus relacionamentos.</p>
-          </div>
-
-          <div class="architecture-board reveal">
-            <svg class="architecture-lines" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
-              <path d="M500 85 L300 210"/><path d="M500 85 L700 210"/>
-              <path d="M300 250 L190 390"/><path d="M300 250 L420 390"/>
-              <path d="M700 250 L580 390"/><path d="M700 250 L810 390"/>
-              <path d="M420 430 L500 515"/><path d="M580 430 L500 515"/>
-            </svg>
-            <button class="module-card app active" data-module="app"><span>01</span><b>APP</b><small>composição + navegação</small></button>
-            <button class="module-card editor" data-module="editor"><span>02</span><b>EDITOR</b><small>EditorPlugin nativo</small></button>
-            <button class="module-card projects" data-module="projects"><span>03</span><b>PROJECTS</b><small>persistência</small></button>
-            <button class="module-card runtime" data-module="runtime"><span>04</span><b>RUNTIME</b><small>SceneTree / Godot</small></button>
-            <button class="module-card scripting" data-module="scripting"><span>05</span><b>SCRIPTING</b><small>Lua + NoCode</small></button>
-            <button class="module-card contracts" data-module="contracts"><span>06</span><b>CONTRACTS</b><small>formatos e contratos</small></button>
-            <button class="module-card model" data-module="model"><span>07</span><b>CORE:MODEL</b><small>cena + componentes</small></button>
-            <button class="module-card common" data-module="common"><span>08</span><b>CORE:COMMON</b><small>IDs + logs + relógio</small></button>
-          </div>
-
-          <div class="module-description reveal" id="moduleDescription">
-            <div><span class="sticker sticker-purple">MÓDULO 01</span><h3>app</h3></div>
-            <p>É o ponto de composição. Liga navegação, tema, dependências e módulos de alto nível sem absorver regras de cena.</p>
-            <div class="module-pills"><span>navigation</span><span>theme</span><span>dependency wiring</span></div>
-          </div>
-        </section>
-
-        <section class="doc-section section-light" id="scripting" data-search-title="Lua sandboxado e lógica visual NoCode">
-          <div class="section-number">06</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow dark">GAMEPLAY</p>
-            <h2>DUAS FORMAS DE PROGRAMAR.<br /><span>UMA ÚNICA API.</span></h2>
-            <p>Lua e o grafo visual chamam o mesmo <code>LogicSceneHost</code>, reduzindo divergência entre programação textual e visual.</p>
-          </div>
-
-          <div class="logic-tabs reveal">
-            <div class="logic-tab-buttons">
-              <button class="logic-tab active" data-logic="nocode">NOCODE</button>
-              <button class="logic-tab" data-logic="lua">LUA</button>
-              <button class="logic-tab" data-logic="runtime">EXECUÇÃO</button>
-            </div>
-
-            <div class="logic-panel active" data-panel="nocode">
-              <div class="node-canvas" id="nodeCanvas">
-                <svg class="node-lines" viewBox="0 0 900 340" preserveAspectRatio="none" aria-hidden="true">
-                  <path d="M185 88 C300 88, 260 166, 385 166"/>
-                  <path d="M520 166 C650 166, 600 252, 735 252"/>
-                </svg>
-                <div class="logic-node event-node" style="left:40px;top:42px"><span>EVENTO</span><b>Ao tocar</b><i class="port output"></i></div>
-                <div class="logic-node action-node" style="left:350px;top:120px"><span>TRANSFORM</span><b>Rotacionar Y</b><small>45°</small><i class="port input"></i><i class="port output"></i></div>
-                <div class="logic-node log-node" style="left:700px;top:205px"><span>DEBUG</span><b>Log</b><small>"girou"</small><i class="port input"></i></div>
-                <div class="node-toolbar"><button>＋</button><button>↶</button><button>⌖</button></div>
-              </div>
-              <div class="logic-caption"><b>GRAFO TIPADO E ACÍCLICO</b><p>Os nodes são persistidos em JSON e executados pelo mesmo host usado pelo Lua.</p></div>
-            </div>
-
-            <div class="logic-panel" data-panel="lua">
-              <div class="editor-code-large">
-                <div class="code-gutter">1<br/>2<br/>3<br/>4<br/>5<br/>6<br/>7</div>
-                <pre><code><span class="kw">local</span> player = scene.find(<span class="str">"Player"</span>)
-
-<span class="fn">onTouch</span>(<span class="kw">function</span>()
-  player.transform.rotateY(<span class="num">45</span>)
-  log(<span class="str">"Player rotacionado"</span>)
-<span class="kw">end</span>)</code></pre>
-                <div class="sandbox-badge">SANDBOX ATIVO</div>
-              </div>
-              <div class="logic-caption"><b>GLOBALS EXPLÍCITOS</b><p>Sem <code>io</code>, <code>os</code>, <code>require</code>, <code>luajava</code> ou carregamento arbitrário de arquivos.</p></div>
-            </div>
-
-            <div class="logic-panel" data-panel="runtime">
-              <div class="runtime-flow">
-                <div><span>01</span><b>CLONAR CENA</b><small>A cena editável permanece intacta.</small></div>
-                <i>→</i>
-                <div><span>02</span><b>INICIALIZAR</b><small>Scripts e grafos recebem orçamento.</small></div>
-                <i>→</i>
-                <div><span>03</span><b>EVENTOS</b><small>Toque e callbacks são serializados.</small></div>
-                <i>→</i>
-                <div><span>04</span><b>STOP</b><small>Descarta a cópia de gameplay.</small></div>
-              </div>
-              <div class="logic-caption"><b>PLAY ISOLADO</b><p>Gameplay não modifica permanentemente o documento que está sendo editado.</p></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="doc-section section-purple" id="assets" data-search-title="Importação de assets GLB">
-          <div class="section-number invert">07</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow">PIPELINE DE ASSETS</p>
-            <h2>DO ARQUIVO GLB<br /><span>ATÉ O VIEWPORT.</span></h2>
-            <p>A importação passa por seleção segura, validação estrutural, cópia local e projeção nativa.</p>
-          </div>
-
-          <div class="asset-pipeline reveal">
-            <article><span>01</span><div class="pipeline-icon">⇧</div><h3>SAF</h3><p>O usuário escolhe um <code>.glb</code> pelo seletor do Android.</p></article>
-            <i>→</i>
-            <article><span>02</span><div class="pipeline-icon">✓</div><h3>VALIDAR</h3><p>GLB 2.0 autocontido, limites de chunks e estruturas.</p></article>
-            <i>→</i>
-            <article><span>03</span><div class="pipeline-icon">▣</div><h3>PERSISTIR</h3><p>Cópia para a biblioteca privada do projeto.</p></article>
-            <i>→</i>
-            <article><span>04</span><div class="pipeline-icon">◇</div><h3>RENDER</h3><p>ModelLoader isolado por geração de carga.</p></article>
-          </div>
-
-          <div class="asset-warning reveal">
-            <div class="warning-number">16<span>MiB</span></div>
-            <div><b>LIMITE ATUAL POR GLB</b><p>Prefira modelos autocontidos e otimizados para GPU mobile. GLTF externo, OBJ e conversão FBX ainda não fazem parte do caminho validado.</p></div>
-          </div>
-        </section>
-
-        <section class="doc-section section-dark" id="build" data-search-title="Compilar testar e gerar APK">
+        <section class="doc-section section-dark" id="play" data-search-title="Fluxo de execução ao pressionar Play">
           <div class="section-number invert">08</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow">TOOLCHAIN</p>
-            <h2>COMPILAR, TESTAR<br /><span>E GERAR APK.</span></h2>
-            <p>O APK empacota a build customizada do Godot 4.6.3 para Android. O pipeline aplica os patches de produto e NoCode, compila o editor e valida o pacote com as ferramentas oficiais do Android.</p>
+          <div class="section-heading"><p class="eyebrow">MODELO MENTAL</p><h2>O QUE ACONTECE<br /><span>QUANDO VOCÊ DÁ PLAY.</span></h2><p>Esta sequência é a forma recomendada de ler os arquivos quando estiver rastreando por que um grafo ou ação funciona — ou não funciona.</p></div>
+          <div class="architecture-flow">
+            <article><b>1. GRAPH</b><small>o painel aponta para executor ou arquivo</small></article>
+            <article><b>2. NODES</b><small>dados e branches formam o fluxo</small></article>
+            <article><b>3. RUNTIME</b><small>ações são resolvidas para APIs reais</small></article>
+            <article><b>4. ENGINE</b><small>componentes, objeto, input e física</small></article>
+            <article><b>5. FRAME</b><small>resultado aparece em execução</small></article>
           </div>
-
-          <div class="build-grid reveal">
-            <div class="terminal-card">
-              <div class="terminal-head"><span>●</span><span>●</span><span>●</span><b>PowerShell</b><button class="copy-code" type="button">COPIAR</button></div>
-              <pre><code><span class="prompt">PS&gt;</span> $env:JAVA_HOME='C:\Program Files\Eclipse Adoptium\jdk-17'
-<span class="prompt">PS&gt;</span> $env:ANDROID_HOME='C:\Users\SEU_USUARIO\AppData\Local\Android\Sdk'
-
-<span class="comment"># Testes e qualidade</span>
-<span class="prompt">PS&gt;</span> .\gradlew.bat test
-<span class="prompt">PS&gt;</span> .\gradlew.bat testDebugUnitTest
-<span class="prompt">PS&gt;</span> .\gradlew.bat :app:lintDebug
-
-<span class="comment"># APKs</span>
-<span class="prompt">PS&gt;</span> .\gradlew.bat :app:assembleDebug
-<span class="prompt">PS&gt;</span> .\gradlew.bat :app:assembleRelease</code></pre>
-            </div>
-            <div class="build-checklist">
-              <article><span>1</span><div><b>JAVA_HOME</b><p>Aponte para um JDK 17 real.</p></div></article>
-              <article><span>2</span><div><b>ANDROID_HOME</b><p>Use a pasta do SDK instalado pelo Android Studio.</p></div></article>
-              <article><span>3</span><div><b>TESTAR</b><p>Execute testes JVM, instrumentados e lint.</p></div></article>
-              <article><span>4</span><div><b>ASSEMBLE</b><p>Gere debug, androidTest e release.</p></div></article>
-            </div>
-          </div>
+          <div class="callout">Para depurar uma mecânica, comece no nome do nó, confirme o tipo dos pinos, procure a ação correspondente no runtime e só depois desça para a implementação do componente de engine.</div>
         </section>
 
-        <section class="doc-section section-light" id="seguranca" data-search-title="Segurança limites técnicos e orçamento de runtime">
+        <section class="doc-section section-light" id="limites" data-search-title="Limites e confiança da documentação decompilada">
           <div class="section-number">09</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow dark">ESTADO REAL DO PROJETO</p>
-            <h2>O QUE É SEGURO.<br /><span>E O QUE AINDA NÃO É.</span></h2>
-            <p>A vertical slice é funcional, mas não deve ser tratada como sandbox total para conteúdo hostil.</p>
+          <div class="section-heading"><p class="eyebrow dark">TRANSPARÊNCIA DA AUDITORIA</p><h2>DECOMPILADO NÃO É<br /><span>CÓDIGO-FONTE ORIGINAL.</span></h2><p>Nomes ofuscados, divisão entre dex e classes ausentes podem impedir reconstruir uma API apenas pelo Smali. A documentação marca a origem para evitar falsa precisão.</p></div>
+          <div class="source-grid">
+            <article class="source-card"><h3>FONTE DIRETA</h3><p>Informação visível no dump, como caminhos, classes, strings, temas e chamadas explícitas.</p></article>
+            <article class="source-card"><h3>CATÁLOGO CORRELACIONADO</h3><p>Para os nomes e contratos dos NoCodes, o catálogo oficial da ITsMagic é usado como índice correlacionado e os detalhes são carregados da própria documentação oficial.</p></article>
+            <article class="source-card"><h3>NÃO CONFIRMADO</h3><p>Quando uma classe referenciada pelo Smali não está presente na árvore versionada, a documentação não inventa os métodos internos.</p></article>
+            <article class="source-card"><h3>ATUALIZAÇÃO AUTOMÁTICA</h3><p>A Referência do Dump consulta a árvore atual do repositório para reduzir divergência quando novos arquivos forem adicionados.</p></article>
           </div>
-
-          <div class="limits-dashboard reveal">
-            <div class="limit-card"><span class="limit-value">256</span><b>OBJETOS RENDERIZÁVEIS</b><small>por projeção</small></div>
-            <div class="limit-card"><span class="limit-value">32</span><b>INSTÂNCIAS GLB</b><small>por projeção</small></div>
-            <div class="limit-card"><span class="limit-value">8</span><b>SCRIPTS ATIVOS</b><small>durante Play</small></div>
-            <div class="limit-card"><span class="limit-value">16</span><b>GRAFOS ATIVOS</b><small>durante Play</small></div>
-            <div class="limit-card"><span class="limit-value">750<span>ms</span></span><b>INICIALIZAÇÃO</b><small>orçamento atual</small></div>
-          </div>
-
-          <div class="safety-columns reveal">
-            <article class="safe"><h3>✓ PROTEÇÕES EXISTENTES</h3><p>Paths resolvidos dentro da raiz confiável, sem symlinks, escrita atômica, limites de tamanho e globals Lua explícitos.</p></article>
-            <article class="risk"><h3>! FRONTEIRAS ABERTAS</h3><p>Falta quota rígida de heap Lua e orçamento por pixels decodificados para texturas comprimidas dentro do GLB.</p></article>
-          </div>
-        </section>
-
-        <section class="doc-section section-dark nocode-docs" id="catalogo-nocode" data-search-title="Catálogo completo com 961 NoCodes, contratos e exemplos">
-          <div class="section-number">10</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow">REFERÊNCIA NATIVA E VERSIONADA</p>
-            <h2>CADA BLOCO.<br /><span>CADA CONTRATO.</span></h2>
-            <p>Esta referência é gerada do catálogo auditado da engine. Pesquise por nome, ID ou categoria e abra um bloco para consultar finalidade, entradas, saídas e falhas esperadas.</p>
-          </div>
-
-          <div class="nocode-stats reveal">
-            <article><strong id="nocodeTotal">961</strong><span>OPERAÇÕES NATIVAS</span></article>
-            <article><strong id="nocodeCategories">—</strong><span>CATEGORIAS</span></article>
-            <article><strong>1</strong><span>FONTE DE VERDADE</span></article>
-          </div>
-
-          <div class="nocode-examples reveal">
-            <article>
-              <span class="example-tag">MOVIMENTO MOBILE</span>
-              <div class="mini-graph"><b>Update</b><i>→</i><b>Joystick Axis</b><i>→</i><b>Character Move</b></div>
-              <p>A cada quadro, lê o joystick, converte o eixo pela orientação da câmera e move o <code>CharacterBody3D</code>.</p>
-            </article>
-            <article>
-              <span class="example-tag">VISÃO POR ARRASTO</span>
-              <div class="mini-graph"><b>Pointer Drag</b><i>→</i><b>Character Look</b></div>
-              <p>O delta de toque controla yaw e pitch com sensibilidade configurável e limite vertical.</p>
-            </article>
-            <article>
-              <span class="example-tag">PULO VALIDADO</span>
-              <div class="mini-graph"><b>Button Pressed</b><i>→</i><b>Character Jump</b></div>
-              <p>O botão emite o evento <code>jump</code>; o runner confirma contato com o chão antes de aplicar a velocidade.</p>
-            </article>
-          </div>
-
-          <div class="catalog-browser reveal">
-            <div class="catalog-toolbar">
-              <label><span>⌕</span><input id="nocodeSearch" type="search" placeholder="Buscar: pulo, vetor, world.character_jump..." /></label>
-              <select id="nocodeCategory" aria-label="Filtrar por categoria"><option value="">Todas as categorias</option></select>
-              <span id="nocodeCount" aria-live="polite">Carregando catálogo…</span>
-            </div>
-            <div class="catalog-grid" id="nocodeGrid"></div>
-            <button class="button button-outline catalog-more" id="nocodeMore" type="button">CARREGAR MAIS</button>
-          </div>
-
-          <div class="nocode-contract reveal">
-            <div><span>01</span><b>EVENTO</b><p>Inicia o fluxo com dados reais do runtime.</p></div>
-            <div><span>02</span><b>ENTRADAS</b><p>Valores e NodePaths passam por validação de tipo.</p></div>
-            <div><span>03</span><b>EXECUÇÃO</b><p>Somente operações registradas podem interagir com a cena.</p></div>
-            <div><span>04</span><b>ERRO</b><p>Falhas emitem <code>graph_error</code>, sem chamada arbitrária.</p></div>
-          </div>
-        </section>
-
-        <section class="doc-section section-mix" id="roadmap" data-search-title="Roadmap e próximas etapas">
-          <div class="section-number">10</div>
-          <div class="section-heading reveal">
-            <p class="eyebrow dark">PRÓXIMOS PASSOS</p>
-            <h2>DO VERTICAL SLICE<br /><span>PARA UMA ENGINE COMPLETA.</span></h2>
-            <p>O roadmap prioriza validação real antes de marcar qualquer formato ou recurso como concluído.</p>
-          </div>
-
-          <div class="roadmap-board reveal">
-            <div class="roadmap-column done">
-              <span class="roadmap-status">CONCLUÍDO</span>
-              <h3>FUNDAÇÃO</h3>
-              <ul>
-                <li>Arquitetura modular</li>
-                <li>Editor landscape</li>
-                <li>Viewport Godot 4.6.3</li>
-                <li>Lua + NoCode</li>
-                <li>Autosave e assets</li>
-              </ul>
-            </div>
-            <div class="roadmap-column now">
-              <span class="roadmap-status">AGORA</span>
-              <h3>VALIDAÇÃO</h3>
-              <ul>
-                <li>Testes de layout 640 × 360</li>
-                <li>Coleção externa de GLBs</li>
-                <li>Foco e enquadramento</li>
-                <li>Gizmo na origem renderizada</li>
-              </ul>
-            </div>
-            <div class="roadmap-column next">
-              <span class="roadmap-status">DEPOIS</span>
-              <h3>EXPANSÃO</h3>
-              <ul>
-                <li>Física e colliders</li>
-                <li>Áudio e animação</li>
-                <li>Autocomplete e breakpoints</li>
-                <li>Exportação APK/AAB</li>
-                <li>Plugins e permissões</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="roadmap-cta reveal">
-            <img src="assets/logo.png" alt="" />
-            <div><span class="eyebrow dark">PRINCÍPIO DO PROJETO</span><h3>NADA É “PRONTO” SEM TESTAR O CAMINHO REAL.</h3></div>
-            <a class="button button-dark" href="https://github.com/kacerato/3dengine/blob/master/ROADMAP.md" target="_blank" rel="noreferrer">VER ROADMAP ↗</a>
-          </div>
+          <div class="hero-actions"><a class="button button-dark" href="reference.html">PESQUISAR O DUMP COMPLETO →</a><a class="button button-outline" href="nocodes.html">ABRIR NOCODES</a></div>
         </section>
       </div>
     </div>
   </main>
 
   <footer>
-    <div class="footer-logo"><img src="assets/logo.png" alt="" /><span><b>Megazord Engine</b><small>DOCUMENTAÇÃO VISUAL</small></span></div>
-    <p>Site estático em HTML, CSS e JavaScript. Conteúdo baseado no estado atual do repositório.</p>
+    <div class="footer-logo"><img src="assets/logo.png" alt="" /><span><b>Megazord Engine</b><small>DECOMPILED DOCUMENTATION</small></span></div>
+    <p>Documentação técnica construída a partir de <code>megazord-engine-decompiled</code> e fontes correlacionadas explicitamente identificadas.</p>
     <div><a href="#inicio">VOLTAR AO TOPO ↑</a></div>
   </footer>
 
-  <script src="nocode-catalog.js"></script>
-  <script src="app.js"></script>
+  <script src="engine-docs.js"></script>
 </body>
 </html>
-

@@ -111,17 +111,20 @@ class VisualGraphExecutor(
                 )
             },
             outgoing = { entry, selectedPortId ->
-                outgoing[entry.nodeId].orEmpty()
-                    .asSequence()
-                    .filter { connection -> connection.fromPortId == selectedPortId }
-                    .mapNotNull { connection ->
-                        if (connection.toNodeId !in byId) null
-                        else NoCodeFlowEntry(
-                            nodeId = connection.toNodeId,
-                            incomingFlowPortId = connection.toPortId,
-                        )
-                    }
-                    .toList()
+                val node = byId[entry.nodeId] ?: return@execute emptyList()
+                val definition = NoCodeNodeRegistry.definitionFor(node)
+                NoCodeConnectionRouter.resolve(
+                    node = node,
+                    definition = definition,
+                    selectedPortId = selectedPortId,
+                    outgoing = outgoing[entry.nodeId].orEmpty(),
+                ).mapNotNull { connection ->
+                    if (connection.toNodeId !in byId) null
+                    else NoCodeFlowEntry(
+                        nodeId = connection.toNodeId,
+                        incomingFlowPortId = connection.toPortId,
+                    )
+                }
             },
         )
     }

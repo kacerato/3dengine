@@ -1,0 +1,60 @@
+.class public final synthetic Ly6/o;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements Lwd/d;
+
+
+# instance fields
+.field public final synthetic a:Ly6/E;
+
+.field public final synthetic b:I
+
+.field public final synthetic c:Ljava/lang/String;
+
+.field public final synthetic d:I
+
+.field public final synthetic e:Lya/H;
+
+
+# direct methods
+.method public synthetic constructor <init>(Ly6/E;ILjava/lang/String;ILya/H;)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Ly6/o;->a:Ly6/E;
+
+    iput p2, p0, Ly6/o;->b:I
+
+    iput-object p3, p0, Ly6/o;->c:Ljava/lang/String;
+
+    iput p4, p0, Ly6/o;->d:I
+
+    iput-object p5, p0, Ly6/o;->e:Lya/H;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final onSelected(Landroid/view/View;)V
+    .locals 6
+
+    iget-object v0, p0, Ly6/o;->a:Ly6/E;
+
+    iget v1, p0, Ly6/o;->b:I
+
+    iget-object v2, p0, Ly6/o;->c:Ljava/lang/String;
+
+    iget v3, p0, Ly6/o;->d:I
+
+    iget-object v4, p0, Ly6/o;->e:Lya/H;
+
+    move-object v5, p1
+
+    invoke-static/range {v0 .. v5}, Ly6/E;->q(Ly6/E;ILjava/lang/String;ILya/H;Landroid/view/View;)V
+
+    return-void
+.end method

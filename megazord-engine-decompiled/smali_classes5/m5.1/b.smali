@@ -1,0 +1,80 @@
+.class public Lm5/b;
+.super Ll5/b;
+.source "SourceFile"
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 0
+
+    invoke-direct {p0}, Ll5/b;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public a(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Activities/Editor/Panels/Editor3DViewer/Base/Panel3DView;)Z
+    .locals 3
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0
+        }
+        names = {
+            "selectedObject",
+            "panel3DView"
+        }
+    .end annotation
+
+    invoke-static {p1}, Lyb/e;->J(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;)Z
+
+    move-result p1
+
+    const/4 v0, 0x0
+
+    if-nez p1, :cond_0
+
+    return v0
+
+    :cond_0
+    invoke-virtual {p2}, Lcom/itsmagic/engine/Activities/Editor/Panels/Editor3DViewer/Base/Panel3DView;->E1()Lcom/itsmagic/engine/Activities/Editor/Panels/Editor3DViewer/Base/Panel3DView$j;
+
+    move-result-object p1
+
+    sget-object v1, Lcom/itsmagic/engine/Activities/Editor/Panels/Editor3DViewer/Base/Panel3DView$j;->All:Lcom/itsmagic/engine/Activities/Editor/Panels/Editor3DViewer/Base/Panel3DView$j;
+
+    const/4 v2, 0x1
+
+    if-ne p1, v1, :cond_1
+
+    return v2
+
+    :cond_1
+    invoke-virtual {p2}, Lcom/itsmagic/engine/Activities/Editor/Panels/Editor3DViewer/Base/Panel3DView;->E1()Lcom/itsmagic/engine/Activities/Editor/Panels/Editor3DViewer/Base/Panel3DView$j;
+
+    move-result-object p1
+
+    sget-object v1, Lcom/itsmagic/engine/Activities/Editor/Panels/Editor3DViewer/Base/Panel3DView$j;->SnapToScale:Lcom/itsmagic/engine/Activities/Editor/Panels/Editor3DViewer/Base/Panel3DView$j;
+
+    if-ne p1, v1, :cond_2
+
+    iget-object p1, p2, Lcom/itsmagic/engine/Activities/Editor/Panels/Editor3DViewer/Base/Panel3DView;->snapToScaleConfigs:Ly5/a;
+
+    iget-boolean p1, p1, Ly5/a;->a:Z
+
+    if-eqz p1, :cond_2
+
+    move v0, v2
+
+    :cond_2
+    return v0
+.end method
+
+.method public b()Lh5/a;
+    .locals 1
+
+    sget-object v0, Lh5/a;->SnapToScale:Lh5/a;
+
+    return-object v0
+.end method

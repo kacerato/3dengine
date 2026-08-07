@@ -1,0 +1,76 @@
+.class public Lb6/a$f;
+.super Lcom/itsmagic/engine/Activities/Editor/Utils/a;
+.source "SourceFile"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lb6/a;->y1()V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1
+    name = null
+.end annotation
+
+
+# instance fields
+.field public final synthetic b:Lb6/a;
+
+
+# direct methods
+.method public constructor <init>(Lb6/a;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x8010
+        }
+        names = {
+            "this$0"
+        }
+    .end annotation
+
+    iput-object p1, p0, Lb6/a$f;->b:Lb6/a;
+
+    invoke-direct {p0}, Lcom/itsmagic/engine/Activities/Editor/Utils/a;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public click(Landroid/view/View;)V
+    .locals 1
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "v"
+        }
+    .end annotation
+
+    iget-object p1, p0, Lb6/a$f;->b:Lb6/a;
+
+    invoke-static {p1}, Lb6/a;->u1(Lb6/a;)Lb6/a$i;
+
+    move-result-object p1
+
+    invoke-interface {p1}, Lb6/a$i;->get()F
+
+    move-result p1
+
+    const v0, 0x3dcccccd    # 0.1f
+
+    sub-float/2addr p1, v0
+
+    iget-object v0, p0, Lb6/a$f;->b:Lb6/a;
+
+    invoke-static {v0}, Lb6/a;->u1(Lb6/a;)Lb6/a$i;
+
+    move-result-object v0
+
+    invoke-interface {v0, p1}, Lb6/a$i;->a(F)V
+
+    return-void
+.end method

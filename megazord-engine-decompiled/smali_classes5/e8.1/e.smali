@@ -1,0 +1,1636 @@
+.class public Le8/e;
+.super Le8/g;
+.source "SourceFile"
+
+
+# static fields
+.field public static final H:I = 0x2
+
+
+# instance fields
+.field public A:I
+
+.field public B:Landroid/view/View;
+
+.field public C:Z
+
+.field public D:Landroid/widget/ImageView;
+
+.field public E:Z
+
+.field public F:Ljava/lang/String;
+
+.field public G:Landroid/widget/TextView;
+
+.field public i:I
+
+.field public j:Le8/f;
+
+.field public k:Landroid/content/Context;
+
+.field public l:I
+
+.field public m:Z
+
+.field public n:LUc/b;
+
+.field public o:I
+
+.field public p:Z
+
+.field public q:LUc/b;
+
+.field public r:I
+
+.field public s:Z
+
+.field public t:LUc/b;
+
+.field public u:I
+
+.field public v:Z
+
+.field public w:LUc/b;
+
+.field public x:I
+
+.field public y:Z
+
+.field public z:LUc/b;
+
+
+# direct methods
+.method public constructor <init>(ILandroid/content/Context;)V
+    .locals 3
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0
+        }
+        names = {
+            "icon",
+            "context"
+        }
+    .end annotation
+
+    .line 1
+    invoke-direct {p0}, Le8/g;-><init>()V
+
+    .line 2
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->HIGH_ICON_TINT:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v1
+
+    iput v1, p0, Le8/e;->l:I
+
+    const/4 v1, 0x1
+
+    .line 3
+    iput-boolean v1, p0, Le8/e;->m:Z
+
+    .line 4
+    iput-object v0, p0, Le8/e;->n:LUc/b;
+
+    .line 5
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->PANEL_TOPBAR:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->o:I
+
+    .line 6
+    iput-boolean v1, p0, Le8/e;->p:Z
+
+    .line 7
+    iput-object v0, p0, Le8/e;->q:LUc/b;
+
+    .line 8
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->PRIMARY:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->r:I
+
+    .line 9
+    iput-boolean v1, p0, Le8/e;->s:Z
+
+    .line 10
+    iput-object v0, p0, Le8/e;->t:LUc/b;
+
+    .line 11
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->BUTTON_OUTLINE:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->u:I
+
+    .line 12
+    iput-boolean v1, p0, Le8/e;->v:Z
+
+    .line 13
+    iput-object v0, p0, Le8/e;->w:LUc/b;
+
+    .line 14
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->x:I
+
+    .line 15
+    iput-boolean v1, p0, Le8/e;->y:Z
+
+    .line 16
+    iput-object v0, p0, Le8/e;->z:LUc/b;
+
+    .line 17
+    iput-boolean v1, p0, Le8/e;->C:Z
+
+    .line 18
+    const-string v0, "Text"
+
+    iput-object v0, p0, Le8/e;->F:Ljava/lang/String;
+
+    .line 19
+    iput p1, p0, Le8/e;->i:I
+
+    .line 20
+    iput-object p2, p0, Le8/e;->k:Landroid/content/Context;
+
+    .line 21
+    invoke-virtual {p2}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object p1
+
+    const p2, 0x7f0600ba
+
+    invoke-virtual {p1, p2}, Landroid/content/res/Resources;->getDimension(I)F
+
+    move-result p1
+
+    float-to-int p1, p1
+
+    iput p1, p0, Le8/e;->A:I
+
+    return-void
+.end method
+
+.method public constructor <init>(ILe8/f;Landroid/content/Context;)V
+    .locals 3
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0,
+            0x0
+        }
+        names = {
+            "icon",
+            "listener",
+            "context"
+        }
+    .end annotation
+
+    .line 22
+    invoke-direct {p0}, Le8/g;-><init>()V
+
+    .line 23
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->HIGH_ICON_TINT:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v1
+
+    iput v1, p0, Le8/e;->l:I
+
+    const/4 v1, 0x1
+
+    .line 24
+    iput-boolean v1, p0, Le8/e;->m:Z
+
+    .line 25
+    iput-object v0, p0, Le8/e;->n:LUc/b;
+
+    .line 26
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->PANEL_TOPBAR:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->o:I
+
+    .line 27
+    iput-boolean v1, p0, Le8/e;->p:Z
+
+    .line 28
+    iput-object v0, p0, Le8/e;->q:LUc/b;
+
+    .line 29
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->PRIMARY:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->r:I
+
+    .line 30
+    iput-boolean v1, p0, Le8/e;->s:Z
+
+    .line 31
+    iput-object v0, p0, Le8/e;->t:LUc/b;
+
+    .line 32
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->BUTTON_OUTLINE:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->u:I
+
+    .line 33
+    iput-boolean v1, p0, Le8/e;->v:Z
+
+    .line 34
+    iput-object v0, p0, Le8/e;->w:LUc/b;
+
+    .line 35
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->x:I
+
+    .line 36
+    iput-boolean v1, p0, Le8/e;->y:Z
+
+    .line 37
+    iput-object v0, p0, Le8/e;->z:LUc/b;
+
+    .line 38
+    iput-boolean v1, p0, Le8/e;->C:Z
+
+    .line 39
+    const-string v0, "Text"
+
+    iput-object v0, p0, Le8/e;->F:Ljava/lang/String;
+
+    .line 40
+    iput p1, p0, Le8/e;->i:I
+
+    .line 41
+    iput-object p2, p0, Le8/e;->j:Le8/f;
+
+    .line 42
+    iput-object p3, p0, Le8/e;->k:Landroid/content/Context;
+
+    .line 43
+    invoke-virtual {p3}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object p1
+
+    const p2, 0x7f0600ba
+
+    invoke-virtual {p1, p2}, Landroid/content/res/Resources;->getDimension(I)F
+
+    move-result p1
+
+    float-to-int p1, p1
+
+    iput p1, p0, Le8/e;->A:I
+
+    return-void
+.end method
+
+.method public constructor <init>(ILjava/lang/String;Le8/f;Landroid/content/Context;)V
+    .locals 3
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0,
+            0x0,
+            0x0
+        }
+        names = {
+            "icon",
+            "text",
+            "listener",
+            "context"
+        }
+    .end annotation
+
+    .line 44
+    invoke-direct {p0}, Le8/g;-><init>()V
+
+    .line 45
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->HIGH_ICON_TINT:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v1
+
+    iput v1, p0, Le8/e;->l:I
+
+    const/4 v1, 0x1
+
+    .line 46
+    iput-boolean v1, p0, Le8/e;->m:Z
+
+    .line 47
+    iput-object v0, p0, Le8/e;->n:LUc/b;
+
+    .line 48
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->PANEL_TOPBAR:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->o:I
+
+    .line 49
+    iput-boolean v1, p0, Le8/e;->p:Z
+
+    .line 50
+    iput-object v0, p0, Le8/e;->q:LUc/b;
+
+    .line 51
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->PRIMARY:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->r:I
+
+    .line 52
+    iput-boolean v1, p0, Le8/e;->s:Z
+
+    .line 53
+    iput-object v0, p0, Le8/e;->t:LUc/b;
+
+    .line 54
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->BUTTON_OUTLINE:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->u:I
+
+    .line 55
+    iput-boolean v1, p0, Le8/e;->v:Z
+
+    .line 56
+    iput-object v0, p0, Le8/e;->w:LUc/b;
+
+    .line 57
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v2
+
+    iput v2, p0, Le8/e;->x:I
+
+    .line 58
+    iput-boolean v1, p0, Le8/e;->y:Z
+
+    .line 59
+    iput-object v0, p0, Le8/e;->z:LUc/b;
+
+    .line 60
+    iput-boolean v1, p0, Le8/e;->C:Z
+
+    .line 61
+    iput p1, p0, Le8/e;->i:I
+
+    .line 62
+    iput-object p2, p0, Le8/e;->F:Ljava/lang/String;
+
+    .line 63
+    iput-object p3, p0, Le8/e;->j:Le8/f;
+
+    .line 64
+    iput-object p4, p0, Le8/e;->k:Landroid/content/Context;
+
+    .line 65
+    invoke-virtual {p4}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object p1
+
+    const p2, 0x7f0600ba
+
+    invoke-virtual {p1, p2}, Landroid/content/res/Resources;->getDimension(I)F
+
+    move-result p1
+
+    float-to-int p1, p1
+
+    iput p1, p0, Le8/e;->A:I
+
+    return-void
+.end method
+
+.method private A(Landroid/graphics/drawable/Drawable;)Landroid/graphics/drawable/GradientDrawable;
+    .locals 3
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "drawable"
+        }
+    .end annotation
+
+    const/4 v0, 0x0
+
+    if-nez p1, :cond_0
+
+    return-object v0
+
+    :cond_0
+    invoke-virtual {p1}, Landroid/graphics/drawable/Drawable;->mutate()Landroid/graphics/drawable/Drawable;
+
+    move-result-object p1
+
+    instance-of v1, p1, Landroid/graphics/drawable/GradientDrawable;
+
+    if-eqz v1, :cond_1
+
+    check-cast p1, Landroid/graphics/drawable/GradientDrawable;
+
+    return-object p1
+
+    :cond_1
+    instance-of v1, p1, Landroid/graphics/drawable/InsetDrawable;
+
+    if-eqz v1, :cond_2
+
+    check-cast p1, Landroid/graphics/drawable/InsetDrawable;
+
+    invoke-virtual {p1}, Landroid/graphics/drawable/DrawableWrapper;->getDrawable()Landroid/graphics/drawable/Drawable;
+
+    move-result-object p1
+
+    invoke-direct {p0, p1}, Le8/e;->A(Landroid/graphics/drawable/Drawable;)Landroid/graphics/drawable/GradientDrawable;
+
+    move-result-object p1
+
+    return-object p1
+
+    :cond_2
+    instance-of v1, p1, Landroid/graphics/drawable/LayerDrawable;
+
+    if-eqz v1, :cond_4
+
+    check-cast p1, Landroid/graphics/drawable/LayerDrawable;
+
+    const/4 v1, 0x0
+
+    :goto_0
+    invoke-virtual {p1}, Landroid/graphics/drawable/LayerDrawable;->getNumberOfLayers()I
+
+    move-result v2
+
+    if-ge v1, v2, :cond_4
+
+    invoke-virtual {p1, v1}, Landroid/graphics/drawable/LayerDrawable;->getDrawable(I)Landroid/graphics/drawable/Drawable;
+
+    move-result-object v2
+
+    invoke-direct {p0, v2}, Le8/e;->A(Landroid/graphics/drawable/Drawable;)Landroid/graphics/drawable/GradientDrawable;
+
+    move-result-object v2
+
+    if-eqz v2, :cond_3
+
+    return-object v2
+
+    :cond_3
+    add-int/lit8 v1, v1, 0x1
+
+    goto :goto_0
+
+    :cond_4
+    return-object v0
+.end method
+
+.method private K(IZ)I
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0
+        }
+        names = {
+            "color",
+            "isDirect"
+        }
+    .end annotation
+
+    if-nez p2, :cond_1
+
+    iget-object p2, p0, Le8/e;->k:Landroid/content/Context;
+
+    if-nez p2, :cond_0
+
+    goto :goto_0
+
+    :cond_0
+    :try_start_0
+    invoke-virtual {p2}, Landroid/content/Context;->getResources()Landroid/content/res/Resources;
+
+    move-result-object p2
+
+    invoke-virtual {p2, p1}, Landroid/content/res/Resources;->getColor(I)I
+
+    move-result p1
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    :catch_0
+    :cond_1
+    :goto_0
+    return p1
+.end method
+
+.method public static synthetic q(Le8/e;)Z
+    .locals 0
+
+    iget-boolean p0, p0, Le8/e;->C:Z
+
+    return p0
+.end method
+
+.method public static synthetic r(Le8/e;)Z
+    .locals 0
+
+    iget-boolean p0, p0, Le8/e;->s:Z
+
+    return p0
+.end method
+
+.method public static synthetic s(Le8/e;)Z
+    .locals 0
+
+    iget-boolean p0, p0, Le8/e;->y:Z
+
+    return p0
+.end method
+
+.method public static synthetic t(Le8/e;IZ)V
+    .locals 0
+
+    invoke-direct {p0, p1, p2}, Le8/e;->z(IZ)V
+
+    return-void
+.end method
+
+.method public static synthetic u(Le8/e;)Z
+    .locals 0
+
+    iget-boolean p0, p0, Le8/e;->p:Z
+
+    return p0
+.end method
+
+.method public static synthetic v(Le8/e;)V
+    .locals 0
+
+    invoke-direct {p0}, Le8/e;->y()V
+
+    return-void
+.end method
+
+.method public static synthetic w(Le8/e;Ljava/lang/String;)Ljava/lang/String;
+    .locals 0
+
+    iput-object p1, p0, Le8/e;->F:Ljava/lang/String;
+
+    return-object p1
+.end method
+
+.method public static synthetic x(Le8/e;)Landroid/widget/TextView;
+    .locals 0
+
+    iget-object p0, p0, Le8/e;->G:Landroid/widget/TextView;
+
+    return-object p0
+.end method
+
+.method private y()V
+    .locals 2
+
+    iget v0, p0, Le8/e;->u:I
+
+    iget-boolean v1, p0, Le8/e;->v:Z
+
+    invoke-direct {p0, v0, v1}, Le8/e;->z(IZ)V
+
+    return-void
+.end method
+
+.method private z(IZ)V
+    .locals 1
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0
+        }
+        names = {
+            "color",
+            "isDirect"
+        }
+    .end annotation
+
+    iget-object v0, p0, Le8/e;->B:Landroid/view/View;
+
+    if-nez v0, :cond_0
+
+    return-void
+
+    :cond_0
+    invoke-direct {p0, p1, p2}, Le8/e;->K(IZ)I
+
+    move-result p1
+
+    iget-object p2, p0, Le8/e;->B:Landroid/view/View;
+
+    invoke-virtual {p2}, Landroid/view/View;->getBackground()Landroid/graphics/drawable/Drawable;
+
+    move-result-object p2
+
+    invoke-direct {p0, p2}, Le8/e;->A(Landroid/graphics/drawable/Drawable;)Landroid/graphics/drawable/GradientDrawable;
+
+    move-result-object p2
+
+    if-eqz p2, :cond_1
+
+    const/high16 v0, 0x40000000    # 2.0f
+
+    invoke-static {v0}, Lgd/b;->k0(F)I
+
+    move-result v0
+
+    invoke-virtual {p2, v0, p1}, Landroid/graphics/drawable/GradientDrawable;->setStroke(II)V
+
+    :cond_1
+    return-void
+.end method
+
+
+# virtual methods
+.method public B()I
+    .locals 1
+
+    iget v0, p0, Le8/e;->r:I
+
+    return v0
+.end method
+
+.method public C()I
+    .locals 1
+
+    iget v0, p0, Le8/e;->x:I
+
+    return v0
+.end method
+
+.method public D()I
+    .locals 1
+
+    iget v0, p0, Le8/e;->o:I
+
+    return v0
+.end method
+
+.method public E()I
+    .locals 1
+
+    iget v0, p0, Le8/e;->A:I
+
+    return v0
+.end method
+
+.method public F()Le8/f;
+    .locals 1
+
+    iget-object v0, p0, Le8/e;->j:Le8/f;
+
+    return-object v0
+.end method
+
+.method public G()I
+    .locals 1
+
+    iget v0, p0, Le8/e;->u:I
+
+    return v0
+.end method
+
+.method public H()Ljava/lang/String;
+    .locals 1
+
+    iget-object v0, p0, Le8/e;->F:Ljava/lang/String;
+
+    return-object v0
+.end method
+
+.method public I()Z
+    .locals 1
+
+    iget-boolean v0, p0, Le8/e;->E:Z
+
+    return v0
+.end method
+
+.method public J()Z
+    .locals 1
+
+    iget-boolean v0, p0, Le8/e;->C:Z
+
+    return v0
+.end method
+
+.method public L(I)Le8/e;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "clickedColor"
+        }
+    .end annotation
+
+    iput p1, p0, Le8/e;->r:I
+
+    const/4 p1, 0x0
+
+    iput-boolean p1, p0, Le8/e;->s:Z
+
+    const/4 p1, 0x0
+
+    iput-object p1, p0, Le8/e;->t:LUc/b;
+
+    return-object p0
+.end method
+
+.method public M(LUc/b;)Le8/e;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "clickedColorTag"
+        }
+    .end annotation
+
+    iput-object p1, p0, Le8/e;->t:LUc/b;
+
+    if-eqz p1, :cond_0
+
+    invoke-static {p1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result p1
+
+    iput p1, p0, Le8/e;->r:I
+
+    const/4 p1, 0x1
+
+    iput-boolean p1, p0, Le8/e;->s:Z
+
+    :cond_0
+    return-object p0
+.end method
+
+.method public N(Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;)Le8/e;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "clickedColor"
+        }
+    .end annotation
+
+    iget p1, p1, Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;->intColor:I
+
+    iput p1, p0, Le8/e;->r:I
+
+    const/4 p1, 0x1
+
+    iput-boolean p1, p0, Le8/e;->s:Z
+
+    const/4 p1, 0x0
+
+    iput-object p1, p0, Le8/e;->t:LUc/b;
+
+    return-object p0
+.end method
+
+.method public O(I)Le8/e;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "clickedOutlineColor"
+        }
+    .end annotation
+
+    iput p1, p0, Le8/e;->x:I
+
+    const/4 p1, 0x0
+
+    iput-boolean p1, p0, Le8/e;->y:Z
+
+    const/4 p1, 0x0
+
+    iput-object p1, p0, Le8/e;->z:LUc/b;
+
+    return-object p0
+.end method
+
+.method public P(LUc/b;)Le8/e;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "clickedOutlineColorTag"
+        }
+    .end annotation
+
+    iput-object p1, p0, Le8/e;->z:LUc/b;
+
+    if-eqz p1, :cond_0
+
+    invoke-static {p1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result p1
+
+    iput p1, p0, Le8/e;->x:I
+
+    const/4 p1, 0x1
+
+    iput-boolean p1, p0, Le8/e;->y:Z
+
+    :cond_0
+    return-object p0
+.end method
+
+.method public Q(Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;)Le8/e;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "clickedOutlineColor"
+        }
+    .end annotation
+
+    if-eqz p1, :cond_0
+
+    iget p1, p1, Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;->intColor:I
+
+    iput p1, p0, Le8/e;->x:I
+
+    const/4 p1, 0x1
+
+    iput-boolean p1, p0, Le8/e;->y:Z
+
+    const/4 p1, 0x0
+
+    iput-object p1, p0, Le8/e;->z:LUc/b;
+
+    :cond_0
+    return-object p0
+.end method
+
+.method public R(IZ)Le8/e;
+    .locals 2
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0
+        }
+        names = {
+            "color",
+            "isDirect"
+        }
+    .end annotation
+
+    iget-object v0, p0, Le8/e;->B:Landroid/view/View;
+
+    if-eqz v0, :cond_2
+
+    invoke-direct {p0, p1, p2}, Le8/e;->K(IZ)I
+
+    move-result v0
+
+    iget-object v1, p0, Le8/e;->B:Landroid/view/View;
+
+    invoke-virtual {v1}, Landroid/view/View;->getBackground()Landroid/graphics/drawable/Drawable;
+
+    move-result-object v1
+
+    invoke-direct {p0, v1}, Le8/e;->A(Landroid/graphics/drawable/Drawable;)Landroid/graphics/drawable/GradientDrawable;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_0
+
+    invoke-virtual {v1, v0}, Landroid/graphics/drawable/GradientDrawable;->setColor(I)V
+
+    goto :goto_0
+
+    :cond_0
+    if-eqz p2, :cond_1
+
+    iget-object p2, p0, Le8/e;->B:Landroid/view/View;
+
+    iget-object v0, p0, Le8/e;->k:Landroid/content/Context;
+
+    invoke-static {p2, v0, p1}, Lod/e;->t(Landroid/view/View;Landroid/content/Context;I)V
+
+    goto :goto_0
+
+    :cond_1
+    iget-object p2, p0, Le8/e;->B:Landroid/view/View;
+
+    iget-object v0, p0, Le8/e;->k:Landroid/content/Context;
+
+    invoke-static {p2, v0, p1}, Lod/e;->u(Landroid/view/View;Landroid/content/Context;I)V
+
+    :goto_0
+    invoke-direct {p0}, Le8/e;->y()V
+
+    :cond_2
+    return-object p0
+.end method
+
+.method public S(I)Le8/e;
+    .locals 2
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "defaultColor"
+        }
+    .end annotation
+
+    iput p1, p0, Le8/e;->o:I
+
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Le8/e;->p:Z
+
+    const/4 v1, 0x0
+
+    iput-object v1, p0, Le8/e;->q:LUc/b;
+
+    invoke-virtual {p0, p1, v0}, Le8/e;->R(IZ)Le8/e;
+
+    return-object p0
+.end method
+
+.method public T(LUc/b;)Le8/e;
+    .locals 1
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "defaultColorTag"
+        }
+    .end annotation
+
+    iput-object p1, p0, Le8/e;->q:LUc/b;
+
+    if-eqz p1, :cond_0
+
+    invoke-static {p1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result p1
+
+    iput p1, p0, Le8/e;->o:I
+
+    const/4 v0, 0x1
+
+    iput-boolean v0, p0, Le8/e;->p:Z
+
+    invoke-virtual {p0, p1, v0}, Le8/e;->R(IZ)Le8/e;
+
+    :cond_0
+    return-object p0
+.end method
+
+.method public U(Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;)Le8/e;
+    .locals 2
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "defaultColor"
+        }
+    .end annotation
+
+    iget p1, p1, Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;->intColor:I
+
+    iput p1, p0, Le8/e;->o:I
+
+    const/4 v0, 0x1
+
+    iput-boolean v0, p0, Le8/e;->p:Z
+
+    const/4 v1, 0x0
+
+    iput-object v1, p0, Le8/e;->q:LUc/b;
+
+    invoke-virtual {p0, p1, v0}, Le8/e;->R(IZ)Le8/e;
+
+    return-object p0
+.end method
+
+.method public V(Z)Le8/e;
+    .locals 1
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "disableTint"
+        }
+    .end annotation
+
+    iput-boolean p1, p0, Le8/e;->E:Z
+
+    iget p1, p0, Le8/e;->o:I
+
+    iget-boolean v0, p0, Le8/e;->p:Z
+
+    invoke-virtual {p0, p1, v0}, Le8/e;->Z(IZ)Le8/e;
+
+    return-object p0
+.end method
+
+.method public W(Z)V
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "enableTouchAnimation"
+        }
+    .end annotation
+
+    iput-boolean p1, p0, Le8/e;->C:Z
+
+    return-void
+.end method
+
+.method public X(I)Le8/e;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "height"
+        }
+    .end annotation
+
+    iput p1, p0, Le8/e;->A:I
+
+    return-object p0
+.end method
+
+.method public Y(I)Le8/e;
+    .locals 2
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "defaultColor"
+        }
+    .end annotation
+
+    iput p1, p0, Le8/e;->l:I
+
+    const/4 v0, 0x0
+
+    iput-boolean v0, p0, Le8/e;->m:Z
+
+    const/4 v1, 0x0
+
+    iput-object v1, p0, Le8/e;->n:LUc/b;
+
+    invoke-virtual {p0, p1, v0}, Le8/e;->Z(IZ)Le8/e;
+
+    return-object p0
+.end method
+
+.method public Z(IZ)Le8/e;
+    .locals 3
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0
+        }
+        names = {
+            "color",
+            "isDirect"
+        }
+    .end annotation
+
+    iget-object v0, p0, Le8/e;->D:Landroid/widget/ImageView;
+
+    if-eqz v0, :cond_2
+
+    iget-boolean v1, p0, Le8/e;->E:Z
+
+    if-nez v1, :cond_1
+
+    if-eqz p2, :cond_0
+
+    iget-object v1, p0, Le8/e;->k:Landroid/content/Context;
+
+    new-instance v2, Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;
+
+    invoke-direct {v2, p1}, Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;-><init>(I)V
+
+    invoke-static {v0, v1, v2}, Lod/e;->y(Landroid/widget/ImageView;Landroid/content/Context;Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;)V
+
+    goto :goto_0
+
+    :cond_0
+    iget-object v1, p0, Le8/e;->k:Landroid/content/Context;
+
+    invoke-static {v0, v1, p1}, Lod/e;->x(Landroid/widget/ImageView;Landroid/content/Context;I)V
+
+    goto :goto_0
+
+    :cond_1
+    invoke-static {v0}, Lod/e;->m(Landroid/widget/ImageView;)V
+
+    :cond_2
+    :goto_0
+    iget-object v0, p0, Le8/e;->G:Landroid/widget/TextView;
+
+    if-eqz v0, :cond_5
+
+    iget-boolean v1, p0, Le8/e;->E:Z
+
+    if-nez v1, :cond_4
+
+    if-eqz p2, :cond_3
+
+    invoke-virtual {v0, p1}, Landroid/widget/TextView;->setTextColor(I)V
+
+    goto :goto_1
+
+    :cond_3
+    const/4 p2, 0x0
+
+    invoke-direct {p0, p1, p2}, Le8/e;->K(IZ)I
+
+    move-result p1
+
+    invoke-virtual {v0, p1}, Landroid/widget/TextView;->setTextColor(I)V
+
+    goto :goto_1
+
+    :cond_4
+    sget-object p1, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme$T;->HIGH_TEXT_COLOR:LUc/b;
+
+    invoke-static {p1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result p1
+
+    invoke-virtual {v0, p1}, Landroid/widget/TextView;->setTextColor(I)V
+
+    :cond_5
+    :goto_1
+    return-object p0
+.end method
+
+.method public a(Landroid/widget/LinearLayout;Landroid/content/Context;Landroid/view/LayoutInflater;)V
+    .locals 2
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0,
+            0x0,
+            0x0
+        }
+        names = {
+            "parent",
+            "context",
+            "layoutInflater"
+        }
+    .end annotation
+
+    iput-object p2, p0, Le8/e;->k:Landroid/content/Context;
+
+    const v0, 0x7f0c0091
+
+    const/4 v1, 0x0
+
+    invoke-virtual {p3, v0, v1}, Landroid/view/LayoutInflater;->inflate(ILandroid/view/ViewGroup;)Landroid/view/View;
+
+    move-result-object p3
+
+    invoke-virtual {p1, p3}, Landroid/view/ViewGroup;->addView(Landroid/view/View;)V
+
+    invoke-virtual {p3}, Landroid/view/View;->getLayoutParams()Landroid/view/ViewGroup$LayoutParams;
+
+    move-result-object p1
+
+    check-cast p1, Landroid/widget/LinearLayout$LayoutParams;
+
+    const/4 v0, -0x2
+
+    iput v0, p1, Landroid/widget/LinearLayout$LayoutParams;->width:I
+
+    iget v0, p0, Le8/e;->A:I
+
+    iput v0, p1, Landroid/widget/LinearLayout$LayoutParams;->height:I
+
+    invoke-virtual {p3, p1}, Landroid/view/View;->setLayoutParams(Landroid/view/ViewGroup$LayoutParams;)V
+
+    const p1, 0x7f0904ee
+
+    invoke-virtual {p3, p1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object p1
+
+    check-cast p1, Landroid/widget/TextView;
+
+    iput-object p1, p0, Le8/e;->G:Landroid/widget/TextView;
+
+    iget-object v0, p0, Le8/e;->F:Ljava/lang/String;
+
+    invoke-virtual {p1, v0}, Landroid/widget/TextView;->setText(Ljava/lang/CharSequence;)V
+
+    const p1, 0x7f09055c
+
+    invoke-virtual {p3, p1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object p1
+
+    iput-object p1, p0, Le8/e;->B:Landroid/view/View;
+
+    const p1, 0x7f090245
+
+    invoke-virtual {p3, p1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object p1
+
+    check-cast p1, Landroid/widget/ImageView;
+
+    iput-object p1, p0, Le8/e;->D:Landroid/widget/ImageView;
+
+    iget v0, p0, Le8/e;->i:I
+
+    invoke-static {p1, v0, p2}, Lod/e;->V(Landroid/widget/ImageView;ILandroid/content/Context;)V
+
+    iget p1, p0, Le8/e;->l:I
+
+    iget-boolean v0, p0, Le8/e;->m:Z
+
+    invoke-virtual {p0, p1, v0}, Le8/e;->Z(IZ)Le8/e;
+
+    new-instance p1, Le8/e$a;
+
+    invoke-direct {p1, p0, p2}, Le8/e$a;-><init>(Le8/e;Landroid/content/Context;)V
+
+    invoke-virtual {p3, p1}, Landroid/view/View;->setOnClickListener(Landroid/view/View$OnClickListener;)V
+
+    iget p1, p0, Le8/e;->o:I
+
+    iget-boolean p2, p0, Le8/e;->p:Z
+
+    invoke-virtual {p0, p1, p2}, Le8/e;->R(IZ)Le8/e;
+
+    invoke-virtual {p0, p3}, Le8/g;->m(Landroid/view/View;)V
+
+    return-void
+.end method
+
+.method public a0(LUc/b;)Le8/e;
+    .locals 1
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "iconColorTag"
+        }
+    .end annotation
+
+    iput-object p1, p0, Le8/e;->n:LUc/b;
+
+    if-eqz p1, :cond_0
+
+    invoke-static {p1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result p1
+
+    iput p1, p0, Le8/e;->l:I
+
+    const/4 v0, 0x1
+
+    iput-boolean v0, p0, Le8/e;->m:Z
+
+    invoke-virtual {p0, p1, v0}, Le8/e;->Z(IZ)Le8/e;
+
+    :cond_0
+    return-object p0
+.end method
+
+.method public b0(Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;)Le8/e;
+    .locals 2
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "defaultColor"
+        }
+    .end annotation
+
+    iget p1, p1, Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;->intColor:I
+
+    iput p1, p0, Le8/e;->l:I
+
+    const/4 v0, 0x1
+
+    iput-boolean v0, p0, Le8/e;->m:Z
+
+    const/4 v1, 0x0
+
+    iput-object v1, p0, Le8/e;->n:LUc/b;
+
+    invoke-virtual {p0, p1, v0}, Le8/e;->Z(IZ)Le8/e;
+
+    return-object p0
+.end method
+
+.method public c0(Ljava/io/File;)V
+    .locals 1
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "file"
+        }
+    .end annotation
+
+    iget-object v0, p0, Le8/e;->D:Landroid/widget/ImageView;
+
+    if-eqz v0, :cond_1
+
+    if-eqz p1, :cond_0
+
+    invoke-static {v0, p1}, Lod/e;->F(Landroid/widget/ImageView;Ljava/io/File;)V
+
+    goto :goto_0
+
+    :cond_0
+    iget-object p1, p0, Le8/e;->k:Landroid/content/Context;
+
+    invoke-static {v0, p1}, Lod/e;->n(Landroid/widget/ImageView;Landroid/content/Context;)V
+
+    :cond_1
+    :goto_0
+    return-void
+.end method
+
+.method public d0(Le8/f;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "listener"
+        }
+    .end annotation
+
+    iput-object p1, p0, Le8/e;->j:Le8/f;
+
+    return-void
+.end method
+
+.method public e0(I)Le8/e;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "outlineColor"
+        }
+    .end annotation
+
+    iput p1, p0, Le8/e;->u:I
+
+    const/4 p1, 0x0
+
+    iput-boolean p1, p0, Le8/e;->v:Z
+
+    const/4 p1, 0x0
+
+    iput-object p1, p0, Le8/e;->w:LUc/b;
+
+    invoke-direct {p0}, Le8/e;->y()V
+
+    return-object p0
+.end method
+
+.method public f0(LUc/b;)Le8/e;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "outlineColorTag"
+        }
+    .end annotation
+
+    iput-object p1, p0, Le8/e;->w:LUc/b;
+
+    if-eqz p1, :cond_0
+
+    invoke-static {p1}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result p1
+
+    iput p1, p0, Le8/e;->u:I
+
+    const/4 p1, 0x1
+
+    iput-boolean p1, p0, Le8/e;->v:Z
+
+    invoke-direct {p0}, Le8/e;->y()V
+
+    :cond_0
+    return-object p0
+.end method
+
+.method public g0(Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;)Le8/e;
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "outlineColor"
+        }
+    .end annotation
+
+    if-eqz p1, :cond_0
+
+    iget p1, p1, Lcom/itsmagic/engine/Engines/Engine/Color/ColorINT;->intColor:I
+
+    iput p1, p0, Le8/e;->u:I
+
+    const/4 p1, 0x1
+
+    iput-boolean p1, p0, Le8/e;->v:Z
+
+    const/4 p1, 0x0
+
+    iput-object p1, p0, Le8/e;->w:LUc/b;
+
+    invoke-direct {p0}, Le8/e;->y()V
+
+    :cond_0
+    return-object p0
+.end method
+
+.method public h0(Ljava/lang/String;)V
+    .locals 1
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "text"
+        }
+    .end annotation
+
+    new-instance v0, Le8/e$b;
+
+    invoke-direct {v0, p0, p1}, Le8/e$b;-><init>(Le8/e;Ljava/lang/String;)V
+
+    invoke-static {v0}, Lf8/c;->j0(Ljava/lang/Runnable;)V
+
+    return-void
+.end method
+
+.method public k()V
+    .locals 2
+
+    iget-object v0, p0, Le8/e;->q:LUc/b;
+
+    const/4 v1, 0x1
+
+    if-eqz v0, :cond_0
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v0
+
+    iput v0, p0, Le8/e;->o:I
+
+    iput-boolean v1, p0, Le8/e;->p:Z
+
+    :cond_0
+    iget-object v0, p0, Le8/e;->t:LUc/b;
+
+    if-eqz v0, :cond_1
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v0
+
+    iput v0, p0, Le8/e;->r:I
+
+    iput-boolean v1, p0, Le8/e;->s:Z
+
+    :cond_1
+    iget-object v0, p0, Le8/e;->n:LUc/b;
+
+    if-eqz v0, :cond_2
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v0
+
+    iput v0, p0, Le8/e;->l:I
+
+    iput-boolean v1, p0, Le8/e;->m:Z
+
+    :cond_2
+    iget-object v0, p0, Le8/e;->w:LUc/b;
+
+    if-eqz v0, :cond_3
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v0
+
+    iput v0, p0, Le8/e;->u:I
+
+    iput-boolean v1, p0, Le8/e;->v:Z
+
+    :cond_3
+    iget-object v0, p0, Le8/e;->z:LUc/b;
+
+    if-eqz v0, :cond_4
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/ThemeSystem/Theme;->i(LUc/b;)I
+
+    move-result v0
+
+    iput v0, p0, Le8/e;->x:I
+
+    iput-boolean v1, p0, Le8/e;->y:Z
+
+    :cond_4
+    iget v0, p0, Le8/e;->o:I
+
+    iget-boolean v1, p0, Le8/e;->p:Z
+
+    invoke-virtual {p0, v0, v1}, Le8/e;->R(IZ)Le8/e;
+
+    iget v0, p0, Le8/e;->l:I
+
+    iget-boolean v1, p0, Le8/e;->m:Z
+
+    invoke-virtual {p0, v0, v1}, Le8/e;->Z(IZ)Le8/e;
+
+    invoke-direct {p0}, Le8/e;->y()V
+
+    return-void
+.end method

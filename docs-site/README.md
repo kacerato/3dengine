@@ -1,4 +1,4 @@
-# Mobile Game Studio — documentação visual
+# Megazord Engine — documentação visual
 
 Site estático criado em HTML, CSS e JavaScript puro.
 
@@ -33,3 +33,4 @@ Depois visite `http://localhost:8080`.
 - `assets/logo.png`: identidade visual usada no site.
 
 O código dos exemplos permanece recolhido por padrão e pode ser aberto individualmente ou pelo botão “Mostrar código”.
+

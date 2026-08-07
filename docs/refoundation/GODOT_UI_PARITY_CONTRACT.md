@@ -8,7 +8,7 @@ Each editor area has one of four states:
 
 - **UPSTREAM:** inherited directly from Godot;
 - **ADAPTED:** upstream implementation with a documented mobile/touch patch;
-- **PRODUCT:** Mobile Game Studio feature implemented as a Godot plugin/module;
+- **PRODUCT:** Megazord Engine feature implemented as a Godot plugin/module;
 - **MISSING:** not yet accepted.
 
 A feature cannot be marked complete because a button with the same label exists.
@@ -258,3 +258,4 @@ Reject a build when any of the following is true:
 - a “feature” stores data outside Godot without a migration/adapter contract;
 - Godot license or attribution is missing;
 - product patches cannot be reproduced from the pinned commit.
+

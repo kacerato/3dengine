@@ -1,0 +1,80 @@
+.class public LD5/a$g$a;
+.super LN5/h$f;
+.source "SourceFile"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = LD5/a$g;->onClick(Landroid/view/View;Landroid/content/Context;Le8/c;)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1
+    name = null
+.end annotation
+
+
+# instance fields
+.field public final synthetic a:LD5/a$g;
+
+
+# direct methods
+.method public constructor <init>(LD5/a$g;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x8010
+        }
+        names = {
+            "this$1"
+        }
+    .end annotation
+
+    iput-object p1, p0, LD5/a$g$a;->a:LD5/a$g;
+
+    invoke-direct {p0}, LN5/h$f;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public a(F)V
+    .locals 1
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "value"
+        }
+    .end annotation
+
+    iget-object v0, p0, LD5/a$g$a;->a:LD5/a$g;
+
+    iget-object v0, v0, LD5/a$g;->a:LD5/a;
+
+    invoke-static {v0}, LD5/a;->H(LD5/a;)Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Pool/ObjectPool;
+
+    move-result-object v0
+
+    iput p1, v0, Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Pool/BasePool;->brushPlaceObjectsPerMeter:F
+
+    return-void
+.end method
+
+.method public get()F
+    .locals 1
+
+    iget-object v0, p0, LD5/a$g$a;->a:LD5/a$g;
+
+    iget-object v0, v0, LD5/a$g;->a:LD5/a;
+
+    invoke-static {v0}, LD5/a;->H(LD5/a;)Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Pool/ObjectPool;
+
+    move-result-object v0
+
+    iget v0, v0, Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Pool/BasePool;->brushPlaceObjectsPerMeter:F
+
+    return v0
+.end method

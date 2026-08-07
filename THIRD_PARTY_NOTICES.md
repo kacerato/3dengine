@@ -1,6 +1,6 @@
 # Third-party notices
 
-Mobile Game Studio inclui dependências de código aberto. Os textos completos das
+Megazord Engine inclui dependências de código aberto. Os textos completos das
 licenças são distribuídos pelos respectivos artefatos e repositórios.
 
 ## SceneView 2.3.0
@@ -42,3 +42,4 @@ licenças são distribuídos pelos respectivos artefatos e repositórios.
 - Modelo: PixelMannen, CC0 1.0 Universal.
 - Rig/animações e conversão: tomkranis, Asobo Studio e scurest, CC BY 4.0.
 - Uso: personagem animado com ciclos Survey, Walk e Run.
+

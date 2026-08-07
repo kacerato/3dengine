@@ -1,0 +1,88 @@
+.class public LP4/a$d;
+.super Landroidx/recyclerview/widget/RecyclerView$ViewHolder;
+.source "SourceFile"
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingClass;
+    value = LP4/a;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1
+    name = "d"
+.end annotation
+
+
+# instance fields
+.field public a:Landroid/widget/TextView;
+
+.field public b:Landroid/widget/LinearLayout;
+
+.field public c:Landroid/widget/ImageView;
+
+.field public d:Landroid/widget/ImageView;
+
+.field public final synthetic e:LP4/a;
+
+
+# direct methods
+.method public constructor <init>(LP4/a;Landroid/view/View;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x8010,
+            0x0
+        }
+        names = {
+            "this$0",
+            "itemView"
+        }
+    .end annotation
+
+    iput-object p1, p0, LP4/a$d;->e:LP4/a;
+
+    invoke-direct {p0, p2}, Landroidx/recyclerview/widget/RecyclerView$ViewHolder;-><init>(Landroid/view/View;)V
+
+    const p1, 0x7f090526
+
+    invoke-virtual {p2, p1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object p1
+
+    check-cast p1, Landroid/widget/TextView;
+
+    iput-object p1, p0, LP4/a$d;->a:Landroid/widget/TextView;
+
+    const p1, 0x7f090296
+
+    invoke-virtual {p2, p1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object p1
+
+    check-cast p1, Landroid/widget/LinearLayout;
+
+    iput-object p1, p0, LP4/a$d;->b:Landroid/widget/LinearLayout;
+
+    const p1, 0x7f0900d0
+
+    invoke-virtual {p2, p1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object p1
+
+    check-cast p1, Landroid/widget/ImageView;
+
+    iput-object p1, p0, LP4/a$d;->c:Landroid/widget/ImageView;
+
+    const p1, 0x7f090295
+
+    invoke-virtual {p2, p1}, Landroid/view/View;->findViewById(I)Landroid/view/View;
+
+    move-result-object p1
+
+    check-cast p1, Landroid/widget/ImageView;
+
+    iput-object p1, p0, LP4/a$d;->d:Landroid/widget/ImageView;
+
+    return-void
+.end method

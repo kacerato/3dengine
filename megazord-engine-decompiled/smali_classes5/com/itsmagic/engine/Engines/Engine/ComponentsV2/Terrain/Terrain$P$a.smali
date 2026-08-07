@@ -1,0 +1,79 @@
+.class public Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P$a;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements LJAVARuntime/Runnable;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P;->set(Lcom/itsmagic/engine/Engines/Utils/Variable;)V
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1
+    name = null
+.end annotation
+
+
+# instance fields
+.field public final synthetic b:Lcom/itsmagic/engine/Engines/Utils/Variable;
+
+.field public final synthetic c:Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P;
+
+
+# direct methods
+.method public constructor <init>(Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P;Lcom/itsmagic/engine/Engines/Utils/Variable;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x8010,
+            0x1010
+        }
+        names = {
+            "this$1",
+            "val$variable"
+        }
+    .end annotation
+
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()V"
+        }
+    .end annotation
+
+    iput-object p1, p0, Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P$a;->c:Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P;
+
+    iput-object p2, p0, Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P$a;->b:Lcom/itsmagic/engine/Engines/Utils/Variable;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public run()V
+    .locals 4
+
+    iget-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P$a;->c:Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P;
+
+    iget-object v0, v0, Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P;->a:Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain;
+
+    iget-object v1, p0, Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain$P$a;->b:Lcom/itsmagic/engine/Engines/Utils/Variable;
+
+    iget v1, v1, Lcom/itsmagic/engine/Engines/Utils/Variable;->float_value:F
+
+    const v2, 0x461c4000    # 10000.0f
+
+    const/high16 v3, 0x42000000    # 32.0f
+
+    invoke-static {v3, v1, v2}, Lgd/b;->E(FFF)F
+
+    move-result v1
+
+    iput v1, v0, Lcom/itsmagic/engine/Engines/Engine/ComponentsV2/Terrain/Terrain;->maxHeight:F
+
+    return-void
+.end method

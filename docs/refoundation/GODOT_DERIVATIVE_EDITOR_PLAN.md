@@ -1,4 +1,4 @@
-# Mobile Game Studio — Godot-derived editor refoundation
+# Megazord Engine — Godot-derived editor refoundation
 
 ## Decision
 
@@ -79,7 +79,7 @@ Godot Android editor build
         ↓
 Mobile workspace profile
         ↓
-Mobile Game Studio plugins/modules
+Megazord Engine plugins/modules
         ↓
 Product templates and documentation
 ```
@@ -126,7 +126,7 @@ Status: implemented, awaiting clean-branch build result.
 Requirements:
 
 - package `com.mobilegamestudio.editor`;
-- application name `Mobile Game Studio`;
+- application name `Megazord Engine`;
 - artifact `mobile_game_studio_editor`;
 - editor title uses product name;
 - `short_name = "godot"` retained;
@@ -225,7 +225,7 @@ Do not migrate the Compose editor shell or its duplicate scene model.
 
 ## Licensing
 
-Godot is MIT-licensed. Distribution must preserve its license and copyright notices. Mobile Game Studio may use its own name and identity, but must not imply that the derivative is the official Godot editor.
+Godot is MIT-licensed. Distribution must preserve its license and copyright notices. Megazord Engine may use its own name and identity, but must not imply that the derivative is the official Godot editor.
 
 The application must include a visible credits/third-party notice before public distribution.
 
@@ -243,3 +243,4 @@ Completed:
 - UI parity contract.
 
 Next decision is based on the clean build and device baseline, not on additional speculative UI work.
+

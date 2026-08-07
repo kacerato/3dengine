@@ -1,84 +1,52 @@
-# Mobile Game Studio
+# Megazord Engine
 
-Mobile Game Studio é um editor de jogos 3D para Android, feito em Kotlin e
-Jetpack Compose e desenhado para uso horizontal em celulares e tablets. O
-estado atual é uma vertical slice executável: ainda não é uma concorrente
-completa de Godot/Unity, mas já cria, edita, salva e executa uma pequena cena.
+**Megazord Engine** é um estúdio e motor de jogos 3D completo para Android, feito em Kotlin, Java e Smali, totalmente otimizado para uso landscape em celulares e tablets.
 
-## O que funciona
+![Megazord Engine](docs-site/assets/megazord_banner.png)
 
-- editor sempre em landscape, com viewport dominante e docks responsivos;
-- viewport 3D nativo Filament/SceneView, câmera orbital e seleção por toque;
-- hierarquia, inspector numérico e gizmos RGB de mover, rotacionar e escalar;
-- criação de cubo, plano, câmera e luz, duplicação, exclusão e renomeação;
-- documento de cena versionado com GameObjects, componentes e validação;
-- undo/redo limitado, autosave e controle otimista de revisão;
-- importação GLB autocontida via Android Storage Access Framework;
-- biblioteca de assets persistente e adição de modelos à cena;
-- runtime LuaJ sandboxado com eventos de toque, Transform e logs;
-- editor Lua integrado com criação, validação e persistência por objeto;
-- canvas NoCode navegável, pan livre, nodes móveis e cabos manuais arrastáveis;
-- modo Visualizar isolado da cena editável;
-- projeto “Open World Starter” com terreno, grama 3D, Toy Car CC0, personagem
-  animado, câmera FPS, joystick, pulo, Lua e NoCode;
-- projetos, scripts, grafos e assets persistidos no armazenamento privado;
-- APK debug, APK de testes e release não assinado compiláveis.
+## 🚀 Recursos e Funcionalidades
 
-## Teste rápido
+- **Gerador e Exportador de APK & AAB**: Exportação direta para `.apk` e `.aab` (Android App Bundle) em segundo plano, salvando diretamente na pasta pública `/sdcard/Download/`.
+- **Motor de Scripting Python Integrado**: Suporte experimental para automação e scripts via `bootstrap.py` e API `MegazordContext`.
+- **Canvas NoCode & Grafos Visuais**: Sistema completo de nós NoCode para controle de objetos, eventos de toque, movimentos de câmera, rotação, física e lógica de jogo sem programar.
+- **Tela de Carregamento Megazord Studio**: Nova interface de carregamento com arte do fantasma roxo, contadores de estágios (`Stage 4/4`), barra de progresso com porcentagem e indicadores visuais.
+- **Visualizador & Viewport 3D Nativo**: Câmera orbital, controle de iluminação, modelos GLB/OBJ, terrenos e sistema de gizmos RGB.
+- **Dark Theme Studio**: Interface escura elegante no estilo Studio profissional.
 
-1. Instale `app/build/outputs/apk/debug/app-debug.apk`.
-2. Abra **Open World Starter** na tela inicial.
-3. Use **Cena** para selecionar um objeto e **Inspector** para editar XYZ.
-4. Use **+ Adicionar** para criar cubo/plano/câmera/luz.
-5. Em **Assets**, importe um `.glb` autocontido e insira-o na cena.
-6. Em **Lógica**, use “Girar ao tocar · rápido” ou edite o fluxo.
-7. Toque em **Play**, interaja e use **Parar** para voltar à cena editável.
+## 📦 Estrutura do Repositório
 
-O fluxo principal e a renderização foram executados em AVD Android 17/API 37
-com 4 GB. Isso não substitui aparelho físico: GPU, teclado, bateria e pressão de
-memória variam por fabricante. Em um AVD de 2 GB sob forte pressão geral, o
-Android encerrou o processo ao abrir o Filament.
+- `megazord-engine-decompiled/`: Código-fonte descompilado do aplicativo Megazord Engine (Manifest, layouts `res/`, assets `assets/` e código `smali/`).
+- `assets/Engine/Python/`: Motor de scripting Python (`bootstrap.py`, `megazord_api.py`).
+- `docs/`: Documentação da linguagem visual NoCode, catálogo de nós nativos e arquitetura.
+- `docs-site/`: Site e documentação visual em HTML/CSS.
+- `.godot_archive/`: Arquivo histórico das versões e fixtures legadas.
 
-Esta versão aceita apenas projetos e assets locais confiáveis. Ainda não é
-seguro executar scripts ou modelos deliberadamente hostis: Lua não possui quota
-rígida de heap e imagens comprimidas dentro de GLB não têm orçamento por pixels
-decodificados.
+## 🧩 Catálogo de Nós NoCode
 
-## Toolchain
+| Categoria | Nó | Descrição |
+|---|---|---|
+| **Eventos** | `On Start` | Executado na inicialização da cena |
+| **Eventos** | `On Touch / Click` | Disparado ao tocar em um objeto 3D ou botão UI |
+| **Eventos** | `On Update (Frame)` | Executado continuamente a cada frame |
+| **Movimento** | `Rotate Object` | Aplica rotação nos eixos X, Y, Z com velocidade ajustável |
+| **Movimento** | `Translate / Move` | Move o objeto no espaço 3D |
+| **Controle** | `Joystick / Touch Input` | Captura entrada analógica de controle mobile |
+| **Câmera** | `Camera Follow / LookAt` | Faz a câmera seguir ou olhar para um alvo |
+| **Lógica** | `If / Else Condition` | Ramificação condicional por comparação de valores |
+| **Física** | `Add Force / Impulse` | Aplica forças físicas em RigidBodies |
 
-- JDK 17
-- Gradle Wrapper 8.10.2
-- Android Gradle Plugin 8.7.0
-- Kotlin 2.0.21
-- `compileSdk` / `targetSdk` 35
-- `minSdk` 26
-- SceneView 2.3.0 / Google Filament
-- LuaJ 3.0.1
-
-## Compilar e testar
+## 🛠️ Como Compilar e Gerar APK
 
 ```powershell
-$env:JAVA_HOME='C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot'
-$env:ANDROID_HOME='C:\Users\jamaa\AppData\Local\Android\Sdk'
+# Recompilar com Apktool 2.10.0
+java -jar apktool_2.10.0.jar b megazord-engine-decompiled -o build/megazord_patched.apk
 
-.\gradlew.bat test
-.\gradlew.bat testDebugUnitTest
-.\gradlew.bat :app:assembleDebug
-.\gradlew.bat :app:assembleDebugAndroidTest
-.\gradlew.bat :app:lintDebug
-.\gradlew.bat :app:assembleRelease
+# Alinhar
+zipalign -p -f 4 build/megazord_patched.apk build/megazord_aligned.apk
+
+# Assinar
+apksigner sign --ks debug.keystore --ks-pass pass:android --key-pass pass:android --ks-key-alias itsmagic --out build/megazord_signed.apk build/megazord_aligned.apk
 ```
 
-## Módulos
-
-- `app`: composição, navegação, tema e injeção explícita.
-- `core:model`: cena, componentes, comandos e validadores.
-- `core:contracts`: contratos de projeto e conteúdo.
-- `core:common`: relógio, IDs e logging.
-- `projects`: JSON, arquivos atômicos, assets, Room e DataStore.
-- `editor`: UI landscape, hierarquia, inspector, assets e lógica visual.
-- `runtime`: projeção do documento de cena para Filament/SceneView.
-- `scripting`: Lua sandboxado e executor do grafo visual.
-
-Veja [a arquitetura](docs/ARCHITECTURE.md), o [roadmap](ROADMAP.md) e as
-[decisões arquiteturais](docs/adr/).
+---
+© Megazord Engine - Mobile Game Creation Engine

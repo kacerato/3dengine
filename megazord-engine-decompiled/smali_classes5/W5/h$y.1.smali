@@ -1,0 +1,109 @@
+.class public LW5/h$y;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements Landroid/view/View$OnLongClickListener;
+
+
+# annotations
+.annotation system Ldalvik/annotation/EnclosingMethod;
+    value = LW5/h;->x(Landroid/widget/LinearLayout;Landroid/view/LayoutInflater;LW5/b;IZLandroid/content/Context;)Landroid/view/View;
+.end annotation
+
+.annotation system Ldalvik/annotation/InnerClass;
+    accessFlags = 0x1
+    name = null
+.end annotation
+
+
+# instance fields
+.field public final synthetic b:LW5/b;
+
+.field public final synthetic c:Landroid/content/Context;
+
+.field public final synthetic d:Landroid/widget/TextView;
+
+
+# direct methods
+.method public constructor <init>(LW5/b;Landroid/content/Context;Landroid/widget/TextView;)V
+    .locals 0
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x1010,
+            0x1010,
+            0x1010
+        }
+        names = {
+            "val$entry",
+            "val$context",
+            "val$textView"
+        }
+    .end annotation
+
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "()V"
+        }
+    .end annotation
+
+    iput-object p1, p0, LW5/h$y;->b:LW5/b;
+
+    iput-object p2, p0, LW5/h$y;->c:Landroid/content/Context;
+
+    iput-object p3, p0, LW5/h$y;->d:Landroid/widget/TextView;
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public onLongClick(Landroid/view/View;)Z
+    .locals 2
+    .annotation system Ldalvik/annotation/MethodParameters;
+        accessFlags = {
+            0x0
+        }
+        names = {
+            "v"
+        }
+    .end annotation
+
+    invoke-static {}, Lf8/c;->Y()V
+
+    :try_start_0
+    iget-object p1, p0, LW5/h$y;->b:LW5/b;
+
+    iget-object p1, p1, LW5/b;->d:LX5/d;
+
+    invoke-interface {p1}, LX5/d;->allowSelect()Z
+
+    move-result p1
+
+    if-eqz p1, :cond_0
+
+    iget-object p1, p0, LW5/h$y;->b:LW5/b;
+
+    iget-object v0, p0, LW5/h$y;->c:Landroid/content/Context;
+
+    iget-object v1, p0, LW5/h$y;->d:Landroid/widget/TextView;
+
+    invoke-static {p1, v0, v1}, LW5/h;->m(LW5/b;Landroid/content/Context;Landroid/widget/TextView;)V
+    :try_end_0
+    .catch Ljava/lang/Exception; {:try_start_0 .. :try_end_0} :catch_0
+
+    goto :goto_0
+
+    :catch_0
+    move-exception p1
+
+    invoke-virtual {p1}, Ljava/lang/Throwable;->printStackTrace()V
+
+    :cond_0
+    :goto_0
+    const/4 p1, 0x0
+
+    return p1
+.end method

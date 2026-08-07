@@ -1,0 +1,81 @@
+.class public Ll4/b;
+.super Lm4/a;
+.source "SourceFile"
+
+
+# instance fields
+.field public final c0:Ljava/util/List;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "Ljava/util/List<",
+            "Lcom/itsmagic/engine/Activities/Editor/Extensions/Settings/Base/a;",
+            ">;"
+        }
+    .end annotation
+.end field
+
+.field public d0:Landroid/widget/LinearLayout;
+
+.field public e0:LX7/l;
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "LX7/l<",
+            "Lcom/itsmagic/engine/Activities/Editor/Extensions/Settings/Base/a;",
+            ">;"
+        }
+    .end annotation
+.end field
+
+
+# direct methods
+.method public constructor <init>()V
+    .locals 2
+
+    sget-object v0, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang$T;->PROJECT_SETTINGS:LUc/b;
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Activities/Editor/Extensions/LanguageSystem/Lang;->l(LUc/b;)Ljava/lang/String;
+
+    move-result-object v0
+
+    invoke-direct {p0, v0}, Lm4/a;-><init>(Ljava/lang/String;)V
+
+    new-instance v0, Ljava/util/ArrayList;
+
+    invoke-direct {v0}, Ljava/util/ArrayList;-><init>()V
+
+    iput-object v0, p0, Ll4/b;->c0:Ljava/util/List;
+
+    new-instance v1, Lx4/d;
+
+    invoke-direct {v1}, Lx4/d;-><init>()V
+
+    invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    new-instance v1, Lx4/c;
+
+    invoke-direct {v1}, Lx4/c;-><init>()V
+
+    invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    new-instance v1, Lx4/f;
+
+    invoke-direct {v1}, Lx4/f;-><init>()V
+
+    invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    new-instance v1, Lx4/g;
+
+    invoke-direct {v1}, Lx4/g;-><init>()V
+
+    invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    new-instance v1, Lx4/e;
+
+    invoke-direct {v1}, Lx4/e;-><init>()V
+
+    invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
+
+    invoke-super {p0, v0}, Lm4/a;->t1(Ljava/util/List;)V
+
+    return-void
+.end method

@@ -1,8 +1,8 @@
-# Mobile Game Studio — referência do aplicativo
+# Megazord Engine — referência do aplicativo
 
 ## Identidade
 
-O pacote Android é `com.mobilegamestudio.editor`. Launcher, splash Android, splash interno, Project Manager e barra de título usam Mobile Game Studio. Nomes internos Godot permanecem apenas onde são necessários à compatibilidade e à licença MIT.
+O pacote Android é `com.mobilegamestudio.editor`. Launcher, splash Android, splash interno, Project Manager e barra de título usam Megazord Engine. Nomes internos Godot permanecem apenas onde são necessários à compatibilidade e à licença MIT.
 
 ## Áreas principais
 
@@ -36,3 +36,4 @@ Blocos de cena resolvem `target_path` contra o `SceneTree` real e validam o tipo
 ## Referência de UX
 
 A biblioteca categorizada, o fluxo evento→ação e a documentação por entradas/saídas foram comparados com a documentação pública do [ITsMagic Engine 2.0](https://itsmagic.com.br/documentation/docs/intro/). A implementação permanece nativa em Godot e não copia código ou assets proprietários.
+

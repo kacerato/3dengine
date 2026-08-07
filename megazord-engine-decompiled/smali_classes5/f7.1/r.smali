@@ -1,0 +1,34 @@
+.class public final synthetic Lf7/r;
+.super Ljava/lang/Object;
+.source "SourceFile"
+
+# interfaces
+.implements Ljava/lang/Runnable;
+
+
+# instance fields
+.field public final synthetic b:Lwc/e;
+
+
+# direct methods
+.method public synthetic constructor <init>(Lwc/e;)V
+    .locals 0
+
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    iput-object p1, p0, Lf7/r;->b:Lwc/e;
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final run()V
+    .locals 1
+
+    iget-object v0, p0, Lf7/r;->b:Lwc/e;
+
+    invoke-static {v0}, Lf7/v;->d(Lwc/e;)V
+
+    return-void
+.end method

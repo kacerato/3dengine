@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:background="@drawable/megazord_surface" android:padding="4.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:gravity="center_vertical" android:id="@id/tittle_bar" android:background="@drawable/megazord_button" android:paddingLeft="12.0dip" android:paddingTop="8.0dip" android:paddingRight="8.0dip" android:paddingBottom="8.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="14.0sp" android:textColor="@color/theme_high_text_color" android:id="@id/tittle" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="tittle" android:singleLine="true" android:textAllCaps="true" android:fontFamily="@font/base_bold" />
+        </LinearLayout>
+        <TextView android:textSize="14.0sp" android:textColor="@color/theme_high_text_color" android:gravity="center" android:id="@id/desc" android:paddingLeft="8.0dip" android:layout_width="fill_parent" android:layout_height="0.0dip" android:text="text" android:layout_weight="1.0" android:fontFamily="@font/base_regular" android:paddingEnd="8.0dip" />
+        <LinearLayout android:orientation="horizontal" android:id="@id/bottom_bar" android:paddingLeft="8.0dip" android:paddingTop="6.0dip" android:paddingRight="10.0dip" android:paddingBottom="8.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <androidx.legacy.widget.Space android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" />
+            <Button android:textColor="@color/white" android:id="@id/confirm" android:background="@drawable/megazord_primary_button" android:layout_width="wrap_content" android:layout_height="34.0dip" android:text="OK" android:textAllCaps="true" android:fontFamily="@font/base_heavy" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

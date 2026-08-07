@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/megazord_background">
+
+    <LinearLayout
+        android:id="@id/action_progress"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/megazord_loading_card"
+        android:clipChildren="false"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.82"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="960dp">
+
+        <!-- Left Art Panel -->
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.40"
+            android:background="@drawable/megazord_loading_art_background">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_margin="24dp"
+                android:contentDescription="Megazord Ghost"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_app_logo_ghost" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_gravity="top|start"
+                android:background="@drawable/megazord_loading_corner"
+                android:padding="14dp"
+                android:src="@drawable/ic_loading_layers"
+                app:tint="@color/megazord_background" />
+        </FrameLayout>
+
+        <!-- Right Content Panel -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.60"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingStart="32dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="32dp"
+            android:paddingBottom="16dp">
+
+            <!-- Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/megazord_primary_button"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_app_logo_ghost" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/progfont"
+                    android:text="Compiling shaders"
+                    android:textColor="@color/megazord_text"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Main Ratio & Stage Counter -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@id/progress_text2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/progfont"
+                    android:singleLine="true"
+                    android:text="14/18"
+                    android:textColor="@color/megazord_primary_light"
+                    android:textSize="42sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:background="@drawable/megazord_button"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@id/step"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/progfont"
+                        android:singleLine="true"
+                        android:text="Stage 4/4"
+                        android:textColor="@color/megazord_text"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_marginStart="8dp"
+                        android:src="@drawable/ic_loading_layers"
+                        app:tint="@color/megazord_primary_light" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Progress Bar + Percentage -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.daimajia.numberprogressbar.NumberProgressBar
+                    android:id="@id/progressBar"
+                    android:layout_width="0dp"
+                    android:layout_height="14dp"
+                    android:layout_weight="1"
+                    app:progress_current="77"
+                    app:progress_reached_bar_height="10dp"
+                    app:progress_reached_color="@color/megazord_primary"
+                    app:progress_text_color="@android:color/transparent"
+                    app:progress_text_offset="0dp"
+                    app:progress_text_size="0sp"
+                    app:progress_unreached_bar_height="10dp"
+                    app:progress_unreached_color="@color/megazord_surface_alt" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/progfont"
+                    android:text="77%"
+                    android:textColor="@color/megazord_text_muted"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- Subtitle Message -->
+            <TextView
+                android:id="@id/progress_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/progfont"
+                android:maxLines="1"
+                android:text="• Optimizing materials and preparing scene"
+                android:textColor="@color/megazord_text_muted"
+                android:textSize="12sp" />
+
+            <!-- 4-Step Progress Dots with Labels -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- Step 1: Parsing -->
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <View android:layout_width="16dp" android:layout_height="16dp" android:background="@drawable/megazord_loading_dot_done" />
+                    <TextView android:textSize="10sp" android:textColor="@color/megazord_text_muted" android:layout_marginTop="4dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Parsing" />
+                </LinearLayout>
+
+                <View android:layout_width="0dp" android:layout_height="1dp" android:layout_marginBottom="14dp" android:layout_weight="1" android:background="@color/megazord_primary" />
+
+                <!-- Step 2: Compiling -->
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <View android:layout_width="16dp" android:layout_height="16dp" android:background="@drawable/megazord_loading_dot_done" />
+                    <TextView android:textSize="10sp" android:textColor="@color/megazord_text_muted" android:layout_marginTop="4dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Compiling" />
+                </LinearLayout>
+
+                <View android:layout_width="0dp" android:layout_height="1dp" android:layout_marginBottom="14dp" android:layout_weight="1" android:background="@color/megazord_primary" />
+
+                <!-- Step 3: Optimizing -->
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <View android:layout_width="16dp" android:layout_height="16dp" android:background="@drawable/megazord_loading_dot_done" />
+                    <TextView android:textSize="10sp" android:textColor="@color/megazord_text_muted" android:layout_marginTop="4dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Optimizing" />
+                </LinearLayout>
+
+                <View android:layout_width="0dp" android:layout_height="1dp" android:layout_marginBottom="14dp" android:layout_weight="1" android:background="@color/megazord_primary" />
+
+                <!-- Step 4: Finalizing -->
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <View android:layout_width="20dp" android:layout_height="20dp" android:background="@drawable/megazord_loading_dot_active" />
+                    <TextView android:textSize="10sp" android:textColor="@color/megazord_primary_light" android:layout_marginTop="4dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Finalizing" android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
+
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/megazord_border" />
+
+            <!-- Bottom Bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@id/version"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/progfont"
+                    android:singleLine="true"
+                    android:text=">_  P2.2026.07F3  |  Megazord Engine"
+                    android:textColor="@color/megazord_text_muted"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="26dp"
+                    android:background="@drawable/megazord_button"
+                    android:fontFamily="@font/progfont"
+                    android:gravity="center"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:text="Please wait  • • •"
+                    android:textColor="@color/megazord_text_muted"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-# Mobile Game Studio — documentação do editor
+# Megazord Engine — documentação do editor
 
 Esta documentação descreve o fluxo real do aplicativo, os recursos disponíveis, a organização dos projetos e os limites técnicos atuais.
 
@@ -38,3 +38,4 @@ res://
 ```
 
 A árvore `res://` é a origem única dos caminhos persistidos. Scripts e grafos são ligados aos objetos por componentes, enquanto assets são referenciados por identificadores estáveis.
+

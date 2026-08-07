@@ -198,7 +198,7 @@
     { title:'Execute em uma cópia isolada', desc:'Play clona a cena, executa a lógica e preserva o documento editável. Stop descarta a sessão.', visual:'play' }
   ];
   const visualTemplates = {
-    install: '<div class="phone-shell"><div class="phone-camera"></div><div class="phone-content"><img src="assets/logo.png" alt=""><span>MOBILE GAME STUDIO</span><button>INSTALL</button></div></div>',
+    install: '<div class="phone-shell"><div class="phone-camera"></div><div class="phone-content"><img src="assets/logo.png" alt=""><span>Megazord Engine</span><button>INSTALL</button></div></div>',
     project: '<div class="phone-shell"><div class="phone-camera"></div><div class="phone-content"><span style="font-size:12px;color:#c7a6e8">PROJETOS</span><div style="width:145px;padding:16px;background:#251638;border:1px solid #65418c;border-radius:16px"><b style="font-family:Impact;font-size:18px">OPEN WORLD</b><small style="display:block;color:#9889a5;margin-top:7px">starter project</small></div></div></div>',
     edit: '<div class="phone-shell" style="width:340px;height:205px;transform:rotate(-2deg)"><div class="phone-camera"></div><div class="phone-content" style="display:grid;grid-template-columns:70px 1fr 80px;padding:18px;gap:8px"><div style="height:130px;background:#17101f;border-radius:9px"></div><div style="height:130px;background:radial-gradient(circle,#432460,#0b0910);border-radius:9px;display:grid;place-items:center"><b style="font-size:50px;color:#9b48ec">◇</b></div><div style="height:130px;background:#17101f;border-radius:9px"></div></div></div>',
     logic: '<div style="width:340px;height:230px;position:relative;background:#120f17;border:1px solid #5d3b75;border-radius:22px;background-image:radial-gradient(#4d3b58 1px,transparent 1px);background-size:18px 18px"><div class="logic-node" style="left:25px;top:40px;transform:scale(.8)"><span>EVENTO</span><b>Ao tocar</b></div><div class="logic-node" style="left:170px;top:120px;transform:scale(.8)"><span>TRANSFORM</span><b>Rotacionar</b></div></div>',
@@ -289,3 +289,4 @@
     renderCatalog();
   }
 })();
+

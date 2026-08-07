@@ -1,21 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:orientation="vertical" android:background="@color/megazord_background" android:padding="8.0dip" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:id="@id/edit_confirm_layout" android:background="@drawable/megazord_surface" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <androidx.legacy.widget.Space android:layout_width="fill_parent" android:layout_height="9.0dip" />
-        <TextView android:textSize="16.0sp" android:textColor="@color/megazord_text" android:id="@id/name_project_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="8.0dip" android:text="Dê um nome ao seu projeto" android:textAllCaps="false" android:fontFamily="@font/base_heavy" />
-        <androidx.legacy.widget.Space android:layout_width="wrap_content" android:layout_height="9.0dip" />
-    </LinearLayout>
-    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
-        <EditText android:textSize="16.0sp" android:textColor="@color/theme_high_text_color" android:textColorHint="@color/theme_mid_text_color" android:id="@id/project_name" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="4.0dip" android:hint="nome do projeto..." android:maxLines="1" android:maxEms="64" android:inputType="textPersonName" android:imeOptions="flagNoExtractUi|flagNoFullscreen" android:fontFamily="@font/base_bold" android:backgroundTint="@color/theme_high_icon_tint" />
-        <FrameLayout android:id="@id/ad_layout" android:layout_width="fill_parent" android:layout_height="100.0dip" android:layout_margin="8.0dip">
-            <com.itsmagic.engine.Activities.Editor.Utils.MaskView.MaskableFrameLayout android:background="@color/theme_card" android:layout_width="fill_parent" android:layout_height="fill_parent" app:anti_aliasing="false" app:mask="@drawable/editor3d_v2_projects_panel_project_mask" app:porterduffxfermode="DST_IN">
-                <LinearLayout android:orientation="vertical" android:id="@id/toucharea" android:background="@color/theme_semi_card" android:layout_width="fill_parent" android:layout_height="fill_parent" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" />
-            </com.itsmagic.engine.Activities.Editor.Utils.MaskView.MaskableFrameLayout>
-        </FrameLayout>
-        <LinearLayout android:gravity="bottom" android:layout_gravity="bottom" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
-            <LinearLayout android:gravity="right" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
-                <Button android:textSize="14.0sp" android:textColor="@color/white" android:id="@id/create" android:background="@drawable/megazord_primary_button" android:layout_width="120.0dip" android:layout_height="38.0dip" android:layout_marginRight="12.0dip" android:layout_marginBottom="12.0dip" android:text="CRIAR" android:fontFamily="@font/base_heavy" />
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/megazord_background"
+    android:padding="16.0dip">
+
+    <LinearLayout
+        android:layout_width="440.0dip"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/megazord_loading_card"
+        android:padding="20.0dip">
+
+        <!-- Popup Header -->
+        <LinearLayout
+            android:id="@id/edit_confirm_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@drawable/megazord_surface"
+            android:padding="12.0dip">
+
+            <ImageView
+                android:layout_width="28.0dip"
+                android:layout_height="28.0dip"
+                android:src="@drawable/ic_app_logo_ghost" />
+
+            <TextView
+                android:id="@id/name_project_text"
+                android:layout_width="0.0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:layout_marginLeft="10.0dip"
+                android:fontFamily="@font/base_heavy"
+                android:text="Novo Projeto Vazio"
+                android:textColor="@color/megazord_text"
+                android:textSize="16.0sp" />
+        </LinearLayout>
+
+        <androidx.legacy.widget.Space
+            android:layout_width="fill_parent"
+            android:layout_height="16.0dip" />
+
+        <!-- Input Section -->
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/progfont"
+                android:text="NOME DO PROJETO:"
+                android:textColor="@color/megazord_text_muted"
+                android:textSize="11.0sp" />
+
+            <EditText
+                android:id="@id/project_name"
+                android:layout_width="fill_parent"
+                android:layout_height="42.0dip"
+                android:layout_marginTop="6.0dip"
+                android:background="@drawable/megazord_button"
+                android:fontFamily="@font/base_bold"
+                android:hint="Digite o nome do projeto..."
+                android:imeOptions="flagNoExtractUi|flagNoFullscreen"
+                android:inputType="textPersonName"
+                android:maxEms="64"
+                android:maxLines="1"
+                android:paddingLeft="12.0dip"
+                android:paddingRight="12.0dip"
+                android:textColor="@color/megazord_text"
+                android:textColorHint="@color/megazord_text_muted"
+                android:textSize="14.0sp" />
+
+            <!-- Legacy Ad Layout (Hidden) -->
+            <FrameLayout
+                android:id="@id/ad_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="0.0dip"
+                android:visibility="gone">
+                <com.itsmagic.engine.Activities.Editor.Utils.MaskView.MaskableFrameLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    app:anti_aliasing="false"
+                    app:mask="@drawable/editor3d_v2_projects_panel_project_mask"
+                    app:porterduffxfermode="DST_IN">
+                    <LinearLayout
+                        android:id="@id/toucharea"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent" />
+                </com.itsmagic.engine.Activities.Editor.Utils.MaskView.MaskableFrameLayout>
+            </FrameLayout>
+
+            <androidx.legacy.widget.Space
+                android:layout_width="fill_parent"
+                android:layout_height="20.0dip" />
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@id/create"
+                    android:layout_width="140.0dip"
+                    android:layout_height="40.0dip"
+                    android:background="@drawable/megazord_primary_button"
+                    android:fontFamily="@font/base_heavy"
+                    android:text="CRIAR PROJETO"
+                    android:textColor="@color/white"
+                    android:textSize="13.0sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

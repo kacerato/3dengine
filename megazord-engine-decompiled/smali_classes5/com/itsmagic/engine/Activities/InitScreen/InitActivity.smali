@@ -61,12 +61,6 @@
 
     invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
 
-    new-instance v1, Lcom/itsmagic/engine/Activities/InitScreen/Screens/UIScaleScreen;
-
-    invoke-direct {v1}, Lcom/itsmagic/engine/Activities/InitScreen/Screens/UIScaleScreen;-><init>()V
-
-    invoke-interface {v0, v1}, Ljava/util/List;->add(Ljava/lang/Object;)Z
-
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/itsmagic/engine/Activities/InitScreen/InitActivity;->c:Landroid/widget/LinearLayout;

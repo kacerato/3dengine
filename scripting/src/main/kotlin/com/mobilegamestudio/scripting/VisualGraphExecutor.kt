@@ -29,6 +29,7 @@ class VisualGraphExecutor(
     private val flowRuntime: NoCodeFlowRuntime = NoCodeFlowRuntime(),
     private val eventRuntime: NoCodeEventRuntime? = null,
     private val attributeRuntime: NoCodeAttributeRuntime? = null,
+    private val physicsRuntime: NoCodePhysicsRuntime? = null,
     private val executionContextFactory: ((VisualGraphDocument) -> ExecutionContext)? = null,
     /**
      * Runtime identity of this graph instance. Two objects may use the same graph
@@ -123,19 +124,27 @@ class VisualGraphExecutor(
     ): LogicExecutionResult {
         val errors = validate(graph)
         if (errors.isNotEmpty()) return failure(errors.first())
-        val context = (baseContext ?: newContext(graph))
-            .withEvent(event)
-            .copy(graphId = runtimeGraphId(graph))
-        val starts = engineEventStarts(graph, event, context)
+        val starts = engineEventStarts(graph, event)
         if (starts.isEmpty()) return LogicExecutionResult.Success
 
         val initialOutputs = buildMap<Pair<String, String>, Any?> {
             starts.forEach { node ->
-                put(node.id to "value", runtimeValue(event.payload))
-                put(node.id to "sender", event.sender)
-                put(node.id to "target", event.address.objectRef)
+                val definitionId = NoCodeNodeRegistry.definitionFor(node)?.id.orEmpty()
+                if (attributeRuntime?.isChangedNode(definitionId) == true) {
+                    put(node.id to "value", attributeRuntime.runtimeValue(event.payload))
+                    put(node.id to "exists", event.payload != EventPayload.None)
+                    put(node.id to "sender", event.sender)
+                    put(node.id to "target", event.address.objectRef)
+                } else {
+                    put(node.id to "value", runtimeValue(event.payload))
+                    put(node.id to "sender", event.sender)
+                    put(node.id to "target", event.address.objectRef)
+                }
             }
         }
+        val context = (baseContext ?: newContext(graph))
+            .withEvent(event)
+            .copy(graphId = runtimeGraphId(graph))
         return execute(
             graph = graph,
             starts = starts,
@@ -204,7 +213,6 @@ class VisualGraphExecutor(
         context: ExecutionContext,
     ): NoCodeNodeExecution {
         val definition = NoCodeNodeRegistry.definitionFor(node)
-        val runtimeContext = context.copy(graphId = runtimeGraphId(graph))
         val inputs = try {
             collectInputs(
                 node = node,
@@ -214,7 +222,7 @@ class VisualGraphExecutor(
                 outputValues = outputValues,
                 valueBudget = valueBudget,
                 visiting = mutableSetOf(),
-                context = runtimeContext,
+                context = context,
             )
         } catch (error: GraphEvaluationException) {
             return NoCodeNodeExecution.Failed(failure(error.message ?: "Falha ao resolver entradas do NoCode."))
@@ -237,12 +245,30 @@ class VisualGraphExecutor(
             return NoCodeNodeExecution.Continue(decision)
         }
 
+        if (definition != null && NoCodePhysicsRuntime.isTraceNode(definition.id)) {
+            val runtime = physicsRuntime
+                ?: return NoCodeNodeExecution.Failed(
+                    failure("${definition.title} exige um PhysicsQueryHost ativo na sessão de Play."),
+                )
+            val result = try {
+                runtime.execute(definition.id, inputs)
+            } catch (error: RuntimeException) {
+                return NoCodeNodeExecution.Failed(
+                    failure("Falha em ${definition.title}: ${error.message}."),
+                )
+            }
+            result.outputs.forEach { (portId, value) ->
+                outputValues[node.id to portId] = value
+            }
+            return NoCodeNodeExecution.Continue(result.decision)
+        }
+
         val actionResult = executeAction(
             node = node,
             definition = definition,
             inputs = inputs,
             outputValues = outputValues,
-            context = runtimeContext,
+            context = context.copy(graphId = runtimeGraphId(graph)),
         )
         if (actionResult is LogicExecutionResult.Failure) {
             return NoCodeNodeExecution.Failed(actionResult)
@@ -294,36 +320,56 @@ class VisualGraphExecutor(
                         val mutation = try {
                             attributeRuntime.setNode(resolvedDefinition.id, inputs, context)
                         } catch (error: IllegalArgumentException) {
-                            return failure(error.message ?: "Falha ao gravar Attribute NoCode.")
+                            return failure(error.message ?: "Falha ao alterar Attribute.")
                         }
-                        outputValues[node.id to "previous"] =
-                            attributeRuntime.runtimeValue(mutation.dispatch.change.previousValue)
+                        outputValues[node.id to "previous"] = attributeRuntime.runtimeValue(
+                            mutation.dispatch.change.previousValue,
+                        )
                         outputValues[node.id to "changed"] = mutation.dispatch.changed
-                        reportAttributeNotificationFailure(resolvedDefinition.title, mutation.dispatch)
+                        mutation.dispatch.eventResult
+                            ?.failures
+                            ?.firstOrNull()
+                            ?.let { notificationFailure ->
+                                host.log(
+                                    LogicLogLevel.ERROR,
+                                    "Attribute ${mutation.address.name} foi alterado, mas um listener falhou: " +
+                                        notificationFailure.message,
+                                )
+                            }
                     }
-                    attributeRuntime != null && resolvedDefinition.id == NoCodeAttributeRuntime.ATTRIBUTE_REMOVE -> {
+                    resolvedDefinition.id == NoCodeAttributeRuntime.ATTRIBUTE_REMOVE && attributeRuntime != null -> {
                         val mutation = try {
                             attributeRuntime.removeNode(inputs, context)
                         } catch (error: IllegalArgumentException) {
-                            return failure(error.message ?: "Falha ao remover Attribute NoCode.")
+                            return failure(error.message ?: "Falha ao remover Attribute.")
                         }
-                        val previous = mutation.dispatch.change.previousValue
-                        outputValues[node.id to "previous"] = attributeRuntime.runtimeValue(previous)
-                        outputValues[node.id to "removed"] = previous != null
-                        reportAttributeNotificationFailure(resolvedDefinition.title, mutation.dispatch)
+                        outputValues[node.id to "previous"] = attributeRuntime.runtimeValue(
+                            mutation.dispatch.change.previousValue,
+                        )
+                        outputValues[node.id to "removed"] = mutation.dispatch.change.wasRemoved
+                        mutation.dispatch.eventResult
+                            ?.failures
+                            ?.firstOrNull()
+                            ?.let { notificationFailure ->
+                                host.log(
+                                    LogicLogLevel.ERROR,
+                                    "Attribute ${mutation.address.name} foi removido, mas um listener falhou: " +
+                                        notificationFailure.message,
+                                )
+                            }
                     }
-                    attributeRuntime != null &&
-                        (attributeRuntime.isGetNode(resolvedDefinition.id) ||
-                            resolvedDefinition.id == NoCodeAttributeRuntime.ATTRIBUTE_EXISTS) -> {
+                    attributeRuntime?.isGetNode(resolvedDefinition.id) == true ||
+                        (resolvedDefinition.id == NoCodeAttributeRuntime.ATTRIBUTE_EXISTS && attributeRuntime != null) -> {
                         val read = try {
                             attributeRuntime.readNode(resolvedDefinition.id, inputs, context)
                         } catch (error: IllegalArgumentException) {
-                            return failure(error.message ?: "Falha ao ler Attribute NoCode.")
+                            return failure(error.message ?: "Falha ao ler Attribute.")
                         }
+                        outputValues[node.id to "value"] = attributeRuntime.runtimeValue(read.value)
                         outputValues[node.id to "exists"] = read.exists
-                        if (attributeRuntime.isGetNode(resolvedDefinition.id)) {
-                            outputValues[node.id to "value"] = attributeRuntime.runtimeValue(read.value)
-                        }
+                    }
+                    resolvedDefinition.id.startsWith("attribute.") && attributeRuntime == null -> {
+                        return failure("${resolvedDefinition.title} exige uma NoCodeRuntimeSession ativa.")
                     }
                     eventRuntime?.isSendNode(resolvedDefinition.id) == true -> {
                         val dispatch = try {
@@ -396,9 +442,6 @@ class VisualGraphExecutor(
                         }
                     }
                     resolvedDefinition.id.startsWith("event.send") -> {
-                        return failure("${resolvedDefinition.title} exige uma NoCodeRuntimeSession ativa.")
-                    }
-                    resolvedDefinition.id.startsWith("attribute.") -> {
                         return failure("${resolvedDefinition.title} exige uma NoCodeRuntimeSession ativa.")
                     }
                     resolvedDefinition.category == VisualNodeCategory.DEBUG -> {
@@ -505,38 +548,32 @@ class VisualGraphExecutor(
                 visiting = visiting,
                 context = context,
             )
-
-            when {
+            val result = when {
                 NoCodeValueEngine.supports(definition.operation) -> {
-                    val result = try {
+                    try {
                         NoCodeValueEngine.evaluate(definition.operation, inputs)
                     } catch (error: RuntimeException) {
                         throw GraphEvaluationException("Falha em ${definition.title}: ${error.message}.")
                     }
-                    definition.outputs
-                        .filter { it.type != VisualPortType.FLOW }
-                        .forEach { port -> outputValues[source.id to port.id] = result }
                 }
-                attributeRuntime != null &&
-                    (attributeRuntime.isGetNode(definition.id) ||
-                        definition.id == NoCodeAttributeRuntime.ATTRIBUTE_EXISTS) -> {
+                attributeRuntime?.isGetNode(definition.id) == true ||
+                    (definition.id == NoCodeAttributeRuntime.ATTRIBUTE_EXISTS && attributeRuntime != null) -> {
                     val read = try {
                         attributeRuntime.readNode(definition.id, inputs, context)
                     } catch (error: IllegalArgumentException) {
-                        throw GraphEvaluationException(error.message ?: "Falha ao ler Attribute NoCode.")
+                        throw GraphEvaluationException(error.message ?: "Falha ao ler Attribute.")
                     }
+                    outputValues[source.id to "value"] = attributeRuntime.runtimeValue(read.value)
                     outputValues[source.id to "exists"] = read.exists
-                    if (attributeRuntime.isGetNode(definition.id)) {
-                        outputValues[source.id to "value"] = attributeRuntime.runtimeValue(read.value)
-                    }
+                    return outputValues[key]
                 }
-                definition.id.startsWith("attribute.") -> throw GraphEvaluationException(
-                    "${definition.title} exige uma NoCodeRuntimeSession ativa.",
-                )
                 else -> throw GraphEvaluationException(
                     "${definition.title} não pode ser usado como valor antes de sua execução de fluxo.",
                 )
             }
+            definition.outputs
+                .filter { it.type != VisualPortType.FLOW }
+                .forEach { port -> outputValues[source.id to port.id] = result }
             return outputValues[key]
         } finally {
             visiting.remove(nodeId)
@@ -546,25 +583,26 @@ class VisualGraphExecutor(
     private fun engineEventStarts(
         graph: VisualGraphDocument,
         event: EngineEvent,
-        context: ExecutionContext,
-    ): List<VisualNode> {
-        val custom = customEventStarts(graph, event.name, event.payload)
-        val attribute = if (attributeRuntime == null) {
-            emptyList()
-        } else {
-            graph.nodes.filter { node ->
-                val definition = NoCodeNodeRegistry.definitionFor(node) ?: return@filter false
+    ): List<VisualNode> = graph.nodes.filter { node ->
+        val definition = NoCodeNodeRegistry.definitionFor(node) ?: return@filter false
+        when {
+            eventRuntime?.isReceiverNode(definition.id) == true -> {
+                val configuredName = node.values["event"] ?: node.textValue.orEmpty()
+                val nameMatches = configuredName.isBlank() || configuredName == event.name
+                nameMatches && eventRuntime.acceptsPayload(definition.id, event.payload)
+            }
+            attributeRuntime?.isChangedNode(definition.id) == true -> {
                 attributeRuntime.matchesChangedEvent(
                     definitionId = definition.id,
                     values = node.values,
                     graphId = runtimeGraphId(graph),
-                    sceneId = context.sceneId ?: event.address.sceneId,
-                    ownerObject = context.sourceObject ?: event.address.objectRef,
+                    sceneId = event.address.sceneId,
+                    ownerObject = event.address.objectRef,
                     event = event,
                 )
             }
+            else -> false
         }
-        return (custom + attribute).distinctBy(VisualNode::id)
     }
 
     private fun customEventStarts(
@@ -589,34 +627,16 @@ class VisualGraphExecutor(
     }
 
     private fun runtimeValue(payload: EventPayload): Any? =
-        eventRuntime?.runtimeValue(payload)
-            ?: attributeRuntime?.runtimeValue(payload)
-            ?: when (payload) {
-                EventPayload.None -> null
-                is EventPayload.Bool -> payload.value
-                is EventPayload.Number -> payload.value
-                is EventPayload.Text -> payload.value
-                is EventPayload.Vector3Value -> payload.value
-                is EventPayload.ObjectValue -> payload.value
-                is EventPayload.ComponentValue -> payload.value
-                is EventPayload.ListValue -> payload.values.map(::runtimeValue)
-            }
-
-    private fun reportAttributeNotificationFailure(
-        title: String,
-        result: AttributeDispatchResult,
-    ) {
-        if (result.notificationSucceeded) return
-        val message = result.eventResult
-            ?.failures
-            ?.joinToString("; ") { it.message }
-            .orEmpty()
-            .ifBlank { "listener desconhecido falhou" }
-        host.log(
-            LogicLogLevel.WARNING,
-            "$title alterou o estado, mas uma notificação falhou: $message",
-        )
-    }
+        eventRuntime?.runtimeValue(payload) ?: when (payload) {
+            EventPayload.None -> null
+            is EventPayload.Bool -> payload.value
+            is EventPayload.Number -> payload.value
+            is EventPayload.Text -> payload.value
+            is EventPayload.Vector3Value -> payload.value
+            is EventPayload.ObjectValue -> payload.value
+            is EventPayload.ComponentValue -> payload.value
+            is EventPayload.ListValue -> payload.values.map(::runtimeValue)
+        }
 
     private fun defaultFlowDecision(
         node: VisualNode,

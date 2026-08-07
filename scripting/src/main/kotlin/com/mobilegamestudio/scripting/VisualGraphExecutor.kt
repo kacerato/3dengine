@@ -1,11 +1,11 @@
 package com.mobilegamestudio.scripting
 
+import com.mobilegamestudio.core.model.NoCodeNodeRegistry
 import com.mobilegamestudio.core.model.Vector3
 import com.mobilegamestudio.core.model.VisualConnection
 import com.mobilegamestudio.core.model.VisualGraphDocument
 import com.mobilegamestudio.core.model.VisualGraphValidator
 import com.mobilegamestudio.core.model.VisualNode
-import com.mobilegamestudio.core.model.VisualNodeCatalog
 import com.mobilegamestudio.core.model.VisualNodeCategory
 import com.mobilegamestudio.core.model.VisualNodeDefinition
 import com.mobilegamestudio.core.model.VisualNodeType
@@ -69,7 +69,7 @@ class VisualGraphExecutor(
         val errors = validate(graph)
         if (errors.isNotEmpty()) return failure(errors.first())
         val starts = graph.nodes.filter { node ->
-            VisualNodeCatalog.definitionFor(node)?.id == "event.custom.received" &&
+            NoCodeNodeRegistry.definitionFor(node)?.id == "event.custom.received" &&
                 node.values["event"].orEmpty().let { it.isBlank() || it == eventName }
         }
         return execute(
@@ -135,7 +135,7 @@ class VisualGraphExecutor(
         outputValues: MutableMap<Pair<String, String>, Any?>,
         valueBudget: ValueEvaluationBudget,
     ): NoCodeNodeExecution {
-        val definition = VisualNodeCatalog.definitionFor(node)
+        val definition = NoCodeNodeRegistry.definitionFor(node)
         val inputs = try {
             collectInputs(
                 node = node,
@@ -360,7 +360,7 @@ class VisualGraphExecutor(
                 throw GraphEvaluationException("Limite de avaliação de valores do grafo excedido.")
             }
             val source = byId[nodeId] ?: throw GraphEvaluationException("Nó de valor ausente: $nodeId.")
-            val definition = VisualNodeCatalog.definitionFor(source)
+            val definition = NoCodeNodeRegistry.definitionFor(source)
                 ?: throw GraphEvaluationException("Definição de valor ausente no nó $nodeId.")
             if (!NoCodeValueEngine.supports(definition.operation)) {
                 throw GraphEvaluationException(

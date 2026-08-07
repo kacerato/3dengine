@@ -1,5 +1,6 @@
 package com.mobilegamestudio.core.model
 
+import java.util.UUID
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,7 +12,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 @SerialName("physics-query-filter")
 data class PhysicsQueryFilterComponent(
-    override val componentId: String = newComponentId(),
+    override val componentId: String = UUID.randomUUID().toString(),
     override val enabled: Boolean = true,
     val layer: Int = DEFAULT_LAYER,
     val isTrigger: Boolean = false,

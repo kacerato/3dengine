@@ -6,8 +6,9 @@ import com.mobilegamestudio.core.model.EventAddress
 import com.mobilegamestudio.core.model.ObjectRef
 
 /**
- * Wires canonical Engine API contracts to the runtime services that actually
- * exist today. Contract-only APIs are intentionally not registered here.
+ * Wires canonical Engine API contracts only when the backing service exists in
+ * this Play session. Missing optional backends therefore produce HANDLER_MISSING
+ * instead of a fake success path.
  */
 class EngineApiHostBindings(
     private val host: LogicSceneHost,
@@ -17,6 +18,40 @@ class EngineApiHostBindings(
         dispatcher.register("scene.find_object") { call ->
             val name = call.arguments.getValue("name") as String
             host.findObjectIdByName(name)?.let(::ObjectRef)
+        }
+
+        session.distanceRuntime?.let { distanceRuntime ->
+            dispatcher.register("transform.get_position") { call ->
+                distanceRuntime.position(call.arguments.getValue("object") as ObjectRef)
+            }
+            dispatcher.register("object.distance") { call ->
+                val runtime = requireNotNull(session.spatialRuntime)
+                runtime.evaluateDistance(call.arguments, call.context).outputs["distance"]
+            }
+        }
+
+        session.componentRuntime?.let { componentRuntime ->
+            dispatcher.register("component.get") { call ->
+                componentRuntime.evaluate(
+                    definitionId = NoCodeComponentRuntime.GET_COMPONENT,
+                    inputs = call.arguments,
+                    context = call.context,
+                ).outputs["component"]
+            }
+            dispatcher.register("component.call") { call ->
+                componentRuntime.executeMethod(call.arguments).outputs["result"]
+            }
+        }
+
+        session.physicsRuntime?.let { physicsRuntime ->
+            dispatcher.register("physics.trace_ray") { call ->
+                val inputs = buildMap<String, Any?> {
+                    put("origin", call.arguments.getValue("origin"))
+                    put("direction", call.arguments.getValue("direction"))
+                    call.arguments["distance"]?.let { put("maxDistance", it) }
+                }
+                physicsRuntime.execute(NoCodePhysicsRuntime.TRACE, inputs).outputs["hitData"]
+            }
         }
 
         dispatcher.register("event.send") { call ->
@@ -34,9 +69,7 @@ class EngineApiHostBindings(
                 sender = call.context.sourceObject ?: call.context.senderObject,
                 context = call.context,
             )
-            if (!result.succeeded) {
-                error(result.failures.joinToString("; ") { it.message })
-            }
+            if (!result.succeeded) error(result.failures.joinToString("; ") { it.message })
             null
         }
 
@@ -73,7 +106,7 @@ class EngineApiHostBindings(
     }
 
     companion object {
-        /** Conservative default sandbox: no files, network, audio or physics writes. */
+        /** Conservative default sandbox: read/write scene state and diagnostics only. */
         val DEFAULT_RUNTIME_CAPABILITIES: Set<EngineApiCapability> = setOf(
             EngineApiCapability.SCENE_READ,
             EngineApiCapability.SCENE_WRITE,

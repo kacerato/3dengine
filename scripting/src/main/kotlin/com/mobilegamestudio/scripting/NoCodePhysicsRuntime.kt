@@ -24,7 +24,7 @@ data class NoCodePhysicsExecution(
 class NoCodePhysicsRuntime(
     private val queryHost: PhysicsQueryHost,
 ) {
-    fun supports(definitionId: String): Boolean = definitionId in SUPPORTED_IDS
+    fun supports(definitionId: String): Boolean = isTraceNode(definitionId)
 
     fun execute(
         definitionId: String,
@@ -129,10 +129,26 @@ class NoCodePhysicsRuntime(
         const val DEFAULT_MAX_HITS = 32
 
         private val SUPPORTED_IDS = setOf(RAYCAST_ALIAS, TRACE, TRACE_ALL)
+
+        fun isTraceNode(definitionId: String): Boolean = definitionId in SUPPORTED_IDS
     }
 }
 
-private fun Map<String, Any?>.vector3(key: String): Vector3? = this[key] as? Vector3
+private fun Map<String, Any?>.vector3(key: String): Vector3? = when (val value = this[key]) {
+    is Vector3 -> value
+    is NoCodeVector -> value.components
+        .takeIf { it.size == 3 }
+        ?.let { components ->
+            Vector3(
+                components[0].toFloat(),
+                components[1].toFloat(),
+                components[2].toFloat(),
+            )
+        }
+    is AttributeValue.Vector3Value -> value.value
+    is EventPayload.Vector3Value -> value.value
+    else -> null
+}
 
 private fun Map<String, Any?>.boolean(key: String): Boolean? = when (val value = this[key]) {
     is Boolean -> value

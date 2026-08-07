@@ -37,7 +37,7 @@ class EngineApiHostBindings(
             if (!result.succeeded) {
                 error(result.failures.joinToString("; ") { it.message })
             }
-            Unit
+            null
         }
 
         dispatcher.register("attribute.get") { call ->
@@ -63,12 +63,12 @@ class EngineApiHostBindings(
                     .ifBlank { "Attribute atualizado, mas uma notificação falhou." }
                 host.log(LogicLogLevel.WARNING, message)
             }
-            Unit
+            null
         }
 
         dispatcher.register("debug.log") { call ->
             host.log(LogicLogLevel.INFO, call.arguments.getValue("message") as String)
-            Unit
+            null
         }
     }
 

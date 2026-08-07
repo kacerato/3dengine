@@ -33,8 +33,10 @@ class NoCodeGraphEventBinder(
         executor: VisualGraphExecutor,
         sceneId: String? = null,
         ownerObject: ObjectRef? = null,
-        instanceKey: String = defaultInstanceKey(graph, sceneId, ownerObject),
+        runtimeGraphId: String = graph.graphId,
+        instanceKey: String = defaultInstanceKey(runtimeGraphId, sceneId, ownerObject),
     ): NoCodeGraphBindingResult {
+        require(runtimeGraphId.isNotBlank()) { "runtimeGraphId do graph não pode ser vazio." }
         require(instanceKey.isNotBlank()) { "instanceKey do graph não pode ser vazio." }
         val owner = EventOwner("nocode:$instanceKey")
         eventBus.unsubscribeOwner(owner)
@@ -58,7 +60,7 @@ class NoCodeGraphEventBinder(
                 eventRuntime.addressForReceiver(
                     definitionId = definition.id,
                     values = node.values,
-                    graphId = graph.graphId,
+                    graphId = runtimeGraphId,
                     sceneId = sceneId,
                     ownerObject = ownerObject,
                 )
@@ -132,13 +134,13 @@ class NoCodeGraphEventBinder(
 
     companion object {
         private fun defaultInstanceKey(
-            graph: VisualGraphDocument,
+            runtimeGraphId: String,
             sceneId: String?,
             ownerObject: ObjectRef?,
         ): String = listOfNotNull(
             sceneId?.let { "scene=$it" },
             ownerObject?.objectId?.let { "object=$it" },
-            "graph=${graph.graphId}",
+            "graph=$runtimeGraphId",
         ).joinToString("|")
     }
 }

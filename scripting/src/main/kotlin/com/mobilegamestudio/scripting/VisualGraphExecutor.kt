@@ -22,19 +22,14 @@ class VisualGraphExecutor(
     private val onEmitEvent: (String, Any?) -> LogicExecutionResult = { _, _ ->
         LogicExecutionResult.Success
     },
-    /**
-     * Must be shared for the lifetime of a Play/graph session when stateful flow
-     * nodes (Gate, Do Once, Do N, Multi Gate) need to survive multiple events.
-     */
+    /** Stateful flow belongs to the lifetime of the graph instance, not one button call. */
     private val flowRuntime: NoCodeFlowRuntime = NoCodeFlowRuntime(),
     private val eventRuntime: NoCodeEventRuntime? = null,
     private val attributeRuntime: NoCodeAttributeRuntime? = null,
     private val physicsRuntime: NoCodePhysicsRuntime? = null,
+    private val componentRuntime: NoCodeComponentRuntime? = null,
     private val executionContextFactory: ((VisualGraphDocument) -> ExecutionContext)? = null,
-    /**
-     * Runtime identity of this graph instance. Two objects may use the same graph
-     * document but must never share Gate/DoOnce/MultiGate state or LOCAL_GRAPH events.
-     */
+    /** Runtime identity, distinct from a reusable graph asset id. */
     private val graphInstanceId: String? = null,
 ) {
     private val scheduler = NoCodeFlowScheduler(maxExecutedNodes)
@@ -55,43 +50,40 @@ class VisualGraphExecutor(
     fun emitButton(graph: VisualGraphDocument, eventName: String): LogicExecutionResult {
         val errors = validate(graph)
         if (errors.isNotEmpty()) return failure(errors.first())
-        val startNodes = graph.nodes.filter {
+        val starts = graph.nodes.filter {
             it.type == VisualNodeType.ON_BUTTON_PRESSED && it.textValue == eventName
         }
-        return execute(
-            graph = graph,
-            starts = startNodes,
-            context = newContext(graph),
-        )
+        return execute(graph, starts, context = newContext(graph))
     }
 
     fun emitTouch(graph: VisualGraphDocument, touchedObjectId: String? = null): LogicExecutionResult {
         val errors = validate(graph)
         if (errors.isNotEmpty()) return failure(errors.first())
-        return execute(
-            graph = graph,
-            starts = graph.nodes.filter { node ->
-                val boundObjectId = node.objectId
-                val boundObjectName = node.objectName
-                node.type == VisualNodeType.ON_TOUCH &&
-                    (
-                        touchedObjectId == null ||
-                            boundObjectId == touchedObjectId ||
-                            (boundObjectId == null && boundObjectName == null) ||
-                            (
-                                boundObjectId == null &&
-                                    boundObjectName != null &&
-                                    host.findObjectIdByName(boundObjectName) == touchedObjectId
+        val starts = graph.nodes.filter { node ->
+            val boundObjectId = node.objectId
+            val boundObjectName = node.objectName
+            node.type == VisualNodeType.ON_TOUCH &&
+                (
+                    touchedObjectId == null ||
+                        boundObjectId == touchedObjectId ||
+                        (boundObjectId == null && boundObjectName == null) ||
+                        (
+                            boundObjectId == null &&
+                                boundObjectName != null &&
+                                host.findObjectIdByName(boundObjectName) == touchedObjectId
                             )
                     )
-            },
+        }
+        return execute(
+            graph = graph,
+            starts = starts,
             context = newContext(graph).copy(
                 targetObject = touchedObjectId?.takeIf(String::isNotBlank)?.let(::ObjectRef),
             ),
         )
     }
 
-    /** Legacy bridge used by existing Lua/runtime code while graphs migrate to EngineEventBus. */
+    /** Legacy bridge while old Lua/runtime paths migrate to EngineEventBus. */
     fun emitCustom(
         graph: VisualGraphDocument,
         eventName: String,
@@ -108,12 +100,7 @@ class VisualGraphExecutor(
         val initialOutputs = starts.associate { node ->
             (node.id to "value") to runtimeValue(payload)
         }
-        return execute(
-            graph = graph,
-            starts = starts,
-            initialOutputs = initialOutputs,
-            context = newContext(graph),
-        )
+        return execute(graph, starts, initialOutputs, newContext(graph))
     }
 
     /** Entry point used by EngineEventBus subscriptions. */
@@ -133,24 +120,17 @@ class VisualGraphExecutor(
                 if (attributeRuntime?.isChangedNode(definitionId) == true) {
                     put(node.id to "value", attributeRuntime.runtimeValue(event.payload))
                     put(node.id to "exists", event.payload != EventPayload.None)
-                    put(node.id to "sender", event.sender)
-                    put(node.id to "target", event.address.objectRef)
                 } else {
                     put(node.id to "value", runtimeValue(event.payload))
-                    put(node.id to "sender", event.sender)
-                    put(node.id to "target", event.address.objectRef)
                 }
+                put(node.id to "sender", event.sender)
+                put(node.id to "target", event.address.objectRef)
             }
         }
         val context = (baseContext ?: newContext(graph))
             .withEvent(event)
             .copy(graphId = runtimeGraphId(graph))
-        return execute(
-            graph = graph,
-            starts = starts,
-            initialOutputs = initialOutputs,
-            context = context,
-        )
+        return execute(graph, starts, initialOutputs, context)
     }
 
     private fun execute(
@@ -213,6 +193,7 @@ class VisualGraphExecutor(
         context: ExecutionContext,
     ): NoCodeNodeExecution {
         val definition = NoCodeNodeRegistry.definitionFor(node)
+        val runtimeContext = context.copy(graphId = runtimeGraphId(graph))
         val inputs = try {
             collectInputs(
                 node = node,
@@ -222,10 +203,12 @@ class VisualGraphExecutor(
                 outputValues = outputValues,
                 valueBudget = valueBudget,
                 visiting = mutableSetOf(),
-                context = context,
+                context = runtimeContext,
             )
         } catch (error: GraphEvaluationException) {
-            return NoCodeNodeExecution.Failed(failure(error.message ?: "Falha ao resolver entradas do NoCode."))
+            return NoCodeNodeExecution.Failed(
+                failure(error.message ?: "Falha ao resolver entradas do NoCode."),
+            )
         }
 
         if (definition != null && flowRuntime.supports(definition.id)) {
@@ -250,17 +233,27 @@ class VisualGraphExecutor(
                 ?: return NoCodeNodeExecution.Failed(
                     failure("${definition.title} exige um PhysicsQueryHost ativo na sessão de Play."),
                 )
-            val result = try {
+            val execution = try {
                 runtime.execute(definition.id, inputs)
             } catch (error: RuntimeException) {
                 return NoCodeNodeExecution.Failed(
                     failure("Falha em ${definition.title}: ${error.message}."),
                 )
             }
-            result.outputs.forEach { (portId, value) ->
-                outputValues[node.id to portId] = value
+            storeOutputs(node.id, execution.outputs, outputValues)
+            return NoCodeNodeExecution.Continue(execution.decision)
+        }
+
+        if (definition != null && componentRuntime?.supportsActionNode(definition.id) == true) {
+            val execution = try {
+                componentRuntime.executeMethod(inputs)
+            } catch (error: RuntimeException) {
+                return NoCodeNodeExecution.Failed(
+                    failure("Falha em ${definition.title}: ${error.message}."),
+                )
             }
-            return NoCodeNodeExecution.Continue(result.decision)
+            storeOutputs(node.id, execution.outputs, outputValues)
+            return NoCodeNodeExecution.Continue(execution.decision)
         }
 
         val actionResult = executeAction(
@@ -268,7 +261,7 @@ class VisualGraphExecutor(
             definition = definition,
             inputs = inputs,
             outputValues = outputValues,
-            context = context.copy(graphId = runtimeGraphId(graph)),
+            context = runtimeContext,
         )
         if (actionResult is LogicExecutionResult.Failure) {
             return NoCodeNodeExecution.Failed(actionResult)
@@ -315,6 +308,14 @@ class VisualGraphExecutor(
                         resolvedDefinition.outputs
                             .filter { it.type != VisualPortType.FLOW }
                             .forEach { port -> outputValues[node.id to port.id] = result }
+                    }
+                    componentRuntime?.supportsValueNode(resolvedDefinition.id) == true -> {
+                        val result = try {
+                            componentRuntime.evaluate(resolvedDefinition.id, inputs, context)
+                        } catch (error: RuntimeException) {
+                            return failure("Falha em ${resolvedDefinition.title}: ${error.message}.")
+                        }
+                        storeOutputs(node.id, result.outputs, outputValues)
                     }
                     attributeRuntime?.isSetNode(resolvedDefinition.id) == true -> {
                         val mutation = try {
@@ -367,9 +368,6 @@ class VisualGraphExecutor(
                         }
                         outputValues[node.id to "value"] = attributeRuntime.runtimeValue(read.value)
                         outputValues[node.id to "exists"] = read.exists
-                    }
-                    resolvedDefinition.id.startsWith("attribute.") && attributeRuntime == null -> {
-                        return failure("${resolvedDefinition.title} exige uma NoCodeRuntimeSession ativa.")
                     }
                     eventRuntime?.isSendNode(resolvedDefinition.id) == true -> {
                         val dispatch = try {
@@ -443,6 +441,15 @@ class VisualGraphExecutor(
                     }
                     resolvedDefinition.id.startsWith("event.send") -> {
                         return failure("${resolvedDefinition.title} exige uma NoCodeRuntimeSession ativa.")
+                    }
+                    resolvedDefinition.id.startsWith("attribute.") && attributeRuntime == null -> {
+                        return failure("${resolvedDefinition.title} exige uma NoCodeRuntimeSession ativa.")
+                    }
+                    NoCodePhysicsRuntime.isTraceNode(resolvedDefinition.id) && physicsRuntime == null -> {
+                        return failure("${resolvedDefinition.title} exige um PhysicsQueryHost ativo.")
+                    }
+                    isComponentDefinition(resolvedDefinition.id) && componentRuntime == null -> {
+                        return failure("${resolvedDefinition.title} exige um ComponentQueryHost ativo.")
                     }
                     resolvedDefinition.category == VisualNodeCategory.DEBUG -> {
                         host.log(
@@ -530,7 +537,9 @@ class VisualGraphExecutor(
     ): Any? {
         val key = nodeId to requestedPortId
         if (outputValues.containsKey(key)) return outputValues[key]
-        if (!visiting.add(nodeId)) throw GraphEvaluationException("Ciclo detectado na avaliação de valores do nó $nodeId.")
+        if (!visiting.add(nodeId)) {
+            throw GraphEvaluationException("Ciclo detectado na avaliação de valores do nó $nodeId.")
+        }
         try {
             if (!valueBudget.consume()) {
                 throw GraphEvaluationException("Limite de avaliação de valores do grafo excedido.")
@@ -548,13 +557,25 @@ class VisualGraphExecutor(
                 visiting = visiting,
                 context = context,
             )
-            val result = when {
+
+            when {
                 NoCodeValueEngine.supports(definition.operation) -> {
-                    try {
+                    val result = try {
                         NoCodeValueEngine.evaluate(definition.operation, inputs)
                     } catch (error: RuntimeException) {
                         throw GraphEvaluationException("Falha em ${definition.title}: ${error.message}.")
                     }
+                    definition.outputs
+                        .filter { it.type != VisualPortType.FLOW }
+                        .forEach { port -> outputValues[source.id to port.id] = result }
+                }
+                componentRuntime?.supportsValueNode(definition.id) == true -> {
+                    val result = try {
+                        componentRuntime.evaluate(definition.id, inputs, context)
+                    } catch (error: RuntimeException) {
+                        throw GraphEvaluationException("Falha em ${definition.title}: ${error.message}.")
+                    }
+                    storeOutputs(source.id, result.outputs, outputValues)
                 }
                 attributeRuntime?.isGetNode(definition.id) == true ||
                     (definition.id == NoCodeAttributeRuntime.ATTRIBUTE_EXISTS && attributeRuntime != null) -> {
@@ -565,15 +586,17 @@ class VisualGraphExecutor(
                     }
                     outputValues[source.id to "value"] = attributeRuntime.runtimeValue(read.value)
                     outputValues[source.id to "exists"] = read.exists
-                    return outputValues[key]
+                }
+                isComponentDefinition(definition.id) && componentRuntime == null -> {
+                    throw GraphEvaluationException("${definition.title} exige um ComponentQueryHost ativo.")
+                }
+                definition.id.startsWith("attribute.") && attributeRuntime == null -> {
+                    throw GraphEvaluationException("${definition.title} exige uma NoCodeRuntimeSession ativa.")
                 }
                 else -> throw GraphEvaluationException(
                     "${definition.title} não pode ser usado como valor antes de sua execução de fluxo.",
                 )
             }
-            definition.outputs
-                .filter { it.type != VisualPortType.FLOW }
-                .forEach { port -> outputValues[source.id to port.id] = result }
             return outputValues[key]
         } finally {
             visiting.remove(nodeId)
@@ -637,6 +660,22 @@ class VisualGraphExecutor(
             is EventPayload.ComponentValue -> payload.value
             is EventPayload.ListValue -> payload.values.map(::runtimeValue)
         }
+
+    private fun storeOutputs(
+        nodeId: String,
+        values: Map<String, Any?>,
+        outputValues: MutableMap<Pair<String, String>, Any?>,
+    ) {
+        values.forEach { (portId, value) -> outputValues[nodeId to portId] = value }
+    }
+
+    private fun isComponentDefinition(id: String): Boolean =
+        id == NoCodeComponentRuntime.PICK_COMPONENT ||
+            id == NoCodeComponentRuntime.GET_COMPONENT ||
+            id == NoCodeComponentRuntime.HAS_COMPONENT ||
+            id == NoCodeComponentRuntime.COMPONENT_OWNER ||
+            id == NoCodeComponentRuntime.COMPONENT_VALID ||
+            id == NoCodeComponentRuntime.COMPONENT_METHOD
 
     private fun defaultFlowDecision(
         node: VisualNode,

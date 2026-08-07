@@ -48,7 +48,8 @@ data class NoCodePlayExecutionReport(
 private data class ActiveGraphInstance(
     val spec: NoCodeGraphRuntimeSpec,
     val executor: VisualGraphExecutor,
-    val binding: NoCodeGraphBindingResult,
+    val eventBinding: NoCodeGraphBindingResult,
+    val attributeBinding: NoCodeAttributeBindingResult,
 )
 
 /**
@@ -57,7 +58,7 @@ private data class ActiveGraphInstance(
  * Lifecycle is explicit and transactional:
  * - every instance has a stable runtime id;
  * - graph validation happens before publication;
- * - Custom Event bindings are rolled back if startup has any issue;
+ * - Custom Event and Attribute bindings are rolled back if startup has any issue;
  * - stateful flow and listeners live in the shared NoCodeRuntimeSession;
  * - closing Play removes all listeners/state in one operation.
  */
@@ -105,7 +106,7 @@ class NoCodePlayRuntime(
                 sourceObject = spec.ownerObject,
                 graphInstanceId = spec.runtimeGraphId,
             )
-            val binding = session.graphEvents.bind(
+            val eventBinding = session.graphEvents.bind(
                 graph = spec.graph,
                 executor = executor,
                 sceneId = spec.sceneId,
@@ -113,8 +114,27 @@ class NoCodePlayRuntime(
                 runtimeGraphId = spec.runtimeGraphId,
                 instanceKey = spec.runtimeGraphId,
             )
-            provisional += ActiveGraphInstance(spec, executor, binding)
-            binding.issues.forEach { issue ->
+            val attributeBinding = session.graphAttributes.bind(
+                graph = spec.graph,
+                executor = executor,
+                sceneId = spec.sceneId,
+                ownerObject = spec.ownerObject,
+                runtimeGraphId = spec.runtimeGraphId,
+                instanceKey = spec.runtimeGraphId,
+            )
+            provisional += ActiveGraphInstance(
+                spec = spec,
+                executor = executor,
+                eventBinding = eventBinding,
+                attributeBinding = attributeBinding,
+            )
+            eventBinding.issues.forEach { issue ->
+                issues += NoCodePlayStartIssue(
+                    runtimeGraphId = spec.runtimeGraphId,
+                    message = "${issue.nodeId}: ${issue.message}",
+                )
+            }
+            attributeBinding.issues.forEach { issue ->
                 issues += NoCodePlayStartIssue(
                     runtimeGraphId = spec.runtimeGraphId,
                     message = "${issue.nodeId}: ${issue.message}",
@@ -123,7 +143,7 @@ class NoCodePlayRuntime(
         }
 
         if (issues.isNotEmpty()) {
-            provisional.forEach { instance -> session.graphEvents.unbind(instance.binding) }
+            provisional.forEach(::unbindInstance)
             return NoCodePlayStartResult(started = false, instanceCount = 0, issues = issues)
         }
 
@@ -203,7 +223,7 @@ class NoCodePlayRuntime(
 
     fun shutdown(): NoCodeRuntimeCloseReport = synchronized(lock) {
         if (closed) return session.shutdown()
-        instances.values.forEach { instance -> session.graphEvents.unbind(instance.binding) }
+        instances.values.forEach(::unbindInstance)
         instances.clear()
         started = false
         closed = true
@@ -236,6 +256,11 @@ class NoCodePlayRuntime(
             attemptedInstances = snapshot.size,
             failures = failures,
         )
+    }
+
+    private fun unbindInstance(instance: ActiveGraphInstance) {
+        session.graphEvents.unbind(instance.eventBinding)
+        session.graphAttributes.unbind(instance.attributeBinding)
     }
 
     private fun requireActive(runtimeGraphId: String): ActiveGraphInstance = synchronized(lock) {

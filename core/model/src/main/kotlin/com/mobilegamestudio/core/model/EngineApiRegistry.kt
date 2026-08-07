@@ -176,7 +176,8 @@ object EngineApiCatalog {
                 parameters = listOf(parameter("object", EngineApiValueType.OBJECT)),
                 returnType = EngineApiValueType.VECTOR3,
                 capabilities = setOf(EngineApiCapability.SCENE_READ),
-                summary = "Reads world/local position according to the runtime transform contract.",
+                availability = EngineApiAvailability.CONTRACT_ONLY,
+                summary = "Reads world/local position after the runtime host exposes an explicit position contract.",
             ),
             EngineApiFunction(
                 id = "transform.set_position",
@@ -187,8 +188,9 @@ object EngineApiCatalog {
                     parameter("position", EngineApiValueType.VECTOR3),
                 ),
                 capabilities = setOf(EngineApiCapability.SCENE_WRITE),
+                availability = EngineApiAvailability.CONTRACT_ONLY,
                 mutatesState = true,
-                summary = "Sets an object's position through the engine mutation boundary.",
+                summary = "Sets object position after the runtime host exposes an explicit position mutation contract.",
             ),
             EngineApiFunction(
                 id = "event.send",

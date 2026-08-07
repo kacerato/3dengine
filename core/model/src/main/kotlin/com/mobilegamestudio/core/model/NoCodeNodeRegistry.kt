@@ -10,7 +10,9 @@ package com.mobilegamestudio.core.model
  */
 object NoCodeNodeRegistry {
     private val specializedDefinitions: List<VisualNodeDefinition> =
-        NoCodeFlowDefinitions.definitions + NoCodeEventDefinitions.definitions
+        NoCodeFlowDefinitions.definitions +
+            NoCodeEventDefinitions.definitions +
+            NoCodeAttributeDefinitions.definitions
 
     private val specializedById: Map<String, VisualNodeDefinition> =
         specializedDefinitions.associateBy(VisualNodeDefinition::id).also { byId ->

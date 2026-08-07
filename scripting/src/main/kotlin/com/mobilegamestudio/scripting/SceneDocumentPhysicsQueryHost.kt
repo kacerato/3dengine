@@ -3,7 +3,6 @@ package com.mobilegamestudio.scripting
 import com.mobilegamestudio.core.model.ColliderComponent
 import com.mobilegamestudio.core.model.ColliderShape
 import com.mobilegamestudio.core.model.ComponentRef
-import com.mobilegamestudio.core.model.GameObject
 import com.mobilegamestudio.core.model.ObjectRef
 import com.mobilegamestudio.core.model.PhysicsQueryFilterComponent
 import com.mobilegamestudio.core.model.RayHit
@@ -42,9 +41,10 @@ class SceneDocumentPhysicsQueryHost(
                 val filter = objectValue.components
                     .filterIsInstance<PhysicsQueryFilterComponent>()
                     .firstOrNull { it.enabled }
-                    ?: PhysicsQueryFilterComponent()
-                if (!layerIncluded(query.layerMask, filter.layer)) return@forEach
-                if (filter.isTrigger && !query.includeTriggers) return@forEach
+                val layer = filter?.layer ?: PhysicsQueryFilterComponent.DEFAULT_LAYER
+                val isTrigger = filter?.isTrigger ?: false
+                if (!layerIncluded(query.layerMask, layer)) return@forEach
+                if (isTrigger && !query.includeTriggers) return@forEach
 
                 val transform = objectValue.components
                     .filterIsInstance<TransformComponent>()
@@ -55,7 +55,6 @@ class SceneDocumentPhysicsQueryHost(
                     .filter { it.enabled }
                     .forEach { collider ->
                         intersect(
-                            objectValue = objectValue,
                             objectRef = objectRef,
                             transform = transform,
                             collider = collider,
@@ -70,7 +69,6 @@ class SceneDocumentPhysicsQueryHost(
     }
 
     private fun intersect(
-        objectValue: GameObject,
         objectRef: ObjectRef,
         transform: TransformComponent,
         collider: ColliderComponent,

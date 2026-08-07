@@ -13,7 +13,6 @@ import com.mobilegamestudio.core.model.ObjectRef
 import com.mobilegamestudio.core.model.RuntimeAttributeStore
 import java.util.concurrent.atomic.AtomicLong
 
-/** Cleanup report used by tests, diagnostics and the future Play-session profiler. */
 data class NoCodeRuntimeCloseReport(
     val removedSubscriptions: Int,
     val removedVolatileAttributes: Int,
@@ -22,10 +21,8 @@ data class NoCodeRuntimeCloseReport(
 )
 
 /**
- * Owns runtime state for exactly one Play session.
- *
- * No singleton is used: flow state, listeners, Attributes, physics/component
- * query facades, proximity watchers and interaction focus all die together on Stop.
+ * Owns mutable scripting state for exactly one Play session.
+ * Nothing here is process-global: Stop Play deterministically tears it down.
  */
 class NoCodeRuntimeSession(
     val eventBus: EngineEventBus = EngineEventBus(),
@@ -36,18 +33,12 @@ class NoCodeRuntimeSession(
     componentQueryHost: ComponentQueryHost? = null,
     spatialQueryHost: ObjectSpatialQueryHost? = null,
 ) : AutoCloseable {
-    val events: NoCodeEventRuntime = NoCodeEventRuntime(eventBus)
-    val graphEvents: NoCodeGraphEventBinder = NoCodeGraphEventBinder(eventBus, events)
+    val events = NoCodeEventRuntime(eventBus)
+    val graphEvents = NoCodeGraphEventBinder(eventBus, events)
 
-    val attributes: EngineAttributeService = EngineAttributeService(
-        store = attributeStore,
-        eventBus = eventBus,
-    )
-    val attributeRuntime: NoCodeAttributeRuntime = NoCodeAttributeRuntime(attributes)
-    val graphAttributes: NoCodeGraphAttributeBinder = NoCodeGraphAttributeBinder(
-        eventBus = eventBus,
-        attributeRuntime = attributeRuntime,
-    )
+    val attributes = EngineAttributeService(attributeStore, eventBus)
+    val attributeRuntime = NoCodeAttributeRuntime(attributes)
+    val graphAttributes = NoCodeGraphAttributeBinder(eventBus, attributeRuntime)
 
     val physicsRuntime: NoCodePhysicsRuntime? = physicsQueryHost?.let(::NoCodePhysicsRuntime)
 
@@ -56,6 +47,7 @@ class NoCodeRuntimeSession(
 
     val distanceRuntime: ObjectDistanceRuntime? = spatialQueryHost?.let(::ObjectDistanceRuntime)
     val spatialRuntime: NoCodeSpatialRuntime? = distanceRuntime?.let(::NoCodeSpatialRuntime)
+    val graphSpatial: NoCodeGraphSpatialBinder? = spatialRuntime?.let(::NoCodeGraphSpatialBinder)
 
     private val lock = Any()
     private val nextExecutionId = AtomicLong(1L)
@@ -64,13 +56,6 @@ class NoCodeRuntimeSession(
     private var closed = false
     private var closeReport: NoCodeRuntimeCloseReport? = null
 
-    /**
-     * Creates an executor facade sharing this Play session's mutable runtime state.
-     *
-     * When sourceObject is a player/interactor, every execution receives the
-     * currently resolved target. Pick Component and Attributes therefore keep
-     * operating on the exact object selected by the interaction resolver.
-     */
     fun graphExecutor(
         host: LogicSceneHost,
         maxExecutedNodes: Int = 128,
@@ -94,6 +79,7 @@ class NoCodeRuntimeSession(
             attributeRuntime = attributeRuntime,
             physicsRuntime = physicsRuntime,
             componentRuntime = componentRuntime,
+            spatialRuntime = spatialRuntime,
             executionContextFactory = { graph ->
                 ExecutionContext(
                     executionId = nextExecutionId.getAndIncrement(),
@@ -107,7 +93,6 @@ class NoCodeRuntimeSession(
         )
     }
 
-    /** Builds the same context used by script/Engine API bridges for one interactor. */
     fun executionContextFor(
         interactor: ObjectRef,
         graphId: String? = null,
@@ -123,10 +108,6 @@ class NoCodeRuntimeSession(
         )
     }
 
-    /**
-     * Resolves one stable interaction target per interactor/player.
-     * Hysteresis/sticky target prevents nearby objects from fighting every frame.
-     */
     fun resolveInteraction(
         interactor: ObjectRef,
         candidates: List<InteractionCandidate>,
@@ -144,7 +125,6 @@ class NoCodeRuntimeSession(
                 interactionTargets[interactor] = resolution.target
             }
         }
-
         if (resolution.changed) {
             publishInteractionChange(
                 interactor = interactor,
@@ -177,7 +157,6 @@ class NoCodeRuntimeSession(
         count
     }
 
-    /** Typed custom-event entry point shared by NoCode and text-script bridges. */
     fun dispatchEvent(
         name: String,
         address: EventAddress,
@@ -187,17 +166,11 @@ class NoCodeRuntimeSession(
     ): EventDispatchResult {
         checkOpen()
         return eventBus.dispatch(
-            EngineEvent(
-                name = name,
-                address = address,
-                payload = payload,
-                sender = sender,
-            ),
+            EngineEvent(name = name, address = address, payload = payload, sender = sender),
             context,
         )
     }
 
-    /** Strict convenience boundary for Java/Lua/Python values. */
     fun dispatchRuntimeEvent(
         name: String,
         address: EventAddress,
@@ -214,7 +187,6 @@ class NoCodeRuntimeSession(
 
     fun isClosed(): Boolean = synchronized(lock) { closed }
 
-    /** Idempotent explicit shutdown. The editor calls this on Stop Play. */
     fun shutdown(): NoCodeRuntimeCloseReport = synchronized(lock) {
         closeReport?.let { return it }
 

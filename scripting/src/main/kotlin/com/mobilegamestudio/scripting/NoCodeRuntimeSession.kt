@@ -24,14 +24,15 @@ data class NoCodeRuntimeCloseReport(
  * Owns runtime state for exactly one Play session.
  *
  * This is deliberately not a singleton. Stateful flow nodes, event listeners,
- * Attributes and interaction focus must die together when Play stops, otherwise
- * the editor eventually accumulates ghost listeners and stale targets.
+ * Attributes, physics queries and interaction focus must die together when Play
+ * stops, otherwise the editor eventually accumulates ghost state.
  */
 class NoCodeRuntimeSession(
     val eventBus: EngineEventBus = EngineEventBus(),
     val flowRuntime: NoCodeFlowRuntime = NoCodeFlowRuntime(),
     val attributeStore: RuntimeAttributeStore = RuntimeAttributeStore(),
     interactionConfig: InteractionResolverConfig = InteractionResolverConfig(),
+    physicsQueryHost: PhysicsQueryHost? = null,
 ) : AutoCloseable {
     val events: NoCodeEventRuntime = NoCodeEventRuntime(eventBus)
     val graphEvents: NoCodeGraphEventBinder = NoCodeGraphEventBinder(eventBus, events)
@@ -45,6 +46,7 @@ class NoCodeRuntimeSession(
         eventBus = eventBus,
         attributeRuntime = attributeRuntime,
     )
+    val physicsRuntime: NoCodePhysicsRuntime? = physicsQueryHost?.let(::NoCodePhysicsRuntime)
 
     private val lock = Any()
     private val nextExecutionId = AtomicLong(1L)
@@ -55,7 +57,7 @@ class NoCodeRuntimeSession(
 
     /**
      * Creates an executor facade that shares this Play session's flow state,
-     * EventBus, Attributes and monotonically increasing execution IDs.
+     * EventBus, Attributes, physics queries and monotonically increasing IDs.
      *
      * When sourceObject is an interactor/player, every new execution also carries
      * that interactor's currently resolved target. A button press therefore uses
@@ -83,6 +85,7 @@ class NoCodeRuntimeSession(
             flowRuntime = flowRuntime,
             eventRuntime = events,
             attributeRuntime = attributeRuntime,
+            physicsRuntime = physicsRuntime,
             executionContextFactory = { graph ->
                 ExecutionContext(
                     executionId = nextExecutionId.getAndIncrement(),

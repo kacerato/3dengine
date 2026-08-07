@@ -75,6 +75,7 @@ data class EngineApiFunction(
     val name: String,
     val parameters: List<EngineApiParameter> = emptyList(),
     val returnType: EngineApiValueType = EngineApiValueType.VOID,
+    val returnNullable: Boolean = false,
     val surfaces: Set<EngineApiSurface> = EngineApiSurface.entries.toSet(),
     val capabilities: Set<EngineApiCapability> = emptySet(),
     val thread: EngineApiThread = EngineApiThread.ENGINE,
@@ -93,6 +94,9 @@ data class EngineApiFunction(
         }
         require(surfaces.isNotEmpty()) { "Engine API $id must be exposed to at least one surface." }
         require(id !in aliases) { "Engine API $id cannot alias itself." }
+        require(returnType != EngineApiValueType.VOID || !returnNullable) {
+            "VOID Engine API $id cannot declare nullable return."
+        }
     }
 }
 
@@ -124,7 +128,7 @@ class EngineApiRegistry(
                 }
             }
         }
-        require(aliasPairs.map(Pair<String, EngineApiFunction>::first).distinct().size == aliasPairs.size) {
+        require(aliasPairs.map { it.first }.distinct().size == aliasPairs.size) {
             "Engine API aliases must be unique."
         }
         aliases = aliasPairs.toMap()
@@ -160,6 +164,7 @@ object EngineApiCatalog {
                 name = "findObject",
                 parameters = listOf(parameter("name", EngineApiValueType.TEXT)),
                 returnType = EngineApiValueType.OBJECT,
+                returnNullable = true,
                 capabilities = setOf(EngineApiCapability.SCENE_READ),
                 aliases = setOf("Scene.GetObject"),
                 summary = "Finds a scene object by authored name and returns a stable ObjectRef.",
@@ -207,6 +212,7 @@ object EngineApiCatalog {
                     parameter("object", EngineApiValueType.OBJECT, required = false),
                 ),
                 returnType = EngineApiValueType.ANY,
+                returnNullable = true,
                 capabilities = setOf(EngineApiCapability.SCENE_READ),
                 summary = "Reads a shared scoped Attribute without relying on editor selection.",
             ),
@@ -234,6 +240,7 @@ object EngineApiCatalog {
                     parameter("distance", EngineApiValueType.NUMBER),
                 ),
                 returnType = EngineApiValueType.ANY,
+                returnNullable = true,
                 capabilities = setOf(EngineApiCapability.PHYSICS_QUERY),
                 thread = EngineApiThread.PHYSICS,
                 availability = EngineApiAvailability.CONTRACT_ONLY,

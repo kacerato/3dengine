@@ -58,10 +58,7 @@ class NoCodeEventRuntime(
         require(isSendNode(definitionId)) { "$definitionId não é um node Send Event." }
 
         val eventName = inputs["event"]?.toString()?.trim().orEmpty()
-        require(eventName.isNotBlank()) { "Send Event exige um nome de evento." }
-        require(eventName.length <= EngineEvent.MAX_EVENT_NAME_LENGTH) {
-            "Nome do evento excede ${EngineEvent.MAX_EVENT_NAME_LENGTH} caracteres."
-        }
+        validateUserEventName(eventName)
 
         val objectAlias = definitionId.startsWith("object.send_event")
         val explicitTarget = objectRef(inputs["object"] ?: inputs["target"])
@@ -114,6 +111,18 @@ class NoCodeEventRuntime(
             ),
         )
     }
+
+    fun validateUserEventName(eventName: String) {
+        require(eventName.isNotBlank()) { "Evento exige um nome." }
+        require(eventName.length <= EngineEvent.MAX_EVENT_NAME_LENGTH) {
+            "Nome do evento excede ${EngineEvent.MAX_EVENT_NAME_LENGTH} caracteres."
+        }
+        require(!eventName.startsWith(INTERNAL_EVENT_PREFIX)) {
+            "Nomes de evento iniciados por '$INTERNAL_EVENT_PREFIX' são reservados pela engine."
+        }
+    }
+
+    fun isReservedEventName(eventName: String): Boolean = eventName.startsWith(INTERNAL_EVENT_PREFIX)
 
     fun acceptsPayload(definitionId: String, payload: EventPayload): Boolean = when (payloadKind(definitionId)) {
         NoCodeEventPayloadKind.ANY -> true
@@ -197,4 +206,8 @@ class NoCodeEventRuntime(
     }
 
     private fun typeName(value: Any?): String = value?.let { it::class.simpleName } ?: "null"
+
+    companion object {
+        const val INTERNAL_EVENT_PREFIX = "__"
+    }
 }

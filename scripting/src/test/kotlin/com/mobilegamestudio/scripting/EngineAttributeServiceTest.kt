@@ -2,10 +2,12 @@ package com.mobilegamestudio.scripting
 
 import com.mobilegamestudio.core.model.AttributeAddress
 import com.mobilegamestudio.core.model.AttributeValue
+import com.mobilegamestudio.core.model.EngineEvent
 import com.mobilegamestudio.core.model.EventPayload
 import com.mobilegamestudio.core.model.ObjectRef
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertThrows
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -105,5 +107,19 @@ class EngineAttributeServiceTest {
         assertTrue(result.changed)
         assertFalse(result.notificationSucceeded)
         assertEquals(AttributeValue.Text("rain"), service.get(address))
+    }
+
+    @Test
+    fun `maximum attribute name always generates a valid engine event name`() {
+        val service = EngineAttributeService(eventBus = EngineEventBus())
+        val address = AttributeAddress.saveGame("x".repeat(AttributeAddress.MAX_ATTRIBUTE_NAME_LENGTH))
+
+        val generated = service.eventName(address)
+
+        assertTrue(generated.length <= EngineEvent.MAX_EVENT_NAME_LENGTH)
+        service.set(address, AttributeValue.Bool(true))
+        assertThrows(IllegalArgumentException::class.java) {
+            AttributeAddress.global("x".repeat(AttributeAddress.MAX_ATTRIBUTE_NAME_LENGTH + 1))
+        }
     }
 }

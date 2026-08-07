@@ -166,9 +166,12 @@
   }
 
   function extractSection(text, heading) {
-    const pattern = new RegExp(`^##\\s+${heading}\\s*$([\\s\\S]*?)(?=^##\\s+|\\Z)`, 'im');
-    const match = text.match(pattern);
-    return match ? match[1].trim() : '';
+    const marker = new RegExp(`^##\\s+${heading}\\s*$`, 'im');
+    const match = marker.exec(text);
+    if (!match) return '';
+    const after = text.slice(match.index + match[0].length);
+    const nextHeading = after.search(/^##\s+/m);
+    return (nextHeading >= 0 ? after.slice(0, nextHeading) : after).trim();
   }
 
   function stripInlineMarkdown(value) {

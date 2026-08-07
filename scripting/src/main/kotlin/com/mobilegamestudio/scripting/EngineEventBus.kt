@@ -2,7 +2,6 @@ package com.mobilegamestudio.scripting
 
 import com.mobilegamestudio.core.model.EngineEvent
 import com.mobilegamestudio.core.model.EventAddress
-import com.mobilegamestudio.core.model.EventScope
 import com.mobilegamestudio.core.model.ExecutionContext
 import com.mobilegamestudio.core.model.ObjectRef
 import java.util.concurrent.atomic.AtomicLong

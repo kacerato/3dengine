@@ -1,7 +1,6 @@
 package com.mobilegamestudio.scripting
 
 import com.mobilegamestudio.core.model.AttributeAddress
-import com.mobilegamestudio.core.model.AttributeScope
 import com.mobilegamestudio.core.model.AttributeValue
 import com.mobilegamestudio.core.model.ComponentRef
 import com.mobilegamestudio.core.model.EngineEvent
@@ -104,6 +103,7 @@ class NoCodeAttributeRuntime(
                 address = address,
                 value = value,
                 sender = context.sourceObject ?: context.senderObject,
+                context = context,
             ),
         )
     }
@@ -118,6 +118,7 @@ class NoCodeAttributeRuntime(
             dispatch = attributes.remove(
                 address = address,
                 sender = context.sourceObject ?: context.senderObject,
+                context = context,
             ),
         )
     }
@@ -140,14 +141,7 @@ class NoCodeAttributeRuntime(
 
     fun eventName(address: AttributeAddress): String = attributes.eventName(address)
 
-    fun eventAddress(address: AttributeAddress): EventAddress = when (address.scope) {
-        AttributeScope.OBJECT -> EventAddress.objectTarget(requireNotNull(address.objectRef))
-        AttributeScope.SCENE -> EventAddress.scene(requireNotNull(address.sceneId))
-        AttributeScope.SESSION,
-        AttributeScope.GLOBAL,
-        AttributeScope.SAVE_GAME,
-        -> EventAddress.global()
-    }
+    fun eventAddress(address: AttributeAddress): EventAddress = attributes.eventAddress(address)
 
     fun matchesChangedEvent(
         definitionId: String,

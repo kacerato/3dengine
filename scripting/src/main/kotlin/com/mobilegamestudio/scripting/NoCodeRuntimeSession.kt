@@ -34,6 +34,7 @@ class NoCodeRuntimeSession(
     interactionConfig: InteractionResolverConfig = InteractionResolverConfig(),
 ) : AutoCloseable {
     val events: NoCodeEventRuntime = NoCodeEventRuntime(eventBus)
+    val graphEvents: NoCodeGraphEventBinder = NoCodeGraphEventBinder(eventBus, events)
 
     val attributes: EngineAttributeService = EngineAttributeService(
         store = attributeStore,
@@ -59,8 +60,12 @@ class NoCodeRuntimeSession(
         },
         sceneId: String? = null,
         sourceObject: ObjectRef? = null,
+        graphInstanceId: String? = null,
     ): VisualGraphExecutor {
         checkOpen()
+        require(graphInstanceId == null || graphInstanceId.isNotBlank()) {
+            "graphInstanceId cannot be blank."
+        }
         return VisualGraphExecutor(
             host = host,
             maxExecutedNodes = maxExecutedNodes,
@@ -70,11 +75,12 @@ class NoCodeRuntimeSession(
             executionContextFactory = { graph ->
                 ExecutionContext(
                     executionId = nextExecutionId.getAndIncrement(),
-                    graphId = graph.graphId,
+                    graphId = graphInstanceId ?: graph.graphId,
                     sceneId = sceneId,
                     sourceObject = sourceObject,
                 )
             },
+            graphInstanceId = graphInstanceId,
         )
     }
 

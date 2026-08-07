@@ -18,14 +18,14 @@ data class NoCodeRuntimeCloseReport(
     val removedSubscriptions: Int,
     val removedVolatileAttributes: Int,
     val removedInteractionTargets: Int,
+    val removedProximityWatchers: Int = 0,
 )
 
 /**
  * Owns runtime state for exactly one Play session.
  *
- * This is deliberately not a singleton. Stateful flow nodes, event listeners,
- * Attributes, physics queries and interaction focus must die together when Play
- * stops, otherwise the editor eventually accumulates ghost state.
+ * No singleton is used: flow state, listeners, Attributes, physics/component
+ * query facades, proximity watchers and interaction focus all die together on Stop.
  */
 class NoCodeRuntimeSession(
     val eventBus: EngineEventBus = EngineEventBus(),
@@ -33,6 +33,8 @@ class NoCodeRuntimeSession(
     val attributeStore: RuntimeAttributeStore = RuntimeAttributeStore(),
     interactionConfig: InteractionResolverConfig = InteractionResolverConfig(),
     physicsQueryHost: PhysicsQueryHost? = null,
+    componentQueryHost: ComponentQueryHost? = null,
+    spatialQueryHost: ObjectSpatialQueryHost? = null,
 ) : AutoCloseable {
     val events: NoCodeEventRuntime = NoCodeEventRuntime(eventBus)
     val graphEvents: NoCodeGraphEventBinder = NoCodeGraphEventBinder(eventBus, events)
@@ -46,7 +48,14 @@ class NoCodeRuntimeSession(
         eventBus = eventBus,
         attributeRuntime = attributeRuntime,
     )
+
     val physicsRuntime: NoCodePhysicsRuntime? = physicsQueryHost?.let(::NoCodePhysicsRuntime)
+
+    val componentResolver: ComponentResolver? = componentQueryHost?.let(::ComponentResolver)
+    val componentRuntime: NoCodeComponentRuntime? = componentResolver?.let(::NoCodeComponentRuntime)
+
+    val distanceRuntime: ObjectDistanceRuntime? = spatialQueryHost?.let(::ObjectDistanceRuntime)
+    val spatialRuntime: NoCodeSpatialRuntime? = distanceRuntime?.let(::NoCodeSpatialRuntime)
 
     private val lock = Any()
     private val nextExecutionId = AtomicLong(1L)
@@ -56,13 +65,11 @@ class NoCodeRuntimeSession(
     private var closeReport: NoCodeRuntimeCloseReport? = null
 
     /**
-     * Creates an executor facade that shares this Play session's flow state,
-     * EventBus, Attributes, physics queries and monotonically increasing IDs.
+     * Creates an executor facade sharing this Play session's mutable runtime state.
      *
-     * When sourceObject is an interactor/player, every new execution also carries
-     * that interactor's currently resolved target. A button press therefore uses
-     * the exact same target chosen by the ray/interaction resolver instead of
-     * performing another nearest-object search in the middle of the graph.
+     * When sourceObject is a player/interactor, every execution receives the
+     * currently resolved target. Pick Component and Attributes therefore keep
+     * operating on the exact object selected by the interaction resolver.
      */
     fun graphExecutor(
         host: LogicSceneHost,
@@ -86,6 +93,7 @@ class NoCodeRuntimeSession(
             eventRuntime = events,
             attributeRuntime = attributeRuntime,
             physicsRuntime = physicsRuntime,
+            componentRuntime = componentRuntime,
             executionContextFactory = { graph ->
                 ExecutionContext(
                     executionId = nextExecutionId.getAndIncrement(),
@@ -117,8 +125,7 @@ class NoCodeRuntimeSession(
 
     /**
      * Resolves one stable interaction target per interactor/player.
-     * Two players (or two editor preview cursors) never overwrite each other.
-     * Target acquired/lost notifications use object-scoped EngineEvents.
+     * Hysteresis/sticky target prevents nearby objects from fighting every frame.
      */
     fun resolveInteraction(
         interactor: ObjectRef,
@@ -170,7 +177,7 @@ class NoCodeRuntimeSession(
         count
     }
 
-    /** Typed custom-event entry point shared by NoCode and future script bridges. */
+    /** Typed custom-event entry point shared by NoCode and text-script bridges. */
     fun dispatchEvent(
         name: String,
         address: EventAddress,
@@ -207,18 +214,14 @@ class NoCodeRuntimeSession(
 
     fun isClosed(): Boolean = synchronized(lock) { closed }
 
-    /**
-     * Idempotent explicit shutdown. The editor should call this on Stop Play.
-     * Global/save-game Attributes survive normal scene changes, but a Play
-     * session object itself does not outlive Stop, so all in-memory data is then
-     * discarded with the session instance.
-     */
+    /** Idempotent explicit shutdown. The editor calls this on Stop Play. */
     fun shutdown(): NoCodeRuntimeCloseReport = synchronized(lock) {
         closeReport?.let { return it }
 
         val subscriptions = eventBus.subscriptionCount()
         val targets = interactionTargets.size
         val volatileChanges = attributeStore.clearVolatile().size
+        val proximityWatchers = spatialRuntime?.watchers?.clear() ?: 0
         interactionTargets.clear()
         flowRuntime.clear()
         eventBus.clear()
@@ -228,6 +231,7 @@ class NoCodeRuntimeSession(
             removedSubscriptions = subscriptions,
             removedVolatileAttributes = volatileChanges,
             removedInteractionTargets = targets,
+            removedProximityWatchers = proximityWatchers,
         ).also { report -> closeReport = report }
     }
 

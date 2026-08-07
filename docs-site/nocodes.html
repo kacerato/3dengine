@@ -3,49 +3,84 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0a0710" />
-  <meta name="description" content="Referência prática completa dos 961 blocos NoCode do Megazord Engine." />
+  <meta name="theme-color" content="#090b0e" />
+  <meta name="description" content="Catálogo NoCode do Megazord Engine correlacionado com o sistema ITsMagic: nós, menus, entradas, saídas, tema e caminhos do runtime decompilado." />
   <title>NoCode — Megazord Engine Docs</title>
   <link rel="icon" type="image/png" href="assets/logo.png" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="megazord-docs.css" />
 </head>
 <body class="nocode-page">
   <header class="topbar">
     <a class="brand" href="index.html"><img src="assets/logo.png" alt="Megazord Engine" /><span><strong>MEGAZORD</strong><small>ENGINE / NOCODE</small></span></a>
-    <nav class="topnav" aria-label="Navegação"><a href="index.html">Documentação</a><a href="#como-ler">Como usar</a><a href="#referencia">961 blocos</a></nav>
-    <div class="top-actions"><a class="button button-outline" href="https://github.com/kacerato/3dengine" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+    <nav class="topnav" aria-label="Navegação"><a href="index.html">Documentação</a><a href="#fontes">Fontes</a><a href="#como-ler">Como usar</a><a href="#referencia">Nós</a><a href="reference.html">Dump</a></nav>
+    <div class="top-actions"><a class="button button-outline" href="https://github.com/kacerato/3dengine/tree/master/megazord-engine-decompiled" target="_blank" rel="noreferrer">FONTE ↗</a></div>
   </header>
 
   <main>
     <section class="nocode-hero section-dark">
-      <p class="eyebrow">GUIA PRÁTICO DE LÓGICA VISUAL</p>
-      <h1>NOCODE NÃO É<br /><span>UMA LISTA DE NOMES.</span></h1>
-      <p>Aqui cada bloco explica o problema que resolve, os dados que recebe, o que entrega e como ligá-lo em uma mecânica real.</p>
-      <div class="nocode-stats"><article><strong id="nocodeTotal">961</strong><span>BLOCOS DOCUMENTADOS</span></article><article><strong id="nocodeCategories">—</strong><span>CATEGORIAS</span></article><article><strong>100%</strong><span>COM EXEMPLO DE USO</span></article></div>
-    </section>
-
-    <section class="doc-section section-light nocode-reading" id="como-ler">
-      <div class="section-heading"><p class="eyebrow dark">ANTES DE MONTAR O GRAFO</p><h2>COMO LER<br /><span>CADA BLOCO.</span></h2></div>
-      <div class="nocode-contract">
-        <div><span>01</span><b>QUANDO USAR</b><p>A finalidade descreve a mecânica adequada e diferencia eventos parecidos, como pressionar, segurar e soltar.</p></div>
-        <div><span>02</span><b>CONFIGURAR</b><p>Entradas mostram nomes, tipos, unidades e qual Node Godot pode ser escolhido como alvo.</p></div>
-        <div><span>03</span><b>CONECTAR</b><p>O resultado informa quais pinos continuam o fluxo e quais dados podem alimentar outros blocos.</p></div>
-        <div><span>04</span><b>APLICAR</b><p>O exemplo monta uma pequena mecânica, com valores e NodePaths que você pode adaptar ao projeto.</p></div>
+      <p class="eyebrow">SISTEMA VISUAL AUDITADO + CATÁLOGO CORRELACIONADO</p>
+      <h1>NOCODE DO<br /><span>MEGAZORD ENGINE.</span></h1>
+      <p>
+        O painel e o runtime são explicados a partir do dump. Para enumerar os nós e seus contratos de entrada/saída,
+        a página usa a documentação oficial ITsMagic como índice correlacionado, evitando manter uma lista Godot que não pertence a esta engine.
+      </p>
+      <div class="nocode-stats">
+        <article><strong id="nocodeTotal">…</strong><span>NÓS ENCONTRADOS</span></article>
+        <article><strong id="nocodeCategories">…</strong><span>CATEGORIAS</span></article>
+        <article><strong>3</strong><span>FONTES AUDITADAS</span></article>
+      </div>
+      <div class="catalog-source">
+        <span><b>UI</b> NoCodePanel.smali</span>
+        <span><b>RUN</b> smali/JAVARuntime</span>
+        <span><b>THEME</b> Default.json</span>
       </div>
     </section>
 
-    <section class="doc-section section-dark nocode-reference" id="referencia">
-      <div class="section-heading"><p class="eyebrow">REFERÊNCIA COMPLETA</p><h2>PROCURE PELO QUE<br /><span>VOCÊ QUER CRIAR.</span></h2><p>Ex.: “abrir porta”, “pular”, “velocidade angular”, “salvar posição”.</p></div>
+    <section class="doc-section section-light" id="fontes">
+      <div class="section-heading"><p class="eyebrow dark">DE ONDE VEM CADA INFORMAÇÃO</p><h2>SEPARANDO<br /><span>FATO DE CORRELAÇÃO.</span></h2><p>Isso evita afirmar que um método existe no dump quando a classe correspondente não está versionada.</p></div>
+      <div class="source-grid">
+        <article class="source-card"><span class="audit-badge">Fonte direta</span><h3>PAINEL VISUAL</h3><p>Criação do canvas, seleção de executor, abertura de graph file, toolbar e lista dos executores NoCode do GameObject ativo.</p><code class="code-path">megazord-engine-decompiled/smali_classes5/com/itsmagic/engine/Activities/Editor/Panels/NoCode/NoCodePanel.smali</code></article>
+        <article class="source-card"><span class="audit-badge">Fonte direta</span><h3>RUNTIME</h3><p>Tipos e wrappers executáveis utilizados pela engine durante Play, incluindo UI, geometria e outras APIs expostas.</p><code class="code-path">megazord-engine-decompiled/smali/JAVARuntime/</code></article>
+        <article class="source-card"><span class="audit-badge">Fonte direta</span><h3>CORES / TIPOS</h3><p>Paleta do NodeGraph e cores para number, string, type, vector, list, dynamic, texture, cubemap, branch e estados especiais.</p><code class="code-path">megazord-engine-decompiled/assets/Editor/Themes/Default.json</code></article>
+        <article class="source-card"><span class="audit-badge">Catálogo correlacionado</span><h3>NOMES DOS NÓS</h3><p>O índice oficial ITsMagic é carregado ao vivo para obter todos os arquivos MDX em <code>docs/nocode</code>. Ao abrir um card, Purpose, Inputs e Outputs são lidos do MDX daquele nó.</p><code class="code-path">ITsMagic-Software/Documentation/docs/nocode/**</code></article>
+      </div>
+    </section>
+
+    <section class="doc-section section-dark" id="como-ler">
+      <div class="section-heading"><p class="eyebrow">ANTES DE MONTAR O GRAFO</p><h2>COMO LER<br /><span>CADA NÓ.</span></h2><p>O card começa leve e carrega o contrato original somente quando você abre os detalhes.</p></div>
+      <div class="nocode-contract">
+        <div><span>01</span><b>MENU</b><p>Mostra o caminho real do nó no catálogo, por exemplo <code>Actions/Buttons</code> ou <code>Vector</code>.</p></div>
+        <div><span>02</span><b>PURPOSE</b><p>Explica o comportamento declarado pela documentação oficial do sistema correlacionado.</p></div>
+        <div><span>03</span><b>INPUTS / OUTPUTS</b><p>As tabelas de pinos são convertidas do MDX e preservam tipo, valor padrão e observações.</p></div>
+        <div><span>04</span><b>RUNTIME</b><p>O caminho do dump aparece separadamente para você continuar a auditoria no código Smali.</p></div>
+      </div>
+      <div class="node-type-legend">
+        <span class="number">NUMBER</span><span class="string">STRING</span><span class="type">TYPE</span><span class="vector">VECTOR</span><span class="list">LIST</span><span class="dynamic">DYNAMIC</span><span class="texture">TEXTURE</span><span class="cubemap">CUBEMAP</span><span class="branch">BRANCH</span>
+      </div>
+    </section>
+
+    <section class="doc-section section-light nocode-reference" id="referencia">
+      <div class="section-heading"><p class="eyebrow dark">REFERÊNCIA COMPLETA</p><h2>PROCURE PELO QUE<br /><span>VOCÊ QUER FAZER.</span></h2><p>Pesquise por nome do nó, menu ou caminho. Ex.: “key down”, “component”, “vector”, “save”, “audio”.</p></div>
       <div class="catalog-browser">
-        <div class="catalog-toolbar"><label><span>⌕</span><input id="nocodeSearch" type="search" placeholder="O que você quer fazer?" /></label><select id="nocodeCategory" aria-label="Categoria"><option value="">Todas as categorias</option></select><span id="nocodeCount">Carregando…</span></div>
+        <div class="catalog-toolbar">
+          <label><span>⌕</span><input id="nocodeSearch" type="search" placeholder="Buscar nó, menu ou função…" /></label>
+          <select id="nocodeCategory" aria-label="Categoria"><option value="">Todas as categorias</option></select>
+          <span id="nocodeCount">Carregando índice…</span>
+        </div>
+        <div class="callout" id="nocodeStatus"><strong>Carregando:</strong> buscando a árvore oficial de NoCodes. Se a API do GitHub estiver indisponível, a página usa um conjunto mínimo de fallback e informa isso claramente.</div>
         <div class="catalog-grid" id="nocodeGrid"></div>
         <button class="button button-outline catalog-more" id="nocodeMore" type="button">CARREGAR MAIS</button>
       </div>
     </section>
   </main>
-  <footer><div class="footer-logo"><img src="assets/logo.png" alt="" /><span><b>Megazord Engine</b><small>NOCODE REFERENCE</small></span></div><p>Catálogo gerado da mesma fonte auditada usada pela engine.</p><div><a href="#referencia">VOLTAR À BUSCA ↑</a></div></footer>
-  <script src="nocode-catalog.js"></script>
+
+  <footer>
+    <div class="footer-logo"><img src="assets/logo.png" alt="" /><span><b>Megazord Engine</b><small>NOCODE REFERENCE</small></span></div>
+    <p>UI e runtime auditados no dump; catálogo de nós correlacionado com a documentação oficial ITsMagic.</p>
+    <div><a href="#referencia">VOLTAR À BUSCA ↑</a></div>
+  </footer>
+
   <script src="nocodes.js"></script>
 </body>
 </html>
-

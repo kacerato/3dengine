@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#090b0e" />
+  <meta name="description" content="Referência pesquisável da árvore megazord-engine-decompiled: Smali, assets, shaders, recursos e módulos do Megazord Engine." />
+  <title>Referência do Dump — Megazord Engine</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="megazord-docs.css" />
+</head>
+<body class="reference-page">
+  <header class="topbar">
+    <a class="brand" href="index.html"><img src="assets/logo.png" alt="Megazord Engine" /><span><strong>MEGAZORD</strong><small>ENGINE / DUMP</small></span></a>
+    <nav class="topnav" aria-label="Navegação"><a href="index.html">Documentação</a><a href="nocodes.html">NoCodes</a><a href="#arquivos">Arquivos</a></nav>
+    <div class="top-actions"><a class="button button-outline" href="https://github.com/kacerato/3dengine/tree/master/megazord-engine-decompiled" target="_blank" rel="noreferrer">GITHUB ↗</a></div>
+  </header>
+
+  <main>
+    <section class="reference-hero">
+      <p class="eyebrow">REFERÊNCIA AO VIVO DO REPOSITÓRIO</p>
+      <h1>MEGAZORD ENGINE<br /><span>DECOMPILED.</span></h1>
+      <p>
+        Esta página não mantém uma árvore copiada manualmente. Ela consulta os subdiretórios atuais de
+        <code>megazord-engine-decompiled</code>, indexa os arquivos no navegador e deixa você pesquisar classes,
+        shaders, recursos, temas e caminhos completos.
+      </p>
+      <div class="nocode-stats">
+        <article><strong id="dumpFiles">…</strong><span>ARQUIVOS INDEXADOS</span></article>
+        <article><strong id="dumpAreas">…</strong><span>ÁREAS RAIZ</span></article>
+        <article><strong id="dumpSmali">…</strong><span>ARQUIVOS SMALI</span></article>
+      </div>
+    </section>
+
+    <section class="doc-section section-light">
+      <div class="section-heading"><p class="eyebrow dark">PONTOS DE ENTRADA</p><h2>COMECE PELOS<br /><span>CAMINHOS CERTOS.</span></h2><p>Estes diretórios têm maior valor para entender editor, NoCode e runtime sem se perder no volume do APK.</p></div>
+      <div class="reference-feature-grid">
+        <article class="reference-feature"><span class="audit-badge">NoCode</span><h3>PAINEL VISUAL</h3><p>Canvas, seleção de executores, grafo por arquivo e toolbar do sistema visual.</p><code class="code-path">smali_classes5/com/itsmagic/engine/Activities/Editor/Panels/NoCode/</code></article>
+        <article class="reference-feature"><span class="audit-badge">Runtime</span><h3>JAVA RUNTIME</h3><p>Superfície de classes utilizada durante execução, incluindo wrappers de UI e tipos matemáticos.</p><code class="code-path">smali/JAVARuntime/</code></article>
+        <article class="reference-feature"><span class="audit-badge">Visual</span><h3>TEMA DO EDITOR</h3><p>Cores, estados, grid e tipos do NodeGraph.</p><code class="code-path">assets/Editor/Themes/Default.json</code></article>
+        <article class="reference-feature"><span class="audit-badge">Render</span><h3>GRAPHICS NODES</h3><p>Shaders GLSL para math, noise, materiais e pós-processamento.</p><code class="code-path">assets/Engine/Graphics/Nodes/</code></article>
+      </div>
+    </section>
+
+    <div class="reference-toolbar" id="arquivos">
+      <label><span>⌕</span><input id="dumpSearch" type="search" placeholder="Buscar arquivo, classe ou caminho…" autocomplete="off" /></label>
+      <select id="dumpArea" aria-label="Área"><option value="">Todas as áreas</option></select>
+      <span class="reference-count" id="dumpCount">Carregando…</span>
+    </div>
+
+    <section class="reference-body">
+      <p class="reference-status" id="dumpStatus">Consultando a árvore do GitHub…</p>
+      <div class="reference-groups" id="dumpGroups"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-logo"><img src="assets/logo.png" alt="" /><span><b>Megazord Engine</b><small>DECOMPILED TREE</small></span></div>
+    <p>Índice de arquivos carregado diretamente do repositório público.</p>
+    <div><a href="#arquivos">VOLTAR À BUSCA ↑</a></div>
+  </footer>
+
+  <script src="engine-reference.js"></script>
+</body>
+</html>

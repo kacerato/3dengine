@@ -3,6 +3,7 @@ package com.mobilegamestudio.scripting
 import com.mobilegamestudio.core.model.AttributeAddress
 import com.mobilegamestudio.core.model.EventAddress
 import com.mobilegamestudio.core.model.EventScope
+import com.mobilegamestudio.core.model.ExecutionContext
 import com.mobilegamestudio.core.model.NoCodeNodeRegistry
 import com.mobilegamestudio.core.model.ObjectRef
 import com.mobilegamestudio.core.model.VisualGraphDocument
@@ -76,8 +77,18 @@ class NoCodeGraphAttributeBinder(
                 owner = owner,
                 eventAddress = attributeRuntime.eventAddress(binding.address),
                 eventName = binding.eventName,
-            ) { event, context ->
-                when (val result = executor.emitEngineEvent(graph, event, context)) {
+            ) { event, dispatchContext ->
+                val receiverContext = ExecutionContext(
+                    executionId = dispatchContext.executionId,
+                    graphId = runtimeGraphId,
+                    sceneId = sceneId ?: event.address.sceneId ?: dispatchContext.sceneId,
+                    sourceObject = ownerObject,
+                    targetObject = event.address.objectRef,
+                    senderObject = event.sender ?: dispatchContext.senderObject,
+                    frameIndex = dispatchContext.frameIndex,
+                    event = event,
+                )
+                when (val result = executor.emitEngineEvent(graph, event, receiverContext)) {
                     LogicExecutionResult.Success -> Unit
                     is LogicExecutionResult.Failure -> throw NoCodeAttributeEventExecutionException(
                         result.diagnostic.message,

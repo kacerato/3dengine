@@ -12,7 +12,8 @@ object NoCodeNodeRegistry {
     private val specializedDefinitions: List<VisualNodeDefinition> =
         NoCodeFlowDefinitions.definitions +
             NoCodeEventDefinitions.definitions +
-            NoCodeAttributeDefinitions.definitions
+            NoCodeAttributeDefinitions.definitions +
+            NoCodePhysicsDefinitions.definitions
 
     private val specializedById: Map<String, VisualNodeDefinition> =
         specializedDefinitions.associateBy(VisualNodeDefinition::id).also { byId ->

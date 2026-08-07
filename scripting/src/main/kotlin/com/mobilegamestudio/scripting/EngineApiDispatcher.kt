@@ -39,6 +39,7 @@ enum class EngineApiFailureCode {
     CAPABILITY_DENIED,
     WRONG_THREAD,
     CONTRACT_ONLY,
+    EDITOR_ONLY,
     HANDLER_MISSING,
     INVALID_ARGUMENT,
     INVALID_RETURN_VALUE,
@@ -99,11 +100,16 @@ class EngineApiDispatcher(
                 "${function.id} exige capabilities ausentes: ${missing.joinToString()}.",
             )
         }
-        if (function.availability == EngineApiAvailability.CONTRACT_ONLY) {
-            return failure(
+        when (function.availability) {
+            EngineApiAvailability.CONTRACT_ONLY -> return failure(
                 EngineApiFailureCode.CONTRACT_ONLY,
                 "${function.id} possui contrato publicado, mas o runtime ainda não está ligado.",
             )
+            EngineApiAvailability.EDITOR_ONLY -> return failure(
+                EngineApiFailureCode.EDITOR_ONLY,
+                "${function.id} é exclusiva do editor e não pode executar no runtime do jogo.",
+            )
+            EngineApiAvailability.RUNTIME -> Unit
         }
         if (function.thread != EngineApiThread.ANY && function.thread != thread) {
             return failure(
@@ -140,10 +146,12 @@ class EngineApiDispatcher(
             )
         }
 
-        if (!accepts(function.returnType, result, allowNull = function.returnType != EngineApiValueType.VOID)) {
+        val nullableReturn = function.returnNullable || function.returnType == EngineApiValueType.VOID
+        if (!accepts(function.returnType, result, allowNull = nullableReturn)) {
             return failure(
                 EngineApiFailureCode.INVALID_RETURN_VALUE,
-                "${function.id} retornou ${typeName(result)}, esperado ${function.returnType}.",
+                "${function.id} retornou ${typeName(result)}, esperado ${function.returnType}" +
+                    if (function.returnNullable) "?" else "" + ".",
             )
         }
         return EngineApiCallResult.Success(result)
@@ -182,7 +190,7 @@ class EngineApiDispatcher(
     ): Boolean {
         if (value == null) return allowNull || type == EngineApiValueType.VOID
         return when (type) {
-            EngineApiValueType.VOID -> false
+            EngineApiValueType.VOID -> value === Unit
             EngineApiValueType.BOOLEAN -> value is Boolean
             EngineApiValueType.NUMBER -> value is Number && value.toDouble().isFinite()
             EngineApiValueType.TEXT -> value is String

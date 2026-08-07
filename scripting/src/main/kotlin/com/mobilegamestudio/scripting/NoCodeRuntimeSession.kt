@@ -11,6 +11,7 @@ import com.mobilegamestudio.core.model.InteractionTarget
 import com.mobilegamestudio.core.model.InteractionTargetResolver
 import com.mobilegamestudio.core.model.ObjectRef
 import com.mobilegamestudio.core.model.RuntimeAttributeStore
+import java.util.concurrent.atomic.AtomicLong
 
 /** Cleanup report used by tests, diagnostics and the future Play-session profiler. */
 data class NoCodeRuntimeCloseReport(
@@ -40,14 +41,15 @@ class NoCodeRuntimeSession(
     )
 
     private val lock = Any()
+    private val nextExecutionId = AtomicLong(1L)
     private val targetResolver = InteractionTargetResolver(interactionConfig)
     private val interactionTargets = LinkedHashMap<ObjectRef, InteractionTarget>()
     private var closed = false
     private var closeReport: NoCodeRuntimeCloseReport? = null
 
     /**
-     * Creates an executor that shares this session's stateful flow runtime.
-     * Creating multiple executor facades is safe; state remains session-owned.
+     * Creates an executor facade that shares this Play session's flow state,
+     * EventBus and monotonically increasing execution IDs.
      */
     fun graphExecutor(
         host: LogicSceneHost,
@@ -55,6 +57,8 @@ class NoCodeRuntimeSession(
         onLegacyEmitEvent: (String, Any?) -> LogicExecutionResult = { _, _ ->
             LogicExecutionResult.Success
         },
+        sceneId: String? = null,
+        sourceObject: ObjectRef? = null,
     ): VisualGraphExecutor {
         checkOpen()
         return VisualGraphExecutor(
@@ -62,6 +66,15 @@ class NoCodeRuntimeSession(
             maxExecutedNodes = maxExecutedNodes,
             onEmitEvent = onLegacyEmitEvent,
             flowRuntime = flowRuntime,
+            eventRuntime = events,
+            executionContextFactory = { graph ->
+                ExecutionContext(
+                    executionId = nextExecutionId.getAndIncrement(),
+                    graphId = graph.graphId,
+                    sceneId = sceneId,
+                    sourceObject = sourceObject,
+                )
+            },
         )
     }
 

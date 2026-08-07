@@ -9,7 +9,6 @@ import com.mobilegamestudio.core.model.DirectionalLightComponent
 import com.mobilegamestudio.core.model.EngineApiAvailability
 import com.mobilegamestudio.core.model.EngineApiParameter
 import com.mobilegamestudio.core.model.EngineApiValueType
-import com.mobilegamestudio.core.model.GameObject
 import com.mobilegamestudio.core.model.LuaScriptComponent
 import com.mobilegamestudio.core.model.MeshModifierStackComponent
 import com.mobilegamestudio.core.model.MeshRendererComponent
@@ -28,13 +27,11 @@ import com.mobilegamestudio.core.model.VegetationSpawnerComponent
 import com.mobilegamestudio.core.model.VirtualJoystickComponent
 import com.mobilegamestudio.core.model.VisualGraphComponent
 
-/** Read boundary for component lookup. It can be backed by a scene document or a live runtime. */
 interface ComponentQueryHost {
     fun objectExists(objectRef: ObjectRef): Boolean
     fun components(objectRef: ObjectRef): List<SceneComponent>
 }
 
-/** Immutable scene-backed implementation useful for editor preview and tests. */
 class SceneDocumentComponentQueryHost(
     private val documentProvider: () -> SceneDocument?,
 ) : ComponentQueryHost {
@@ -57,28 +54,30 @@ data class ComponentTypeDescriptor(
     }
 }
 
-/** Stable authored type names. No class-name reflection is used for graph semantics. */
-class ComponentTypeRegistry(
-    descriptors: List<ComponentTypeDescriptor>,
-) {
-    val descriptors: List<ComponentTypeDescriptor> = descriptors.toList()
+/** Stable authored type names. Graph semantics never depend on JVM class names. */
+class ComponentTypeRegistry(descriptors: List<ComponentTypeDescriptor>) {
+    val descriptors = descriptors.toList()
     private val byName: Map<String, ComponentTypeDescriptor>
 
     init {
         require(this.descriptors.map { it.id }.distinct().size == this.descriptors.size) {
             "Component type ids must be unique."
         }
-        val pairs = buildList {
-            this@ComponentTypeRegistry.descriptors.forEach { descriptor ->
-                add(normalize(descriptor.id) to descriptor)
-                add(normalize(descriptor.title) to descriptor)
-                descriptor.aliases.forEach { alias -> add(normalize(alias) to descriptor) }
-            }
+        val names = linkedMapOf<String, ComponentTypeDescriptor>()
+        this.descriptors.forEach { descriptor ->
+            sequenceOf(descriptor.id, descriptor.title)
+                .plus(descriptor.aliases.asSequence())
+                .map(::normalize)
+                .filter(String::isNotBlank)
+                .forEach { key ->
+                    val previous = names[key]
+                    require(previous == null || previous.id == descriptor.id) {
+                        "Component alias $key collides between ${previous?.id} and ${descriptor.id}."
+                    }
+                    names[key] = descriptor
+                }
         }
-        require(pairs.map { it.first }.distinct().size == pairs.size) {
-            "Component aliases must be unique."
-        }
-        byName = pairs.toMap()
+        byName = names.toMap()
     }
 
     fun resolve(idOrAlias: String): ComponentTypeDescriptor? = byName[normalize(idOrAlias)]
@@ -87,7 +86,8 @@ class ComponentTypeRegistry(
         descriptors.firstOrNull { it.matches(component) }
 
     companion object {
-        private fun normalize(value: String): String = value.trim().lowercase().replace('-', '_').replace(' ', '_')
+        private fun normalize(value: String): String =
+            value.trim().lowercase().replace('-', '_').replace(' ', '_')
     }
 }
 
@@ -146,11 +146,6 @@ data class ComponentResolution(
     val found: Boolean get() = componentRef != null
 }
 
-/**
- * Deterministic component resolver. Lookup never leaves the supplied ObjectRef.
- * If several components share a type, authored component order wins just like
- * GetComponent-style APIs; matchingCount remains available for diagnostics.
- */
 class ComponentResolver(
     private val host: ComponentQueryHost,
     private val types: ComponentTypeRegistry = BuiltInComponentTypes.registry,
@@ -178,10 +173,7 @@ class ComponentResolver(
     }
 
     fun resolve(ref: ComponentRef, includeDisabled: Boolean = true): ComponentResolution =
-        resolve(
-            ref.objectRef,
-            ComponentSelector(componentId = ref.componentId, includeDisabled = includeDisabled),
-        )
+        resolve(ref.objectRef, ComponentSelector(componentId = ref.componentId, includeDisabled = includeDisabled))
 
     fun isValid(ref: ComponentRef): Boolean = resolve(ref).found
 }
@@ -211,9 +203,7 @@ sealed interface ComponentMethodResult {
     data class Failure(val code: String, val message: String) : ComponentMethodResult
 }
 
-class ComponentMethodRegistry(
-    descriptors: List<ComponentMethodDescriptor>,
-) {
+class ComponentMethodRegistry(descriptors: List<ComponentMethodDescriptor>) {
     val descriptors = descriptors.toList()
     val byId = this.descriptors.associateBy(ComponentMethodDescriptor::id)
 
@@ -222,10 +212,6 @@ class ComponentMethodRegistry(
     }
 }
 
-/**
- * Explicit method dispatch. There is intentionally no java.lang.reflect call.
- * A method becomes callable only after both a descriptor and handler exist.
- */
 class ComponentMethodDispatcher(
     private val resolver: ComponentResolver,
     private val typeRegistry: ComponentTypeRegistry,
@@ -236,13 +222,15 @@ class ComponentMethodDispatcher(
     fun register(methodId: String, handler: ComponentMethodHandler) {
         val descriptor = registry.byId[methodId]
             ?: throw IllegalArgumentException("Unknown component method: $methodId.")
-        require(descriptor.availability == EngineApiAvailability.RUNTIME) {
-            "$methodId is not runtime-callable."
-        }
+        require(descriptor.availability == EngineApiAvailability.RUNTIME) { "$methodId is not runtime-callable." }
         handlers[methodId] = handler
     }
 
-    fun invoke(ref: ComponentRef, methodId: String, positionalArguments: List<Any?> = emptyList()): ComponentMethodResult {
+    fun invoke(
+        ref: ComponentRef,
+        methodId: String,
+        positionalArguments: List<Any?> = emptyList(),
+    ): ComponentMethodResult {
         val descriptor = registry.byId[methodId]
             ?: return ComponentMethodResult.Failure("UNKNOWN_METHOD", "Unknown component method: $methodId.")
         if (descriptor.availability != EngineApiAvailability.RUNTIME) {
@@ -250,7 +238,10 @@ class ComponentMethodDispatcher(
         }
         val resolution = resolver.resolve(ref)
         val component = resolution.component
-            ?: return ComponentMethodResult.Failure("COMPONENT_MISSING", "Component ${ref.componentId} no longer exists on ${ref.objectRef.objectId}.")
+            ?: return ComponentMethodResult.Failure(
+                "COMPONENT_MISSING",
+                "Component ${ref.componentId} no longer exists on ${ref.objectRef.objectId}.",
+            )
         val actualType = typeRegistry.descriptorFor(component)?.id
         if (descriptor.componentType != null && descriptor.componentType != actualType) {
             return ComponentMethodResult.Failure(

@@ -95,7 +95,7 @@ There is deliberately no fallback to nearest object, editor selection, object na
 
 ## Slice 3 — P3.2 context lifecycle wired into NoCodeExecutor
 
-`Components/NoCodeExecutor.smali` now opens and closes an execution context around the legacy synchronous dispatch while keeping the old `Y0(GameObject, Component)` call intact.
+`Components/NoCodeExecutor.smali` opens and closes an execution context around the legacy synchronous dispatch while keeping the old `Y0(GameObject, Component)` call intact.
 
 Integrated entry points:
 
@@ -108,22 +108,66 @@ Integrated entry points:
 
 For every wrapped entry point the compatibility order is:
 
-1. obtain/rebind the existing `NoCodeData`;
+1. obtain/rebind existing `NoCodeData`;
 2. run legacy `Y0(GameObject, Component)`;
 3. `NoCodeExecutionRuntime.begin(...)`;
 4. execute the original graph dispatch unchanged;
 5. `NoCodeExecutionRuntime.end(graph, expectedContext)`.
 
-Normal and exceptional exits both call `end(...)`. The Smali methods use `catchall` cleanup paths so a node exception cannot strand the nested context on the stack.
+Normal and exceptional exits both call `end(...)`. `catchall` cleanup prevents a node exception from stranding a nested context.
 
-Lifecycle cleanup was also wired:
+Lifecycle cleanup:
 
 - `onDetach()` clears the graph execution session before legacy `E0()` teardown;
 - `setNoCodeData()` clears the old graph session when replacing the graph;
-- `clone()` remains untouched by execution state and continues cloning only graph data through Gson;
-- no runtime execution field was added to the serialized `NoCodeExecutor` data model.
+- `clone()` remains independent of runtime execution state;
+- no execution field was added to serialized `NoCodeExecutor` state.
 
-This is intentionally a compatibility bridge. Existing nodes still see the legacy binding, while new nodes can consume explicit runtime context.
+Existing nodes still consume the legacy binding; new nodes can consume explicit runtime context.
+
+## Slice 4 — P4.2 event envelope implemented before event nodes
+
+The runtime event value was added before `Custom Event` / `Send Event` so node implementation does not dictate event semantics.
+
+### Event IDs
+
+`Runtime/NoCodeEventIds.smali`
+
+- independent monotonic event IDs using `AtomicLong`;
+- event identity is not conflated with execution identity.
+
+### EventEnvelope
+
+`Runtime/NoCodeEventEnvelope.smali`
+
+Immutable runtime fields:
+
+- `eventId`;
+- `createdAtNanos`;
+- event `name`;
+- sender `ObjectRef`;
+- receiver `ObjectRef`;
+- payload;
+- `parentExecutionId`.
+
+`hasReceiver()` checks that a directed receiver reference is valid. The envelope contains resolved references and never performs a scene/name/nearest-object lookup itself.
+
+### EventFactory
+
+`Runtime/NoCodeEventFactory.smali`
+
+- reads `NoCodeExecutionRuntime.current(graph)`;
+- captures the current execution ID as `parentExecutionId` when present;
+- creates a new immutable event envelope;
+- uses parent ID `0` only when the event originates outside an active NoCode execution.
+
+This gives the future debugger/event log a real causal chain, e.g. `execution 41 -> event 12 -> execution 42`, instead of inferring relationships from timestamps or node labels.
+
+## Registry mapping note
+
+Existing engine event dispatch uses obfuscated descriptors such as `Ldb/a;` and `Lhb/*;`. The decompiled tree also contains case-distinct physical package directories such as `Db` and `Hb`; therefore path casing must not be guessed from a bytecode descriptor. Registry mapping is being done from actual dex trees/classes before adding a concrete `Custom Event` node.
+
+This is deliberate: a new readable event runtime is safe to add independently, but registering a node against an assumed obfuscated base/registry would create the exact kind of fragile patch this refoundation is intended to remove.
 
 ## Static validation
 
@@ -133,48 +177,43 @@ The validator intentionally does not build an APK. It checks:
 
 - expected runtime descriptors;
 - balanced Smali methods and annotations;
-- no Gson `@Expose` on execution-session classes;
-- weakly keyed runtime sessions;
+- no Gson `@Expose` on execution-session/event-envelope runtime classes;
+- weakly keyed execution sessions;
 - synchronized begin/event/current/end/clear contracts;
-- target-resolution priority explicit → target → source;
+- target-resolution priority explicit -> target -> source;
+- immutable event-envelope fields;
+- event IDs generated through `NoCodeEventIds`;
+- event creation timestamps;
+- EventFactory causal linkage to current execution;
 - every integrated `NoCodeExecutor` entry point still contains legacy `Y0`;
-- every integrated entry point contains `begin`, two `end` paths and `catchall` cleanup;
+- every integrated entry point contains `begin`, normal/exceptional `end` paths and `catchall` cleanup;
 - `onDetach` and graph replacement clear sessions;
-- `clone()` does not reference `ExecutionRuntime`/`ExecutionContext`;
+- `clone()` does not copy execution state;
 - baseline `NoCodeData` and `NoCodePanel` remain present.
 
-## Next slice — Custom Events before flow/raycast expansion
+## Next slice — registry mapping + Custom Event / Send Event
 
-The next implementation should establish event semantics before Sequence, Gate or Raycast depend on them.
+### P4.1 — finish registry/event-node mapping
 
-### P4.1 — Registry/event-node mapping
-
-1. map the actual node registration mechanism across all dex files;
-2. identify the base node contract used by existing event nodes such as Start/Collision;
-3. add readable registration metadata without replacing the old registry wholesale;
-4. keep stable node IDs separate from visual labels.
-
-### P4.2 — Event envelope
-
-Introduce a small runtime event value containing:
-
-- event ID/name;
-- sender `ObjectRef`;
-- receiver/target `ObjectRef`;
-- payload;
-- parent execution ID;
-- dispatch timestamp.
-
-No scene lookup is allowed after receiver resolution.
+1. resolve the exact physical class for Start and collision event descriptors across case-distinct decompiled package paths;
+2. identify the actual NoCode event-node base contract;
+3. identify where node classes are registered/instantiated/deserialized;
+4. document stable ID vs visual title responsibilities;
+5. avoid modifying `y6/X` until runtime-node registration is understood.
 
 ### P4.3 — Custom Event + Send Event
 
-- `Custom Event` is an explicit graph entry point;
-- `Send Event` resolves its receiver once, creates an event context via `beginEvent(...)`, dispatches and restores the caller;
-- component/object scope must be explicit;
-- invalid receiver means a deterministic failed/no-op result, never nearest-object fallback.
+After P4.1 is confirmed:
 
-Only after event dispatch is stable should the graph receive `Sequence`, `Fan Out`, `Gate`, `Multi Gate` and then `Trace Ray`/interaction nodes.
+- `Custom Event` becomes an explicit graph entry point;
+- `Send Event` resolves the receiver once through `ObjectRef`;
+- it creates an `EventEnvelope` through `NoCodeEventFactory`;
+- directed dispatch rejects an invalid receiver instead of falling back to source/nearest object;
+- receiver execution opens through `beginEvent(...)` and restores its caller in LIFO order;
+- component/object scope is explicit;
+- sender, receiver, payload and parent execution stay available to debugging.
+
+Only after event dispatch is stable should the graph receive `Sequence`, `Fan Out`, `Gate`, `Multi Gate`, then `Trace Ray` / interaction nodes.
 
 ## Compatibility gates before moving on
 
@@ -186,6 +225,7 @@ Only after event dispatch is stable should the graph receive `Sequence`, `Fan Ou
 - graph clone still contains only serializable graph state;
 - runtime session depth returns to zero after synchronous dispatch;
 - nested calls restore the caller in LIFO order;
+- event envelope is not serialized as graph state;
 - two adjacent objects never exchange targets through fallback behavior;
 - editor can still open component graphs and graph files.
 
@@ -193,7 +233,7 @@ Only after event dispatch is stable should the graph receive `Sequence`, `Fan Ou
 
 - editor/UI stays in the editor layer; execution stays under `Engines/Engine/NoCode`;
 - readable runtime classes are preferred over growing unrelated obfuscated classes;
-- no global "current object" for interaction targeting;
+- no global `current object` for interaction targeting;
 - no nearest-object fallback after target resolution;
 - no reflection-based arbitrary component invocation;
 - no graph state keyed by visual labels;

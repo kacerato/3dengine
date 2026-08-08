@@ -2,102 +2,95 @@
 
 Branch: `agent/megazord-nocode-foundation`
 
-This document records the implementation directly in `megazord-engine-decompiled/`. The existing Megazord runtime is being evolved in place; no parallel engine/runtime is introduced.
+This work evolves the existing Megazord runtime directly inside `megazord-engine-decompiled/`. No parallel engine/runtime is being introduced.
+
+## Source-completeness rule
+
+The connected repository may not contain every original source/decompiled class. An unresolved descriptor is therefore treated as **missing/unresolved in the current tree**, not as proof that the class never exists in the product.
+
+Consequences:
+
+- do not recreate an unresolved engine class just because its physical Smali path is absent;
+- do not introduce a second node registry to replace an unresolved `ya/*` boundary;
+- prefer additive runtime contracts that can later connect to the authoritative implementation;
+- keep confirmed behavior and inferred/missing behavior clearly separated in documentation.
 
 ## Existing runtime mapped
 
-| Readable responsibility | Decompiled class/path | Notes |
+| Responsibility | Decompiled class/path | Confirmed behavior |
 | --- | --- | --- |
-| NoCode editor panel | `smali_classes5/com/itsmagic/engine/Activities/Editor/Panels/NoCode/NoCodePanel.smali` | Creates `y6/X`, opens either a component-backed graph or `graphFile`. |
-| NoCode component runtime | `smali_classes6/com/itsmagic/engine/Engines/Engine/NoCode/Components/NoCodeExecutor.smali` | Component lifecycle, function calls, collisions, update hooks and access to `NoCodeData`. |
-| Graph/runtime state | `smali_classes6/com/itsmagic/engine/Engines/Engine/NoCode/NoCodeData.smali` | Nodes, connections, branch connections, variables, attributes and transient runtime maps. |
-| Legacy object/component binding | `NoCodeData.d` / `NoCodeData.e`, assigned through `Y0(GameObject, Component)` | Preserved during migration so existing graphs keep their behavior. |
+| NoCode editor panel | `smali_classes5/com/itsmagic/engine/Activities/Editor/Panels/NoCode/NoCodePanel.smali` | Opens component-backed graphs or graph files. |
+| NoCode component runtime | `smali_classes6/com/itsmagic/engine/Engines/Engine/NoCode/Components/NoCodeExecutor.smali` | Lifecycle, function/custom-event calls, collisions and update hooks. |
+| Graph/runtime state | `smali_classes6/com/itsmagic/engine/Engines/Engine/NoCode/NoCodeData.smali` | Nodes, connections, branches, variables, attributes and transient execution maps. |
+| Legacy object/component binding | `NoCodeData.Y0(GameObject, Component)` | Preserved during migration so old graphs continue working. |
+| Existing custom-event base | `NoCode/Nodes/Events/Custom/BaseCustomEventNode.smali` | Matches event names and calls legacy `I0(Object[])`. |
+| Local component lookup | `GameObject.l0(Class)` | Resolves a component on exactly that `GameObject`; no parent/child search. |
 
 ## Slice 1 — stable execution primitives
 
-### Execution IDs
+### `NoCodeExecutionIds`
 
-`Runtime/NoCodeExecutionIds.smali`
+Monotonic execution IDs for debugger/event/scheduler correlation.
 
-- monotonic `AtomicLong` source;
-- each execution context receives a unique ID;
-- ready for debugger, event log and scheduler correlation.
-
-### ObjectRef
-
-`Runtime/NoCodeObjectRef.smali`
+### `NoCodeObjectRef`
 
 - wraps the actual `GameObject` instance;
-- equality is identity-based rather than name-based;
-- prevents adjacent/repeated objects from silently exchanging targets.
+- identity equality, never name equality;
+- `isValid()` now rejects null and destroyed/invalid `GameObject` instances through the engine's existing `GameObject.h1()` state check.
 
-### ComponentRef
+### `NoCodeComponentRef`
 
-`Runtime/NoCodeComponentRef.smali`
+Couples a component to its owning `ObjectRef`, preventing later resolution from silently moving to another object.
 
-- couples a component to its owner `ObjectRef`;
-- keeps component resolution attached to the same object selected earlier in the flow.
+### `NoCodeExecutionContext`
 
-### ExecutionContext
+Carries runtime-only execution state:
 
-`Runtime/NoCodeExecutionContext.smali`
-
-Carries:
-
-- `executionId`;
-- creation timestamp;
-- graph (`NoCodeData`);
+- execution ID and timestamp;
+- graph;
 - source object/component;
 - target object;
 - sender object;
-- event name;
-- payload;
+- event name/payload;
+- `NoCodeEventEnvelope` when dispatch originates from the new event bridge;
 - cancellation state.
 
-Execution context is runtime-only and is never graph JSON.
+It also exposes explicit ref setters for sender/target so an already-resolved reference does not need to be re-resolved by scene lookup.
 
-### ExecutionStack
+### `NoCodeExecutionStack`
 
-`Runtime/NoCodeExecutionStack.smali`
+LIFO context stack for nested calls/events. A nested dispatch can restore its caller instead of overwriting one global target.
 
-- LIFO execution semantics;
-- nested graph/event calls can restore their caller instead of overwriting one global target;
-- explicit `current`, `push`, `pop`, `clear`, `size`, `isEmpty` operations.
+## Slice 2 — execution sessions and target resolution
 
-## Slice 2 — runtime sessions and target resolution
+### `NoCodeExecutionRuntime`
 
-### ExecutionRuntime
+- `WeakHashMap<NoCodeData, NoCodeExecutionStack>`;
+- synchronized session operations;
+- `begin(...)` for ordinary graph entry;
+- `beginEvent(...)` for legacy-style event metadata;
+- `beginEnvelope(...)` for a fully resolved `NoCodeEventEnvelope`;
+- `current(...)`, `depth(...)`, `end(...)`, `clear(...)`;
+- `end(graph, expectedContext)` refuses out-of-order pops.
 
-`Runtime/NoCodeExecutionRuntime.smali`
+`beginEnvelope(...)` propagates the same envelope, event name/payload, sender ref and receiver ref into the receiver's execution context.
 
-- sessions are keyed by `NoCodeData` using `WeakHashMap`;
-- graphs are not kept alive only because a previous execution existed;
-- session operations are synchronized;
-- `begin(...)` seeds source object/component and default target;
-- `beginEvent(...)` also carries event name, payload and sender;
-- `current(...)` exposes the active nested context;
-- `end(graph, expectedContext)` refuses out-of-order pops;
-- `clear(graph)` is the lifecycle cleanup hook;
-- `depth(graph)` is ready for debugger diagnostics.
-
-### TargetResolver
-
-`Runtime/NoCodeTargetResolver.smali`
+### `NoCodeTargetResolver`
 
 Resolution order is fixed:
 
-1. explicit valid `ObjectRef` supplied by a node;
-2. `ExecutionContext.targetObject`;
-3. `ExecutionContext.sourceObject`;
+1. explicit valid `ObjectRef`;
+2. context target;
+3. context source;
 4. `null`.
 
-There is deliberately no fallback to nearest object, editor selection, object name, scene scan or global current object.
+No nearest-object, object-name, editor-selection or scene-scan fallback exists.
 
-## Slice 3 — P3.2 context lifecycle wired into NoCodeExecutor
+## Slice 3 — P3.2 integrated into the legacy executor
 
-`Components/NoCodeExecutor.smali` opens and closes an execution context around the legacy synchronous dispatch while keeping the old `Y0(GameObject, Component)` call intact.
+`NoCodeExecutor` now opens/closes execution contexts around the existing synchronous runtime while retaining `Y0(...)`.
 
-Integrated entry points:
+Wrapped entry points:
 
 - `callFunction`;
 - `onCollision`;
@@ -106,136 +99,179 @@ Integrated entry points:
 - `preUpdate`;
 - `lowTaskUpdate`.
 
-For every wrapped entry point the compatibility order is:
+Each follows the compatibility pattern:
 
-1. obtain/rebind existing `NoCodeData`;
-2. run legacy `Y0(GameObject, Component)`;
-3. `NoCodeExecutionRuntime.begin(...)`;
-4. execute the original graph dispatch unchanged;
-5. `NoCodeExecutionRuntime.end(graph, expectedContext)`.
+1. resolve/rebind existing `NoCodeData`;
+2. legacy `Y0(GameObject, Component)`;
+3. execution `begin(...)`;
+4. original graph dispatch;
+5. `end(...)` on normal exit;
+6. `end(...)` through `catchall` on exceptional exit.
 
-Normal and exceptional exits both call `end(...)`. `catchall` cleanup prevents a node exception from stranding a nested context.
+`onDetach()` and graph replacement clear old sessions. `clone()` remains independent of execution state.
 
-Lifecycle cleanup:
+## Slice 4 — event identity and causal chain
 
-- `onDetach()` clears the graph execution session before legacy `E0()` teardown;
-- `setNoCodeData()` clears the old graph session when replacing the graph;
-- `clone()` remains independent of runtime execution state;
-- no execution field was added to serialized `NoCodeExecutor` state.
+### `NoCodeEventIds`
 
-Existing nodes still consume the legacy binding; new nodes can consume explicit runtime context.
+Events have their own monotonic IDs, independent from execution IDs.
 
-## Slice 4 — P4.2 event envelope implemented before event nodes
+### `NoCodeEventEnvelope`
 
-The runtime event value was added before `Custom Event` / `Send Event` so node implementation does not dictate event semantics.
+Immutable runtime value containing:
 
-### Event IDs
-
-`Runtime/NoCodeEventIds.smali`
-
-- independent monotonic event IDs using `AtomicLong`;
-- event identity is not conflated with execution identity.
-
-### EventEnvelope
-
-`Runtime/NoCodeEventEnvelope.smali`
-
-Immutable runtime fields:
-
-- `eventId`;
-- `createdAtNanos`;
-- event `name`;
+- event ID;
+- creation timestamp;
+- name;
 - sender `ObjectRef`;
 - receiver `ObjectRef`;
 - payload;
-- `parentExecutionId`.
+- parent execution ID.
 
-`hasReceiver()` checks that a directed receiver reference is valid. The envelope contains resolved references and never performs a scene/name/nearest-object lookup itself.
+The envelope contains already-resolved references and performs no scene search.
 
-### EventFactory
+### `NoCodeEventFactory`
 
-`Runtime/NoCodeEventFactory.smali`
+Captures the current execution ID, when one exists, as `parentExecutionId`. This provides a real causal chain such as:
 
-- reads `NoCodeExecutionRuntime.current(graph)`;
-- captures the current execution ID as `parentExecutionId` when present;
-- creates a new immutable event envelope;
-- uses parent ID `0` only when the event originates outside an active NoCode execution.
+`execution 41 -> event 12 -> execution 42`
 
-This gives the future debugger/event log a real causal chain, e.g. `execution 41 -> event 12 -> execution 42`, instead of inferring relationships from timestamps or node labels.
+## Slice 5 — P4.3 directed Custom Event bridge
 
-## Registry mapping note
+A key discovery is that Custom Events already exist in the original runtime.
 
-Existing engine event dispatch uses obfuscated descriptors such as `Ldb/a;` and `Lhb/*;`. The decompiled tree also contains case-distinct physical package directories such as `Db` and `Hb`; therefore path casing must not be guessed from a bytecode descriptor. Registry mapping is being done from actual dex trees/classes before adding a concrete `Custom Event` node.
+`NoCodeData.C(name, args)` iterates runtime nodes and invokes `BaseCustomEventNode.H0(name, args)`. `BaseCustomEventNode` performs the existing event-name match and calls the abstract `I0(Object[])` implementation.
 
-This is deliberate: a new readable event runtime is safe to add independently, but registering a node against an assumed obfuscated base/registry would create the exact kind of fragile patch this refoundation is intended to remove.
+The new runtime therefore **does not replace Custom Events**. It routes a resolved event into that existing entry point.
 
-## Static validation
+### `NoCodeEventDispatcher`
 
-`tools/validate_nocode_runtime_foundation.py`
+`dispatch(EventEnvelope)` performs directed delivery:
 
-The validator intentionally does not build an APK. It checks:
+1. require a valid receiver and non-empty event name;
+2. unwrap the exact receiver `GameObject` from its `ObjectRef`;
+3. call `GameObject.l0(NoCodeExecutor.class)` — local lookup only;
+4. reject the dispatch if that exact object has no local `NoCodeExecutor`;
+5. retain legacy `NoCodeData.Y0(receiver, executor)` compatibility;
+6. open the receiver with `beginEnvelope(...)`;
+7. normalize payload to the existing `Object[]` custom-event interface;
+8. call existing `NoCodeData.C(name, args)`;
+9. close the receiver context on normal and exceptional exits.
 
-- expected runtime descriptors;
-- balanced Smali methods and annotations;
-- no Gson `@Expose` on execution-session/event-envelope runtime classes;
-- weakly keyed execution sessions;
-- synchronized begin/event/current/end/clear contracts;
-- target-resolution priority explicit -> target -> source;
-- immutable event-envelope fields;
-- event IDs generated through `NoCodeEventIds`;
-- event creation timestamps;
-- EventFactory causal linkage to current execution;
-- every integrated `NoCodeExecutor` entry point still contains legacy `Y0`;
-- every integrated entry point contains `begin`, normal/exceptional `end` paths and `catchall` cleanup;
-- `onDetach` and graph replacement clear sessions;
-- `clone()` does not copy execution state;
-- baseline `NoCodeData` and `NoCodePanel` remain present.
+The dispatcher deliberately does **not** call recursive `GameObject.callFunction`, parent lookup, child lookup, name lookup or nearest-object search.
 
-## Next slice — registry mapping + Custom Event / Send Event
+### `send(graph, name, receiverRef, payload)`
 
-### P4.1 — finish registry/event-node mapping
+This is the runtime API intended for the future visual `Send Event` node.
 
-1. resolve the exact physical class for Start and collision event descriptors across case-distinct decompiled package paths;
-2. identify the actual NoCode event-node base contract;
-3. identify where node classes are registered/instantiated/deserialized;
-4. document stable ID vs visual title responsibilities;
-5. avoid modifying `y6/X` until runtime-node registration is understood.
+It:
 
-### P4.3 — Custom Event + Send Event
+- reads the current caller execution;
+- uses the caller's `sourceObject` as sender;
+- creates the immutable envelope through `NoCodeEventFactory`;
+- preserves the parent execution ID;
+- calls exact-target `dispatch(...)`.
 
-After P4.1 is confirmed:
+The receiver must already be an explicit `ObjectRef`.
 
-- `Custom Event` becomes an explicit graph entry point;
-- `Send Event` resolves the receiver once through `ObjectRef`;
-- it creates an `EventEnvelope` through `NoCodeEventFactory`;
-- directed dispatch rejects an invalid receiver instead of falling back to source/nearest object;
-- receiver execution opens through `beginEvent(...)` and restores its caller in LIFO order;
-- component/object scope is explicit;
-- sender, receiver, payload and parent execution stay available to debugging.
+### Existing `BaseCustomEventNode` upgraded compatibly
 
-Only after event dispatch is stable should the graph receive `Sequence`, `Fan Out`, `Gate`, `Multi Gate`, then `Trace Ray` / interaction nodes.
+The legacy abstract `I0(Object[])` contract is untouched. New event implementations can additionally read:
 
-## Compatibility gates before moving on
+- `currentEventEnvelope()`;
+- `currentEventSender()`;
+- `currentEventReceiver()`;
+- `currentEventPayload()`.
 
-- existing graphs deserialize unchanged;
-- start still fires once;
-- function calls still reach existing nodes;
-- collision enter/stay/stop still reach existing nodes;
-- `setNoCodeData()` still binds the new graph to owner/component;
-- graph clone still contains only serializable graph state;
-- runtime session depth returns to zero after synchronous dispatch;
-- nested calls restore the caller in LIFO order;
-- event envelope is not serialized as graph state;
-- two adjacent objects never exchange targets through fallback behavior;
-- editor can still open component graphs and graph files.
+Legacy calls made without an envelope continue to work; these helpers simply return `null` when no envelope-backed event is active.
+
+## Node persistence / factory boundary
+
+Confirmed persistence:
+
+- `NoCodeNode.serializedNodeType` stores a stable node type when needed;
+- otherwise `NoCodeNode.L()` defaults to the class simple name;
+- `NoCodeNodeRecord` persists `serializedType + JsonObject`;
+- reconstruction calls `Lya/o;->c(type, json)`.
+
+The `ya/*` family is heavily referenced by the current NoCode code but its literal physical files have not been resolved in the connected decompiled tree. Given the source-completeness rule above, this is treated as an unresolved boundary, not permission to create a replacement registry.
+
+See `docs/nocode/NODE_REGISTRY_MAP.md` and `tools/audit_nocode_registry.py`.
+
+## Validation
+
+No APK is generated by these tools.
+
+### `tools/validate_nocode_runtime_foundation.py`
+
+Protects the initial execution/context/legacy compatibility contracts.
+
+### `tools/validate_nocode_event_dispatch.py`
+
+Protects the directed-event bridge, including:
+
+- destroyed-object rejection;
+- envelope propagation;
+- exact `GameObject.l0(NoCodeExecutor.class)` lookup;
+- existing `NoCodeData.C(...)` dispatch;
+- normal/exceptional context cleanup;
+- prohibition of parent/child/recursive fallback in the directed path;
+- sender/parent-execution causal linkage.
+
+### `tools/audit_nocode_registry.py`
+
+Scans Smali by descriptor rather than guessed physical path and is intended to locate the unresolved factory/registry boundary when the complete source/decompile is available.
+
+## Next implementation gate
+
+### P4.4 — concrete visual `Send Event` node
+
+The runtime side is ready. The visual/persistent node should only be registered after the authoritative factory/palette path is confirmed. It will call:
+
+`NoCodeEventDispatcher.send(graph, eventName, receiverRef, payload)`
+
+No alternative registry will be created merely to make the node appear in the editor.
+
+### P5 — flow runtime foundation
+
+While registry discovery remains a separate gate, runtime primitives can proceed safely:
+
+1. Sequence / Fan Out ordering contract;
+2. Gate state keyed by stable node instance ID;
+3. Multi Gate index/reset/loop contract;
+4. cancellation propagation through `ExecutionContext`;
+5. scheduler boundary for later Delay/Timer/async nodes.
+
+### P6 — interaction / raycast
+
+Only after the flow contracts are stable:
+
+- `Trace Ray` produces a stable hit/`ObjectRef`;
+- interaction copies that ref into context target;
+- `Pick Component` resolves only on that referenced object;
+- no proximity fallback after the hit has resolved a target.
+
+## Compatibility gates
+
+- old graphs deserialize unchanged;
+- Start still fires once;
+- local `callFunction` still reaches existing custom event nodes;
+- collisions still reach existing nodes;
+- graph clone contains only serializable graph state;
+- nested contexts restore in LIFO order;
+- directed events never switch receiver through fallback;
+- destroyed receiver refs are rejected;
+- legacy `I0(Object[])` custom events remain valid;
+- editor still opens component graphs and graph files.
 
 ## Architectural rules
 
 - editor/UI stays in the editor layer; execution stays under `Engines/Engine/NoCode`;
-- readable runtime classes are preferred over growing unrelated obfuscated classes;
-- no global `current object` for interaction targeting;
+- extend confirmed existing contracts before introducing replacements;
+- unresolved source is documented as unresolved, never silently reimplemented;
+- no global `current object`;
 - no nearest-object fallback after target resolution;
 - no reflection-based arbitrary component invocation;
 - no graph state keyed by visual labels;
-- stable IDs are required when graph versioning lands;
+- stable IDs are required for persistent flow state;
 - async/parallel flow will be scheduler-controlled; scene mutation will not become uncontrolled multi-threading.

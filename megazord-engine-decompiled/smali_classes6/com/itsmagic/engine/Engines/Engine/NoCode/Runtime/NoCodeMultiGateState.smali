@@ -75,3 +75,14 @@
 
     return-void
 .end method
+
+.method public restore(I)V
+    .locals 0
+
+    if-ltz p1, :cond_done
+
+    iput p1, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeMultiGateState;->nextIndex:I
+
+    :cond_done
+    return-void
+.end method

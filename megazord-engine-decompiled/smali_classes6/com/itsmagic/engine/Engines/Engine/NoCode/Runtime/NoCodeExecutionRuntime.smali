@@ -114,6 +114,45 @@
     return-object v0
 .end method
 
+.method public static synchronized beginEnvelope(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
+    .locals 2
+
+    invoke-static {p0, p1, p2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->begin(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_0
+
+    if-eqz p3, :cond_0
+
+    invoke-virtual {v0, p3}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->setEventEnvelope(Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;)V
+
+    invoke-virtual {p3}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;->getName()Ljava/lang/String;
+
+    move-result-object v1
+
+    invoke-virtual {p3}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;->getPayload()Ljava/lang/Object;
+
+    move-result-object p0
+
+    invoke-virtual {v0, v1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->setEvent(Ljava/lang/String;Ljava/lang/Object;)V
+
+    invoke-virtual {p3}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;->getSender()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->setSenderRef(Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;)V
+
+    invoke-virtual {p3}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;->getReceiver()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
+
+    move-result-object v1
+
+    invoke-virtual {v0, v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->setTargetRef(Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;)V
+
+    :cond_0
+    return-object v0
+.end method
+
 .method public static synchronized clear(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)V
     .locals 1
 

@@ -44,6 +44,17 @@ EXPECTED = {
     "NoCodeExecutionStack.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionStack;",
     "NoCodeExecutionRuntime.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;",
     "NoCodeTargetResolver.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeTargetResolver;",
+    "NoCodeEventIds.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventIds;",
+    "NoCodeEventEnvelope.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;",
+    "NoCodeEventFactory.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventFactory;",
+}
+
+RUNTIME_ONLY = {
+    "NoCodeExecutionContext.smali",
+    "NoCodeExecutionStack.smali",
+    "NoCodeExecutionRuntime.smali",
+    "NoCodeEventEnvelope.smali",
+    "NoCodeEventFactory.smali",
 }
 
 CLASS_RE = re.compile(r"^\.class\s+.+?\s+(L[^;]+;)$", re.MULTILINE)
@@ -84,11 +95,7 @@ def validate_file(path: Path, expected_descriptor: str) -> list[str]:
             f"{annotation_ends} ends)"
         )
 
-    if path.name in {
-        "NoCodeExecutionContext.smali",
-        "NoCodeExecutionStack.smali",
-        "NoCodeExecutionRuntime.smali",
-    } and "Lcom/google/gson/annotations/Expose;" in text:
+    if path.name in RUNTIME_ONLY and "Lcom/google/gson/annotations/Expose;" in text:
         errors.append(f"{path.name}: runtime state must not use Gson @Expose")
 
     return errors
@@ -132,6 +139,39 @@ def validate_runtime_contracts() -> list[str]:
         errors.append(
             "NoCodeTargetResolver.smali: target priority must remain explicit -> context target -> source"
         )
+
+    return errors
+
+
+def validate_event_contracts() -> list[str]:
+    errors: list[str] = []
+
+    envelope = (RUNTIME / "NoCodeEventEnvelope.smali").read_text(encoding="utf-8")
+    required_fields = (
+        ".field private final eventId:J",
+        ".field private final createdAtNanos:J",
+        ".field private final name:Ljava/lang/String;",
+        ".field private final sender:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;",
+        ".field private final receiver:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;",
+        ".field private final payload:Ljava/lang/Object;",
+        ".field private final parentExecutionId:J",
+    )
+    for field in required_fields:
+        if field not in envelope:
+            errors.append(f"NoCodeEventEnvelope.smali: missing immutable event field {field}")
+
+    if "NoCodeEventIds;->next()J" not in envelope:
+        errors.append("NoCodeEventEnvelope.smali: eventId must come from NoCodeEventIds")
+    if "Ljava/lang/System;->nanoTime()J" not in envelope:
+        errors.append("NoCodeEventEnvelope.smali: dispatch creation timestamp missing")
+
+    factory = (RUNTIME / "NoCodeEventFactory.smali").read_text(encoding="utf-8")
+    current_marker = "NoCodeExecutionRuntime;->current("
+    parent_marker = "NoCodeExecutionContext;->getExecutionId()J"
+    envelope_marker = "NoCodeEventEnvelope;-><init>("
+    for marker in (current_marker, parent_marker, envelope_marker):
+        if marker not in factory:
+            errors.append(f"NoCodeEventFactory.smali: missing causal-link contract {marker}")
 
     return errors
 
@@ -214,6 +254,7 @@ def main() -> int:
 
     if not errors:
         errors.extend(validate_runtime_contracts())
+        errors.extend(validate_event_contracts())
         errors.extend(validate_executor_integration())
 
     legacy_data = EXECUTOR.parents[1] / "NoCodeData.smali"
@@ -242,6 +283,7 @@ def main() -> int:
     print("NoCode runtime foundation: static checks passed")
     print(f"Validated {len(EXPECTED)} runtime classes")
     print("Validated execution-session and target-resolution contracts")
+    print("Validated immutable event-envelope and causal-link contracts")
     print("Validated legacy executor compatibility wiring and cleanup paths")
     print("APK build intentionally not executed")
     return 0

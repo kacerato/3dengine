@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Static checks for the additive NoCode 2.0 runtime foundation.
+"""Static checks for the NoCode 2.0 runtime foundation and compatibility wiring.
 
 This intentionally does not build an APK. It catches common manual-smali mistakes
-before the integration phase touches NoCodeData/NoCodeExecutor.
+and protects the legacy NoCode execution contract while the new runtime is wired in.
 """
 
 from __future__ import annotations
@@ -22,6 +22,18 @@ RUNTIME = (
     / "Engine"
     / "NoCode"
     / "Runtime"
+)
+EXECUTOR = (
+    ROOT
+    / "smali_classes6"
+    / "com"
+    / "itsmagic"
+    / "engine"
+    / "Engines"
+    / "Engine"
+    / "NoCode"
+    / "Components"
+    / "NoCodeExecutor.smali"
 )
 
 EXPECTED = {
@@ -72,7 +84,6 @@ def validate_file(path: Path, expected_descriptor: str) -> list[str]:
             f"{annotation_ends} ends)"
         )
 
-    # All execution-session classes are runtime state, never graph JSON.
     if path.name in {
         "NoCodeExecutionContext.smali",
         "NoCodeExecutionStack.smali",
@@ -81,6 +92,16 @@ def validate_file(path: Path, expected_descriptor: str) -> list[str]:
         errors.append(f"{path.name}: runtime state must not use Gson @Expose")
 
     return errors
+
+
+def method_body(text: str, method_name: str) -> str | None:
+    pattern = re.compile(
+        rf"^\.method\s+[^\n]*\b{re.escape(method_name)}\([^\n]*\n"
+        rf"(?P<body>.*?)^\.end method$",
+        flags=re.MULTILINE | re.DOTALL,
+    )
+    match = pattern.search(text)
+    return match.group(0) if match else None
 
 
 def validate_runtime_contracts() -> list[str]:
@@ -115,6 +136,77 @@ def validate_runtime_contracts() -> list[str]:
     return errors
 
 
+def validate_executor_integration() -> list[str]:
+    errors: list[str] = []
+    if not EXECUTOR.is_file():
+        return [f"critical baseline file missing: {EXECUTOR.relative_to(ROOT)}"]
+
+    errors.extend(
+        validate_file(
+            EXECUTOR,
+            "Lcom/itsmagic/engine/Engines/Engine/NoCode/Components/NoCodeExecutor;",
+        )
+    )
+    text = EXECUTOR.read_text(encoding="utf-8")
+
+    begin_marker = "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->begin("
+    end_marker = "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end("
+    clear_marker = "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->clear("
+    legacy_bind = "Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->Y0("
+
+    wrapped_methods = (
+        "callFunction",
+        "lowTaskUpdate",
+        "onCollision",
+        "onCollisionEnter",
+        "onCollisionStop",
+        "preUpdate",
+    )
+
+    for name in wrapped_methods:
+        body = method_body(text, name)
+        if body is None:
+            errors.append(f"NoCodeExecutor.smali: missing entry point {name}")
+            continue
+        if legacy_bind not in body:
+            errors.append(f"NoCodeExecutor.smali:{name}: legacy Y0 binding was removed")
+        if begin_marker not in body:
+            errors.append(f"NoCodeExecutor.smali:{name}: missing execution begin")
+        if body.count(end_marker) < 2:
+            errors.append(
+                f"NoCodeExecutor.smali:{name}: context must end on normal and exceptional exits"
+            )
+        if ".catchall" not in body:
+            errors.append(f"NoCodeExecutor.smali:{name}: missing catchall cleanup path")
+        if legacy_bind in body and begin_marker in body:
+            if body.find(legacy_bind) > body.find(begin_marker):
+                errors.append(
+                    f"NoCodeExecutor.smali:{name}: compatibility binding must run before context begin"
+                )
+
+    detach = method_body(text, "onDetach")
+    if detach is None or clear_marker not in detach:
+        errors.append("NoCodeExecutor.smali:onDetach: runtime session must be cleared")
+
+    replace = method_body(text, "setNoCodeData")
+    if replace is None or clear_marker not in replace:
+        errors.append("NoCodeExecutor.smali:setNoCodeData: old graph session must be cleared")
+
+    clone = method_body(text, "clone")
+    if clone is None:
+        errors.append("NoCodeExecutor.smali: clone method missing")
+    elif "NoCodeExecutionRuntime" in clone or "NoCodeExecutionContext" in clone:
+        errors.append("NoCodeExecutor.smali: clone must not copy runtime execution state")
+
+    if text.count(begin_marker) != len(wrapped_methods):
+        errors.append(
+            "NoCodeExecutor.smali: unexpected number of execution begin hooks; "
+            "review new/removed entry points explicitly"
+        )
+
+    return errors
+
+
 def main() -> int:
     errors: list[str] = []
     for filename, descriptor in EXPECTED.items():
@@ -122,20 +214,9 @@ def main() -> int:
 
     if not errors:
         errors.extend(validate_runtime_contracts())
+        errors.extend(validate_executor_integration())
 
-    legacy_executor = (
-        ROOT
-        / "smali_classes6"
-        / "com"
-        / "itsmagic"
-        / "engine"
-        / "Engines"
-        / "Engine"
-        / "NoCode"
-        / "Components"
-        / "NoCodeExecutor.smali"
-    )
-    legacy_data = legacy_executor.parents[1] / "NoCodeData.smali"
+    legacy_data = EXECUTOR.parents[1] / "NoCodeData.smali"
     editor_panel = (
         ROOT
         / "smali_classes5"
@@ -149,7 +230,7 @@ def main() -> int:
         / "NoCodePanel.smali"
     )
 
-    for critical in (legacy_executor, legacy_data, editor_panel):
+    for critical in (legacy_data, editor_panel):
         if not critical.is_file():
             errors.append(f"critical baseline file missing: {critical.relative_to(ROOT)}")
 
@@ -159,8 +240,9 @@ def main() -> int:
         return 1
 
     print("NoCode runtime foundation: static checks passed")
-    print(f"Validated {len(EXPECTED)} additive runtime classes")
+    print(f"Validated {len(EXPECTED)} runtime classes")
     print("Validated execution-session and target-resolution contracts")
+    print("Validated legacy executor compatibility wiring and cleanup paths")
     print("APK build intentionally not executed")
     return 0
 

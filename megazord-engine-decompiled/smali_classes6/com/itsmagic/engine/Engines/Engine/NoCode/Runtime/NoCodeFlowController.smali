@@ -178,9 +178,23 @@
 .end method
 
 .method public static multiGateNext(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;[Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeSlot;Z)I
-    .locals 3
+    .locals 4
+
+    if-eqz p0, :cond_fail
 
     if-eqz p1, :cond_fail
+
+    invoke-virtual {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;->A()Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;
+
+    move-result-object v3
+
+    if-eqz v3, :cond_fail
+
+    invoke-static {v3}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeFlowRuntime;->canContinue(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Z
+
+    move-result v2
+
+    if-eqz v2, :cond_fail
 
     invoke-static {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeFlowController;->multiGateState(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeMultiGateState;
 
@@ -200,8 +214,13 @@
 
     move-result v2
 
-    if-eqz v2, :cond_fail
+    if-nez v2, :cond_success
 
+    invoke-virtual {v0, v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeMultiGateState;->restore(I)V
+
+    goto :cond_fail
+
+    :cond_success
     return v1
 
     :cond_fail

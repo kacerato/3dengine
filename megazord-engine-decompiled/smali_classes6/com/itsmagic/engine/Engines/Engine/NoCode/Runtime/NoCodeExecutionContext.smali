@@ -7,6 +7,8 @@
 
 .field private final createdAtNanos:J
 
+.field private eventEnvelope:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+
 .field private eventName:Ljava/lang/String;
 
 .field private final executionId:J
@@ -49,6 +51,8 @@
 
     iput-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->sourceComponent:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeComponentRef;
 
+    iput-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->eventEnvelope:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+
     if-eqz p2, :cond_1
 
     new-instance v1, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
@@ -85,6 +89,8 @@
 
     const/4 v0, 0x0
 
+    iput-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->eventEnvelope:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+
     iput-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->eventName:Ljava/lang/String;
 
     iput-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->payload:Ljava/lang/Object;
@@ -100,6 +106,14 @@
     iget-wide v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->createdAtNanos:J
 
     return-wide v0
+.end method
+
+.method public getEventEnvelope()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+    .locals 1
+
+    iget-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->eventEnvelope:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+
+    return-object v0
 .end method
 
 .method public getEventName()Ljava/lang/String;
@@ -184,6 +198,14 @@
     return-void
 .end method
 
+.method public setEventEnvelope(Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;)V
+    .locals 0
+
+    iput-object p1, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->eventEnvelope:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+
+    return-void
+.end method
+
 .method public setSenderObject(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;)V
     .locals 1
 
@@ -205,6 +227,14 @@
     return-void
 .end method
 
+.method public setSenderRef(Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;)V
+    .locals 0
+
+    iput-object p1, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->senderObject:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
+
+    return-void
+.end method
+
 .method public setTargetObject(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;)V
     .locals 1
 
@@ -222,6 +252,14 @@
     const/4 v0, 0x0
 
     iput-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->targetObject:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
+
+    return-void
+.end method
+
+.method public setTargetRef(Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;)V
+    .locals 0
+
+    iput-object p1, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->targetObject:Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
 
     return-void
 .end method

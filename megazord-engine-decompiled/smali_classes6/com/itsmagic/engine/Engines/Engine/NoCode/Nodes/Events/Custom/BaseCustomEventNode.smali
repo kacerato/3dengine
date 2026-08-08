@@ -213,6 +213,96 @@
     return-object p1
 .end method
 
+.method public final currentEventEnvelope()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+    .locals 2
+
+    invoke-virtual {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeNode;->A()Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_none
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->current(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
+
+    move-result-object v1
+
+    if-eqz v1, :cond_none
+
+    invoke-virtual {v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->getEventEnvelope()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_none
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
+.method public final currentEventPayload()Ljava/lang/Object;
+    .locals 1
+
+    invoke-virtual {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Nodes/Events/Custom/BaseCustomEventNode;->currentEventEnvelope()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_none
+
+    invoke-virtual {v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;->getPayload()Ljava/lang/Object;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_none
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
+.method public final currentEventReceiver()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
+    .locals 1
+
+    invoke-virtual {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Nodes/Events/Custom/BaseCustomEventNode;->currentEventEnvelope()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_none
+
+    invoke-virtual {v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;->getReceiver()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_none
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
+.method public final currentEventSender()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
+    .locals 1
+
+    invoke-virtual {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Nodes/Events/Custom/BaseCustomEventNode;->currentEventEnvelope()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_none
+
+    invoke-virtual {v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;->getSender()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
+
+    move-result-object v0
+
+    return-object v0
+
+    :cond_none
+    const/4 v0, 0x0
+
+    return-object v0
+.end method
+
 .method public l0()V
     .locals 1
 

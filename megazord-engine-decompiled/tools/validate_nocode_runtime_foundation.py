@@ -30,6 +30,8 @@ EXPECTED = {
     "NoCodeComponentRef.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeComponentRef;",
     "NoCodeExecutionContext.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;",
     "NoCodeExecutionStack.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionStack;",
+    "NoCodeExecutionRuntime.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;",
+    "NoCodeTargetResolver.smali": "Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeTargetResolver;",
 }
 
 CLASS_RE = re.compile(r"^\.class\s+.+?\s+(L[^;]+;)$", re.MULTILINE)
@@ -70,10 +72,45 @@ def validate_file(path: Path, expected_descriptor: str) -> list[str]:
             f"{annotation_ends} ends)"
         )
 
-    # Execution context is runtime state. It must not accidentally become graph JSON.
-    if path.name in {"NoCodeExecutionContext.smali", "NoCodeExecutionStack.smali"}:
-        if "Lcom/google/gson/annotations/Expose;" in text:
-            errors.append(f"{path.name}: runtime state must not use Gson @Expose")
+    # All execution-session classes are runtime state, never graph JSON.
+    if path.name in {
+        "NoCodeExecutionContext.smali",
+        "NoCodeExecutionStack.smali",
+        "NoCodeExecutionRuntime.smali",
+    } and "Lcom/google/gson/annotations/Expose;" in text:
+        errors.append(f"{path.name}: runtime state must not use Gson @Expose")
+
+    return errors
+
+
+def validate_runtime_contracts() -> list[str]:
+    errors: list[str] = []
+
+    runtime_text = (RUNTIME / "NoCodeExecutionRuntime.smali").read_text(encoding="utf-8")
+    if "Ljava/util/WeakHashMap;" not in runtime_text:
+        errors.append("NoCodeExecutionRuntime.smali: sessions must be weakly keyed by NoCodeData")
+
+    for signature in (
+        ".method public static synchronized begin(",
+        ".method public static synchronized beginEvent(",
+        ".method public static synchronized current(",
+        ".method public static synchronized end(",
+        ".method public static synchronized clear(",
+    ):
+        if signature not in runtime_text:
+            errors.append(f"NoCodeExecutionRuntime.smali: missing synchronized contract {signature}")
+
+    resolver_text = (RUNTIME / "NoCodeTargetResolver.smali").read_text(encoding="utf-8")
+    ordered_markers = (
+        "->valid(Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;)Z",
+        "->getTargetObject()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;",
+        "->getSourceObject()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;",
+    )
+    positions = [resolver_text.find(marker) for marker in ordered_markers]
+    if any(position < 0 for position in positions) or positions != sorted(positions):
+        errors.append(
+            "NoCodeTargetResolver.smali: target priority must remain explicit -> context target -> source"
+        )
 
     return errors
 
@@ -82,6 +119,9 @@ def main() -> int:
     errors: list[str] = []
     for filename, descriptor in EXPECTED.items():
         errors.extend(validate_file(RUNTIME / filename, descriptor))
+
+    if not errors:
+        errors.extend(validate_runtime_contracts())
 
     legacy_executor = (
         ROOT
@@ -120,6 +160,7 @@ def main() -> int:
 
     print("NoCode runtime foundation: static checks passed")
     print(f"Validated {len(EXPECTED)} additive runtime classes")
+    print("Validated execution-session and target-resolution contracts")
     print("APK build intentionally not executed")
     return 0
 

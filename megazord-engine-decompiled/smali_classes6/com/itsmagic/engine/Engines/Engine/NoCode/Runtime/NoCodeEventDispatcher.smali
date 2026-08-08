@@ -125,3 +125,37 @@
 
     return v0
 .end method
+
+.method public static send(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Ljava/lang/String;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;Ljava/lang/Object;)Z
+    .locals 3
+
+    if-eqz p0, :cond_fail
+
+    const/4 v0, 0x0
+
+    invoke-static {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->current(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
+
+    move-result-object v1
+
+    if-eqz v1, :sender_ready
+
+    invoke-virtual {v1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;->getSourceObject()Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;
+
+    move-result-object v0
+
+    :sender_ready
+    invoke-static {p0, p1, v0, p2, p3}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventFactory;->create(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Ljava/lang/String;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeObjectRef;Ljava/lang/Object;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;
+
+    move-result-object v2
+
+    invoke-static {v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventDispatcher;->dispatch(Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeEventEnvelope;)Z
+
+    move-result v0
+
+    return v0
+
+    :cond_fail
+    const/4 v0, 0x0
+
+    return v0
+.end method

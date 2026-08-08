@@ -158,6 +158,8 @@
 
     if-eqz p0, :cond_0
 
+    invoke-static {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeFlowRuntime;->clear(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)V
+
     sget-object v0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->sessions:Ljava/util/WeakHashMap;
 
     invoke-virtual {v0, p0}, Ljava/util/WeakHashMap;->remove(Ljava/lang/Object;)Ljava/lang/Object;

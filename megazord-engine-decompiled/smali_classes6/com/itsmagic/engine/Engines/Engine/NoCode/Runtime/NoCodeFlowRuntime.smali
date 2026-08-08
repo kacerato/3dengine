@@ -108,7 +108,7 @@
 .end method
 
 # virtual methods
-.method public static synchronized cancelCurrent(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Z
+.method public static cancelCurrent(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Z
     .locals 1
 
     invoke-static {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->current(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
@@ -129,7 +129,7 @@
     return v0
 .end method
 
-.method public static synchronized canContinue(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Z
+.method public static canContinue(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Z
     .locals 1
 
     invoke-static {p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->current(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;

@@ -110,7 +110,7 @@
 
 # virtual methods
 .method public varargs callFunction(Ljava/lang/String;[Ljava/lang/Object;)V
-    .locals 2
+    .locals 4
     .annotation system Ldalvik/annotation/MethodParameters;
         accessFlags = {
             0x0,
@@ -134,7 +134,25 @@
 
     invoke-virtual {v0, v1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->Y0(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)V
 
+    invoke-static {v0, v1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->begin(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
+
+    move-result-object v2
+
+    :try_start_0
     invoke-virtual {v0, p1, p2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->C(Ljava/lang/String;[Ljava/lang/Object;)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-static {v0, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
+
+    goto :cond_0
+
+    :catchall_0
+    move-exception v3
+
+    invoke-static {v0, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
+
+    throw v3
 
     :cond_0
     return-void
@@ -504,7 +522,7 @@
 .end method
 
 .method public lowTaskUpdate(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Z)V
-    .locals 0
+    .locals 2
     .annotation system Ldalvik/annotation/MethodParameters;
         accessFlags = {
             0x0,
@@ -524,9 +542,25 @@
 
     invoke-virtual {p2, p1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->Y0(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)V
 
+    invoke-static {p2, p1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->begin(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
+
+    move-result-object v0
+
+    :try_start_0
     invoke-virtual {p2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->i1()V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-static {p2, v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
 
     return-void
+
+    :catchall_0
+    move-exception v1
+
+    invoke-static {p2, v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
+
+    throw v1
 .end method
 
 .method public onAttach()V
@@ -552,7 +586,7 @@
 .end method
 
 .method public onCollision(LB9/a;)V
-    .locals 2
+    .locals 4
     .annotation system Ldalvik/annotation/MethodParameters;
         accessFlags = {
             0x0
@@ -574,16 +608,34 @@
 
     invoke-virtual {v0, v1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->Y0(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)V
 
+    invoke-static {v0, v1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->begin(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
+
+    move-result-object v2
+
+    :try_start_0
     const-class v1, Lhb/c;
 
     invoke-virtual {v0, v1, p1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->B(Ljava/lang/Class;LB9/a;)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-static {v0, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
+
+    goto :cond_0
+
+    :catchall_0
+    move-exception v3
+
+    invoke-static {v0, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
+
+    throw v3
 
     :cond_0
     return-void
 .end method
 
 .method public onCollisionEnter(LB9/a;)V
-    .locals 2
+    .locals 4
     .annotation system Ldalvik/annotation/MethodParameters;
         accessFlags = {
             0x0
@@ -605,16 +657,34 @@
 
     invoke-virtual {v0, v1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->Y0(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)V
 
+    invoke-static {v0, v1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->begin(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
+
+    move-result-object v2
+
+    :try_start_0
     const-class v1, Lhb/b;
 
     invoke-virtual {v0, v1, p1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->y(Ljava/lang/Class;LB9/a;)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-static {v0, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
+
+    goto :cond_0
+
+    :catchall_0
+    move-exception v3
+
+    invoke-static {v0, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
+
+    throw v3
 
     :cond_0
     return-void
 .end method
 
 .method public onCollisionStop(LB9/a;)V
-    .locals 2
+    .locals 4
     .annotation system Ldalvik/annotation/MethodParameters;
         accessFlags = {
             0x0
@@ -636,9 +706,27 @@
 
     invoke-virtual {v0, v1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->Y0(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)V
 
+    invoke-static {v0, v1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->begin(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
+
+    move-result-object v2
+
+    :try_start_0
     const-class v1, Lhb/d;
 
     invoke-virtual {v0, v1, p1}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->D(Ljava/lang/Class;LB9/a;)V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-static {v0, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
+
+    goto :cond_0
+
+    :catchall_0
+    move-exception v3
+
+    invoke-static {v0, v2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
+
+    throw v3
 
     :cond_0
     return-void
@@ -656,6 +744,8 @@
     iget-object v0, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Components/NoCodeExecutor;->noCodeData:Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;
 
     if-eqz v0, :cond_0
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->clear(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)V
 
     invoke-virtual {v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->E0()V
 
@@ -691,7 +781,7 @@
 .end method
 
 .method public preUpdate(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Z)V
-    .locals 0
+    .locals 2
     .annotation system Ldalvik/annotation/MethodParameters;
         accessFlags = {
             0x0,
@@ -711,11 +801,27 @@
 
     invoke-virtual {p2, p1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->Y0(Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)V
 
+    invoke-static {p2, p1, p0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->begin(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;)Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;
+
+    move-result-object v0
+
+    :try_start_0
     invoke-direct {p0, p2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Components/NoCodeExecutor;->dispatchStartEventIfNeeded(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)V
 
     invoke-virtual {p2}, Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;->h1()V
+    :try_end_0
+    .catchall {:try_start_0 .. :try_end_0} :catchall_0
+
+    invoke-static {p2, v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
 
     return-void
+
+    :catchall_0
+    move-exception v1
+
+    invoke-static {p2, v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->end(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionContext;)Z
+
+    throw v1
 .end method
 
 .method public reloadFilesPaths(Lcom/itsmagic/engine/Core/Components/PackageBuilder/BuilderUtils/BuildDictionary;)V
@@ -875,6 +981,8 @@
     iput-boolean v1, p0, Lcom/itsmagic/engine/Engines/Engine/NoCode/Components/NoCodeExecutor;->E:Z
 
     if-eqz v0, :cond_1
+
+    invoke-static {v0}, Lcom/itsmagic/engine/Engines/Engine/NoCode/Runtime/NoCodeExecutionRuntime;->clear(Lcom/itsmagic/engine/Engines/Engine/NoCode/NoCodeData;)V
 
     iget-object v1, p0, Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/Components/Component;->n:Lcom/itsmagic/engine/Engines/Engine/ObjectOriented/GameObject/GameObject;
 
